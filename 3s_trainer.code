@@ -167,7 +167,7 @@ Jump @Label_8752
 
 :Label_8750
 iPush_2
-Push1 184
+Push1 179
 CallNative is_control_pressed 2 1
 JumpFalse @Label_8752
 StackGet 8
@@ -378,11 +378,10 @@ iPush_1
 setF 10
 
 :Label_draw_menu_3
-getF 12
-getF 13
+getF 10
+iPush_0
 Call @Label_set_up_draw
 getF 3
-StackGet 9
 Call @Label_get_menu
 StackGet 3
 getF 5
@@ -520,6 +519,7 @@ Jump @Label_get_menu_6
 :Label_get_menu_2
 getF 0
 Call @Label_get_menu_veh_hash
+CallNative get_display_name_from_vehicle_model 1 1
 Return 1 1
 Jump @Label_get_menu_6
 
@@ -570,7 +570,7 @@ Return 1 1
 Jump @Label_get_menu_veh_hash_boats_22
 
 :Label_get_menu_veh_hash_boats_5
-Push -751771967
+Push -488123221
 Return 1 1
 Jump @Label_get_menu_veh_hash_boats_22
 
@@ -675,7 +675,7 @@ Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_12
-PushString "Off-road"
+PushString "Off Road"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
@@ -700,7 +700,7 @@ Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_17
-PushString "Sports-classics"
+PushString "Sports Classics"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
