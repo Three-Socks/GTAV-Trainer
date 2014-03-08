@@ -19,6 +19,10 @@ StackSet 9
 iPush_0
 StackSet 10
 
+iPush_0
+StackSet 11
+
+
 :while
 iPush_0
 CallNative wait 1 0
@@ -72,8 +76,101 @@ Jump @Label_action2
 Return 0 0
 
 :Label_spawn_veh
-Function 14 1 7
+Function 14 1 10
+
+getF 0
+Call @Label_get_menu_veh_hash
+CallNative is_model_in_cdimage 1 1
+JumpFalse @Label_spawn_veh_error
+getF 0
+Call @Label_get_menu_veh_hash
+CallNative request_model 1 0
+
+:Label_spawn_veh_1
+getF 0
+Call @Label_get_menu_veh_hash
+CallNative has_model_loaded 1 1
+Not
+JumpFalse @Label_spawn_veh_2
+iPush_0
+CallNative wait 1 0
+Jump @Label_spawn_veh_1
+
+:Label_spawn_veh_2
+CallNative player_ped_id 0 1
+CallNative get_vehicle_ped_is_using 1 1
+setF 2
+
+getF 2
+CallNative does_entity_exist 1 1
+JumpFalse @Label_spawn_veh_3
+getF 2
+CallNative get_entity_speed 1 1
+setF 4
+getF 2
+CallNative delete_vehicle 1 0
+
+:Label_spawn_veh_3
+CallNative player_ped_id 0 1
+iPush_1
+CallNative get_entity_coords 2 3
+iPush_3
+pFrame1 3
+FromStack
+
+CallNative player_ped_id 0 1
+CallNative get_entity_heading 1 1
+setF 5
+
+getF 0
+Call @Label_get_menu_veh_hash
+iPush_3
+pFrame1 3
+ToStack
+getF 5
+iPush_0
+iPush_1
+CallNative create_vehicle 7 1
+StackSet 11
+
+StackGet 11
+CallNative set_vehicle_on_ground_properly 1 1
+drop
+getF 0
+Call @Label_get_menu_veh_hash
+CallNative set_model_as_no_longer_needed 1 0
+
+CallNative player_ped_id 0 1
+StackGet 11
+iPush_-1
+CallNative set_ped_into_vehicle 3 0
+StackGet 11
+getF 4
+CallNative set_vehicle_forward_speed 2 0
+
+StackGetp 11
+CallNative set_vehicle_as_no_longer_needed 1 0
+Jump @Label_spawn_veh_4
+
+:Label_spawn_veh_error
+PushString "STRING"
+CallNative unk_0x574EE85C 1 0
+PushString "3S Trainer Error:~n~Unable to spawn vehicle."
+CallNative unk_0x27A244D8 1 0
+iPush_0
+iPush_1
+CallNative unk_0x08F7AF78 2 1
+
+:Label_spawn_veh_4
 Return 1 0
+
+:Label_get_coords
+Function 3 1 3
+getF 0
+CallNative get_player_ped 1 1
+iPush_0
+CallNative get_entity_coords 2 3
+Return 1 3
 
 :Label_catch_select_button_press
 Function 11 0 2
@@ -105,6 +202,17 @@ iPush_-1
 PushString "SELECT"
 PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
 CallNative play_sound_frontend 3 0
+
+iPush_1
+StackGet 9
+JumpEq @Label_catch_select_button_press_2
+iPush_1
+StackSet 9
+StackGet 4
+StackSet 10
+Jump @Label_739
+
+:Label_catch_select_button_press_2
 iPush_1
 StackSet 7
 Jump @Label_739
@@ -118,6 +226,17 @@ iPush_-1
 PushString "SELECT"
 PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
 CallNative play_sound_frontend 3 0
+
+iPush_0
+StackGet 9
+JumpEq @Label_catch_select_button_press_3
+iPush_0
+StackSet 9
+iPush_0
+StackSet 10
+Jump @Label_739
+
+:Label_catch_select_button_press_3
 iPush_2
 StackSet 7
 
@@ -316,7 +435,7 @@ Call @Label_set_up_draw
 PushString "Three-Socks Trainer"
 StackGet 3
 fPush 0.04444443
-Call @Label_draw_string
+Call @Label_draw_string_header
 
 iPush_0
 setF 3
@@ -395,12 +514,33 @@ Jump @Label_draw_menu_LOOP
 :Label_draw_menu_END
 Return 0 0
 
-:Label_draw_string
-Function 4 3 3
+:Label_draw_string_header
+Function 25 3 3
 PushString "STRING"
 CallNative unk_0x3E35563E 1 0
 getF 0
 CallNative unk_0x27A244D8 1 0
+getF 1
+getF 2
+CallNative unk_0x6F8350CE 2 0
+Return 3 0
+
+:Label_draw_string
+Function 4 3 3
+iPush_1
+StackGet 9
+JumpEq @Label_draw_string_2
+PushString "STRING"
+CallNative unk_0x3E35563E 1 0
+getF 0
+CallNative unk_0x27A244D8 1 0
+Jump @Label_draw_string_3
+
+:Label_draw_string_2
+getF 0
+CallNative unk_0x3E35563E 1 0
+
+:Label_draw_string_3
 getF 1
 getF 2
 CallNative unk_0x6F8350CE 2 0
@@ -487,20 +627,115 @@ Return 0 1
 :Label_get_menu_veh_count
 Function 22 0 3
 StackGet 10
-Switch [0 @Label_get_menu_veh_count_1]:[1 @Label_get_menu_veh_count_2]
-Jump @Label_get_menu_veh_count_6
+Switch [0 @Label_get_menu_veh_count_1]:[1 @Label_get_menu_veh_count_2]:[2 @Label_get_menu_veh_count_3]:[3 @Label_get_menu_veh_count_4]:[4 @Label_get_menu_veh_count_5]:[5 @Label_get_menu_veh_count_6]:[6 @Label_get_menu_veh_count_7]:[7 @Label_get_menu_veh_count_8]:[8 @Label_get_menu_veh_count_9]:[9 @Label_get_menu_veh_count_10]:[10 @Label_get_menu_veh_count_11]:[11 @Label_get_menu_veh_count_12]:[12 @Label_get_menu_veh_count_13]:[13 @Label_get_menu_veh_count_14]:[14 @Label_get_menu_veh_count_15]:[15 @Label_get_menu_veh_count_16]:[16 @Label_get_menu_veh_count_17]:[17 @Label_get_menu_veh_count_18]:[18 @Label_get_menu_veh_count_19]:[19 @Label_get_menu_veh_count_20]:[20 @Label_get_menu_veh_count_21]
+Jump @Label_get_menu_veh_count_22
 
 :Label_get_menu_veh_count_1
-iPush_0
+Push1 11
 Return 0 1
-Jump @Label_get_menu_veh_count_6
+Jump @Label_get_menu_veh_count_22
 
 :Label_get_menu_veh_count_2
-iPush_0
+Push1 9
 Return 0 1
-Jump @Label_get_menu_veh_count_6
+Jump @Label_get_menu_veh_count_22
+
+:Label_get_menu_veh_count_3
+Push1 4
+Return 0 1
+Jump @Label_get_menu_veh_count_22
+
+:Label_get_menu_veh_count_4
+Push1 11
+Return 0 1
+Jump @Label_get_menu_veh_count_22
+
+:Label_get_menu_veh_count_5
+Push1 6
+Return 0 1
+Jump @Label_get_menu_veh_count_22
 
 :Label_get_menu_veh_count_6
+Push1 17
+Return 0 1
+Jump @Label_get_menu_veh_count_22
+
+:Label_get_menu_veh_count_7
+Push1 10
+Return 0 1
+Jump @Label_get_menu_veh_count_22
+
+:Label_get_menu_veh_count_8
+Push1 9
+Return 0 1
+Jump @Label_get_menu_veh_count_22
+
+:Label_get_menu_veh_count_9
+Push1 3
+Return 0 1
+Jump @Label_get_menu_veh_count_22
+
+:Label_get_menu_veh_count_10
+Push1 14
+Return 0 1
+Jump @Label_get_menu_veh_count_22
+
+:Label_get_menu_veh_count_11
+Push1 10
+Return 0 1
+Jump @Label_get_menu_veh_count_22
+
+:Label_get_menu_veh_count_12
+Push1 16
+Return 0 1
+Jump @Label_get_menu_veh_count_22
+
+:Label_get_menu_veh_count_13
+Push1 11
+Return 0 1
+Jump @Label_get_menu_veh_count_22
+
+:Label_get_menu_veh_count_14
+Push1 20
+Return 0 1
+Jump @Label_get_menu_veh_count_22
+
+:Label_get_menu_veh_count_15
+Push1 6
+Return 0 1
+Jump @Label_get_menu_veh_count_22
+
+:Label_get_menu_veh_count_16
+Push1 18
+Return 0 1
+Jump @Label_get_menu_veh_count_22
+
+:Label_get_menu_veh_count_17
+Push1 11
+Return 0 1
+Jump @Label_get_menu_veh_count_22
+
+:Label_get_menu_veh_count_18
+Push1 6
+Return 0 1
+Jump @Label_get_menu_veh_count_22
+
+:Label_get_menu_veh_count_19
+Push1 18
+Return 0 1
+Jump @Label_get_menu_veh_count_22
+
+:Label_get_menu_veh_count_20
+Push1 17
+Return 0 1
+Jump @Label_get_menu_veh_count_22
+
+:Label_get_menu_veh_count_21
+Push1 26
+Return 0 1
+Jump @Label_get_menu_veh_count_22
+
+:Label_get_menu_veh_count_22
 iPush_0
 Return 0 1
 
