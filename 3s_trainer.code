@@ -22,7 +22,6 @@ StackSet 10
 iPush_0
 StackSet 11
 
-
 :while
 iPush_0
 CallNative wait 1 0
@@ -53,9 +52,8 @@ JumpEq @Label_action1
 Jump @Label_action4
 
 :Label_action1
-iPush_0
-StackSet 7
 StackGet 4
+Call @Label_get_menu_veh_hash
 Call @Label_spawn_veh
 Jump @Label_action2
 
@@ -76,19 +74,17 @@ Jump @Label_action2
 Return 0 0
 
 :Label_spawn_veh
-Function 14 1 10
-
+Function 14 1 8
+iPush_0
+setF 7
 getF 0
-Call @Label_get_menu_veh_hash
 CallNative is_model_in_cdimage 1 1
-JumpFalse @Label_spawn_veh_error
+JumpFalse @Label_spawn_veh_30
 getF 0
-Call @Label_get_menu_veh_hash
 CallNative request_model 1 0
 
 :Label_spawn_veh_1
 getF 0
-Call @Label_get_menu_veh_hash
 CallNative has_model_loaded 1 1
 Not
 JumpFalse @Label_spawn_veh_2
@@ -97,75 +93,559 @@ CallNative wait 1 0
 Jump @Label_spawn_veh_1
 
 :Label_spawn_veh_2
-CallNative player_ped_id 0 1
-CallNative get_vehicle_ped_is_using 1 1
-setF 2
-
-getF 2
+StackGet 46
 CallNative does_entity_exist 1 1
-JumpFalse @Label_spawn_veh_3
-getF 2
-CallNative get_entity_speed 1 1
-setF 4
-getF 2
-CallNative delete_vehicle 1 0
-
-:Label_spawn_veh_3
+JumpFalse @Label_spawn_veh_21
+StackGet 46
+CallNative is_entity_dead 1 1
+Not
+JumpFalse @Label_spawn_veh_22
 CallNative player_ped_id 0 1
+StackGet 46
+iPush_0
+CallNative is_ped_in_vehicle 3 1
+JumpFalse @Label_spawn_veh_22
+StackGet 46
 iPush_1
 CallNative get_entity_coords 2 3
 iPush_3
 pFrame1 3
 FromStack
+StackGet 46
+CallNative get_entity_heading 1 1
+setF 6
+CallNative player_ped_id 0 1
+getF 3
+pFrame1 3
+arraygeti1 1
+pFrame1 3
+arraygeti1 2
+fPush_4.0
+fAdd
+iPush_1
+iPush_0
+iPush_0
+iPush_1
+CallNative set_entity_coords 8 0
+iPush_1
+setF 7
 
+:Label_spawn_veh_22
+StackGetp 46
+CallNative delete_vehicle 1 0
+
+:Label_spawn_veh_21
+getF 7
+Not
+JumpFalse @Label_spawn_veh_23
+getF 0
+Push 970356638
+CmpEq
+dup
+Not
+JumpFalse @Label_spawn_veh_24
+getF 0
+Push -2122757008
+CmpEq
+Or
+
+:Label_spawn_veh_24
+JumpFalse @Label_spawn_veh_25
+CallNative player_ped_id 0 1
+fPush -1.5
+fPush 3.5
+fPush_1.0
+CallNative get_offset_from_entity_in_world_coords 4 3
+iPush_3
+pFrame1 3
+FromStack
+Jump @Label_spawn_veh_26
+
+:Label_spawn_veh_25
+getF 0
+Push 788747387
+JumpNE @Label_spawn_veh_27
+CallNative player_ped_id 0 1
+fPush_0.0
+fPush_6.0
+fPush_2.0
+CallNative get_offset_from_entity_in_world_coords 4 3
+iPush_3
+pFrame1 3
+FromStack
+Jump @Label_spawn_veh_26
+
+:Label_spawn_veh_27
+CallNative player_ped_id 0 1
+fPush_0.0
+fPush 3.5
+fPush_1.0
+CallNative get_offset_from_entity_in_world_coords 4 3
+iPush_3
+pFrame1 3
+FromStack
+
+:Label_spawn_veh_26
 CallNative player_ped_id 0 1
 CallNative get_entity_heading 1 1
-setF 5
+fPush 90
+fAdd
+setF 6
 
+:Label_spawn_veh_23
 getF 0
-Call @Label_get_menu_veh_hash
 iPush_3
 pFrame1 3
 ToStack
-getF 5
+getF 6
+Call @Label_cc_place_veh
+JumpFalse @Label_spawn_veh_29
+getF 0
+iPush_3
+pFrame1 3
+ToStack
+getF 6
 iPush_0
 iPush_1
 CallNative create_vehicle 7 1
-StackSet 11
-
-StackGet 11
+StackSet 46
+StackGet 46
 CallNative set_vehicle_on_ground_properly 1 1
 drop
 getF 0
-Call @Label_get_menu_veh_hash
 CallNative set_model_as_no_longer_needed 1 0
-
-CallNative player_ped_id 0 1
-StackGet 11
-iPush_-1
-CallNative set_ped_into_vehicle 3 0
-StackGet 11
-getF 4
-CallNative set_vehicle_forward_speed 2 0
-
-StackGetp 11
+StackGetp 46
 CallNative set_vehicle_as_no_longer_needed 1 0
+iPush_0
+StackSet 7
 Jump @Label_spawn_veh_4
 
-:Label_spawn_veh_error
+:Label_spawn_veh_29
+getF 0
+CallNative set_model_as_no_longer_needed 1 0
 PushString "STRING"
 CallNative unk_0x574EE85C 1 0
-PushString "3S Trainer Error:~n~Unable to spawn vehicle."
+PushString "3S Trainer Error:~n~No space to spawn vehicle."
 CallNative unk_0x27A244D8 1 0
 iPush_0
 iPush_1
 CallNative unk_0x08F7AF78 2 1
+iPush_0
+StackSet 7
+Jump @Label_spawn_veh_5
+
+:Label_spawn_veh_30
+PushString "STRING"
+CallNative unk_0x574EE85C 1 0
+PushString "3S Trainer Error:~n~Vehicle model does not exist."
+CallNative unk_0x27A244D8 1 0
+iPush_0
+iPush_1
+CallNative unk_0x08F7AF78 2 1
+iPush_0
+StackSet 7
+Jump @Label_spawn_veh_5
 
 :Label_spawn_veh_4
+Jump @Label_spawn_veh_5
+
+:Label_spawn_veh_5
 Return 1 0
 
-:Label_get_coords
-Function 3 1 3
+:Label_cc_place_veh
+Function 27 5 59
+pFrame1 7
+Push1 9
+pPeekSet
+drop
+getF 0
+pFrame1 35
+pFrame1 38
+CallNative get_model_dimensions 3 0
+getF 38
+getF 35
+fSub
+CallNative absf 1 1
+fPush_2.0
+fDiv
+setF 41
+pFrame1 38
+arraygeti1 1
+pFrame1 35
+arraygeti1 1
+fSub
+CallNative absf 1 1
+fPush_2.0
+fDiv
+pFrame1 41
+arrayset 1
+pFrame1 38
+arraygeti1 2
+pFrame1 35
+arraygeti1 2
+fSub
+CallNative absf 1 1
+fPush_2.0
+fDiv
+pFrame1 41
+arrayset 2
+iPush_3
+pFrame1 1
+ToStack
+iPush_3
+iPush_0
+pFrame1 7
+pArray 3
+FromStack
+iPush_3
+pFrame1 1
+ToStack
+getF 4
+getF 41
+fNeg
+pFrame1 41
+arraygeti1 1
+fNeg
+pFrame1 41
+arraygeti1 2
+fNeg
+CallNative unk_0x87A42A12 7 3
+iPush_3
+iPush_1
+pFrame1 7
+pArray 3
+FromStack
+iPush_3
+pFrame1 1
+ToStack
+getF 4
+getF 41
+pFrame1 41
+arraygeti1 1
+fNeg
+pFrame1 41
+arraygeti1 2
+fNeg
+CallNative unk_0x87A42A12 7 3
+iPush_3
+iPush_2
+pFrame1 7
+pArray 3
+FromStack
+iPush_3
+pFrame1 1
+ToStack
+getF 4
+getF 41
+pFrame1 41
+arraygeti1 1
+pFrame1 41
+arraygeti1 2
+fNeg
+CallNative unk_0x87A42A12 7 3
+iPush_3
+iPush_3
+pFrame1 7
+pArray 3
+FromStack
+iPush_3
+pFrame1 1
+ToStack
+getF 4
+getF 41
+fNeg
+pFrame1 41
+arraygeti1 1
+pFrame1 41
+arraygeti1 2
+fNeg
+CallNative unk_0x87A42A12 7 3
+iPush_3
+iPush_4
+pFrame1 7
+pArray 3
+FromStack
+iPush_3
+pFrame1 1
+ToStack
+getF 4
+getF 41
+fNeg
+pFrame1 41
+arraygeti1 1
+fNeg
+pFrame1 41
+arraygeti1 2
+CallNative unk_0x87A42A12 7 3
+iPush_3
+iPush_5
+pFrame1 7
+pArray 3
+FromStack
+iPush_3
+pFrame1 1
+ToStack
+getF 4
+getF 41
+pFrame1 41
+arraygeti1 1
+fNeg
+pFrame1 41
+arraygeti1 2
+CallNative unk_0x87A42A12 7 3
+iPush_3
+iPush_6
+pFrame1 7
+pArray 3
+FromStack
+iPush_3
+pFrame1 1
+ToStack
+getF 4
+getF 41
+pFrame1 41
+arraygeti1 1
+pFrame1 41
+arraygeti1 2
+CallNative unk_0x87A42A12 7 3
+iPush_3
+iPush_7
+pFrame1 7
+pArray 3
+FromStack
+iPush_3
+pFrame1 1
+ToStack
+getF 4
+getF 41
+fNeg
+pFrame1 41
+arraygeti1 1
+pFrame1 41
+arraygeti1 2
+CallNative unk_0x87A42A12 7 3
+iPush_3
+Push1 8
+pFrame1 7
+pArray 3
+FromStack
+iPush_3
+pFrame1 1
+ToStack
+CallNative unk_0x7762249C 3 1
+Not
+JumpFalse @Label_cc_place_veh_56
+iPush_0
+Return 5 1
+
+:Label_cc_place_veh_56
+CallNative player_id 0 1
+Call @Label_cc_place_veh_57
+fPush_0.0
+fPush_0.0
+fPush_1.0
+vAdd
+iPush_3
+pFrame1 1
+ToStack
+Push1 87
+CallNative player_ped_id 0 1
+iPush_0
+CallNative unk_0x8251485D 9 1
+setF 57
+getF 57
+pFrame1 50
+pFrame1 44
+pFrame1 47
+pFrame1 58
+CallNative unk_0xF3C2875A 5 1
+drop
+getF 50
+iPush_0
+JumpEq @Label_cc_place_veh_58
+iPush_0
+Return 5 1
+
+:Label_cc_place_veh_58
+iPush_3
+iPush_1
+pFrame1 7
+pArray 3
+ToStack
+iPush_3
+iPush_3
+pFrame1 7
+pArray 3
+ToStack
+Push1 87
+CallNative player_ped_id 0 1
+iPush_0
+CallNative unk_0x8251485D 9 1
+setF 51
+getF 51
+pFrame1 50
+pFrame1 44
+pFrame1 47
+pFrame1 58
+CallNative unk_0xF3C2875A 5 1
+drop
+getF 50
+iPush_0
+JumpEq @Label_cc_place_veh_59
+iPush_0
+Return 5 1
+
+:Label_cc_place_veh_59
+iPush_3
+iPush_2
+pFrame1 7
+pArray 3
+ToStack
+iPush_3
+iPush_4
+pFrame1 7
+pArray 3
+ToStack
+Push1 87
+CallNative player_ped_id 0 1
+iPush_0
+CallNative unk_0x8251485D 9 1
+setF 52
+getF 52
+pFrame1 50
+pFrame1 44
+pFrame1 47
+pFrame1 58
+CallNative unk_0xF3C2875A 5 1
+drop
+getF 50
+iPush_0
+JumpEq @Label_cc_place_veh_60
+iPush_0
+Return 5 1
+
+:Label_cc_place_veh_60
+iPush_3
+iPush_5
+pFrame1 7
+pArray 3
+ToStack
+iPush_3
+iPush_7
+pFrame1 7
+pArray 3
+ToStack
+Push1 87
+CallNative player_ped_id 0 1
+iPush_0
+CallNative unk_0x8251485D 9 1
+setF 53
+getF 53
+pFrame1 50
+pFrame1 44
+pFrame1 47
+pFrame1 58
+CallNative unk_0xF3C2875A 5 1
+drop
+getF 50
+iPush_0
+JumpEq @Label_cc_place_veh_61
+iPush_0
+Return 5 1
+
+:Label_cc_place_veh_61
+iPush_3
+iPush_6
+pFrame1 7
+pArray 3
+ToStack
+iPush_3
+Push1 8
+pFrame1 7
+pArray 3
+ToStack
+Push1 87
+CallNative player_ped_id 0 1
+iPush_0
+CallNative unk_0x8251485D 9 1
+setF 54
+getF 54
+pFrame1 50
+pFrame1 44
+pFrame1 47
+pFrame1 58
+CallNative unk_0xF3C2875A 5 1
+drop
+getF 50
+iPush_0
+JumpEq @Label_cc_place_veh_62
+iPush_0
+Return 5 1
+
+:Label_cc_place_veh_62
+iPush_3
+iPush_1
+pFrame1 7
+pArray 3
+ToStack
+iPush_3
+Push1 8
+pFrame1 7
+pArray 3
+ToStack
+Push1 87
+CallNative player_ped_id 0 1
+iPush_0
+CallNative unk_0x8251485D 9 1
+setF 55
+getF 55
+pFrame1 50
+pFrame1 44
+pFrame1 47
+pFrame1 58
+CallNative unk_0xF3C2875A 5 1
+drop
+getF 50
+iPush_0
+JumpEq @Label_cc_place_veh_63
+iPush_0
+Return 5 1
+
+:Label_cc_place_veh_63
+iPush_3
+iPush_2
+pFrame1 7
+pArray 3
+ToStack
+iPush_3
+iPush_7
+pFrame1 7
+pArray 3
+ToStack
+Push1 87
+CallNative player_ped_id 0 1
+iPush_0
+CallNative unk_0x8251485D 9 1
+setF 56
+getF 56
+pFrame1 50
+pFrame1 44
+pFrame1 47
+pFrame1 58
+CallNative unk_0xF3C2875A 5 1
+drop
+getF 50
+iPush_0
+JumpEq @Label_cc_place_veh_64
+iPush_0
+Return 5 1
+
+:Label_cc_place_veh_64
+iPush_1
+Return 5 1
+
+:Label_cc_place_veh_57
+Function 30 1 3
 getF 0
 CallNative get_player_ped 1 1
 iPush_0
@@ -210,6 +690,8 @@ iPush_1
 StackSet 9
 StackGet 4
 StackSet 10
+iPush_0
+StackSet 4
 Jump @Label_739
 
 :Label_catch_select_button_press_2
@@ -287,6 +769,10 @@ Jump @Label_8752
 :Label_8750
 iPush_2
 Push1 179
+CallNative is_control_pressed 2 1
+JumpFalse @Label_8752
+iPush_2
+Push1 161
 CallNative is_control_pressed 2 1
 JumpFalse @Label_8752
 StackGet 8
@@ -432,7 +918,7 @@ StackSet 5
 iPush_0
 iPush_0
 Call @Label_set_up_draw
-PushString "Three-Socks Trainer"
+PushString "Three-Socks Trainer - rev8"
 StackGet 3
 fPush 0.04444443
 Call @Label_draw_string_header
@@ -765,7 +1251,7 @@ Return 1 1
 :Label_get_menu_veh_hash
 Function 23 1 3
 StackGet 10
-Switch [0 @Label_get_menu_veh_hash_1]
+Switch [0 @Label_get_menu_veh_hash_1]:[1 @Label_get_menu_veh_hash_2]:[2 @Label_get_menu_veh_hash_3]:[3 @Label_get_menu_veh_hash_4]:[4 @Label_get_menu_veh_hash_5]:[5 @Label_get_menu_veh_hash_6]:[6 @Label_get_menu_veh_hash_7]:[7 @Label_get_menu_veh_hash_8]:[8 @Label_get_menu_veh_hash_9]:[9 @Label_get_menu_veh_hash_10]:[10 @Label_get_menu_veh_hash_11]:[11 @Label_get_menu_veh_hash_12]:[12 @Label_get_menu_veh_hash_13]:[13 @Label_get_menu_veh_hash_14]:[14 @Label_get_menu_veh_hash_15]:[15 @Label_get_menu_veh_hash_16]:[16 @Label_get_menu_veh_hash_17]:[17 @Label_get_menu_veh_hash_18]:[18 @Label_get_menu_veh_hash_19]:[19 @Label_get_menu_veh_hash_20]:[20 @Label_get_menu_veh_hash_21]
 Jump @Label_get_menu_veh_hash_22
 
 :Label_get_menu_veh_hash_1
@@ -774,12 +1260,134 @@ Call @Label_get_menu_veh_hash_boats
 Return 1 1
 Jump @Label_get_menu_veh_hash_22
 
+:Label_get_menu_veh_hash_2
+getF 0
+Call @Label_get_menu_veh_hash_commercial
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
+:Label_get_menu_veh_hash_3
+getF 0
+Call @Label_get_menu_veh_hash_compacts
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
+:Label_get_menu_veh_hash_4
+getF 0
+Call @Label_get_menu_veh_hash_coupes
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
+:Label_get_menu_veh_hash_5
+getF 0
+Call @Label_get_menu_veh_hash_cycles
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
+:Label_get_menu_veh_hash_6
+getF 0
+Call @Label_get_menu_veh_hash_emergency
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
+:Label_get_menu_veh_hash_7
+getF 0
+Call @Label_get_menu_veh_hash_helicopters
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
+:Label_get_menu_veh_hash_8
+getF 0
+Call @Label_get_menu_veh_hash_industrial
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
+:Label_get_menu_veh_hash_9
+getF 0
+Call @Label_get_menu_veh_hash_military
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
+:Label_get_menu_veh_hash_10
+getF 0
+Call @Label_get_menu_veh_hash_motorcycles
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
+:Label_get_menu_veh_hash_11
+getF 0
+Call @Label_get_menu_veh_hash_muscle
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
+:Label_get_menu_veh_hash_12
+getF 0
+Call @Label_get_menu_veh_hash_off_road
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
+:Label_get_menu_veh_hash_13
+getF 0
+Call @Label_get_menu_veh_hash_planes
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
+:Label_get_menu_veh_hash_14
+getF 0
+Call @Label_get_menu_veh_hash_sedans
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
+:Label_get_menu_veh_hash_15
+getF 0
+Call @Label_get_menu_veh_hash_service
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
+:Label_get_menu_veh_hash_16
+getF 0
+Call @Label_get_menu_veh_hash_sports
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
+:Label_get_menu_veh_hash_17
+getF 0
+Call @Label_get_menu_veh_hash_sports_classics
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
+:Label_get_menu_veh_hash_18
+getF 0
+Call @Label_get_menu_veh_hash_super
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
+:Label_get_menu_veh_hash_19
+getF 0
+Call @Label_get_menu_veh_hash_suvs
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
+:Label_get_menu_veh_hash_20
+getF 0
+Call @Label_get_menu_veh_hash_utility
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
+:Label_get_menu_veh_hash_21
+getF 0
+Call @Label_get_menu_veh_hash_vans
+Return 1 1
+Jump @Label_get_menu_veh_hash_22
+
 :Label_get_menu_veh_hash_22
 iPush_0
 Return 1 1
 
+
+
 :Label_get_menu_veh_hash_boats
-Function 24 1 3
+Function 40 1 3
 getF 0
 Switch [0 @Label_get_menu_veh_hash_boats_1]:[1 @Label_get_menu_veh_hash_boats_2]:[2 @Label_get_menu_veh_hash_boats_3]:[3 @Label_get_menu_veh_hash_boats_4]:[4 @Label_get_menu_veh_hash_boats_5]:[5 @Label_get_menu_veh_hash_boats_6]:[6 @Label_get_menu_veh_hash_boats_7]:[7 @Label_get_menu_veh_hash_boats_8]:[8 @Label_get_menu_veh_hash_boats_9]:[9 @Label_get_menu_veh_hash_boats_10]:[10 @Label_get_menu_veh_hash_boats_11]:[11 @Label_get_menu_veh_hash_boats_12]
 Jump @Label_get_menu_veh_hash_boats_22
@@ -845,6 +1453,1516 @@ Return 1 1
 Jump @Label_get_menu_veh_hash_boats_22
 
 :Label_get_menu_veh_hash_boats_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_commercial
+Function 41 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_commercial_1]:[1 @Label_get_menu_veh_hash_commercial_2]:[2 @Label_get_menu_veh_hash_commercial_3]:[3 @Label_get_menu_veh_hash_commercial_4]:[4 @Label_get_menu_veh_hash_commercial_5]:[5 @Label_get_menu_veh_hash_commercial_6]:[6 @Label_get_menu_veh_hash_commercial_7]:[7 @Label_get_menu_veh_hash_commercial_8]:[8 @Label_get_menu_veh_hash_commercial_9]:[9 @Label_get_menu_veh_hash_commercial_10]
+Jump @Label_get_menu_veh_hash_commercial_22
+
+:Label_get_menu_veh_hash_commercial_1
+Push 2053223216
+Return 1 1
+Jump @Label_get_menu_veh_hash_commercial_22
+
+:Label_get_menu_veh_hash_commercial_2
+Push 850991848
+Return 1 1
+Jump @Label_get_menu_veh_hash_commercial_22
+
+:Label_get_menu_veh_hash_commercial_3
+Push 1518533038
+Return 1 1
+Jump @Label_get_menu_veh_hash_commercial_22
+
+:Label_get_menu_veh_hash_commercial_4
+Push 904750859
+Return 1 1
+Jump @Label_get_menu_veh_hash_commercial_22
+
+:Label_get_menu_veh_hash_commercial_5
+Push -1050465301
+Return 1 1
+Jump @Label_get_menu_veh_hash_commercial_22
+
+:Label_get_menu_veh_hash_commercial_6
+Push 569305213
+Return 1 1
+Jump @Label_get_menu_veh_hash_commercial_22
+
+:Label_get_menu_veh_hash_commercial_7
+Push -2137348917
+Return 1 1
+Jump @Label_get_menu_veh_hash_commercial_22
+
+:Label_get_menu_veh_hash_commercial_8
+Push 2112052861
+Return 1 1
+Jump @Label_get_menu_veh_hash_commercial_22
+
+:Label_get_menu_veh_hash_commercial_9
+Push 1747439474
+Return 1 1
+Jump @Label_get_menu_veh_hash_commercial_22
+
+:Label_get_menu_veh_hash_commercial_10
+Push -214455498
+Return 1 1
+Jump @Label_get_menu_veh_hash_commercial_22
+
+:Label_get_menu_veh_hash_commercial_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_compacts
+Function 42 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_compacts_1]:[1 @Label_get_menu_veh_hash_compacts_2]:[2 @Label_get_menu_veh_hash_compacts_3]:[3 @Label_get_menu_veh_hash_compacts_4]:[4 @Label_get_menu_veh_hash_compacts_5]
+Jump @Label_get_menu_veh_hash_compacts_22
+
+:Label_get_menu_veh_hash_compacts_1
+Push -344943009
+Return 1 1
+Jump @Label_get_menu_veh_hash_compacts_22
+
+:Label_get_menu_veh_hash_compacts_2
+Push -1130810103
+Return 1 1
+Jump @Label_get_menu_veh_hash_compacts_22
+
+:Label_get_menu_veh_hash_compacts_3
+Push 1682114128
+Return 1 1
+Jump @Label_get_menu_veh_hash_compacts_22
+
+:Label_get_menu_veh_hash_compacts_4
+Push -1177863319
+Return 1 1
+Jump @Label_get_menu_veh_hash_compacts_22
+
+:Label_get_menu_veh_hash_compacts_5
+Push -1450650718
+Return 1 1
+Jump @Label_get_menu_veh_hash_compacts_22
+
+:Label_get_menu_veh_hash_compacts_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_coupes
+Function 43 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_coupes_1]:[1 @Label_get_menu_veh_hash_coupes_2]:[2 @Label_get_menu_veh_hash_coupes_3]:[3 @Label_get_menu_veh_hash_coupes_4]:[4 @Label_get_menu_veh_hash_coupes_5]:[5 @Label_get_menu_veh_hash_coupes_6]:[6 @Label_get_menu_veh_hash_coupes_7]:[7 @Label_get_menu_veh_hash_coupes_8]:[8 @Label_get_menu_veh_hash_coupes_9]:[9 @Label_get_menu_veh_hash_coupes_10]:[10 @Label_get_menu_veh_hash_coupes_11]:[11 @Label_get_menu_veh_hash_coupes_12]
+Jump @Label_get_menu_veh_hash_coupes_22
+
+:Label_get_menu_veh_hash_coupes_1
+Push 330661258
+Return 1 1
+Jump @Label_get_menu_veh_hash_coupes_22
+
+:Label_get_menu_veh_hash_coupes_2
+Push -5153954
+Return 1 1
+Jump @Label_get_menu_veh_hash_coupes_22
+
+:Label_get_menu_veh_hash_coupes_3
+Push -591610296
+Return 1 1
+Jump @Label_get_menu_veh_hash_coupes_22
+
+:Label_get_menu_veh_hash_coupes_4
+Push -391594584
+Return 1 1
+Jump @Label_get_menu_veh_hash_coupes_22
+
+:Label_get_menu_veh_hash_coupes_5
+Push -89291282
+Return 1 1
+Jump @Label_get_menu_veh_hash_coupes_22
+
+:Label_get_menu_veh_hash_coupes_6
+Push -624529134
+Return 1 1
+Jump @Label_get_menu_veh_hash_coupes_22
+
+:Label_get_menu_veh_hash_coupes_7
+Push 1348744438
+Return 1 1
+Jump @Label_get_menu_veh_hash_coupes_22
+
+:Label_get_menu_veh_hash_coupes_8
+Push -511601230
+Return 1 1
+Jump @Label_get_menu_veh_hash_coupes_22
+
+:Label_get_menu_veh_hash_coupes_9
+Push 1349725314
+Return 1 1
+Jump @Label_get_menu_veh_hash_coupes_22
+
+:Label_get_menu_veh_hash_coupes_10
+Push 873639469
+Return 1 1
+Jump @Label_get_menu_veh_hash_coupes_22
+
+:Label_get_menu_veh_hash_coupes_11
+Push -1122289213
+Return 1 1
+Jump @Label_get_menu_veh_hash_coupes_22
+
+:Label_get_menu_veh_hash_coupes_12
+Push -1193103848
+Return 1 1
+Jump @Label_get_menu_veh_hash_coupes_22
+
+:Label_get_menu_veh_hash_coupes_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_cycles
+Function 44 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_cycles_1]:[1 @Label_get_menu_veh_hash_cycles_2]:[2 @Label_get_menu_veh_hash_cycles_3]:[3 @Label_get_menu_veh_hash_cycles_4]:[4 @Label_get_menu_veh_hash_cycles_5]:[5 @Label_get_menu_veh_hash_cycles_6]:[6 @Label_get_menu_veh_hash_cycles_7]
+Jump @Label_get_menu_veh_hash_cycles_22
+
+:Label_get_menu_veh_hash_cycles_1
+Push 1131912276
+Return 1 1
+Jump @Label_get_menu_veh_hash_cycles_22
+
+:Label_get_menu_veh_hash_cycles_2
+Push 448402357
+Return 1 1
+Jump @Label_get_menu_veh_hash_cycles_22
+
+:Label_get_menu_veh_hash_cycles_3
+Push 1127861609
+Return 1 1
+Jump @Label_get_menu_veh_hash_cycles_22
+
+:Label_get_menu_veh_hash_cycles_4
+Push -836512833
+Return 1 1
+Jump @Label_get_menu_veh_hash_cycles_22
+
+:Label_get_menu_veh_hash_cycles_5
+Push -186537451
+Return 1 1
+Jump @Label_get_menu_veh_hash_cycles_22
+
+:Label_get_menu_veh_hash_cycles_6
+Push -1233807380
+Return 1 1
+Jump @Label_get_menu_veh_hash_cycles_22
+
+:Label_get_menu_veh_hash_cycles_7
+Push -400295096
+Return 1 1
+Jump @Label_get_menu_veh_hash_cycles_22
+
+:Label_get_menu_veh_hash_cycles_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_emergency
+Function 45 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_emergency_1]:[1 @Label_get_menu_veh_hash_emergency_2]:[2 @Label_get_menu_veh_hash_emergency_3]:[3 @Label_get_menu_veh_hash_emergency_4]:[4 @Label_get_menu_veh_hash_emergency_5]:[5 @Label_get_menu_veh_hash_emergency_6]:[6 @Label_get_menu_veh_hash_emergency_7]:[7 @Label_get_menu_veh_hash_emergency_8]:[8 @Label_get_menu_veh_hash_emergency_9]:[9 @Label_get_menu_veh_hash_emergency_10]:[10 @Label_get_menu_veh_hash_emergency_11]:[11 @Label_get_menu_veh_hash_emergency_12]:[12 @Label_get_menu_veh_hash_emergency_13]:[13 @Label_get_menu_veh_hash_emergency_14]:[14 @Label_get_menu_veh_hash_emergency_15]:[15 @Label_get_menu_veh_hash_emergency_16]:[16 @Label_get_menu_veh_hash_emergency_17]:[17 @Label_get_menu_veh_hash_emergency_18]
+Jump @Label_get_menu_veh_hash_emergency_22
+
+:Label_get_menu_veh_hash_emergency_1
+Push 1171614426
+Return 1 1
+Jump @Label_get_menu_veh_hash_emergency_22
+
+:Label_get_menu_veh_hash_emergency_2
+Push 1127131465
+Return 1 1
+Jump @Label_get_menu_veh_hash_emergency_22
+
+:Label_get_menu_veh_hash_emergency_3
+Push -1647941228
+Return 1 1
+Jump @Label_get_menu_veh_hash_emergency_22
+
+:Label_get_menu_veh_hash_emergency_4
+Push 1938952078
+Return 1 1
+Jump @Label_get_menu_veh_hash_emergency_22
+
+:Label_get_menu_veh_hash_emergency_5
+Push 469291905
+Return 1 1
+Jump @Label_get_menu_veh_hash_emergency_22
+
+:Label_get_menu_veh_hash_emergency_6
+Push 741586030
+Return 1 1
+Jump @Label_get_menu_veh_hash_emergency_22
+
+:Label_get_menu_veh_hash_emergency_7
+Push -34623805
+Return 1 1
+Jump @Label_get_menu_veh_hash_emergency_22
+
+:Label_get_menu_veh_hash_emergency_8
+Push 2046537925
+Return 1 1
+Jump @Label_get_menu_veh_hash_emergency_22
+
+:Label_get_menu_veh_hash_emergency_9
+Push -1627000575
+Return 1 1
+Jump @Label_get_menu_veh_hash_emergency_22
+
+:Label_get_menu_veh_hash_emergency_10
+Push 1912215274
+Return 1 1
+Jump @Label_get_menu_veh_hash_emergency_22
+
+:Label_get_menu_veh_hash_emergency_11
+Push -1536924937
+Return 1 1
+Jump @Label_get_menu_veh_hash_emergency_22
+
+:Label_get_menu_veh_hash_emergency_12
+Push -1779120616
+Return 1 1
+Jump @Label_get_menu_veh_hash_emergency_22
+
+:Label_get_menu_veh_hash_emergency_13
+Push -2007026063
+Return 1 1
+Jump @Label_get_menu_veh_hash_emergency_22
+
+:Label_get_menu_veh_hash_emergency_14
+Push -1205689942
+Return 1 1
+Jump @Label_get_menu_veh_hash_emergency_22
+
+:Label_get_menu_veh_hash_emergency_15
+Push 456714581
+Return 1 1
+Jump @Label_get_menu_veh_hash_emergency_22
+
+:Label_get_menu_veh_hash_emergency_16
+Push -1683328900
+Return 1 1
+Jump @Label_get_menu_veh_hash_emergency_22
+
+:Label_get_menu_veh_hash_emergency_17
+Push 1922257928
+Return 1 1
+Jump @Label_get_menu_veh_hash_emergency_22
+
+:Label_get_menu_veh_hash_emergency_18
+Push -1973172295
+Return 1 1
+Jump @Label_get_menu_veh_hash_emergency_22
+
+:Label_get_menu_veh_hash_emergency_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_helicopters
+Function 46 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_helicopters_1]:[1 @Label_get_menu_veh_hash_helicopters_2]:[2 @Label_get_menu_veh_hash_helicopters_3]:[3 @Label_get_menu_veh_hash_helicopters_4]:[4 @Label_get_menu_veh_hash_helicopters_5]:[5 @Label_get_menu_veh_hash_helicopters_6]:[6 @Label_get_menu_veh_hash_helicopters_7]:[7 @Label_get_menu_veh_hash_helicopters_8]:[8 @Label_get_menu_veh_hash_helicopters_9]:[9 @Label_get_menu_veh_hash_helicopters_10]:[10 @Label_get_menu_veh_hash_helicopters_11]
+Jump @Label_get_menu_veh_hash_helicopters_22
+
+:Label_get_menu_veh_hash_helicopters_1
+Push 837858166
+Return 1 1
+Jump @Label_get_menu_veh_hash_helicopters_22
+
+:Label_get_menu_veh_hash_helicopters_2
+Push 788747387
+Return 1 1
+Jump @Label_get_menu_veh_hash_helicopters_22
+
+:Label_get_menu_veh_hash_helicopters_3
+Push 745926877
+Return 1 1
+Jump @Label_get_menu_veh_hash_helicopters_22
+
+:Label_get_menu_veh_hash_helicopters_4
+Push -50547061
+Return 1 1
+Jump @Label_get_menu_veh_hash_helicopters_22
+
+:Label_get_menu_veh_hash_helicopters_5
+Push 1621617168
+Return 1 1
+Jump @Label_get_menu_veh_hash_helicopters_22
+
+:Label_get_menu_veh_hash_helicopters_6
+Push 1394036463
+Return 1 1
+Jump @Label_get_menu_veh_hash_helicopters_22
+
+:Label_get_menu_veh_hash_helicopters_7
+Push 744705981
+Return 1 1
+Jump @Label_get_menu_veh_hash_helicopters_22
+
+:Label_get_menu_veh_hash_helicopters_8
+Push 1949211328
+Return 1 1
+Jump @Label_get_menu_veh_hash_helicopters_22
+
+:Label_get_menu_veh_hash_helicopters_9
+Push -1660661558
+Return 1 1
+Jump @Label_get_menu_veh_hash_helicopters_22
+
+:Label_get_menu_veh_hash_helicopters_10
+Push 353883353
+Return 1 1
+Jump @Label_get_menu_veh_hash_helicopters_22
+
+:Label_get_menu_veh_hash_helicopters_11
+Push 1044954915
+Return 1 1
+Jump @Label_get_menu_veh_hash_helicopters_22
+
+:Label_get_menu_veh_hash_helicopters_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_industrial
+Function 47 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_industrial_1]:[1 @Label_get_menu_veh_hash_industrial_2]:[2 @Label_get_menu_veh_hash_industrial_3]:[3 @Label_get_menu_veh_hash_industrial_4]:[4 @Label_get_menu_veh_hash_industrial_5]:[5 @Label_get_menu_veh_hash_industrial_6]:[6 @Label_get_menu_veh_hash_industrial_7]:[7 @Label_get_menu_veh_hash_industrial_8]:[8 @Label_get_menu_veh_hash_industrial_9]:[9 @Label_get_menu_veh_hash_industrial_10]
+Jump @Label_get_menu_veh_hash_industrial_22
+
+:Label_get_menu_veh_hash_industrial_1
+Push -1006919392
+Return 1 1
+Jump @Label_get_menu_veh_hash_industrial_22
+
+:Label_get_menu_veh_hash_industrial_2
+Push 444583674
+Return 1 1
+Jump @Label_get_menu_veh_hash_industrial_22
+
+:Label_get_menu_veh_hash_industrial_3
+Push 1886712733
+Return 1 1
+Jump @Label_get_menu_veh_hash_industrial_22
+
+:Label_get_menu_veh_hash_industrial_4
+Push -2130482718
+Return 1 1
+Jump @Label_get_menu_veh_hash_industrial_22
+
+:Label_get_menu_veh_hash_industrial_5
+Push 1353720154
+Return 1 1
+Jump @Label_get_menu_veh_hash_industrial_22
+
+:Label_get_menu_veh_hash_industrial_6
+Push -784816453
+Return 1 1
+Jump @Label_get_menu_veh_hash_industrial_22
+
+:Label_get_menu_veh_hash_industrial_7
+Push 475220373
+Return 1 1
+Jump @Label_get_menu_veh_hash_industrial_22
+
+:Label_get_menu_veh_hash_industrial_8
+Push -1705304628
+Return 1 1
+Jump @Label_get_menu_veh_hash_industrial_22
+
+:Label_get_menu_veh_hash_industrial_9
+Push 48339065
+Return 1 1
+Jump @Label_get_menu_veh_hash_industrial_22
+
+:Label_get_menu_veh_hash_industrial_10
+Push -947761570
+Return 1 1
+Jump @Label_get_menu_veh_hash_industrial_22
+
+:Label_get_menu_veh_hash_industrial_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_military
+Function 48 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_military_1]:[1 @Label_get_menu_veh_hash_military_2]:[2 @Label_get_menu_veh_hash_military_3]:[3 @Label_get_menu_veh_hash_military_4]
+Jump @Label_get_menu_veh_hash_military_22
+
+:Label_get_menu_veh_hash_military_1
+Push -823509173
+Return 1 1
+Jump @Label_get_menu_veh_hash_military_22
+
+:Label_get_menu_veh_hash_military_2
+Push 1074326203
+Return 1 1
+Jump @Label_get_menu_veh_hash_military_22
+
+:Label_get_menu_veh_hash_military_3
+Push 321739290
+Return 1 1
+Jump @Label_get_menu_veh_hash_military_22
+
+:Label_get_menu_veh_hash_military_4
+Push 782665360
+Return 1 1
+Jump @Label_get_menu_veh_hash_military_22
+
+:Label_get_menu_veh_hash_military_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_motorcycles
+Function 49 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_motorcycles_1]:[1 @Label_get_menu_veh_hash_motorcycles_2]:[2 @Label_get_menu_veh_hash_motorcycles_3]:[3 @Label_get_menu_veh_hash_motorcycles_4]:[4 @Label_get_menu_veh_hash_motorcycles_5]:[5 @Label_get_menu_veh_hash_motorcycles_6]:[6 @Label_get_menu_veh_hash_motorcycles_7]:[7 @Label_get_menu_veh_hash_motorcycles_8]:[8 @Label_get_menu_veh_hash_motorcycles_9]:[9 @Label_get_menu_veh_hash_motorcycles_10]:[10 @Label_get_menu_veh_hash_motorcycles_11]:[11 @Label_get_menu_veh_hash_motorcycles_12]:[12 @Label_get_menu_veh_hash_motorcycles_13]:[13 @Label_get_menu_veh_hash_motorcycles_14]:[14 @Label_get_menu_veh_hash_motorcycles_15]
+Jump @Label_get_menu_veh_hash_motorcycles_22
+
+:Label_get_menu_veh_hash_motorcycles_1
+Push 1672195559
+Return 1 1
+Jump @Label_get_menu_veh_hash_motorcycles_22
+
+:Label_get_menu_veh_hash_motorcycles_2
+Push -2140431165
+Return 1 1
+Jump @Label_get_menu_veh_hash_motorcycles_22
+
+:Label_get_menu_veh_hash_motorcycles_3
+Push -114291515
+Return 1 1
+Jump @Label_get_menu_veh_hash_motorcycles_22
+
+:Label_get_menu_veh_hash_motorcycles_4
+Push -891462355
+Return 1 1
+Jump @Label_get_menu_veh_hash_motorcycles_22
+
+:Label_get_menu_veh_hash_motorcycles_5
+Push 11251904
+Return 1 1
+Jump @Label_get_menu_veh_hash_motorcycles_22
+
+:Label_get_menu_veh_hash_motorcycles_6
+Push 2006142190
+Return 1 1
+Jump @Label_get_menu_veh_hash_motorcycles_22
+
+:Label_get_menu_veh_hash_motorcycles_7
+Push -1670998136
+Return 1 1
+Jump @Label_get_menu_veh_hash_motorcycles_22
+
+:Label_get_menu_veh_hash_motorcycles_8
+Push 55628203
+Return 1 1
+Jump @Label_get_menu_veh_hash_motorcycles_22
+
+:Label_get_menu_veh_hash_motorcycles_9
+Push 301427732
+Return 1 1
+Jump @Label_get_menu_veh_hash_motorcycles_22
+
+:Label_get_menu_veh_hash_motorcycles_10
+Push -634879114
+Return 1 1
+Jump @Label_get_menu_veh_hash_motorcycles_22
+
+:Label_get_menu_veh_hash_motorcycles_11
+Push -909201658
+Return 1 1
+Jump @Label_get_menu_veh_hash_motorcycles_22
+
+:Label_get_menu_veh_hash_motorcycles_12
+Push -893578776
+Return 1 1
+Jump @Label_get_menu_veh_hash_motorcycles_22
+
+:Label_get_menu_veh_hash_motorcycles_13
+Push 788045382
+Return 1 1
+Jump @Label_get_menu_veh_hash_motorcycles_22
+
+:Label_get_menu_veh_hash_motorcycles_14
+Push -1453280962
+Return 1 1
+Jump @Label_get_menu_veh_hash_motorcycles_22
+
+:Label_get_menu_veh_hash_motorcycles_15
+Push -140902153
+Return 1 1
+Jump @Label_get_menu_veh_hash_motorcycles_22
+
+:Label_get_menu_veh_hash_motorcycles_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_muscle
+Function 50 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_muscle_1]:[1 @Label_get_menu_veh_hash_muscle_2]:[2 @Label_get_menu_veh_hash_muscle_3]:[3 @Label_get_menu_veh_hash_muscle_4]:[4 @Label_get_menu_veh_hash_muscle_5]:[5 @Label_get_menu_veh_hash_muscle_6]:[6 @Label_get_menu_veh_hash_muscle_7]:[7 @Label_get_menu_veh_hash_muscle_8]:[8 @Label_get_menu_veh_hash_muscle_9]:[9 @Label_get_menu_veh_hash_muscle_10]:[10 @Label_get_menu_veh_hash_muscle_11]
+Jump @Label_get_menu_veh_hash_muscle_22
+
+:Label_get_menu_veh_hash_muscle_1
+Push -682211828
+Return 1 1
+Jump @Label_get_menu_veh_hash_muscle_22
+
+:Label_get_menu_veh_hash_muscle_2
+Push 80636076
+Return 1 1
+Jump @Label_get_menu_veh_hash_muscle_22
+
+:Label_get_menu_veh_hash_muscle_3
+Push -1800170043
+Return 1 1
+Jump @Label_get_menu_veh_hash_muscle_22
+
+:Label_get_menu_veh_hash_muscle_4
+Push 37348240
+Return 1 1
+Jump @Label_get_menu_veh_hash_muscle_22
+
+:Label_get_menu_veh_hash_muscle_5
+Push -2095439403
+Return 1 1
+Jump @Label_get_menu_veh_hash_muscle_22
+
+:Label_get_menu_veh_hash_muscle_6
+Push 1507916787
+Return 1 1
+Jump @Label_get_menu_veh_hash_muscle_22
+
+:Label_get_menu_veh_hash_muscle_7
+Push -667151410
+Return 1 1
+Jump @Label_get_menu_veh_hash_muscle_22
+
+:Label_get_menu_veh_hash_muscle_8
+Push -227741703
+Return 1 1
+Jump @Label_get_menu_veh_hash_muscle_22
+
+:Label_get_menu_veh_hash_muscle_9
+Push -1685021548
+Return 1 1
+Jump @Label_get_menu_veh_hash_muscle_22
+
+:Label_get_menu_veh_hash_muscle_10
+Push -825837129
+Return 1 1
+Jump @Label_get_menu_veh_hash_muscle_22
+
+:Label_get_menu_veh_hash_muscle_11
+Push 523724515
+Return 1 1
+Jump @Label_get_menu_veh_hash_muscle_22
+
+:Label_get_menu_veh_hash_muscle_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_off_road
+Function 51 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_off_road_1]:[1 @Label_get_menu_veh_hash_off_road_2]:[2 @Label_get_menu_veh_hash_off_road_3]:[3 @Label_get_menu_veh_hash_off_road_4]:[4 @Label_get_menu_veh_hash_off_road_5]:[5 @Label_get_menu_veh_hash_off_road_6]:[6 @Label_get_menu_veh_hash_off_road_7]:[7 @Label_get_menu_veh_hash_off_road_8]:[8 @Label_get_menu_veh_hash_off_road_9]:[9 @Label_get_menu_veh_hash_off_road_10]:[10 @Label_get_menu_veh_hash_off_road_11]:[11 @Label_get_menu_veh_hash_off_road_12]:[12 @Label_get_menu_veh_hash_off_road_13]:[13 @Label_get_menu_veh_hash_off_road_14]:[14 @Label_get_menu_veh_hash_off_road_15]:[15 @Label_get_menu_veh_hash_off_road_16]:[16 @Label_get_menu_veh_hash_off_road_17]
+Jump @Label_get_menu_veh_hash_off_road_22
+
+:Label_get_menu_veh_hash_off_road_1
+Push -349601129
+Return 1 1
+Jump @Label_get_menu_veh_hash_off_road_22
+
+:Label_get_menu_veh_hash_off_road_2
+Push -2128233223
+Return 1 1
+Jump @Label_get_menu_veh_hash_off_road_22
+
+:Label_get_menu_veh_hash_off_road_3
+Push -48031959
+Return 1 1
+Jump @Label_get_menu_veh_hash_off_road_22
+
+:Label_get_menu_veh_hash_off_road_4
+Push -1269889662
+Return 1 1
+Jump @Label_get_menu_veh_hash_off_road_22
+
+:Label_get_menu_veh_hash_off_road_5
+Push -1435919434
+Return 1 1
+Jump @Label_get_menu_veh_hash_off_road_22
+
+:Label_get_menu_veh_hash_off_road_6
+Push -1661854193
+Return 1 1
+Jump @Label_get_menu_veh_hash_off_road_22
+
+:Label_get_menu_veh_hash_off_road_7
+Push 1770332643
+Return 1 1
+Jump @Label_get_menu_veh_hash_off_road_22
+
+:Label_get_menu_veh_hash_off_road_8
+Push 1126868326
+Return 1 1
+Jump @Label_get_menu_veh_hash_off_road_22
+
+:Label_get_menu_veh_hash_off_road_9
+Push 92612664
+Return 1 1
+Jump @Label_get_menu_veh_hash_off_road_22
+
+:Label_get_menu_veh_hash_off_road_10
+Push -2064372143
+Return 1 1
+Jump @Label_get_menu_veh_hash_off_road_22
+
+:Label_get_menu_veh_hash_off_road_11
+Push 1645267888
+Return 1 1
+Jump @Label_get_menu_veh_hash_off_road_22
+
+:Label_get_menu_veh_hash_off_road_12
+Push 1933662059
+Return 1 1
+Jump @Label_get_menu_veh_hash_off_road_22
+
+:Label_get_menu_veh_hash_off_road_13
+Push -1207771834
+Return 1 1
+Jump @Label_get_menu_veh_hash_off_road_22
+
+:Label_get_menu_veh_hash_off_road_14
+Push -2045594037
+Return 1 1
+Jump @Label_get_menu_veh_hash_off_road_22
+
+:Label_get_menu_veh_hash_off_road_15
+Push -1189015600
+Return 1 1
+Jump @Label_get_menu_veh_hash_off_road_22
+
+:Label_get_menu_veh_hash_off_road_16
+Push 989381445
+Return 1 1
+Jump @Label_get_menu_veh_hash_off_road_22
+
+:Label_get_menu_veh_hash_off_road_17
+Push 534258863
+Return 1 1
+Jump @Label_get_menu_veh_hash_off_road_22
+
+:Label_get_menu_veh_hash_off_road_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_planes
+Function 52 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_planes_1]:[1 @Label_get_menu_veh_hash_planes_2]:[2 @Label_get_menu_veh_hash_planes_3]:[3 @Label_get_menu_veh_hash_planes_4]:[4 @Label_get_menu_veh_hash_planes_5]:[5 @Label_get_menu_veh_hash_planes_6]:[6 @Label_get_menu_veh_hash_planes_7]:[7 @Label_get_menu_veh_hash_planes_8]:[8 @Label_get_menu_veh_hash_planes_9]:[9 @Label_get_menu_veh_hash_planes_10]:[10 @Label_get_menu_veh_hash_planes_11]:[11 @Label_get_menu_veh_hash_planes_12]
+Jump @Label_get_menu_veh_hash_planes_22
+
+:Label_get_menu_veh_hash_planes_1
+Push -150975354
+Return 1 1
+Jump @Label_get_menu_veh_hash_planes_22
+
+:Label_get_menu_veh_hash_planes_2
+Push 368211810
+Return 1 1
+Jump @Label_get_menu_veh_hash_planes_22
+
+:Label_get_menu_veh_hash_planes_3
+Push -644710429
+Return 1 1
+Jump @Label_get_menu_veh_hash_planes_22
+
+:Label_get_menu_veh_hash_planes_4
+Push 970356638
+Return 1 1
+Jump @Label_get_menu_veh_hash_planes_22
+
+:Label_get_menu_veh_hash_planes_5
+Push 1058115860
+Return 1 1
+Jump @Label_get_menu_veh_hash_planes_22
+
+:Label_get_menu_veh_hash_planes_6
+Push 621481054
+Return 1 1
+Jump @Label_get_menu_veh_hash_planes_22
+
+:Label_get_menu_veh_hash_planes_7
+Push -2122757008
+Return 1 1
+Jump @Label_get_menu_veh_hash_planes_22
+
+:Label_get_menu_veh_hash_planes_8
+Push -1746576111
+Return 1 1
+Jump @Label_get_menu_veh_hash_planes_22
+
+:Label_get_menu_veh_hash_planes_9
+Push -1281684762
+Return 1 1
+Jump @Label_get_menu_veh_hash_planes_22
+
+:Label_get_menu_veh_hash_planes_10
+Push -1214505995
+Return 1 1
+Jump @Label_get_menu_veh_hash_planes_22
+
+:Label_get_menu_veh_hash_planes_11
+Push 1981688531
+Return 1 1
+Jump @Label_get_menu_veh_hash_planes_22
+
+:Label_get_menu_veh_hash_planes_12
+Push -1673356438
+Return 1 1
+Jump @Label_get_menu_veh_hash_planes_22
+
+:Label_get_menu_veh_hash_planes_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_sedans
+Function 53 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_sedans_1]:[1 @Label_get_menu_veh_hash_sedans_2]:[2 @Label_get_menu_veh_hash_sedans_3]:[3 @Label_get_menu_veh_hash_sedans_4]:[4 @Label_get_menu_veh_hash_sedans_5]:[5 @Label_get_menu_veh_hash_sedans_6]:[6 @Label_get_menu_veh_hash_sedans_7]:[7 @Label_get_menu_veh_hash_sedans_8]:[8 @Label_get_menu_veh_hash_sedans_9]:[9 @Label_get_menu_veh_hash_sedans_10]:[10 @Label_get_menu_veh_hash_sedans_11]:[11 @Label_get_menu_veh_hash_sedans_12]:[12 @Label_get_menu_veh_hash_sedans_13]:[13 @Label_get_menu_veh_hash_sedans_14]:[14 @Label_get_menu_veh_hash_sedans_15]:[15 @Label_get_menu_veh_hash_sedans_16]:[16 @Label_get_menu_veh_hash_sedans_17]:[17 @Label_get_menu_veh_hash_sedans_18]:[18 @Label_get_menu_veh_hash_sedans_19]:[19 @Label_get_menu_veh_hash_sedans_20]:[20 @Label_get_menu_veh_hash_sedans_21]
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_1
+Push -1809822327
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_2
+Push -1807623979
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_3
+Push -1903012613
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_4
+Push -685276541
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_5
+Push -1883002148
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_6
+Push -1241712818
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_7
+Push 1909141499
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_8
+Push -1289722222
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_9
+Push 886934177
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_10
+Push -1883869285
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_11
+Push -1150599089
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_12
+Push -14495224
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_13
+Push 627094268
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_14
+Push -1255452397
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_15
+Push -1477580979
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_16
+Push 1723137093
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_17
+Push -1961627517
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_18
+Push 1123216662
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_19
+Push -1894894188
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_20
+Push -1008861746
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_21
+Push 1777363799
+Return 1 1
+Jump @Label_get_menu_veh_hash_sedans_22
+
+:Label_get_menu_veh_hash_sedans_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_service
+Function 54 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_service_1]:[1 @Label_get_menu_veh_hash_service_2]:[2 @Label_get_menu_veh_hash_service_3]:[3 @Label_get_menu_veh_hash_service_4]:[4 @Label_get_menu_veh_hash_service_5]:[5 @Label_get_menu_veh_hash_service_6]:[6 @Label_get_menu_veh_hash_service_7]
+Jump @Label_get_menu_veh_hash_service_22
+
+:Label_get_menu_veh_hash_service_1
+Push 1283517198
+Return 1 1
+Jump @Label_get_menu_veh_hash_service_22
+
+:Label_get_menu_veh_hash_service_2
+Push -713569950
+Return 1 1
+Jump @Label_get_menu_veh_hash_service_22
+
+:Label_get_menu_veh_hash_service_3
+Push -2072933068
+Return 1 1
+Jump @Label_get_menu_veh_hash_service_22
+
+:Label_get_menu_veh_hash_service_4
+Push -1098802077
+Return 1 1
+Jump @Label_get_menu_veh_hash_service_22
+
+:Label_get_menu_veh_hash_service_5
+Push -956048545
+Return 1 1
+Jump @Label_get_menu_veh_hash_service_22
+
+:Label_get_menu_veh_hash_service_6
+Push 1941029835
+Return 1 1
+Jump @Label_get_menu_veh_hash_service_22
+
+:Label_get_menu_veh_hash_service_7
+Push 1917016601
+Return 1 1
+Jump @Label_get_menu_veh_hash_service_22
+
+:Label_get_menu_veh_hash_service_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_sports
+Function 55 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_sports_1]:[1 @Label_get_menu_veh_hash_sports_2]:[2 @Label_get_menu_veh_hash_sports_3]:[3 @Label_get_menu_veh_hash_sports_4]:[4 @Label_get_menu_veh_hash_sports_5]:[5 @Label_get_menu_veh_hash_sports_6]:[6 @Label_get_menu_veh_hash_sports_7]:[7 @Label_get_menu_veh_hash_sports_8]:[8 @Label_get_menu_veh_hash_sports_9]:[9 @Label_get_menu_veh_hash_sports_10]:[10 @Label_get_menu_veh_hash_sports_11]:[11 @Label_get_menu_veh_hash_sports_12]:[12 @Label_get_menu_veh_hash_sports_13]:[13 @Label_get_menu_veh_hash_sports_14]:[14 @Label_get_menu_veh_hash_sports_15]:[15 @Label_get_menu_veh_hash_sports_16]:[16 @Label_get_menu_veh_hash_sports_17]:[17 @Label_get_menu_veh_hash_sports_18]:[18 @Label_get_menu_veh_hash_sports_19]
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_1
+Push 1032823388
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_2
+Push -1461482751
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_3
+Push -1041692462
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_4
+Push -304802106
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_5
+Push 736902334
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_6
+Push 2072687711
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_7
+Push -1045541610
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_8
+Push 108773431
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_9
+Push -566387422
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_10
+Push -1995326987
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_11
+Push 499169875
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_12
+Push 2016857647
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_13
+Push 544021352
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_14
+Push -377465520
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_15
+Push -1934452204
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_16
+Push 1737773231
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_17
+Push -746882698
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_18
+Push 970598228
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_19
+Push 384071873
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_22
+
+:Label_get_menu_veh_hash_sports_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_sports_classics
+Function 56 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_sports_classics_1]:[1 @Label_get_menu_veh_hash_sports_classics_2]:[2 @Label_get_menu_veh_hash_sports_classics_3]:[3 @Label_get_menu_veh_hash_sports_classics_4]:[4 @Label_get_menu_veh_hash_sports_classics_5]:[5 @Label_get_menu_veh_hash_sports_classics_6]:[6 @Label_get_menu_veh_hash_sports_classics_7]:[7 @Label_get_menu_veh_hash_sports_classics_8]:[8 @Label_get_menu_veh_hash_sports_classics_9]:[9 @Label_get_menu_veh_hash_sports_classics_10]:[10 @Label_get_menu_veh_hash_sports_classics_11]:[11 @Label_get_menu_veh_hash_sports_classics_12]
+Jump @Label_get_menu_veh_hash_sports_classics_22
+
+:Label_get_menu_veh_hash_sports_classics_1
+Push 1051415893
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_classics_22
+
+:Label_get_menu_veh_hash_sports_classics_2
+Push -2124201592
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_classics_22
+
+:Label_get_menu_veh_hash_sports_classics_3
+Push -433375717
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_classics_22
+
+:Label_get_menu_veh_hash_sports_classics_4
+Push 1830407356
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_classics_22
+
+:Label_get_menu_veh_hash_sports_classics_5
+Push 117401876
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_classics_22
+
+:Label_get_menu_veh_hash_sports_classics_6
+Push 1545842587
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_classics_22
+
+:Label_get_menu_veh_hash_sports_classics_7
+Push -2098947590
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_classics_22
+
+:Label_get_menu_veh_hash_sports_classics_8
+Push 464687292
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_classics_22
+
+:Label_get_menu_veh_hash_sports_classics_9
+Push 1531094468
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_classics_22
+
+:Label_get_menu_veh_hash_sports_classics_10
+Push 1762279763
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_classics_22
+
+:Label_get_menu_veh_hash_sports_classics_11
+Push -2033222435
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_classics_22
+
+:Label_get_menu_veh_hash_sports_classics_12
+Push 758895617
+Return 1 1
+Jump @Label_get_menu_veh_hash_sports_classics_22
+
+:Label_get_menu_veh_hash_sports_classics_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_super
+Function 57 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_super_1]:[1 @Label_get_menu_veh_hash_super_2]:[2 @Label_get_menu_veh_hash_super_3]:[3 @Label_get_menu_veh_hash_super_4]:[4 @Label_get_menu_veh_hash_super_5]:[5 @Label_get_menu_veh_hash_super_6]:[6 @Label_get_menu_veh_hash_super_7]
+Jump @Label_get_menu_veh_hash_super_22
+
+:Label_get_menu_veh_hash_super_1
+Push -1216765807
+Return 1 1
+Jump @Label_get_menu_veh_hash_super_22
+
+:Label_get_menu_veh_hash_super_2
+Push -1696146015
+Return 1 1
+Jump @Label_get_menu_veh_hash_super_22
+
+:Label_get_menu_veh_hash_super_3
+Push -1311154784
+Return 1 1
+Jump @Label_get_menu_veh_hash_super_22
+
+:Label_get_menu_veh_hash_super_4
+Push -1291952903
+Return 1 1
+Jump @Label_get_menu_veh_hash_super_22
+
+:Label_get_menu_veh_hash_super_5
+Push 418536135
+Return 1 1
+Jump @Label_get_menu_veh_hash_super_22
+
+:Label_get_menu_veh_hash_super_6
+Push 338562499
+Return 1 1
+Jump @Label_get_menu_veh_hash_super_22
+
+:Label_get_menu_veh_hash_super_7
+Push -1622444098
+Return 1 1
+Jump @Label_get_menu_veh_hash_super_22
+
+:Label_get_menu_veh_hash_super_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_suvs
+Function 58 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_suvs_1]:[1 @Label_get_menu_veh_hash_suvs_2]:[2 @Label_get_menu_veh_hash_suvs_3]:[3 @Label_get_menu_veh_hash_suvs_4]:[4 @Label_get_menu_veh_hash_suvs_5]:[5 @Label_get_menu_veh_hash_suvs_6]:[6 @Label_get_menu_veh_hash_suvs_7]:[7 @Label_get_menu_veh_hash_suvs_8]:[8 @Label_get_menu_veh_hash_suvs_9]:[9 @Label_get_menu_veh_hash_suvs_10]:[10 @Label_get_menu_veh_hash_suvs_11]:[11 @Label_get_menu_veh_hash_suvs_12]:[12 @Label_get_menu_veh_hash_suvs_13]:[13 @Label_get_menu_veh_hash_suvs_14]:[14 @Label_get_menu_veh_hash_suvs_15]:[15 @Label_get_menu_veh_hash_suvs_16]:[16 @Label_get_menu_veh_hash_suvs_17]:[17 @Label_get_menu_veh_hash_suvs_18]:[18 @Label_get_menu_veh_hash_suvs_19]
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_1
+Push -808831384
+Return 1 1
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_2
+Push 142944341
+Return 1 1
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_3
+Push 850565707
+Return 1 1
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_4
+Push 2006918058
+Return 1 1
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_5
+Push -789894171
+Return 1 1
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_6
+Push 1177543287
+Return 1 1
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_7
+Push -394074634
+Return 1 1
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_8
+Push -1137532101
+Return 1 1
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_9
+Push -1775728740
+Return 1 1
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_10
+Push -1543762099
+Return 1 1
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_11
+Push 884422927
+Return 1 1
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_12
+Push 1269098716
+Return 1 1
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_13
+Push 914654722
+Return 1 1
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_14
+Push -748008636
+Return 1 1
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_15
+Push -808457413
+Return 1 1
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_16
+Push -1651067813
+Return 1 1
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_17
+Push 2136773105
+Return 1 1
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_18
+Push 1221512915
+Return 1 1
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_19
+Push 1337041428
+Return 1 1
+Jump @Label_get_menu_veh_hash_suvs_22
+
+:Label_get_menu_veh_hash_suvs_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_utility
+Function 59 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_utility_1]:[1 @Label_get_menu_veh_hash_utility_2]:[2 @Label_get_menu_veh_hash_utility_3]:[3 @Label_get_menu_veh_hash_utility_4]:[4 @Label_get_menu_veh_hash_utility_5]:[5 @Label_get_menu_veh_hash_utility_6]:[6 @Label_get_menu_veh_hash_utility_7]:[7 @Label_get_menu_veh_hash_utility_8]:[8 @Label_get_menu_veh_hash_utility_9]:[9 @Label_get_menu_veh_hash_utility_10]:[10 @Label_get_menu_veh_hash_utility_11]:[11 @Label_get_menu_veh_hash_utility_12]:[12 @Label_get_menu_veh_hash_utility_13]:[13 @Label_get_menu_veh_hash_utility_14]:[14 @Label_get_menu_veh_hash_utility_15]:[15 @Label_get_menu_veh_hash_utility_16]:[16 @Label_get_menu_veh_hash_utility_17]:[17 @Label_get_menu_veh_hash_utility_18]
+Jump @Label_get_menu_veh_hash_utility_22
+
+:Label_get_menu_veh_hash_utility_1
+Push 1560980623
+Return 1 1
+Jump @Label_get_menu_veh_hash_utility_22
+
+:Label_get_menu_veh_hash_utility_2
+Push 1147287684
+Return 1 1
+Jump @Label_get_menu_veh_hash_utility_22
+
+:Label_get_menu_veh_hash_utility_3
+Push -537896628
+Return 1 1
+Jump @Label_get_menu_veh_hash_utility_22
+
+:Label_get_menu_veh_hash_utility_4
+Push -884690486
+Return 1 1
+Jump @Label_get_menu_veh_hash_utility_22
+
+:Label_get_menu_veh_hash_utility_5
+Push 1491375716
+Return 1 1
+Jump @Label_get_menu_veh_hash_utility_22
+
+:Label_get_menu_veh_hash_utility_6
+Push 1783355638
+Return 1 1
+Jump @Label_get_menu_veh_hash_utility_22
+
+:Label_get_menu_veh_hash_utility_7
+Push -845979911
+Return 1 1
+Jump @Label_get_menu_veh_hash_utility_22
+
+:Label_get_menu_veh_hash_utility_8
+Push -599568815
+Return 1 1
+Jump @Label_get_menu_veh_hash_utility_22
+
+:Label_get_menu_veh_hash_utility_9
+Push 734217681
+Return 1 1
+Jump @Label_get_menu_veh_hash_utility_22
+
+:Label_get_menu_veh_hash_utility_10
+Push -1700801569
+Return 1 1
+Jump @Label_get_menu_veh_hash_utility_22
+
+:Label_get_menu_veh_hash_utility_11
+Push -1323100960
+Return 1 1
+Jump @Label_get_menu_veh_hash_utility_22
+
+:Label_get_menu_veh_hash_utility_12
+Push -442313018
+Return 1 1
+Jump @Label_get_menu_veh_hash_utility_22
+
+:Label_get_menu_veh_hash_utility_13
+Push 1641462412
+Return 1 1
+Jump @Label_get_menu_veh_hash_utility_22
+
+:Label_get_menu_veh_hash_utility_14
+Push -2076478498
+Return 1 1
+Jump @Label_get_menu_veh_hash_utility_22
+
+:Label_get_menu_veh_hash_utility_15
+Push 1445631933
+Return 1 1
+Jump @Label_get_menu_veh_hash_utility_22
+
+:Label_get_menu_veh_hash_utility_16
+Push 516990260
+Return 1 1
+Jump @Label_get_menu_veh_hash_utility_22
+
+:Label_get_menu_veh_hash_utility_17
+Push 887537515
+Return 1 1
+Jump @Label_get_menu_veh_hash_utility_22
+
+:Label_get_menu_veh_hash_utility_18
+Push 2132890591
+Return 1 1
+Jump @Label_get_menu_veh_hash_utility_22
+
+:Label_get_menu_veh_hash_utility_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_vans
+Function 60 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_vans_1]:[1 @Label_get_menu_veh_hash_vans_2]:[2 @Label_get_menu_veh_hash_vans_3]:[3 @Label_get_menu_veh_hash_vans_4]:[4 @Label_get_menu_veh_hash_vans_5]:[5 @Label_get_menu_veh_hash_vans_6]:[6 @Label_get_menu_veh_hash_vans_7]:[7 @Label_get_menu_veh_hash_vans_8]:[8 @Label_get_menu_veh_hash_vans_9]:[9 @Label_get_menu_veh_hash_vans_10]:[10 @Label_get_menu_veh_hash_vans_11]:[11 @Label_get_menu_veh_hash_vans_12]:[12 @Label_get_menu_veh_hash_vans_13]:[13 @Label_get_menu_veh_hash_vans_14]:[14 @Label_get_menu_veh_hash_vans_15]:[15 @Label_get_menu_veh_hash_vans_16]:[16 @Label_get_menu_veh_hash_vans_17]:[17 @Label_get_menu_veh_hash_vans_18]:[18 @Label_get_menu_veh_hash_vans_19]:[19 @Label_get_menu_veh_hash_vans_20]:[20 @Label_get_menu_veh_hash_vans_21]:[21 @Label_get_menu_veh_hash_vans_22]:[22 @Label_get_menu_veh_hash_vans_23]:[23 @Label_get_menu_veh_hash_vans_24]:[24 @Label_get_menu_veh_hash_vans_25]:[25 @Label_get_menu_veh_hash_vans_26]:[26 @Label_get_menu_veh_hash_vans_27]
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_1
+Push -16948145
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_2
+Push 2072156101
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_3
+Push 1739845664
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_4
+Push 1069929536
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_5
+Push -1987130134
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_6
+Push -233098306
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_7
+Push 121658888
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_8
+Push -1346687836
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_9
+Push -907477130
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_10
+Push -1743316013
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_11
+Push 893081117
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_12
+Push 1132262048
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_13
+Push 1876516712
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_14
+Push -1745203402
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_15
+Push -120287622
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_16
+Push -310465116
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_17
+Push 1488164764
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_18
+Push -119658072
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_19
+Push 943752001
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_20
+Push 1162065741
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_21
+Push -1776615689
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_22
+Push -810318068
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_23
+Push 728614474
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_24
+Push 699456151
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_25
+Push -1311240698
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_26
+Push 1951180813
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_27
+Push 65402552
+Return 1 1
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_28
 iPush_0
 Return 1 1
 
