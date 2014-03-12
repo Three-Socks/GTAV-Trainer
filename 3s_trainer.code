@@ -152,8 +152,8 @@ Or
 :Label_spawn_veh_24
 JumpFalse @Label_spawn_veh_25
 CallNative player_ped_id 0 1
-fPush -1.5
-fPush 3.5
+fPush -3.5
+fPush 8.5
 fPush_1.0
 CallNative get_offset_from_entity_in_world_coords 4 3
 iPush_3
@@ -714,6 +714,8 @@ StackGet 9
 JumpEq @Label_catch_select_button_press_3
 iPush_0
 StackSet 9
+StackGet 10
+StackSet 4
 iPush_0
 StackSet 10
 Jump @Label_739
@@ -924,7 +926,7 @@ StackSet 5
 iPush_0
 iPush_0
 Call @Label_set_up_draw
-PushString "Three-Socks Trainer - rev15"
+PushString "Vehicle Spawn"
 StackGet 3
 fPush 0.04444443
 Call @Label_draw_string_header
@@ -1019,20 +1021,8 @@ Return 3 0
 
 :Label_draw_string
 Function 4 3 3
-iPush_1
-StackGet 9
-JumpEq @Label_draw_string_2
-PushString "STRING"
-CallNative unk_0x3E35563E 1 0
-getF 0
-CallNative unk_0x27A244D8 1 0
-Jump @Label_draw_string_3
-
-:Label_draw_string_2
 getF 0
 CallNative unk_0x3E35563E 1 0
-
-:Label_draw_string_3
 getF 1
 getF 2
 CallNative unk_0x6F8350CE 2 0
@@ -2826,107 +2816,107 @@ Switch [0 @Label_get_menu_veh_cat_1]:[1 @Label_get_menu_veh_cat_2]:[2 @Label_get
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_1
-PushString "Boats"
+PushString "VEH_CLASS_14"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_2
-PushString "Commercial"
+PushString "VEH_CLASS_20"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_3
-PushString "Compacts"
+PushString "VEH_CLASS_0"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_4
-PushString "Coupes"
+PushString "VEH_CLASS_3"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_5
-PushString "Cycles"
+PushString "VEH_CLASS_13"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_6
-PushString "Emergency"
+PushString "VEH_CLASS_18"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_7
-PushString "Helicopters"
+PushString "VEH_CLASS_15"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_8
-PushString "Industrial"
+PushString "VEH_CLASS_10"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_9
-PushString "Military"
+PushString "VEH_CLASS_19"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_10
-PushString "Motorcycles"
+PushString "VEH_CLASS_8"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_11
-PushString "Muscle"
+PushString "VEH_CLASS_4"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_12
-PushString "Off Road"
+PushString "VEH_CLASS_9"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_13
-PushString "Planes"
+PushString "VEH_CLASS_16"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_14
-PushString "Sedans"
+PushString "VEH_CLASS_1"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_15
-PushString "Service"
+PushString "VEH_CLASS_17"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_16
-PushString "Sports"
+PushString "VEH_CLASS_6"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_17
-PushString "Sports Classics"
+PushString "VEH_CLASS_5"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_18
-PushString "Super"
+PushString "VEH_CLASS_7"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_19
-PushString "Suvs"
+PushString "VEH_CLASS_2"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_20
-PushString "Utility"
+PushString "VEH_CLASS_11"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_21
-PushString "Vans"
+PushString "VEH_CLASS_12"
 Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
