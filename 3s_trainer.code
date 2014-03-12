@@ -225,7 +225,7 @@ getF 0
 CallNative set_model_as_no_longer_needed 1 0
 PushString "STRING"
 CallNative unk_0x574EE85C 1 0
-PushString "3S Trainer Error:~n~No space to spawn vehicle."
+PushString "Error:~n~No space to spawn vehicle."
 CallNative unk_0x27A244D8 1 0
 iPush_0
 iPush_1
@@ -237,7 +237,7 @@ Jump @Label_spawn_veh_5
 :Label_spawn_veh_30
 PushString "STRING"
 CallNative unk_0x574EE85C 1 0
-PushString "3S Trainer Error:~n~Vehicle model does not exist."
+PushString "Error:~n~Vehicle model does not exist."
 CallNative unk_0x27A244D8 1 0
 iPush_0
 iPush_1
@@ -757,25 +757,35 @@ CallNative play_sound_frontend 3 0
 Jump @Label_catch_load4
 
 :Label_catch_load4
-Call @Label_8749
+Call @Label_load_pressed
 Return 0 0
 
-:Label_8749
+:Label_load_pressed
 Function 10 0 2
 CallNative is_pause_menu_active 0 1
-JumpFalse @Label_8750
-Jump @Label_8752
+JumpFalse @Label_load_pressed_1
+Jump @Label_load_pressed_2
 
-:Label_8750
+:Label_load_pressed_1
 iPush_2
 Push1 179
 CallNative is_control_pressed 2 1
-JumpFalse @Label_8752
+JumpFalse @Label_load_pressed_2
+iPush_2
+Push1 176
+CallNative is_control_pressed 2 1
+JumpFalse @Label_load_pressed_2
+
 StackGet 8
 Add1 1
 StackSet 8
+Jump @Label_load_pressed_3
 
-:Label_8752
+:Label_load_pressed_2
+iPush_0
+StackSet 8
+
+:Label_load_pressed_3
 Return 0 0
 
 :Label_draw_window
@@ -914,7 +924,7 @@ StackSet 5
 iPush_0
 iPush_0
 Call @Label_set_up_draw
-PushString "Three-Socks Trainer - rev8"
+PushString "Three-Socks Trainer - rev15"
 StackGet 3
 fPush 0.04444443
 Call @Label_draw_string_header
@@ -1241,7 +1251,7 @@ Return 1 1
 Jump @Label_get_menu_6
 
 :Label_get_menu_6
-PushString "{NULLSTRING}"
+PushString ""
 Return 1 1
 
 :Label_get_menu_veh_hash
@@ -2921,5 +2931,5 @@ Return 1 1
 Jump @Label_get_menu_veh_cat_22
 
 :Label_get_menu_veh_cat_22
-PushString "{NULLSTRING}"
+PushString ""
 Return 1 1
