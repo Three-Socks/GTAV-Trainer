@@ -69,8 +69,7 @@ Jump @Label_action2
 :Label_action5
 iPush_0
 StackSet 7
-iPush_0
-StackSet 6
+Call @Label_hide_menu
 Jump @Label_action2
 
 :Label_action2
@@ -142,17 +141,7 @@ getF 7
 Not
 JumpFalse @Label_spawn_veh_23
 getF 0
-Push 970356638
-CmpEq
-dup
-Not
-JumpFalse @Label_spawn_veh_24
-getF 0
-Push -2122757008
-CmpEq
-Or
-
-:Label_spawn_veh_24
+CallNative is_this_model_a_plane 1 1
 JumpFalse @Label_spawn_veh_25
 CallNative player_ped_id 0 1
 fPush -3.5
@@ -166,8 +155,8 @@ Jump @Label_spawn_veh_26
 
 :Label_spawn_veh_25
 getF 0
-Push 788747387
-JumpNE @Label_spawn_veh_27
+CallNative is_this_model_a_heli 1 1
+JumpFalse @Label_spawn_veh_27
 CallNative player_ped_id 0 1
 fPush_0.0
 fPush_6.0
@@ -226,9 +215,11 @@ Jump @Label_spawn_veh_4
 :Label_spawn_veh_29
 getF 0
 CallNative set_model_as_no_longer_needed 1 0
-PushString "STRING"
+PushString "TWOSTRINGS"
 CallNative unk_0x574EE85C 1 0
-PushString "Error:~n~No space to spawn vehicle."
+PushString "No space to spawn vehicle:"
+CallNative unk_0x27A244D8 1 0
+CallNative get_display_name_from_vehicle_model 1 1
 CallNative unk_0x27A244D8 1 0
 iPush_0
 iPush_1
@@ -240,7 +231,7 @@ Jump @Label_spawn_veh_5
 :Label_spawn_veh_30
 PushString "STRING"
 CallNative unk_0x574EE85C 1 0
-PushString "Error:~n~Vehicle model does not exist."
+PushString "Vehicle model does not exist."
 CallNative unk_0x27A244D8 1 0
 iPush_0
 iPush_1
@@ -742,8 +733,7 @@ StackGet 6
 JumpFalse @Label_catch_load2
 iPush_0
 StackSet 8
-iPush_0
-StackSet 6
+Call @Label_hide_menu
 iPush_-1
 PushString "SELECT"
 PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
@@ -763,6 +753,14 @@ Jump @Label_catch_load4
 
 :Label_catch_load4
 Call @Label_load_pressed
+Return 0 0
+
+:Label_hide_menu
+Function 60 0 2
+iPush_1
+CallNative set_cinematic_button_active 1 0
+iPush_0
+StackSet 6
 Return 0 0
 
 :Label_load_pressed
@@ -929,7 +927,7 @@ StackSet 5
 iPush_0
 iPush_0
 Call @Label_set_up_draw
-PushString "Vehicle Spawn"
+PushString "Vehicle Spawn - BETA"
 StackGet 3
 fPush 0.04444443
 Call @Label_draw_string_header
@@ -1117,106 +1115,85 @@ Jump @Label_get_menu_veh_count_22
 Push1 11
 Return 0 1
 
-
 :Label_get_menu_veh_count_2
 Push1 9
 Return 0 1
-
 
 :Label_get_menu_veh_count_3
 Push1 4
 Return 0 1
 
-
 :Label_get_menu_veh_count_4
 Push1 11
 Return 0 1
-
 
 :Label_get_menu_veh_count_5
 Push1 6
 Return 0 1
 
-
 :Label_get_menu_veh_count_6
 Push1 17
 Return 0 1
-
 
 :Label_get_menu_veh_count_7
 Push1 10
 Return 0 1
 
-
 :Label_get_menu_veh_count_8
 Push1 9
 Return 0 1
-
 
 :Label_get_menu_veh_count_9
 Push1 3
 Return 0 1
 
-
 :Label_get_menu_veh_count_10
 Push1 14
 Return 0 1
-
 
 :Label_get_menu_veh_count_11
 Push1 10
 Return 0 1
 
-
 :Label_get_menu_veh_count_12
 Push1 16
 Return 0 1
-
 
 :Label_get_menu_veh_count_13
 Push1 11
 Return 0 1
 
-
 :Label_get_menu_veh_count_14
 Push1 20
 Return 0 1
-
 
 :Label_get_menu_veh_count_15
 Push1 6
 Return 0 1
 
-
 :Label_get_menu_veh_count_16
 Push1 18
 Return 0 1
-
 
 :Label_get_menu_veh_count_17
 Push1 11
 Return 0 1
 
-
 :Label_get_menu_veh_count_18
 Push1 6
 Return 0 1
-
 
 :Label_get_menu_veh_count_19
 Push1 18
 Return 0 1
 
-
 :Label_get_menu_veh_count_20
 Push1 17
 Return 0 1
 
-
 :Label_get_menu_veh_count_21
 Push1 26
 Return 0 1
-
 
 :Label_get_menu_veh_count_22
 iPush_0
@@ -1253,106 +1230,85 @@ Jump @Label_get_menu_veh_cat_22
 PushString "VEH_CLASS_14"
 Return 1 1
 
-
 :Label_get_menu_veh_cat_2
 PushString "VEH_CLASS_20"
 Return 1 1
-
 
 :Label_get_menu_veh_cat_3
 PushString "VEH_CLASS_0"
 Return 1 1
 
-
 :Label_get_menu_veh_cat_4
 PushString "VEH_CLASS_3"
 Return 1 1
-
 
 :Label_get_menu_veh_cat_5
 PushString "VEH_CLASS_13"
 Return 1 1
 
-
 :Label_get_menu_veh_cat_6
 PushString "VEH_CLASS_18"
 Return 1 1
-
 
 :Label_get_menu_veh_cat_7
 PushString "VEH_CLASS_15"
 Return 1 1
 
-
 :Label_get_menu_veh_cat_8
 PushString "VEH_CLASS_10"
 Return 1 1
-
 
 :Label_get_menu_veh_cat_9
 PushString "VEH_CLASS_19"
 Return 1 1
 
-
 :Label_get_menu_veh_cat_10
 PushString "VEH_CLASS_8"
 Return 1 1
-
 
 :Label_get_menu_veh_cat_11
 PushString "VEH_CLASS_4"
 Return 1 1
 
-
 :Label_get_menu_veh_cat_12
 PushString "VEH_CLASS_9"
 Return 1 1
-
 
 :Label_get_menu_veh_cat_13
 PushString "VEH_CLASS_16"
 Return 1 1
 
-
 :Label_get_menu_veh_cat_14
 PushString "VEH_CLASS_1"
 Return 1 1
-
 
 :Label_get_menu_veh_cat_15
 PushString "VEH_CLASS_17"
 Return 1 1
 
-
 :Label_get_menu_veh_cat_16
 PushString "VEH_CLASS_6"
 Return 1 1
-
 
 :Label_get_menu_veh_cat_17
 PushString "VEH_CLASS_5"
 Return 1 1
 
-
 :Label_get_menu_veh_cat_18
 PushString "VEH_CLASS_7"
 Return 1 1
-
 
 :Label_get_menu_veh_cat_19
 PushString "VEH_CLASS_2"
 Return 1 1
 
-
 :Label_get_menu_veh_cat_20
 PushString "VEH_CLASS_11"
 Return 1 1
 
-
 :Label_get_menu_veh_cat_21
 PushString "VEH_CLASS_12"
 Return 1 1
-
 
 :Label_get_menu_veh_cat_22
 PushString ""
@@ -1369,90 +1325,75 @@ getF 0
 Call @Label_get_menu_veh_hash_boats
 Return 1 1
 
-
 :Label_get_menu_veh_hash_2
 getF 0
 Call @Label_get_menu_veh_hash_commercial
 Return 1 1
-
 
 :Label_get_menu_veh_hash_3
 getF 0
 Call @Label_get_menu_veh_hash_compacts
 Return 1 1
 
-
 :Label_get_menu_veh_hash_4
 getF 0
 Call @Label_get_menu_veh_hash_coupes
 Return 1 1
-
 
 :Label_get_menu_veh_hash_5
 getF 0
 Call @Label_get_menu_veh_hash_cycles
 Return 1 1
 
-
 :Label_get_menu_veh_hash_6
 getF 0
 Call @Label_get_menu_veh_hash_emergency
 Return 1 1
-
 
 :Label_get_menu_veh_hash_7
 getF 0
 Call @Label_get_menu_veh_hash_helicopters
 Return 1 1
 
-
 :Label_get_menu_veh_hash_8
 getF 0
 Call @Label_get_menu_veh_hash_industrial
 Return 1 1
-
 
 :Label_get_menu_veh_hash_9
 getF 0
 Call @Label_get_menu_veh_hash_military
 Return 1 1
 
-
 :Label_get_menu_veh_hash_10
 getF 0
 Call @Label_get_menu_veh_hash_motorcycles
 Return 1 1
-
 
 :Label_get_menu_veh_hash_11
 getF 0
 Call @Label_get_menu_veh_hash_muscle
 Return 1 1
 
-
 :Label_get_menu_veh_hash_12
 getF 0
 Call @Label_get_menu_veh_hash_off_road
 Return 1 1
-
 
 :Label_get_menu_veh_hash_13
 getF 0
 Call @Label_get_menu_veh_hash_planes
 Return 1 1
 
-
 :Label_get_menu_veh_hash_14
 getF 0
 Call @Label_get_menu_veh_hash_sedans
 Return 1 1
 
-
 :Label_get_menu_veh_hash_15
 getF 0
 Call @Label_get_menu_veh_hash_service
 Return 1 1
-
 
 :Label_get_menu_veh_hash_16
 getF 0
@@ -1465,29 +1406,24 @@ getF 0
 Call @Label_get_menu_veh_hash_sports_classics
 Return 1 1
 
-
 :Label_get_menu_veh_hash_18
 getF 0
 Call @Label_get_menu_veh_hash_super
 Return 1 1
-
 
 :Label_get_menu_veh_hash_19
 getF 0
 Call @Label_get_menu_veh_hash_suvs
 Return 1 1
 
-
 :Label_get_menu_veh_hash_20
 getF 0
 Call @Label_get_menu_veh_hash_utility
 Return 1 1
 
-
 :Label_get_menu_veh_hash_22
 iPush_0
 Return 1 1
-
 
 :Label_get_menu_veh_hash_boats
 Function 40 1 3
