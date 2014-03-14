@@ -144,7 +144,7 @@ getF 0
 CallNative is_this_model_a_plane 1 1
 JumpFalse @Label_spawn_veh_25
 CallNative player_ped_id 0 1
-fPush -3.5
+fPush -4.0
 fPush 8.5
 fPush_1.0
 CallNative get_offset_from_entity_in_world_coords 4 3
@@ -219,8 +219,9 @@ PushString "TWOSTRINGS"
 CallNative unk_0x574EE85C 1 0
 PushString "No space to spawn vehicle:"
 CallNative unk_0x27A244D8 1 0
+getF 0
 CallNative get_display_name_from_vehicle_model 1 1
-CallNative unk_0x27A244D8 1 0
+CallNative unk_0xDCE05406 1 0
 iPush_0
 iPush_1
 CallNative unk_0x08F7AF78 2 1
@@ -724,7 +725,7 @@ Return 0 0
 :Label_catch_load_button_press
 Function 8 0 3
 StackGet 8
-Push1 30
+Push1 25
 JumpGT @Label_catch_load3
 Jump @Label_catch_load4
 
@@ -756,7 +757,7 @@ Call @Label_load_pressed
 Return 0 0
 
 :Label_hide_menu
-Function 60 0 2
+Function 61 0 2
 iPush_1
 CallNative set_cinematic_button_active 1 0
 iPush_0
@@ -927,7 +928,7 @@ StackSet 5
 iPush_0
 iPush_0
 Call @Label_set_up_draw
-PushString "Vehicle Spawn - BETA"
+PushString "Vehicle Spawn - BETA2"
 StackGet 3
 fPush 0.04444443
 Call @Label_draw_string_header
@@ -1317,7 +1318,7 @@ Return 1 1
 :Label_get_menu_veh_hash
 Function 23 1 3
 StackGet 10
-Switch [0 @Label_get_menu_veh_hash_1]:[1 @Label_get_menu_veh_hash_2]:[2 @Label_get_menu_veh_hash_3]:[3 @Label_get_menu_veh_hash_4]:[4 @Label_get_menu_veh_hash_5]:[5 @Label_get_menu_veh_hash_6]:[6 @Label_get_menu_veh_hash_7]:[7 @Label_get_menu_veh_hash_8]:[8 @Label_get_menu_veh_hash_9]:[9 @Label_get_menu_veh_hash_10]:[10 @Label_get_menu_veh_hash_11]:[11 @Label_get_menu_veh_hash_12]:[12 @Label_get_menu_veh_hash_13]:[13 @Label_get_menu_veh_hash_14]:[14 @Label_get_menu_veh_hash_15]:[15 @Label_get_menu_veh_hash_16]:[16 @Label_get_menu_veh_hash_17]:[17 @Label_get_menu_veh_hash_18]:[18 @Label_get_menu_veh_hash_19]:[19 @Label_get_menu_veh_hash_20]
+Switch [0 @Label_get_menu_veh_hash_1]:[1 @Label_get_menu_veh_hash_2]:[2 @Label_get_menu_veh_hash_3]:[3 @Label_get_menu_veh_hash_4]:[4 @Label_get_menu_veh_hash_5]:[5 @Label_get_menu_veh_hash_6]:[6 @Label_get_menu_veh_hash_7]:[7 @Label_get_menu_veh_hash_8]:[8 @Label_get_menu_veh_hash_9]:[9 @Label_get_menu_veh_hash_10]:[10 @Label_get_menu_veh_hash_11]:[11 @Label_get_menu_veh_hash_12]:[12 @Label_get_menu_veh_hash_13]:[13 @Label_get_menu_veh_hash_14]:[14 @Label_get_menu_veh_hash_15]:[15 @Label_get_menu_veh_hash_16]:[16 @Label_get_menu_veh_hash_17]:[17 @Label_get_menu_veh_hash_18]:[18 @Label_get_menu_veh_hash_19]:[19 @Label_get_menu_veh_hash_20]:[20 @Label_get_menu_veh_hash_21]
 Jump @Label_get_menu_veh_hash_22
 
 :Label_get_menu_veh_hash_1
@@ -1400,7 +1401,6 @@ getF 0
 Call @Label_get_menu_veh_hash_sports
 Return 1 1
 
-
 :Label_get_menu_veh_hash_17
 getF 0
 Call @Label_get_menu_veh_hash_sports_classics
@@ -1419,6 +1419,11 @@ Return 1 1
 :Label_get_menu_veh_hash_20
 getF 0
 Call @Label_get_menu_veh_hash_utility
+Return 1 1
+
+:Label_get_menu_veh_hash_21
+getF 0
+Call @Label_get_menu_veh_hash_vans
 Return 1 1
 
 :Label_get_menu_veh_hash_22
@@ -2610,5 +2615,123 @@ Push 2132890591
 Return 1 1
 
 :Label_get_menu_veh_hash_utility_22
+iPush_0
+Return 1 1
+
+:Label_get_menu_veh_hash_vans
+Function 60 1 3
+getF 0
+Switch [0 @Label_get_menu_veh_hash_vans_1]:[1 @Label_get_menu_veh_hash_vans_2]:[2 @Label_get_menu_veh_hash_vans_3]:[3 @Label_get_menu_veh_hash_vans_4]:[4 @Label_get_menu_veh_hash_vans_5]:[5 @Label_get_menu_veh_hash_vans_6]:[6 @Label_get_menu_veh_hash_vans_7]:[7 @Label_get_menu_veh_hash_vans_8]:[8 @Label_get_menu_veh_hash_vans_9]:[9 @Label_get_menu_veh_hash_vans_10]:[10 @Label_get_menu_veh_hash_vans_11]:[11 @Label_get_menu_veh_hash_vans_12]:[12 @Label_get_menu_veh_hash_vans_13]:[13 @Label_get_menu_veh_hash_vans_14]:[14 @Label_get_menu_veh_hash_vans_15]:[15 @Label_get_menu_veh_hash_vans_16]:[16 @Label_get_menu_veh_hash_vans_17]:[17 @Label_get_menu_veh_hash_vans_18]:[18 @Label_get_menu_veh_hash_vans_19]:[19 @Label_get_menu_veh_hash_vans_20]:[20 @Label_get_menu_veh_hash_vans_21]:[21 @Label_get_menu_veh_hash_vans_22]:[22 @Label_get_menu_veh_hash_vans_23]:[23 @Label_get_menu_veh_hash_vans_24]:[24 @Label_get_menu_veh_hash_vans_25]:[25 @Label_get_menu_veh_hash_vans_26]:[26 @Label_get_menu_veh_hash_vans_27]
+Jump @Label_get_menu_veh_hash_vans_28
+
+:Label_get_menu_veh_hash_vans_1
+Push -16948145
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_2
+Push 2072156101
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_3
+Push 1739845664
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_4
+Push 1069929536
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_5
+Push -1987130134
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_6
+Push -233098306
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_7
+Push 121658888
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_8
+Push -1346687836
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_9
+Push -907477130
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_10
+Push -1743316013
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_11
+Push 893081117
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_12
+Push 1132262048
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_13
+Push 1876516712
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_14
+Push -1745203402
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_15
+Push -120287622
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_16
+Push -310465116
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_17
+Push 1488164764
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_18
+Push -119658072
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_19
+Push 943752001
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_20
+Push 1162065741
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_21
+Push -1776615689
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_22
+Push -810318068
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_23
+Push 728614474
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_24
+Push 699456151
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_25
+Push -1311240698
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_26
+Push 1951180813
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_27
+Push 65402552
+Return 1 1
+
+:Label_get_menu_veh_hash_vans_28
 iPush_0
 Return 1 1
