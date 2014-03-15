@@ -1,74 +1,74 @@
 Function 0 0 2
 iPush_1
-StackSet 2
+StaticSet1 2
 fPush 0.0453125
-StackSet 3
+StaticSet1 3
 iPush_0
-StackSet 4
+StaticSet1 4
 iPush_0
-StackSet 5
+StaticSet1 5
 iPush_0
-StackSet 6
+StaticSet1 6
 iPush_0
-StackSet 7
+StaticSet1 7
 iPush_0
-StackSet 8
+StaticSet1 8
 
 iPush_0
-StackSet 9
+StaticSet1 9
 iPush_0
-StackSet 10
+StaticSet1 10
 
 iPush_0
-StackSet 11
+StaticSet1 11
 
 PushString "NULL"
-StackSet 14
+StaticSet1 14
 
 :while
+iPush_1
+JumpFalse @Label_main3
 iPush_0
 CallNative wait 1 0
 Call @Label_catch_load_button_press
 
 :Label_main1
-StackGet 6
+StaticGet1 6
 JumpFalse @Label_main2
 Call @Label_draw_window
 Call @Label_draw_menu
 Call @Label_catch_updown_button_press
 Call @Label_catch_select_button_press
 Call @Label_action
-Jump @Label_main3
-
-:Label_main3
-Jump @Label_main2
 
 :Label_main2
 Jump @while
+
+:Label_main3
 Return 0 0
 
 :Label_action
 Function 12 0 2
-StackGet 7
+StaticGet1 7
 iPush_1
 JumpEq @Label_action1
 Jump @Label_action4
 
 :Label_action1
-StackGet 4
+StaticGet1 4
 Call @Label_get_menu_veh_hash
 Call @Label_spawn_veh
 Jump @Label_action2
 
 :Label_action4
-StackGet 7
+StaticGet1 7
 iPush_2
 JumpEq @Label_action5
 Jump @Label_action2
 
 :Label_action5
 iPush_0
-StackSet 7
+StaticSet1 7
 Call @Label_hide_menu
 Jump @Label_action2
 
@@ -95,25 +95,25 @@ CallNative wait 1 0
 Jump @Label_spawn_veh_1
 
 :Label_spawn_veh_2
-StackGet 46
+StaticGet1 46
 CallNative does_entity_exist 1 1
 JumpFalse @Label_spawn_veh_21
-StackGet 46
+StaticGet1 46
 CallNative is_entity_dead 1 1
 Not
 JumpFalse @Label_spawn_veh_22
 CallNative player_ped_id 0 1
-StackGet 46
+StaticGet1 46
 iPush_0
 CallNative is_ped_in_vehicle 3 1
 JumpFalse @Label_spawn_veh_22
-StackGet 46
+StaticGet1 46
 iPush_1
 CallNative get_entity_coords 2 3
 iPush_3
 pFrame1 3
 FromStack
-StackGet 46
+StaticGet1 46
 CallNative get_entity_heading 1 1
 setF 6
 CallNative player_ped_id 0 1
@@ -133,7 +133,7 @@ iPush_1
 setF 7
 
 :Label_spawn_veh_22
-StackGetp 46
+pstatic1 46
 CallNative delete_vehicle 1 0
 
 :Label_spawn_veh_21
@@ -200,16 +200,16 @@ getF 6
 iPush_0
 iPush_1
 CallNative create_vehicle 7 1
-StackSet 46
-StackGet 46
+StaticSet1 46
+StaticGet1 46
 CallNative set_vehicle_on_ground_properly 1 1
 drop
 getF 0
 CallNative set_model_as_no_longer_needed 1 0
-StackGetp 46
+pstatic1 46
 CallNative set_vehicle_as_no_longer_needed 1 0
 iPush_0
-StackSet 7
+StaticSet1 7
 Jump @Label_spawn_veh_4
 
 :Label_spawn_veh_29
@@ -226,7 +226,7 @@ iPush_0
 iPush_1
 CallNative unk_0x08F7AF78 2 1
 iPush_0
-StackSet 7
+StaticSet1 7
 Jump @Label_spawn_veh_5
 
 :Label_spawn_veh_30
@@ -238,7 +238,7 @@ iPush_0
 iPush_1
 CallNative unk_0x08F7AF78 2 1
 iPush_0
-StackSet 7
+StaticSet1 7
 Jump @Label_spawn_veh_5
 
 :Label_spawn_veh_4
@@ -679,19 +679,19 @@ PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
 CallNative play_sound_frontend 3 0
 
 iPush_1
-StackGet 9
+StaticGet1 9
 JumpEq @Label_catch_select_button_press_2
 iPush_1
-StackSet 9
-StackGet 4
-StackSet 10
+StaticSet1 9
+StaticGet1 4
+StaticSet1 10
 iPush_0
-StackSet 4
+StaticSet1 4
 Jump @Label_739
 
 :Label_catch_select_button_press_2
 iPush_1
-StackSet 7
+StaticSet1 7
 Jump @Label_739
 
 :Label_741
@@ -705,35 +705,35 @@ PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
 CallNative play_sound_frontend 3 0
 
 iPush_0
-StackGet 9
+StaticGet1 9
 JumpEq @Label_catch_select_button_press_3
 iPush_0
-StackSet 9
-StackGet 10
-StackSet 4
+StaticSet1 9
+StaticGet1 10
+StaticSet1 4
 iPush_0
-StackSet 10
+StaticSet1 10
 Jump @Label_739
 
 :Label_catch_select_button_press_3
 iPush_2
-StackSet 7
+StaticSet1 7
 
 :Label_739
 Return 0 0
 
 :Label_catch_load_button_press
 Function 8 0 3
-StackGet 8
+StaticGet1 8
 Push1 25
 JumpGT @Label_catch_load3
 Jump @Label_catch_load4
 
 :Label_catch_load3
-StackGet 6
+StaticGet1 6
 JumpFalse @Label_catch_load2
 iPush_0
-StackSet 8
+StaticSet1 8
 Call @Label_hide_menu
 iPush_-1
 PushString "SELECT"
@@ -743,9 +743,9 @@ Jump @Label_catch_load4
 
 :Label_catch_load2
 iPush_0
-StackSet 8
+StaticSet1 8
 iPush_1
-StackSet 6
+StaticSet1 6
 iPush_-1
 PushString "SELECT"
 PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
@@ -761,7 +761,7 @@ Function 61 0 2
 iPush_1
 CallNative set_cinematic_button_active 1 0
 iPush_0
-StackSet 6
+StaticSet1 6
 Return 0 0
 
 :Label_load_pressed
@@ -780,14 +780,14 @@ Push1 176
 CallNative is_control_pressed 2 1
 JumpFalse @Label_load_pressed_2
 
-StackGet 8
+StaticGet1 8
 Add1 1
-StackSet 8
+StaticSet1 8
 Jump @Label_load_pressed_3
 
 :Label_load_pressed_2
 iPush_0
-StackSet 8
+StaticSet1 8
 
 :Label_load_pressed_3
 Return 0 0
@@ -801,7 +801,7 @@ pFrame1 4
 pFrame1 5
 CallNative get_hud_colour 5 0
 
-StackGet 5
+StaticGet1 5
 Add1 1
 setF 6
 
@@ -873,17 +873,17 @@ iPush_-1
 PushString "NAV_UP_DOWN"
 PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
 CallNative play_sound_frontend 3 0
-StackGet 4
-StackGet 5
+StaticGet1 4
+StaticGet1 5
 JumpGE @Label_1341
-StackGet 4
+StaticGet1 4
 Add1 1
-StackSet 4
+StaticSet1 4
 Jump @Label_1342
 
 :Label_1341
 iPush_0
-StackSet 4
+StaticSet1 4
 
 :Label_1342
 Jump @Label_catch_updown_button_press_END
@@ -897,18 +897,18 @@ iPush_-1
 PushString "NAV_UP_DOWN"
 PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
 CallNative play_sound_frontend 3 0
-StackGet 4
+StaticGet1 4
 iPush_0
 JumpLE @Label_1345
-StackGet 4
+StaticGet1 4
 iPush_1
 Sub
-StackSet 4
+StaticSet1 4
 Jump @Label_1346
 
 :Label_1345
-StackGet 5
-StackSet 4
+StaticGet1 5
+StaticSet1 4
 
 :Label_1344
 Jump @Label_catch_updown_button_press_END
@@ -923,13 +923,13 @@ Return 0 0
 Function 5 0 12
 
 Call @Label_get_menu_count
-StackSet 5
+StaticSet1 5
 
 iPush_0
 iPush_0
 Call @Label_set_up_draw
 PushString "Vehicle Spawn - BETA2"
-StackGet 3
+StaticGet1 3
 fPush 0.04444443
 Call @Label_draw_string_header
 
@@ -951,7 +951,7 @@ setF 7
 fPush 0.03472222
 setF 8
 
-StackGet 5
+StaticGet1 5
 Add1 1
 setF 9
 
@@ -973,7 +973,7 @@ setF 7
 
 :Label_draw_menu_1
 getF 3
-StackGet 4
+StaticGet1 4
 JumpEq @Label_draw_menu_2
 iPush_0
 setF 10
@@ -998,7 +998,7 @@ iPush_0
 Call @Label_set_up_draw
 getF 3
 Call @Label_get_menu
-StackGet 3
+StaticGet1 3
 getF 5
 Call @Label_draw_string
 
@@ -1055,7 +1055,7 @@ CallNative set_text_colour 4 0
 getF 1
 JumpFalse @Label_set_up_draw_4
 fPush_0.0
-StackGet 3
+StaticGet1 3
 fPush 0.2040
 fAdd
 CallNative set_text_wrap 2 0
@@ -1090,7 +1090,7 @@ Return 2 0
 
 :Label_get_menu_count
 Function 21 0 3
-StackGet 9
+StaticGet1 9
 Switch [0 @Label_get_menu_count_1]:[1 @Label_get_menu_count_2]
 Jump @Label_get_menu_count_6
 
@@ -1108,7 +1108,7 @@ Return 0 1
 
 :Label_get_menu_veh_count
 Function 22 0 3
-StackGet 10
+StaticGet1 10
 Switch [0 @Label_get_menu_veh_count_1]:[1 @Label_get_menu_veh_count_2]:[2 @Label_get_menu_veh_count_3]:[3 @Label_get_menu_veh_count_4]:[4 @Label_get_menu_veh_count_5]:[5 @Label_get_menu_veh_count_6]:[6 @Label_get_menu_veh_count_7]:[7 @Label_get_menu_veh_count_8]:[8 @Label_get_menu_veh_count_9]:[9 @Label_get_menu_veh_count_10]:[10 @Label_get_menu_veh_count_11]:[11 @Label_get_menu_veh_count_12]:[12 @Label_get_menu_veh_count_13]:[13 @Label_get_menu_veh_count_14]:[14 @Label_get_menu_veh_count_15]:[15 @Label_get_menu_veh_count_16]:[16 @Label_get_menu_veh_count_17]:[17 @Label_get_menu_veh_count_18]:[18 @Label_get_menu_veh_count_19]:[19 @Label_get_menu_veh_count_20]:[20 @Label_get_menu_veh_count_21]
 Jump @Label_get_menu_veh_count_22
 
@@ -1202,7 +1202,7 @@ Return 0 1
 
 :Label_get_menu
 Function 19 1 3
-StackGet 9
+StaticGet1 9
 Switch [0 @Label_get_menu_1]:[1 @Label_get_menu_2]
 Jump @Label_get_menu_6
 
@@ -1317,7 +1317,7 @@ Return 1 1
 
 :Label_get_menu_veh_hash
 Function 23 1 3
-StackGet 10
+StaticGet1 10
 Switch [0 @Label_get_menu_veh_hash_1]:[1 @Label_get_menu_veh_hash_2]:[2 @Label_get_menu_veh_hash_3]:[3 @Label_get_menu_veh_hash_4]:[4 @Label_get_menu_veh_hash_5]:[5 @Label_get_menu_veh_hash_6]:[6 @Label_get_menu_veh_hash_7]:[7 @Label_get_menu_veh_hash_8]:[8 @Label_get_menu_veh_hash_9]:[9 @Label_get_menu_veh_hash_10]:[10 @Label_get_menu_veh_hash_11]:[11 @Label_get_menu_veh_hash_12]:[12 @Label_get_menu_veh_hash_13]:[13 @Label_get_menu_veh_hash_14]:[14 @Label_get_menu_veh_hash_15]:[15 @Label_get_menu_veh_hash_16]:[16 @Label_get_menu_veh_hash_17]:[17 @Label_get_menu_veh_hash_18]:[18 @Label_get_menu_veh_hash_19]:[19 @Label_get_menu_veh_hash_20]:[20 @Label_get_menu_veh_hash_21]
 Jump @Label_get_menu_veh_hash_22
 
