@@ -76,7 +76,7 @@ Jump @Label_action2
 Return 0 0
 
 :Label_spawn_veh
-Function 14 1 8
+Function 14 1 10
 iPush_0
 setF 7
 getF 0
@@ -204,6 +204,36 @@ StaticSet1 46
 StaticGet1 46
 CallNative set_vehicle_on_ground_properly 1 1
 drop
+
+:Label_spawn_veh_hold
+iPush_2
+Push1 179
+CallNative is_control_pressed 2 1
+JumpFalse @Label_spawn_veh_hold_2
+CallNative player_ped_id 0 1
+iPush_0
+CallNative is_ped_in_any_vehicle 2 1
+JumpFalse @Label_spawn_veh_hold_3
+CallNative player_ped_id 0 1
+iPush_0
+CallNative get_vehicle_ped_is_in 2 1
+setF 9
+CallNative player_ped_id 0 1
+CallNative clear_ped_tasks_immediately 1 0
+getF 9
+iPush_0
+iPush_1
+CallNative set_entity_as_mission_entity 3 0
+pFrame1 9
+CallNative delete_vehicle 1 0
+
+:Label_spawn_veh_hold_3
+CallNative player_ped_id 0 1
+StaticGet1 46
+iPush_-1
+CallNative set_ped_into_vehicle 3 0
+
+:Label_spawn_veh_hold_2
 getF 0
 CallNative set_model_as_no_longer_needed 1 0
 pstatic1 46
@@ -928,7 +958,7 @@ StaticSet1 5
 iPush_0
 iPush_0
 Call @Label_set_up_draw
-PushString "Vehicle Spawn - BETA2"
+PushString "Vehicle Spawn - BETA2 r2"
 StaticGet1 3
 fPush 0.04444443
 Call @Label_draw_string_header
