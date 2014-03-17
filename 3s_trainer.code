@@ -139,7 +139,7 @@ CallNative delete_vehicle 1 0
 :Label_spawn_veh_21
 getF 7
 Not
-JumpFalse @Label_spawn_veh_23
+JumpFalse @Label_spawn_veh_hold
 getF 0
 CallNative is_this_model_a_plane 1 1
 JumpFalse @Label_spawn_veh_25
@@ -178,20 +178,17 @@ pFrame1 3
 FromStack
 
 :Label_spawn_veh_26
+Jump @Label_spawn_veh_hold
+
+:Label_spawn_veh_hold
+iPush_2
+Push1 179
+CallNative is_control_pressed 2 1
+JumpFalse @Label_spawn_veh_23
 CallNative player_ped_id 0 1
 CallNative get_entity_heading 1 1
-fPush 90
-fAdd
 setF 6
 
-:Label_spawn_veh_23
-getF 0
-iPush_3
-pFrame1 3
-ToStack
-getF 6
-Call @Label_cc_place_veh
-JumpFalse @Label_spawn_veh_29
 getF 0
 iPush_3
 pFrame1 3
@@ -205,11 +202,6 @@ StaticGet1 46
 CallNative set_vehicle_on_ground_properly 1 1
 drop
 
-:Label_spawn_veh_hold
-iPush_2
-Push1 179
-CallNative is_control_pressed 2 1
-JumpFalse @Label_spawn_veh_hold_2
 CallNative player_ped_id 0 1
 iPush_0
 CallNative is_ped_in_any_vehicle 2 1
@@ -232,8 +224,52 @@ CallNative player_ped_id 0 1
 StaticGet1 46
 iPush_-1
 CallNative set_ped_into_vehicle 3 0
+StaticGet1 46
+iPush_1
+iPush_1
+CallNative set_vehicle_engine_on 3 0
 
 :Label_spawn_veh_hold_2
+getF 0
+CallNative set_model_as_no_longer_needed 1 0
+pstatic1 46
+CallNative set_vehicle_as_no_longer_needed 1 0
+iPush_0
+StaticSet1 7
+Jump @Label_spawn_veh_4
+
+:Label_spawn_veh_23
+getF 0
+iPush_3
+pFrame1 3
+ToStack
+getF 6
+Call @Label_cc_place_veh
+JumpFalse @Label_spawn_veh_29
+
+getF 7
+Not
+JumpFalse @Label_spawn_veh_24
+CallNative player_ped_id 0 1
+CallNative get_entity_heading 1 1
+fPush 90
+fAdd
+setF 6
+
+:Label_spawn_veh_24
+getF 0
+iPush_3
+pFrame1 3
+ToStack
+getF 6
+iPush_0
+iPush_1
+CallNative create_vehicle 7 1
+StaticSet1 46
+StaticGet1 46
+CallNative set_vehicle_on_ground_properly 1 1
+drop
+
 getF 0
 CallNative set_model_as_no_longer_needed 1 0
 pstatic1 46
@@ -958,7 +994,7 @@ StaticSet1 5
 iPush_0
 iPush_0
 Call @Label_set_up_draw
-PushString "Vehicle Spawn - BETA2 r2"
+PushString "Vehicle Spawn - BETA2 r5"
 StaticGet1 3
 fPush 0.04444443
 Call @Label_draw_string_header
