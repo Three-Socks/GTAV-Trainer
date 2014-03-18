@@ -1006,7 +1006,7 @@ StaticSet1 5
 iPush_0
 iPush_0
 Call @Label_set_up_draw
-PushString "Vehicle Spawn - BETA2 r6"
+PushString "Vehicle Spawn"
 StaticGet1 3
 fPush 0.04444443
 Call @Label_draw_string_header
