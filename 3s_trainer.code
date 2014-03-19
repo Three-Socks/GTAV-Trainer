@@ -55,6 +55,8 @@ JumpEq @Label_action1
 Jump @Label_action4
 
 :Label_action1
+iPush_0
+StaticSet1 7
 StaticGet1 4
 Call @Label_get_menu_veh_hash
 Call @Label_spawn_veh
@@ -81,32 +83,32 @@ iPush_0
 setF 7
 getF 0
 CallNative is_model_in_cdimage 1 1
-JumpFalse @Label_spawn_veh_30
+JumpFalse @Label_spawn_veh_error_cd
 getF 0
 CallNative request_model 1 0
 
-:Label_spawn_veh_1
+:Label_spawn_veh_while
 getF 0
 CallNative has_model_loaded 1 1
 Not
-JumpFalse @Label_spawn_veh_2
+JumpFalse @Label_spawn_veh_main
 iPush_0
 CallNative wait 1 0
-Jump @Label_spawn_veh_1
+Jump @Label_spawn_veh_while
 
-:Label_spawn_veh_2
+:Label_spawn_veh_main
 StaticGet1 46
 CallNative does_entity_exist 1 1
-JumpFalse @Label_spawn_veh_21
+JumpFalse @Label_spawn_veh_normal
 StaticGet1 46
 CallNative is_entity_dead 1 1
 Not
-JumpFalse @Label_spawn_veh_22
+JumpFalse @Label_spawn_veh_delete
 CallNative player_ped_id 0 1
 StaticGet1 46
 iPush_0
 CallNative is_ped_in_vehicle 3 1
-JumpFalse @Label_spawn_veh_22
+JumpFalse @Label_spawn_veh_delete
 StaticGet1 46
 iPush_1
 CallNative get_entity_coords 2 3
@@ -132,67 +134,25 @@ CallNative set_entity_coords 8 0
 iPush_1
 setF 7
 
-:Label_spawn_veh_22
+:Label_spawn_veh_delete
 pstatic1 46
 CallNative delete_vehicle 1 0
 
-:Label_spawn_veh_21
-getF 7
-Not
-JumpFalse @Label_spawn_veh_hold
-getF 0
-CallNative is_this_model_a_plane 1 1
-JumpFalse @Label_spawn_veh_25
-CallNative player_ped_id 0 1
-fPush -4.0
-fPush 8.5
-fPush_1.0
-CallNative get_offset_from_entity_in_world_coords 4 3
-iPush_3
-pFrame1 3
-FromStack
-Jump @Label_spawn_veh_26
-
-:Label_spawn_veh_25
-getF 0
-CallNative is_this_model_a_heli 1 1
-JumpFalse @Label_spawn_veh_27
-CallNative player_ped_id 0 1
-fPush_0.0
-fPush_6.0
-fPush_2.0
-CallNative get_offset_from_entity_in_world_coords 4 3
-iPush_3
-pFrame1 3
-FromStack
-Jump @Label_spawn_veh_26
-
-:Label_spawn_veh_27
-CallNative player_ped_id 0 1
-fPush_0.0
-fPush 3.5
-fPush_1.0
-CallNative get_offset_from_entity_in_world_coords 4 3
-iPush_3
-pFrame1 3
-FromStack
-
-:Label_spawn_veh_26
-Jump @Label_spawn_veh_hold
-
-:Label_spawn_veh_hold
-iPush_2
-Push1 179
-CallNative is_control_pressed 2 1
-JumpFalse @Label_spawn_veh_23
+:Label_spawn_veh_normal
 CallNative player_ped_id 0 1
 CallNative get_entity_heading 1 1
 setF 6
+CallNative player_ped_id 0 1
+iPush_1
+CallNative get_entity_coords 2 3
+iPush_3
+pFrame1 3
+FromStack
 
 CallNative player_ped_id 0 1
 iPush_0
 CallNative is_ped_in_any_vehicle 2 1
-JumpFalse @Label_spawn_veh_hold_4
+JumpFalse @Label_spawn_veh_normal_not_in_veh
 CallNative player_ped_id 0 1
 iPush_0
 CallNative get_vehicle_ped_is_in 2 1
@@ -215,7 +175,7 @@ CallNative set_entity_as_mission_entity 3 0
 pFrame1 9
 CallNative delete_vehicle 1 0
 
-:Label_spawn_veh_hold_4
+:Label_spawn_veh_normal_not_in_veh
 getF 0
 iPush_3
 pFrame1 3
@@ -229,7 +189,6 @@ StaticGet1 46
 CallNative set_vehicle_on_ground_properly 1 1
 drop
 
-:Label_spawn_veh_hold_3
 CallNative player_ped_id 0 1
 StaticGet1 46
 iPush_-1
@@ -239,74 +198,13 @@ iPush_1
 iPush_1
 CallNative set_vehicle_engine_on 3 0
 
-:Label_spawn_veh_hold_2
 getF 0
 CallNative set_model_as_no_longer_needed 1 0
 pstatic1 46
 CallNative set_vehicle_as_no_longer_needed 1 0
-iPush_0
-StaticSet1 7
-Jump @Label_spawn_veh_4
+Jump @Label_spawn_veh_goto_end
 
-:Label_spawn_veh_23
-getF 0
-iPush_3
-pFrame1 3
-ToStack
-getF 6
-Call @Label_cc_place_veh
-JumpFalse @Label_spawn_veh_29
-
-getF 7
-Not
-JumpFalse @Label_spawn_veh_24
-CallNative player_ped_id 0 1
-CallNative get_entity_heading 1 1
-fPush 90
-fAdd
-setF 6
-
-:Label_spawn_veh_24
-getF 0
-iPush_3
-pFrame1 3
-ToStack
-getF 6
-iPush_0
-iPush_1
-CallNative create_vehicle 7 1
-StaticSet1 46
-StaticGet1 46
-CallNative set_vehicle_on_ground_properly 1 1
-drop
-
-getF 0
-CallNative set_model_as_no_longer_needed 1 0
-pstatic1 46
-CallNative set_vehicle_as_no_longer_needed 1 0
-iPush_0
-StaticSet1 7
-Jump @Label_spawn_veh_4
-
-:Label_spawn_veh_29
-getF 0
-CallNative set_model_as_no_longer_needed 1 0
-PushString "TWOSTRINGS"
-CallNative unk_0x574EE85C 1 0
-PushString "No space to spawn vehicle:"
-CallNative unk_0x27A244D8 1 0
-getF 0
-CallNative get_display_name_from_vehicle_model 1 1
-CallNative unk_0xDCE05406 1 0
-iPush_0
-iPush_1
-CallNative unk_0x08F7AF78 2 1
-drop
-iPush_0
-StaticSet1 7
-Jump @Label_spawn_veh_5
-
-:Label_spawn_veh_30
+:Label_spawn_veh_error_cd
 PushString "STRING"
 CallNative unk_0x574EE85C 1 0
 PushString "Vehicle model does not exist."
@@ -315,415 +213,13 @@ iPush_0
 iPush_1
 CallNative unk_0x08F7AF78 2 1
 drop
-iPush_0
-StaticSet1 7
-Jump @Label_spawn_veh_5
+Jump @Label_spawn_veh_end
 
-:Label_spawn_veh_4
-Jump @Label_spawn_veh_5
+:Label_spawn_veh_goto_end
+Jump @Label_spawn_veh_end
 
-:Label_spawn_veh_5
+:Label_spawn_veh_end
 Return 1 0
-
-:Label_cc_place_veh
-Function 27 5 59
-pFrame1 7
-Push1 9
-pPeekSet
-drop
-getF 0
-pFrame1 35
-pFrame1 38
-CallNative get_model_dimensions 3 0
-getF 38
-getF 35
-fSub
-CallNative absf 1 1
-fPush_2.0
-fDiv
-setF 41
-pFrame1 38
-arraygeti1 1
-pFrame1 35
-arraygeti1 1
-fSub
-CallNative absf 1 1
-fPush_2.0
-fDiv
-pFrame1 41
-arrayset 1
-pFrame1 38
-arraygeti1 2
-pFrame1 35
-arraygeti1 2
-fSub
-CallNative absf 1 1
-fPush_2.0
-fDiv
-pFrame1 41
-arrayset 2
-iPush_3
-pFrame1 1
-ToStack
-iPush_3
-iPush_0
-pFrame1 7
-pArray 3
-FromStack
-iPush_3
-pFrame1 1
-ToStack
-getF 4
-getF 41
-fNeg
-pFrame1 41
-arraygeti1 1
-fNeg
-pFrame1 41
-arraygeti1 2
-fNeg
-CallNative unk_0x87A42A12 7 3
-iPush_3
-iPush_1
-pFrame1 7
-pArray 3
-FromStack
-iPush_3
-pFrame1 1
-ToStack
-getF 4
-getF 41
-pFrame1 41
-arraygeti1 1
-fNeg
-pFrame1 41
-arraygeti1 2
-fNeg
-CallNative unk_0x87A42A12 7 3
-iPush_3
-iPush_2
-pFrame1 7
-pArray 3
-FromStack
-iPush_3
-pFrame1 1
-ToStack
-getF 4
-getF 41
-pFrame1 41
-arraygeti1 1
-pFrame1 41
-arraygeti1 2
-fNeg
-CallNative unk_0x87A42A12 7 3
-iPush_3
-iPush_3
-pFrame1 7
-pArray 3
-FromStack
-iPush_3
-pFrame1 1
-ToStack
-getF 4
-getF 41
-fNeg
-pFrame1 41
-arraygeti1 1
-pFrame1 41
-arraygeti1 2
-fNeg
-CallNative unk_0x87A42A12 7 3
-iPush_3
-iPush_4
-pFrame1 7
-pArray 3
-FromStack
-iPush_3
-pFrame1 1
-ToStack
-getF 4
-getF 41
-fNeg
-pFrame1 41
-arraygeti1 1
-fNeg
-pFrame1 41
-arraygeti1 2
-CallNative unk_0x87A42A12 7 3
-iPush_3
-iPush_5
-pFrame1 7
-pArray 3
-FromStack
-iPush_3
-pFrame1 1
-ToStack
-getF 4
-getF 41
-pFrame1 41
-arraygeti1 1
-fNeg
-pFrame1 41
-arraygeti1 2
-CallNative unk_0x87A42A12 7 3
-iPush_3
-iPush_6
-pFrame1 7
-pArray 3
-FromStack
-iPush_3
-pFrame1 1
-ToStack
-getF 4
-getF 41
-pFrame1 41
-arraygeti1 1
-pFrame1 41
-arraygeti1 2
-CallNative unk_0x87A42A12 7 3
-iPush_3
-iPush_7
-pFrame1 7
-pArray 3
-FromStack
-iPush_3
-pFrame1 1
-ToStack
-getF 4
-getF 41
-fNeg
-pFrame1 41
-arraygeti1 1
-pFrame1 41
-arraygeti1 2
-CallNative unk_0x87A42A12 7 3
-iPush_3
-Push1 8
-pFrame1 7
-pArray 3
-FromStack
-iPush_3
-pFrame1 1
-ToStack
-CallNative unk_0x7762249C 3 1
-Not
-JumpFalse @Label_cc_place_veh_56
-iPush_0
-Return 5 1
-
-:Label_cc_place_veh_56
-CallNative player_id 0 1
-Call @Label_cc_place_veh_57
-fPush_0.0
-fPush_0.0
-fPush_1.0
-vAdd
-iPush_3
-pFrame1 1
-ToStack
-Push1 87
-CallNative player_ped_id 0 1
-iPush_0
-CallNative unk_0x8251485D 9 1
-setF 57
-getF 57
-pFrame1 50
-pFrame1 44
-pFrame1 47
-pFrame1 58
-CallNative unk_0xF3C2875A 5 1
-drop
-getF 50
-iPush_0
-JumpEq @Label_cc_place_veh_58
-iPush_0
-Return 5 1
-
-:Label_cc_place_veh_58
-iPush_3
-iPush_1
-pFrame1 7
-pArray 3
-ToStack
-iPush_3
-iPush_3
-pFrame1 7
-pArray 3
-ToStack
-Push1 87
-CallNative player_ped_id 0 1
-iPush_0
-CallNative unk_0x8251485D 9 1
-setF 51
-getF 51
-pFrame1 50
-pFrame1 44
-pFrame1 47
-pFrame1 58
-CallNative unk_0xF3C2875A 5 1
-drop
-getF 50
-iPush_0
-JumpEq @Label_cc_place_veh_59
-iPush_0
-Return 5 1
-
-:Label_cc_place_veh_59
-iPush_3
-iPush_2
-pFrame1 7
-pArray 3
-ToStack
-iPush_3
-iPush_4
-pFrame1 7
-pArray 3
-ToStack
-Push1 87
-CallNative player_ped_id 0 1
-iPush_0
-CallNative unk_0x8251485D 9 1
-setF 52
-getF 52
-pFrame1 50
-pFrame1 44
-pFrame1 47
-pFrame1 58
-CallNative unk_0xF3C2875A 5 1
-drop
-getF 50
-iPush_0
-JumpEq @Label_cc_place_veh_60
-iPush_0
-Return 5 1
-
-:Label_cc_place_veh_60
-iPush_3
-iPush_5
-pFrame1 7
-pArray 3
-ToStack
-iPush_3
-iPush_7
-pFrame1 7
-pArray 3
-ToStack
-Push1 87
-CallNative player_ped_id 0 1
-iPush_0
-CallNative unk_0x8251485D 9 1
-setF 53
-getF 53
-pFrame1 50
-pFrame1 44
-pFrame1 47
-pFrame1 58
-CallNative unk_0xF3C2875A 5 1
-drop
-getF 50
-iPush_0
-JumpEq @Label_cc_place_veh_61
-iPush_0
-Return 5 1
-
-:Label_cc_place_veh_61
-iPush_3
-iPush_6
-pFrame1 7
-pArray 3
-ToStack
-iPush_3
-Push1 8
-pFrame1 7
-pArray 3
-ToStack
-Push1 87
-CallNative player_ped_id 0 1
-iPush_0
-CallNative unk_0x8251485D 9 1
-setF 54
-getF 54
-pFrame1 50
-pFrame1 44
-pFrame1 47
-pFrame1 58
-CallNative unk_0xF3C2875A 5 1
-drop
-getF 50
-iPush_0
-JumpEq @Label_cc_place_veh_62
-iPush_0
-Return 5 1
-
-:Label_cc_place_veh_62
-iPush_3
-iPush_1
-pFrame1 7
-pArray 3
-ToStack
-iPush_3
-Push1 8
-pFrame1 7
-pArray 3
-ToStack
-Push1 87
-CallNative player_ped_id 0 1
-iPush_0
-CallNative unk_0x8251485D 9 1
-setF 55
-getF 55
-pFrame1 50
-pFrame1 44
-pFrame1 47
-pFrame1 58
-CallNative unk_0xF3C2875A 5 1
-drop
-getF 50
-iPush_0
-JumpEq @Label_cc_place_veh_63
-iPush_0
-Return 5 1
-
-:Label_cc_place_veh_63
-iPush_3
-iPush_2
-pFrame1 7
-pArray 3
-ToStack
-iPush_3
-iPush_7
-pFrame1 7
-pArray 3
-ToStack
-Push1 87
-CallNative player_ped_id 0 1
-iPush_0
-CallNative unk_0x8251485D 9 1
-setF 56
-getF 56
-pFrame1 50
-pFrame1 44
-pFrame1 47
-pFrame1 58
-CallNative unk_0xF3C2875A 5 1
-drop
-getF 50
-iPush_0
-JumpEq @Label_cc_place_veh_64
-iPush_0
-Return 5 1
-
-:Label_cc_place_veh_64
-iPush_1
-Return 5 1
-
-:Label_cc_place_veh_57
-Function 30 1 3
-getF 0
-CallNative get_player_ped 1 1
-iPush_0
-CallNative get_entity_coords 2 3
-Return 1 3
 
 :Label_catch_select_button_press
 Function 11 0 2
@@ -1006,7 +502,7 @@ StaticSet1 5
 iPush_0
 iPush_0
 Call @Label_set_up_draw
-PushString "Vehicle Spawn"
+PushString "Vehicle Spawn - 1.0"
 StaticGet1 3
 fPush 0.04444443
 Call @Label_draw_string_header
