@@ -28,10 +28,9 @@ iPush_1
 JumpFalse @Label_main3
 iPush_0
 CallNative wait 1 0
-Call @catch_load_button_press
 
 :Label_main1
-StaticGet1 6
+globalget2 62001
 JumpFalse @Label_main2
 Call @menu_set
 Call @draw_window
@@ -50,7 +49,7 @@ Return 0 0
 :trainer_level_0
 Function 1 0 4
 
-PushString "3S Trainer"
+PushString "Three-Socks Trainer"
 StaticSet1 10
 
 StaticGet1 9
@@ -1477,43 +1476,6 @@ StaticSet1 7
 :Label_739
 Return 0 0
 
-:catch_load_button_press
-Function 8 0 3
-StaticGet1 8
-Push1 25
-JumpGT @Label_catch_load3
-Jump @Label_catch_load4
-
-:Label_catch_load3
-StaticGet1 6
-JumpFalse @Label_catch_load2
-iPush_0
-StaticSet1 8
-Call @menu_hide
-iPush_-1
-PushString "SELECT"
-PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
-CallNative play_sound_frontend 3 0
-Jump @Label_catch_load4
-
-:Label_catch_load2
-iPush_0
-StaticSet1 8
-iPush_1
-StaticSet1 6
-iPush_0
-StaticSet1 11
-Call @menu_clean
-iPush_-1
-PushString "SELECT"
-PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
-CallNative play_sound_frontend 3 0
-Jump @Label_catch_load4
-
-:Label_catch_load4
-Call @load_pressed
-Return 0 0
-
 :menu_hide
 Function 60 0 2
 iPush_0
@@ -1523,7 +1485,7 @@ CallNative set_scaleform_movie_as_no_longer_needed 1 0
 iPush_1
 CallNative set_cinematic_button_active 1 0
 iPush_0
-StaticSet1 6
+globalset2 62001
 Return 0 0
 
 :menu_clean
@@ -1568,29 +1530,6 @@ Jump @Label_menu_clean_LOOP
 :Label_menu_clean_END
 iPush_-1
 StaticSet1 5
-Return 0 0
-
-:load_pressed
-Function 10 0 2
-CallNative is_pause_menu_active 0 1
-JumpFalse @Label_load_pressed_1
-Jump @Label_load_pressed_2
-
-:Label_load_pressed_1
-iPush_2
-Push1 184
-CallNative is_control_pressed 2 1
-JumpFalse @Label_load_pressed_2
-StaticGet1 8
-Add1 1
-StaticSet1 8
-Jump @Label_load_pressed_3
-
-:Label_load_pressed_2
-iPush_0
-StaticSet1 8
-
-:Label_load_pressed_3
 Return 0 0
 
 :draw_window
@@ -1932,6 +1871,45 @@ getF 17
 setF 20
 
 :Label_draw_menu_2
+iPush_4
+getF 3
+pstatic1 123
+aGet 1
+JumpNE @Label_draw_menu_gxt_end
+getF 18
+getF 19
+getF 20
+iPush_0
+Call @set_up_draw
+getF 3
+pstatic1 72
+aGet 1
+StaticGet1 3
+getF 5
+Call @draw_string_gxt
+Jump @Label_draw_menu_bool
+
+:Label_draw_menu_gxt_end
+iPush_5
+getF 3
+pstatic1 123
+aGet 1
+JumpNE @Label_draw_menu_gxt_veh_hash_end
+getF 18
+getF 19
+getF 20
+iPush_0
+Call @set_up_draw
+getF 3
+pstatic1 174
+aGet 1
+CallNative get_display_name_from_vehicle_model 1 1
+StaticGet1 3
+getF 5
+Call @draw_string_gxt
+Jump @Label_draw_menu_bool
+
+:Label_draw_menu_gxt_veh_hash_end
 getF 18
 getF 19
 getF 20
@@ -1944,6 +1922,7 @@ StaticGet1 3
 getF 5
 Call @draw_string
 
+:Label_draw_menu_bool
 iPush_3
 getF 3
 pstatic1 123
@@ -1973,43 +1952,6 @@ getF 5
 Call @draw_string
 
 :Label_draw_menu_bool_end
-iPush_4
-getF 3
-pstatic1 123
-aGet 1
-JumpNE @Label_draw_menu_gxt_end
-getF 18
-getF 19
-getF 20
-iPush_0
-Call @set_up_draw
-getF 3
-pstatic1 72
-aGet 1
-StaticGet1 3
-getF 5
-Call @draw_string_gxt
-
-:Label_draw_menu_gxt_end
-iPush_5
-getF 3
-pstatic1 123
-aGet 1
-JumpNE @Label_draw_menu_gxt_veh_hash_end
-getF 18
-getF 19
-getF 20
-iPush_0
-Call @set_up_draw
-getF 3
-pstatic1 174
-aGet 1
-CallNative get_display_name_from_vehicle_model 1 1
-StaticGet1 3
-getF 5
-Call @draw_string_gxt
-
-:Label_draw_menu_gxt_veh_hash_end
 getF 3
 Add1 1
 setF 3
