@@ -7,7 +7,7 @@ iPush_0
 StaticSet1 4
 iPush_-1
 StaticSet1 5
-iPush_0
+iPush_1
 StaticSet1 6
 iPush_0
 StaticSet1 7
@@ -30,7 +30,7 @@ iPush_0
 CallNative wait 1 0
 
 :Label_main1
-globalget2 62001
+StaticGet1 6
 JumpFalse @Label_main2
 Call @menu_set
 Call @draw_window
@@ -79,9 +79,6 @@ Return 0 0
 :trainer_level_1
 Function 1 0 4
 
-PushString "Vehicle"
-StaticSet1 10
-
 iPush_0
 pstatic2 30
 aGet 1
@@ -89,6 +86,8 @@ Switch [1 @Label_last_selected_3]
 Jump @Label_level_1_end
 
 :Label_last_selected_3
+PushString "Vehicle"
+StaticSet1 10
 PushString "VEH_CLASS_14"
 Call @menu_addItem_gxt
 
@@ -1260,7 +1259,7 @@ Jump @Label_action2
 StaticGet1 7
 iPush_2
 JumpEq @Label_action5
-Jump @Label_action6
+Jump @Label_action2
 
 :Label_action5
 iPush_0
@@ -1268,16 +1267,6 @@ StaticSet1 7
 Call @menu_hide
 Jump @Label_action2
 
-:Label_action6
-StaticGet1 7
-iPush_3
-JumpEq @Label_action7
-Jump @Label_action2
-
-:Label_action7
-iPush_0
-StaticSet1 7
-Jump @Label_action2
 
 :Label_action2
 Return 0 0
@@ -1387,19 +1376,6 @@ iPush_2
 Push1 175
 CallNative unk_0x4E8E29E6 2 0
 iPush_2
-Push1 176
-CallNative is_control_just_released 2 1
-JumpFalse @Label_740
-iPush_-1
-PushString "SELECT"
-PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
-CallNative play_sound_frontend 3 0
-iPush_3
-StaticSet1 7
-Jump @Label_739
-
-:Label_740
-iPush_2
 Push1 174
 CallNative is_control_just_released 2 1
 JumpFalse @Label_741
@@ -1484,8 +1460,7 @@ pstatic1 12
 CallNative set_scaleform_movie_as_no_longer_needed 1 0
 iPush_1
 CallNative set_cinematic_button_active 1 0
-iPush_0
-globalset2 62001
+CallNative terminate_this_thread 0 0
 Return 0 0
 
 :menu_clean
