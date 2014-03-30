@@ -190,7 +190,7 @@ Call @trainer_error_vehicle
 Return 0 0
 
 :trainer_vehicle_modify_level_3
-Function 1 0 6
+Function 1 0 11
 
 iPush_2
 pstatic2 30
@@ -200,43 +200,6 @@ Jump @Label_trainer_vehicle_modify_level_3_end
 
 :Label_trainer_vehicle_modify_level_3_last_selected_0
 
-PushString "Upgrade 1"
-iPush_0
-pFrame1 5
-aSet 1
-PushString "Upgrade 2"
-iPush_1
-pFrame1 5
-aSet 1
-PushString "Upgrade 3"
-iPush_2
-pFrame1 5
-aSet 1
-PushString "Upgrade 4"
-iPush_3
-pFrame1 5
-aSet 1
-PushString "Upgrade 5"
-iPush_4
-pFrame1 5
-aSet 1
-PushString "Upgrade 6"
-iPush_5
-pFrame1 5
-aSet 1
-PushString "Upgrade 7"
-iPush_6
-pFrame1 5
-aSet 1
-PushString "Upgrade 8"
-iPush_7
-pFrame1 5
-aSet 1
-PushString "Upgrade 9"
-Push1 8
-pFrame1 5
-aSet 1
-
 iPush_0
 setF 3
 
@@ -244,43 +207,18 @@ setF 3
 getF 3
 Push1 8
 JumpGT @Label_3645
-iPush_0
-setF 4
-
 StaticGet2 379
 getF 3
 Add1 1
-CallNative is_vehicle_extra_turned_on 2 1
-Not
-JumpFalse @Label_3670
-StaticGet2 379
-getF 3
-Add1 1
-iPush_1
-CallNative set_vehicle_extra 3 0
-iPush_1
-setF 4
-
-:Label_3670
-StaticGet2 379
-getF 3
-Add1 1
-CallNative is_vehicle_extra_turned_on 2 1
+CallNative does_extra_exist 2 1
 JumpFalse @Label_3672
 
-getF 4
-JumpFalse @Label_modify_level_3_not_turnedon
-StaticGet2 379
+PushString "Extra"
+Call @menu_addItem
 getF 3
 Add1 1
-iPush_1
-CallNative set_vehicle_extra 3 0
-
-:Label_modify_level_3_not_turnedon
-getF 3
-pFrame1 5
-aGet 1
-Call @menu_addItem
+iPush_0
+Call @menu_addItem_number
 StaticGet2 379
 getF 3
 Add1 1
@@ -1328,12 +1266,36 @@ Return 0 0
 :trainer_vehicle_extra_action_level_3
 Function 1 0 4
 
+StaticGet2 379
 StaticGet1 4
-Switch [0 @Label_trainer_vehicle_extra_action_level_3_last_selected_0]
+pstatic2 276
+aGet 1
+CallNative is_vehicle_extra_turned_on 2 1
+JumpFalse @Label_trainer_vehicle_extra_action_level_3_not_on
+
+StaticGet2 379
+StaticGet1 4
+pstatic2 276
+aGet 1
+iPush_1
+CallNative set_vehicle_extra 3 0
+iPush_0
+StaticGet1 4
+pstatic1 174
+aSet 1
 Jump @Label_trainer_vehicle_extra_action_level_3_end
 
-:Label_trainer_vehicle_extra_action_level_3_last_selected_0
-Return 0 0
+:Label_trainer_vehicle_extra_action_level_3_not_on
+StaticGet2 379
+StaticGet1 4
+pstatic2 276
+aGet 1
+iPush_0
+CallNative set_vehicle_extra 3 0
+iPush_1
+StaticGet1 4
+pstatic1 174
+aSet 1
 
 :Label_trainer_vehicle_extra_action_level_3_end
 Return 0 0
@@ -1790,6 +1752,11 @@ Return 0 0
 
 :catch_select_button_press
 Function 11 0 2
+CallNative hide_help_text_this_frame 0 0
+iPush_0
+CallNative set_mobile_radio_enabled_during_gameplay 1 0
+iPush_0
+CallNative set_mobile_phone_radio_state 1 0
 iPush_0
 CallNative set_cinematic_button_active 1 0
 iPush_0
@@ -1889,6 +1856,10 @@ Return 0 0
 
 :menu_hide
 Function 60 0 2
+iPush_1
+CallNative set_mobile_radio_enabled_during_gameplay 1 0
+iPush_1
+CallNative set_mobile_phone_radio_state 1 0
 iPush_0
 StaticSet1 13
 pstatic1 12
@@ -1931,6 +1902,17 @@ iPush_0
 getF 3
 pstatic2 225
 aSet 1
+
+iPush_0
+getF 3
+pstatic2 276
+aSet 1
+
+iPush_0
+getF 3
+pstatic2 327
+aSet 1
+
 
 getF 3
 Add1 1
@@ -2122,6 +2104,15 @@ Push1 162
 CallNative unk_0x4E8E29E6 2 0
 iPush_2
 Push1 174
+CallNative unk_0x4E8E29E6 2 0
+iPush_0
+Push1 92
+CallNative disable_control_action 2 0
+iPush_0
+Push1 67
+CallNative disable_control_action 2 0
+iPush_0
+Push1 49
 CallNative unk_0x4E8E29E6 2 0
 StaticGet1 5
 setF 3
