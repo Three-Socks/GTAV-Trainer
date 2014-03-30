@@ -36,7 +36,7 @@ Call @menu_set
 Call @draw_window
 Call @draw_frontend
 Call @draw_menu
-Call @catch_updown_button_press
+Call @catch_button_press
 Call @catch_select_button_press
 Call @menu_action
 
@@ -53,7 +53,7 @@ PushString "Three-Socks Trainer"
 StaticSet1 10
 
 StaticGet1 9
-Switch [0 @Label_level_0]:[1 @Label_level_1]:[2 @Label_level_2]
+Switch [0 @Label_level_0]:[1 @Label_level_1]:[2 @Label_level_2]:[3 @Label_level_3]
 Jump @Label_level_end
 
 :Label_level_0
@@ -73,6 +73,10 @@ Return 0 0
 Call @trainer_level_2
 Return 0 0
 
+:Label_level_3
+Call @trainer_level_3
+Return 0 0
+
 :Label_level_end
 Return 0 0
 
@@ -82,74 +86,16 @@ Function 1 0 4
 iPush_0
 pstatic2 30
 aGet 1
-Switch [1 @Label_last_selected_3]
+Switch [1 @Label_last_selected_1]
 Jump @Label_level_1_end
 
-:Label_last_selected_3
+:Label_last_selected_1
 PushString "Vehicle"
 StaticSet1 10
-PushString "VEH_CLASS_14"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_20"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_0"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_3"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_13"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_18"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_15"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_10"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_19"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_8"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_4"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_9"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_16"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_1"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_17"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_6"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_5"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_7"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_2"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_11"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_12"
-Call @menu_addItem_gxt
+PushString "Spawn"
+Call @menu_addItem
+PushString "Modify"
+Call @menu_addItem
 Return 0 0
 
 :Label_level_1_end
@@ -158,14 +104,258 @@ Return 0 0
 :trainer_level_2
 Function 1 0 4
 
+iPush_0
+pstatic2 30
+aGet 1
+Switch [1 @Label_level_2_last_selected_1]
+Jump @Label_level_2_end
+
+:Label_level_2_last_selected_1
+Call @trainer_vehicle_level_2
+Return 0 0
+
+:Label_level_2_end
+Return 0 0
+
+:trainer_vehicle_level_2
+Function 1 0 4
+
 iPush_1
 pstatic2 30
 aGet 1
-Switch [0 @Label_level_2_last_selected_boats]:[1 @Label_level_2_last_selected_commercial]:[2 @Label_level_2_last_selected_compacts]:[3 @Label_level_2_last_selected_coupes]:[4 @Label_level_2_last_selected_cycles]:[5 @Label_level_2_last_selected_emergency]:[6 @Label_level_2_last_selected_helicopters]:[7 @Label_level_2_last_selected_industrial]:[8 @Label_level_2_last_selected_military]:[9 @Label_level_2_last_selected_motorcycles]:[10 @Label_level_2_last_selected_muscle]:[11 @Label_level_2_last_selected_off_road]:[12 @Label_level_2_last_selected_planes]:[13 @Label_level_2_last_selected_sedans]:[14 @Label_level_2_last_selected_service]:[15 @Label_level_2_last_selected_sports]:[16 @Label_level_2_last_selected_sports_classics]:[17 @Label_level_2_last_selected_super]:[18 @Label_level_2_last_selected_suvs]:[19 @Label_level_2_last_selected_utility]:[20 @Label_level_2_last_selected_vans]
-Jump @Label_level_2_end
+Switch [0 @Label_trainer_vehicle_level_2_last_selected_0]:[1 @Label_trainer_vehicle_level_2_last_selected_1]
+Jump @Label_trainer_vehicle_level_2_end
 
+:Label_trainer_vehicle_level_2_last_selected_0
+PushString "Vehicle - Spawn"
+StaticSet1 10
+Call @test_get_veh_cats
+Return 0 0
 
-:Label_level_2_last_selected_boats
+:Label_trainer_vehicle_level_2_last_selected_1
+PushString "Vehicle - Modify"
+StaticSet1 10
+PushString "Extras"
+Call @menu_addItem
+PushString "Doors"
+Call @menu_addItem
+PushString "Lights"
+Call @menu_addItem
+Return 0 0
+
+:Label_trainer_vehicle_level_2_end
+Return 0 0
+
+:trainer_level_3
+Function 1 0 4
+
+iPush_0
+pstatic2 30
+aGet 1
+Switch [1 @Label_level_3_last_selected_1]
+Jump @Label_level_3_end
+
+:Label_level_3_last_selected_1
+Call @trainer_vehicle_level_3
+Return 0 0
+
+:Label_level_3_end
+Return 0 0
+
+:trainer_vehicle_level_3
+Function 1 0 4
+
+iPush_1
+pstatic2 30
+aGet 1
+Switch [0 @Label_vehicle_level_3_last_selected_0]:[1 @Label_vehicle_level_3_last_selected_1]
+Jump @Label_vehicle_level_3_end
+
+:Label_vehicle_level_3_last_selected_0
+Call @trainer_vehicle_spawn_level_3
+Return 0 0
+
+:Label_vehicle_level_3_last_selected_1
+Call @trainer_get_vehicle
+JumpFalse @Label_vehicle_level_3_error
+
+Call @trainer_vehicle_modify_level_3
+Return 0 0
+
+:Label_vehicle_level_3_end
+Return 0 0
+
+:Label_vehicle_level_3_error
+Call @trainer_error_vehicle
+Return 0 0
+
+:trainer_vehicle_modify_level_3
+Function 1 0 6
+
+iPush_2
+pstatic2 30
+aGet 1
+Switch [0 @Label_trainer_vehicle_modify_level_3_last_selected_0]:[1 @Label_trainer_vehicle_modify_level_3_last_selected_1]:[2 @Label_trainer_vehicle_modify_level_3_last_selected_2]
+Jump @Label_trainer_vehicle_modify_level_3_end
+
+:Label_trainer_vehicle_modify_level_3_last_selected_0
+
+PushString "Upgrade 1"
+iPush_0
+pFrame1 5
+aSet 1
+PushString "Upgrade 2"
+iPush_1
+pFrame1 5
+aSet 1
+PushString "Upgrade 3"
+iPush_2
+pFrame1 5
+aSet 1
+PushString "Upgrade 4"
+iPush_3
+pFrame1 5
+aSet 1
+PushString "Upgrade 5"
+iPush_4
+pFrame1 5
+aSet 1
+PushString "Upgrade 6"
+iPush_5
+pFrame1 5
+aSet 1
+PushString "Upgrade 7"
+iPush_6
+pFrame1 5
+aSet 1
+PushString "Upgrade 8"
+iPush_7
+pFrame1 5
+aSet 1
+PushString "Upgrade 9"
+Push1 8
+pFrame1 5
+aSet 1
+
+iPush_0
+setF 3
+
+:Label_3673
+getF 3
+Push1 8
+JumpGT @Label_3645
+iPush_0
+setF 4
+
+StaticGet2 379
+getF 3
+Add1 1
+CallNative is_vehicle_extra_turned_on 2 1
+Not
+JumpFalse @Label_3670
+StaticGet2 379
+getF 3
+Add1 1
+iPush_1
+CallNative set_vehicle_extra 3 0
+iPush_1
+setF 4
+
+:Label_3670
+StaticGet2 379
+getF 3
+Add1 1
+CallNative is_vehicle_extra_turned_on 2 1
+JumpFalse @Label_3672
+
+getF 4
+JumpFalse @Label_modify_level_3_not_turnedon
+StaticGet2 379
+getF 3
+Add1 1
+iPush_1
+CallNative set_vehicle_extra 3 0
+
+:Label_modify_level_3_not_turnedon
+getF 3
+pFrame1 5
+aGet 1
+Call @menu_addItem
+StaticGet2 379
+getF 3
+Add1 1
+CallNative is_vehicle_extra_turned_on 2 1
+Call @menu_addItem_bool
+Call @menu_addItem_action
+
+:Label_3672
+getF 3
+Add1 1
+setF 3
+Jump @Label_3673
+
+:Label_3645
+Return 0 0
+
+:Label_trainer_vehicle_modify_level_3_last_selected_1
+PushString "Door"
+Call @menu_addItem
+iPush_1
+iPush_6
+Call @menu_addItem_number
+Call @menu_addItem_action
+
+PushString "Control Open"
+Call @menu_addItem
+Call @menu_addItem_action
+
+PushString "Control Close"
+Call @menu_addItem
+Call @menu_addItem_action
+
+PushString "Fully Open"
+Call @menu_addItem
+Call @menu_addItem_action
+
+PushString "Fully Close"
+Call @menu_addItem
+Call @menu_addItem_action
+
+PushString "Lock"
+Call @menu_addItem
+Call @menu_addItem_action
+
+PushString "door angle 2"
+Call @menu_addItem
+StaticGet2 379
+iPush_2
+CallNative get_vehicle_door_angle_ratio 2 1
+Push1 10
+Call @menu_addItem_float
+Call @menu_addItem_action
+Return 0 0
+
+:Label_trainer_vehicle_modify_level_3_last_selected_2
+PushString "Interior Light"
+Call @menu_addItem
+iPush_0
+Call @menu_addItem_bool
+Call @menu_addItem_action
+Return 0 0
+
+:Label_trainer_vehicle_modify_level_3_end
+Return 0 0
+
+:trainer_vehicle_spawn_level_3
+Function 1 0 4
+
+iPush_2
+pstatic2 30
+aGet 1
+Switch [0 @Label_trainer_vehicle_spawn_level_3_last_selected_boats]:[1 @Label_trainer_vehicle_spawn_level_3_last_selected_commercial]:[2 @Label_trainer_vehicle_spawn_level_3_last_selected_compacts]:[3 @Label_trainer_vehicle_spawn_level_3_last_selected_coupes]:[4 @Label_trainer_vehicle_spawn_level_3_last_selected_cycles]:[5 @Label_trainer_vehicle_spawn_level_3_last_selected_emergency]:[6 @Label_trainer_vehicle_spawn_level_3_last_selected_helicopters]:[7 @Label_trainer_vehicle_spawn_level_3_last_selected_industrial]:[8 @Label_trainer_vehicle_spawn_level_3_last_selected_military]:[9 @Label_trainer_vehicle_spawn_level_3_last_selected_motorcycles]:[10 @Label_trainer_vehicle_spawn_level_3_last_selected_muscle]:[11 @Label_trainer_vehicle_spawn_level_3_last_selected_off_road]:[12 @Label_trainer_vehicle_spawn_level_3_last_selected_planes]:[13 @Label_trainer_vehicle_spawn_level_3_last_selected_sedans]:[14 @Label_trainer_vehicle_spawn_level_3_last_selected_service]:[15 @Label_trainer_vehicle_spawn_level_3_last_selected_sports]:[16 @Label_trainer_vehicle_spawn_level_3_last_selected_sports_classics]:[17 @Label_trainer_vehicle_spawn_level_3_last_selected_super]:[18 @Label_trainer_vehicle_spawn_level_3_last_selected_suvs]:[19 @Label_trainer_vehicle_spawn_level_3_last_selected_utility]:[20 @Label_trainer_vehicle_spawn_level_3_last_selected_vans]
+Jump @Label_trainer_vehicle_spawn_level_3_end
+
+:Label_trainer_vehicle_spawn_level_3_last_selected_boats
 Push 1033245328
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -204,7 +394,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_commercial
+:Label_trainer_vehicle_spawn_level_3_last_selected_commercial
 Push 2053223216
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -237,7 +427,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_compacts
+:Label_trainer_vehicle_spawn_level_3_last_selected_compacts
 Push -344943009
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -255,7 +445,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_coupes
+:Label_trainer_vehicle_spawn_level_3_last_selected_coupes
 Push 330661258
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -294,7 +484,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_cycles
+:Label_trainer_vehicle_spawn_level_3_last_selected_cycles
 Push 1131912276
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -318,7 +508,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_emergency
+:Label_trainer_vehicle_spawn_level_3_last_selected_emergency
 Push 1171614426
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -375,7 +565,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_helicopters
+:Label_trainer_vehicle_spawn_level_3_last_selected_helicopters
 Push 837858166
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -411,7 +601,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_industrial
+:Label_trainer_vehicle_spawn_level_3_last_selected_industrial
 Push -1006919392
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -444,7 +634,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_military
+:Label_trainer_vehicle_spawn_level_3_last_selected_military
 Push -823509173
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -459,7 +649,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_motorcycles
+:Label_trainer_vehicle_spawn_level_3_last_selected_motorcycles
 Push 1672195559
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -507,7 +697,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_muscle
+:Label_trainer_vehicle_spawn_level_3_last_selected_muscle
 Push -682211828
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -543,7 +733,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_off_road
+:Label_trainer_vehicle_spawn_level_3_last_selected_off_road
 Push -349601129
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -597,7 +787,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_planes
+:Label_trainer_vehicle_spawn_level_3_last_selected_planes
 Push -150975354
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -639,7 +829,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_sedans
+:Label_trainer_vehicle_spawn_level_3_last_selected_sedans
 Push -1809822327
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -705,7 +895,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_service
+:Label_trainer_vehicle_spawn_level_3_last_selected_service
 Push 1283517198
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -729,7 +919,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_sports
+:Label_trainer_vehicle_spawn_level_3_last_selected_sports
 Push 1032823388
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -795,7 +985,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_sports_classics
+:Label_trainer_vehicle_spawn_level_3_last_selected_sports_classics
 Push 1051415893
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -834,7 +1024,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_super
+:Label_trainer_vehicle_spawn_level_3_last_selected_super
 Push -1216765807
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -861,7 +1051,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_suvs
+:Label_trainer_vehicle_spawn_level_3_last_selected_suvs
 Push -808831384
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -921,7 +1111,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_utility
+:Label_trainer_vehicle_spawn_level_3_last_selected_utility
 Push 1560980623
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -978,7 +1168,7 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_last_selected_vans
+:Label_trainer_vehicle_spawn_level_3_last_selected_vans
 Push -16948145
 Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
@@ -1062,7 +1252,212 @@ Call @menu_addItem_gxt_veh_hash
 Call @menu_addItem_action
 Return 0 0
 
-:Label_level_2_end
+:Label_trainer_vehicle_spawn_level_3_end
+Return 0 0
+
+:trainer_action_level_3
+Function 1 0 4
+
+iPush_0
+pstatic2 30
+aGet 1
+Switch [1 @Label_action_level_3_last_selected_1]
+Jump @Label_action_level_3_end
+
+:Label_action_level_3_last_selected_1
+Call @trainer_vehicle_action_level_3
+Return 0 0
+
+:Label_action_level_3_end
+Return 0 0
+
+:trainer_vehicle_action_level_3
+Function 1 0 4
+
+iPush_1
+pstatic2 30
+aGet 1
+Switch [0 @Label_trainer_vehicle_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_action_level_3_last_selected_1]
+Jump @Label_trainer_vehicle_action_level_3_end
+
+:Label_trainer_vehicle_action_level_3_last_selected_0
+StaticGet1 4
+pstatic1 174
+aGet 1
+Call @trainer_spawn_veh
+Return 0 0
+
+:Label_trainer_vehicle_action_level_3_last_selected_1
+Call @trainer_get_vehicle
+JumpFalse @Label_trainer_vehicle_action_level_3_error
+
+Call @trainer_vehicle_modify_action_level_3
+Return 0 0
+
+:Label_trainer_vehicle_action_level_3_end
+Return 0 0
+
+:Label_trainer_vehicle_action_level_3_error
+Call @trainer_error_vehicle
+Return 0 0
+
+:trainer_vehicle_modify_action_level_3
+Function 1 0 4
+
+iPush_2
+pstatic2 30
+aGet 1
+Switch [0 @Label_trainer_vehicle_modify_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_modify_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_modify_action_level_3_last_selected_2]
+Jump @Label_trainer_vehicle_modify_action_level_3_end
+
+:Label_trainer_vehicle_modify_action_level_3_last_selected_0
+Call @trainer_vehicle_extra_action_level_3
+Return 0 0
+
+:Label_trainer_vehicle_modify_action_level_3_last_selected_1
+Call @trainer_vehicle_door_action_level_3
+Return 0 0
+
+:Label_trainer_vehicle_modify_action_level_3_last_selected_2
+Call @trainer_vehicle_light_action_level_3
+Return 0 0
+
+:Label_trainer_vehicle_modify_action_level_3_end
+Return 0 0
+
+:trainer_vehicle_extra_action_level_3
+Function 1 0 4
+
+StaticGet1 4
+Switch [0 @Label_trainer_vehicle_extra_action_level_3_last_selected_0]
+Jump @Label_trainer_vehicle_extra_action_level_3_end
+
+:Label_trainer_vehicle_extra_action_level_3_last_selected_0
+Return 0 0
+
+:Label_trainer_vehicle_extra_action_level_3_end
+Return 0 0
+
+:trainer_vehicle_door_action_level_3
+Function 1 0 4
+
+iPush_0
+pstatic2 276
+aGet 1
+iPush_1
+Sub
+setF 3
+
+StaticGet1 4
+Switch [1 @Label_trainer_vehicle_door_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_door_action_level_3_last_selected_2]:[3 @Label_trainer_vehicle_door_action_level_3_last_selected_3]:[4 @Label_trainer_vehicle_door_action_level_3_last_selected_4]:[5 @Label_trainer_vehicle_door_action_level_3_last_selected_5]
+Jump @Label_trainer_vehicle_door_action_level_3_end
+
+:Label_trainer_vehicle_door_action_level_3_last_selected_1
+StaticGet2 379
+getF 3
+iPush_0
+fPush_1.0
+CallNative set_vehicle_door_control 4 0
+Return 0 0
+
+:Label_trainer_vehicle_door_action_level_3_last_selected_2
+StaticGet2 379
+getF 3
+iPush_0
+fPush_0.0
+CallNative set_vehicle_door_control 4 0
+Return 0 0
+
+:Label_trainer_vehicle_door_action_level_3_last_selected_3
+StaticGet2 379
+getF 3
+iPush_1
+iPush_0
+CallNative set_vehicle_door_open 4 0
+Return 0 0
+
+:Label_trainer_vehicle_door_action_level_3_last_selected_4
+StaticGet2 379
+getF 3
+iPush_1
+CallNative set_vehicle_door_shut 3 0
+Return 0 0
+
+:Label_trainer_vehicle_door_action_level_3_last_selected_5
+StaticGet2 379
+getF 3
+CallNative set_vehicle_doors_locked 2 0
+Return 0 0
+
+:Label_trainer_vehicle_door_action_level_3_end
+Return 0 0
+
+:trainer_vehicle_light_action_level_3
+Function 1 0 4
+
+StaticGet1 4
+Switch [0 @Label_trainer_vehicle_light_action_level_3_last_selected_0]
+Jump @Label_trainer_vehicle_light_action_level_3_end
+
+:Label_trainer_vehicle_light_action_level_3_last_selected_0
+StaticGet1 4
+pstatic1 174
+aGet 1
+Not
+JumpFalse @Label_trainer_vehicle_light_true
+
+StaticGet2 379
+iPush_1
+CallNative set_vehicle_interiorlight 2 0
+iPush_1
+StaticGet1 4
+pstatic1 174
+aSet 1
+Jump @Label_trainer_vehicle_light_end
+
+:Label_trainer_vehicle_light_true
+StaticGet2 379
+iPush_0
+CallNative set_vehicle_interiorlight 2 0
+iPush_0
+StaticGet1 4
+pstatic1 174
+aSet 1
+
+:Label_trainer_vehicle_light_end
+Return 0 0
+
+:Label_trainer_vehicle_light_action_level_3_end
+Return 0 0
+
+:trainer_get_vehicle
+Function 1 0 5
+
+CallNative player_ped_id 0 1
+iPush_0
+CallNative is_ped_in_any_vehicle 2 1
+JumpFalse @Label_trainer_get_vehicle_not
+CallNative player_ped_id 0 1
+iPush_0
+CallNative get_vehicle_ped_is_in 2 1
+StaticSet2 379
+iPush_1
+Return 0 1
+
+:Label_trainer_get_vehicle_not
+iPush_0
+Return 0 1
+
+:trainer_error_vehicle
+Function 1 0 4
+PushString "STRING"
+CallNative unk_0x574EE85C 1 0
+PushString "Not in a vehicle."
+CallNative unk_0x27A244D8 1 0
+iPush_0
+iPush_1
+CallNative unk_0x08F7AF78 2 1
+drop
 Return 0 0
 
 :draw_frontend_hook
@@ -1071,7 +1466,7 @@ Function 1 0 5
 :Label_draw_frontend_hook_end
 Return 0 0
 
-:spawn_veh
+:trainer_spawn_veh
 Function 14 1 10
 iPush_0
 setF 7
@@ -1091,25 +1486,25 @@ CallNative wait 1 0
 Jump @Label_spawn_veh_while
 
 :Label_spawn_veh_main
-StaticGet2 276
+StaticGet2 378
 CallNative does_entity_exist 1 1
 JumpFalse @Label_spawn_veh_normal
-StaticGet2 276
+StaticGet2 378
 CallNative is_entity_dead 1 1
 Not
 JumpFalse @Label_spawn_veh_delete
 CallNative player_ped_id 0 1
-StaticGet2 276
+StaticGet2 378
 iPush_0
 CallNative is_ped_in_vehicle 3 1
 JumpFalse @Label_spawn_veh_delete
-StaticGet2 276
+StaticGet2 378
 iPush_1
 CallNative get_entity_coords 2 3
 iPush_3
 pFrame1 3
 FromStack
-StaticGet2 276
+StaticGet2 378
 CallNative get_entity_heading 1 1
 setF 6
 CallNative player_ped_id 0 1
@@ -1129,7 +1524,7 @@ iPush_1
 setF 7
 
 :Label_spawn_veh_delete
-pstatic2 276
+pstatic2 378
 CallNative delete_vehicle 1 0
 
 :Label_spawn_veh_normal
@@ -1178,23 +1573,23 @@ getF 6
 iPush_0
 iPush_1
 CallNative create_vehicle 7 1
-StaticSet2 276
-StaticGet2 276
+StaticSet2 378
+StaticGet2 378
 CallNative set_vehicle_on_ground_properly 1 1
 drop
 
 CallNative player_ped_id 0 1
-StaticGet2 276
+StaticGet2 378
 iPush_-1
 CallNative set_ped_into_vehicle 3 0
-StaticGet2 276
+StaticGet2 378
 iPush_1
 iPush_1
 CallNative set_vehicle_engine_on 3 0
 
 getF 0
 CallNative set_model_as_no_longer_needed 1 0
-pstatic2 276
+pstatic2 378
 CallNative set_vehicle_as_no_longer_needed 1 0
 Jump @Label_spawn_veh_goto_end
 
@@ -1242,14 +1637,12 @@ iPush_0
 StaticSet1 7
 
 StaticGet1 9
-Switch [2 @Label_action_switch_3]
+Switch [3 @Label_action_switch_3]
 Jump @Label_action_switch_22
 
 :Label_action_switch_3
-StaticGet1 4
-pstatic1 174
-aGet 1
-Call @spawn_veh
+Call @trainer_action_level_3
+
 Jump @Label_action_switch_22
 
 :Label_action_switch_22
@@ -1285,6 +1678,48 @@ aSet 1
 
 :Label_menu_addItem_end
 Return 1 0
+
+:menu_addItem_number
+Function 1 2 4
+
+iPush_1
+StaticGet1 5
+pstatic1 123
+aSet 1
+
+getF 0
+StaticGet1 5
+pstatic2 276
+aSet 1
+
+getF 1
+StaticGet1 5
+pstatic1 174
+aSet 1
+
+:Label_menu_addItem_number_end
+Return 2 0
+
+:menu_addItem_float
+Function 1 2 4
+
+iPush_2
+StaticGet1 5
+pstatic1 123
+aSet 1
+
+getF 0
+StaticGet1 5
+pstatic2 327
+aSet 1
+
+getF 1
+StaticGet1 5
+pstatic1 174
+aSet 1
+
+:Label_menu_addItem_float_end
+Return 2 0
 
 :menu_addItem_bool
 Function 1 1 4
@@ -1674,7 +2109,7 @@ StaticSet1 13
 :Label_draw_frontend_end
 Return 0 0
 
-:catch_updown_button_press
+:catch_button_press
 Function 8 0 6
 iPush_0
 Push1 46
@@ -1694,55 +2129,133 @@ setF 3
 iPush_2
 Push1 161
 CallNative is_control_just_pressed 2 1
-JumpFalse @Label_else_up
+JumpFalse @Label_catch_up_button_press
 iPush_-1
 PushString "NAV_UP_DOWN"
 PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
 CallNative play_sound_frontend 3 0
 StaticGet1 4
 getF 3
-JumpGE @Label_1341
+JumpGE @Label_catch_button_press_1
 StaticGet1 4
 Add1 1
 StaticSet1 4
-Jump @Label_1342
+Jump @Label_catch_button_press_2
 
-:Label_1341
+:Label_catch_button_press_1
 iPush_0
 StaticSet1 4
 
-:Label_1342
-Jump @Label_catch_updown_button_press_END
+:Label_catch_button_press_2
+Jump @Label_catch_button_press_end
 
-:Label_else_up
+:Label_catch_up_button_press
 iPush_2
 Push1 162
 CallNative is_control_just_pressed 2 1
-JumpFalse @Label_1344
+JumpFalse @Label_catch_left_button_press
 iPush_-1
 PushString "NAV_UP_DOWN"
 PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
 CallNative play_sound_frontend 3 0
 StaticGet1 4
 iPush_0
-JumpLE @Label_1345
+JumpLE @Label_catch_button_press_4
 StaticGet1 4
 iPush_1
 Sub
 StaticSet1 4
-Jump @Label_1346
+Jump @Label_catch_button_press_3
 
-:Label_1345
+:Label_catch_button_press_4
 getF 3
 StaticSet1 4
 
-:Label_1344
-Jump @Label_catch_updown_button_press_END
+:Label_catch_button_press_3
+Jump @Label_catch_button_press_end
 
-:Label_1346
-Jump @Label_catch_updown_button_press_END
+:Label_catch_left_button_press
+iPush_2
+Push1 163
+CallNative is_control_just_pressed 2 1
+JumpFalse @Label_catch_right_button_press
+iPush_-1
+PushString "NAV_UP_DOWN"
+PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
+CallNative play_sound_frontend 3 0
+iPush_1
+StaticGet1 4
+pstatic1 123
+aGet 1
+JumpNE @Label_catch_button_press_5
+iPush_1
+StaticGet1 4
+pstatic2 276
+aGet 1
+JumpEq @Label_catch_button_press_6
+StaticGet1 4
+pstatic2 276
+aGet 1
+iPush_1
+Sub
+StaticGet1 4
+pstatic2 276
+aSet 1
 
-:Label_catch_updown_button_press_END
+Jump @Label_catch_button_press_5
+
+:Label_catch_button_press_6
+StaticGet1 4
+pstatic1 174
+aGet 1
+StaticGet1 4
+pstatic2 276
+aSet 1
+
+:Label_catch_button_press_5
+Jump @Label_catch_button_press_end
+
+:Label_catch_right_button_press
+iPush_2
+Push1 164
+CallNative is_control_just_pressed 2 1
+JumpFalse @Label_catch_button_press_end
+iPush_-1
+PushString "NAV_UP_DOWN"
+PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
+CallNative play_sound_frontend 3 0
+iPush_1
+StaticGet1 4
+pstatic1 123
+aGet 1
+JumpNE @Label_catch_button_press_7
+StaticGet1 4
+pstatic2 276
+aGet 1
+StaticGet1 4
+pstatic1 174
+aGet 1
+JumpEq @Label_catch_button_press_8
+StaticGet1 4
+pstatic2 276
+aGet 1
+Add1 1
+StaticGet1 4
+pstatic2 276
+aSet 1
+
+Jump @Label_catch_button_press_7
+
+:Label_catch_button_press_8
+iPush_1
+StaticGet1 4
+pstatic2 276
+aSet 1
+
+:Label_catch_button_press_7
+Jump @Label_catch_button_press_end
+
+:Label_catch_button_press_end
 Return 0 0
 
 :draw_menu
@@ -1797,6 +2310,7 @@ setF 17
 getF 12
 getF 13
 getF 14
+iPush_0
 iPush_0
 Call @set_up_draw
 StaticGet1 10
@@ -1855,6 +2369,7 @@ getF 18
 getF 19
 getF 20
 iPush_0
+iPush_0
 Call @set_up_draw
 getF 3
 pstatic1 72
@@ -1874,6 +2389,7 @@ getF 18
 getF 19
 getF 20
 iPush_0
+iPush_0
 Call @set_up_draw
 getF 3
 pstatic1 174
@@ -1889,6 +2405,7 @@ getF 18
 getF 19
 getF 20
 iPush_0
+iPush_0
 Call @set_up_draw
 getF 3
 pstatic1 72
@@ -1898,6 +2415,44 @@ getF 5
 Call @draw_string
 
 :Label_draw_menu_bool
+iPush_1
+getF 3
+pstatic1 123
+aGet 1
+JumpNE @Label_draw_menu_number_end
+getF 18
+getF 19
+getF 20
+iPush_0
+iPush_1
+Call @set_up_draw
+getF 3
+pstatic2 276
+aGet 1
+fPush_0.0
+getF 5
+Call @draw_number
+
+:Label_draw_menu_number_end
+iPush_2
+getF 3
+pstatic1 123
+aGet 1
+JumpNE @Label_draw_menu_float_end
+getF 18
+getF 19
+getF 20
+iPush_0
+iPush_1
+Call @set_up_draw
+getF 3
+pstatic2 327
+aGet 1
+fPush_0.0
+getF 5
+Call @draw_float
+
+:Label_draw_menu_float_end
 iPush_3
 getF 3
 pstatic1 123
@@ -1907,6 +2462,7 @@ getF 18
 getF 19
 getF 20
 iPush_1
+iPush_0
 Call @set_up_draw
 
 getF 3
@@ -1935,6 +2491,29 @@ Jump @Label_draw_menu_LOOP
 :Label_draw_menu_END
 Return 0 0
 
+:draw_number
+Function 4 3 3
+PushString "NUMBER"
+CallNative unk_0x3E35563E 1 0
+getF 0
+CallNative unk_0xFE272A57 1 0
+getF 1
+getF 2
+CallNative unk_0x6F8350CE 2 0
+Return 3 0
+
+:draw_float
+Function 4 3 3
+PushString "NUMBER"
+CallNative unk_0x3E35563E 1 0
+getF 0
+iPush_4
+CallNative is_ped_hiding_near_indicatorlights 2 0
+getF 1
+getF 2
+CallNative unk_0x6F8350CE 2 0
+Return 3 0
+
 :draw_string
 Function 4 3 3
 PushString "STRING"
@@ -1956,7 +2535,7 @@ CallNative unk_0x6F8350CE 2 0
 Return 3 0
 
 :set_up_draw
-Function 1 4 6
+Function 1 5 7
 iPush_0
 CallNative set_text_font 1 0
 fPush_0.0
@@ -1969,8 +2548,14 @@ getF 2
 Push1 255
 CallNative set_text_colour 4 0
 
+fPush_0.0
+fPush_1.0
+CallNative set_text_wrap 2 0
+iPush_0
+CallNative set_text_right_justify 1 0
+
 getF 3
-JumpFalse @Label_set_up_draw_4
+JumpFalse @Label_set_up_draw_5
 fPush_0.0
 StaticGet1 3
 fPush 0.2040
@@ -1978,17 +2563,20 @@ fAdd
 CallNative set_text_wrap 2 0
 iPush_1
 CallNative set_text_right_justify 1 0
-Jump @Label_set_up_draw_5
-
-:Label_set_up_draw_4
-fPush_0.0
-fPush_1.0
-CallNative set_text_wrap 2 0
-iPush_0
-CallNative set_text_right_justify 1 0
-Jump @Label_set_up_draw_5
+Jump @Label_set_up_draw_6
 
 :Label_set_up_draw_5
+getF 4
+JumpFalse @Label_set_up_draw_6
+fPush_0.0
+StaticGet1 3
+fPush 0.1920
+fAdd
+CallNative set_text_wrap 2 0
+iPush_1
+CallNative set_text_right_justify 1 0
+
+:Label_set_up_draw_6
 iPush_0
 CallNative set_text_centre 1 0
 iPush_0
@@ -2003,4 +2591,979 @@ iPush_0
 iPush_0
 iPush_0
 CallNative set_text_edge 5 0
-Return 4 0
+Return 5 0
+
+:test_get_veh_cats
+Function 1 0 4
+PushString "VEH_CLASS_14"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_20"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_0"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_3"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_13"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_18"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_15"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_10"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_19"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_8"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_4"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_9"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_16"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_1"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_17"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_6"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_5"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_7"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_2"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_11"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_12"
+Call @menu_addItem_gxt
+Return 0 0
+
+:test_trainer_vehicle_spawn_level_3
+Function 1 0 4
+
+iPush_2
+pstatic2 30
+aGet 1
+Switch [0 @Label_test_trainer_vehicle_spawn_level_3_last_selected_boats]:[1 @Label_test_trainer_vehicle_spawn_level_3_last_selected_commercial]:[2 @Label_test_trainer_vehicle_spawn_level_3_last_selected_compacts]:[3 @Label_test_trainer_vehicle_spawn_level_3_last_selected_coupes]:[4 @Label_test_trainer_vehicle_spawn_level_3_last_selected_cycles]:[5 @Label_test_trainer_vehicle_spawn_level_3_last_selected_emergency]:[6 @Label_test_trainer_vehicle_spawn_level_3_last_selected_helicopters]:[7 @Label_test_trainer_vehicle_spawn_level_3_last_selected_industrial]:[8 @Label_test_trainer_vehicle_spawn_level_3_last_selected_military]:[9 @Label_test_trainer_vehicle_spawn_level_3_last_selected_motorcycles]:[10 @Label_test_trainer_vehicle_spawn_level_3_last_selected_muscle]:[11 @Label_test_trainer_vehicle_spawn_level_3_last_selected_off_road]:[12 @Label_test_trainer_vehicle_spawn_level_3_last_selected_planes]:[13 @Label_test_trainer_vehicle_spawn_level_3_last_selected_sedans]:[14 @Label_test_trainer_vehicle_spawn_level_3_last_selected_service]:[15 @Label_test_trainer_vehicle_spawn_level_3_last_selected_sports]:[16 @Label_test_trainer_vehicle_spawn_level_3_last_selected_sports_classics]:[17 @Label_test_trainer_vehicle_spawn_level_3_last_selected_super]:[18 @Label_test_trainer_vehicle_spawn_level_3_last_selected_suvs]:[19 @Label_test_trainer_vehicle_spawn_level_3_last_selected_utility]:[20 @Label_test_trainer_vehicle_spawn_level_3_last_selected_vans]
+Jump @Label_test_trainer_vehicle_spawn_level_3_end
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_boats
+Push 1033245328
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 276773164
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 861409633
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1043459709
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -488123221
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1030275036
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -616331036
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 231083307
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 400514754
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 771711535
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -282946103
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 290013743
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_commercial
+Push 2053223216
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 850991848
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1518533038
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 904750859
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1050465301
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 569305213
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -2137348917
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 2112052861
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1747439474
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -214455498
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_compacts
+Push -344943009
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1130810103
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1682114128
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1177863319
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1450650718
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_coupes
+Push 330661258
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -5153954
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -591610296
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -391594584
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -89291282
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -624529134
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1348744438
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -511601230
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1349725314
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 873639469
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1122289213
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1193103848
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_cycles
+Push 1131912276
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 448402357
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1127861609
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -836512833
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -186537451
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1233807380
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -400295096
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_emergency
+Push 1171614426
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1127131465
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1647941228
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1938952078
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 469291905
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 741586030
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -34623805
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 2046537925
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1627000575
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1912215274
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1536924937
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1779120616
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -2007026063
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1205689942
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 456714581
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1683328900
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1922257928
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1973172295
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_helicopters
+Push 837858166
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 788747387
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 745926877
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -50547061
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1621617168
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1394036463
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 744705981
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1949211328
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1660661558
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 353883353
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1044954915
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_industrial
+Push -1006919392
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 444583674
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1886712733
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -2130482718
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1353720154
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -784816453
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 475220373
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1705304628
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 48339065
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -947761570
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_military
+Push -823509173
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1074326203
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 321739290
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 782665360
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_motorcycles
+Push 1672195559
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -2140431165
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -114291515
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -891462355
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 11251904
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 2006142190
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1670998136
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 55628203
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 301427732
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -634879114
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -909201658
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -893578776
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 788045382
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1453280962
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -140902153
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_muscle
+Push -682211828
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 80636076
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1800170043
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 37348240
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -2095439403
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1507916787
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -667151410
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -227741703
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1685021548
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -825837129
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 523724515
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_off_road
+Push -349601129
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -2128233223
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -48031959
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1269889662
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1435919434
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1661854193
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1770332643
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1126868326
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 92612664
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -2064372143
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1645267888
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1933662059
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1207771834
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -2045594037
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1189015600
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 989381445
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 534258863
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_planes
+Push -150975354
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 368211810
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -644710429
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 970356638
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1058115860
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 621481054
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -2122757008
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1746576111
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1281684762
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1214505995
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1981688531
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1673356438
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1341619767
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_sedans
+Push -1809822327
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1807623979
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1903012613
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -685276541
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1883002148
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1241712818
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1909141499
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1289722222
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 886934177
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1883869285
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1150599089
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -14495224
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 627094268
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1255452397
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1477580979
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1723137093
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1961627517
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1123216662
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1894894188
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1008861746
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1777363799
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_service
+Push 1283517198
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -713569950
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -2072933068
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1098802077
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -956048545
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1941029835
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1917016601
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_sports
+Push 1032823388
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1461482751
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 767087018
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1041692462
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -304802106
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 736902334
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 2072687711
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1045541610
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 108773431
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -566387422
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1995326987
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 499169875
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 2016857647
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1297672541
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 544021352
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -377465520
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1934452204
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1737773231
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -746882698
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 970598228
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 384071873
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_sports_classics
+Push 1051415893
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -2124201592
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -433375717
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1830407356
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 117401876
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1545842587
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -2098947590
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 464687292
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1531094468
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1762279763
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -2033222435
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 758895617
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_super
+Push -1216765807
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1696146015
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1311154784
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1291952903
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 418536135
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 408192225
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 338562499
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1622444098
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_suvs
+Push -808831384
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 142944341
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 850565707
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 2006918058
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -789894171
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1177543287
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -394074634
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1137532101
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1775728740
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1543762099
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 884422927
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1269098716
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 914654722
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -748008636
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -808457413
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1651067813
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 2136773105
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1221512915
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1337041428
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_utility
+Push 1560980623
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1147287684
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -537896628
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -884690486
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1491375716
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1783355638
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -845979911
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -599568815
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 734217681
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1700801569
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1323100960
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -442313018
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1641462412
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -2076478498
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1445631933
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 516990260
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 887537515
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 2132890591
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_last_selected_vans
+Push -16948145
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 2072156101
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1739845664
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1069929536
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1987130134
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -233098306
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 121658888
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1346687836
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -907477130
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1743316013
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 893081117
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1132262048
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1876516712
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1745203402
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -120287622
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -310465116
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1488164764
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -119658072
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 943752001
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1162065741
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1776615689
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -810318068
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 728614474
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 699456151
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push -1311240698
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 1951180813
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Push 65402552
+Call @menu_addItem_gxt_veh_hash
+Call @menu_addItem_action
+Return 0 0
+
+:Label_test_trainer_vehicle_spawn_level_3_end
+Return 0 0
