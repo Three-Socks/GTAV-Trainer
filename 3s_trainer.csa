@@ -46,6 +46,21 @@ Jump @while
 :Label_main3
 Return 0 0
 
+:menu_set
+Function 1 0 4
+
+StaticGet1 11
+Not
+JumpFalse @Label_menu_set_end
+
+Call @trainer_level_0
+
+iPush_1
+StaticSet1 11
+
+:Label_menu_set_end
+Return 0 0
+
 :trainer_level_0
 Function 1 0 4
 
@@ -53,7 +68,7 @@ PushString "Three-Socks Trainer"
 StaticSet1 10
 
 StaticGet1 9
-Switch [0 @Label_level_0]:[1 @Label_level_1]:[2 @Label_level_2]:[3 @Label_level_3]
+Switch [0 @Label_level_0]:[1 @Label_level_1]:[2 @Label_level_2]:[3 @Label_level_3]:[4 @Label_level_4]
 Jump @Label_level_end
 
 :Label_level_0
@@ -77,6 +92,10 @@ Return 0 0
 Call @trainer_level_3
 Return 0 0
 
+:Label_level_4
+Call @trainer_level_4
+Return 0 0
+
 :Label_level_end
 Return 0 0
 
@@ -85,7 +104,7 @@ Function 1 0 4
 
 iPush_0
 pstatic2 30
-aGet 1
+ArrayGet1 1
 Switch [1 @Label_last_selected_1]
 Jump @Label_level_1_end
 
@@ -106,7 +125,7 @@ Function 1 0 4
 
 iPush_0
 pstatic2 30
-aGet 1
+ArrayGet1 1
 Switch [1 @Label_level_2_last_selected_1]
 Jump @Label_level_2_end
 
@@ -122,7 +141,7 @@ Function 1 0 4
 
 iPush_1
 pstatic2 30
-aGet 1
+ArrayGet1 1
 Switch [0 @Label_trainer_vehicle_level_2_last_selected_0]:[1 @Label_trainer_vehicle_level_2_last_selected_1]
 Jump @Label_trainer_vehicle_level_2_end
 
@@ -135,6 +154,8 @@ Return 0 0
 :Label_trainer_vehicle_level_2_last_selected_1
 PushString "Vehicle - Modify"
 StaticSet1 10
+PushString "Mod"
+Call @menu_addItem
 PushString "Extras"
 Call @menu_addItem
 PushString "Doors"
@@ -151,7 +172,7 @@ Function 1 0 4
 
 iPush_0
 pstatic2 30
-aGet 1
+ArrayGet1 1
 Switch [1 @Label_level_3_last_selected_1]
 Jump @Label_level_3_end
 
@@ -167,7 +188,7 @@ Function 1 0 4
 
 iPush_1
 pstatic2 30
-aGet 1
+ArrayGet1 1
 Switch [0 @Label_vehicle_level_3_last_selected_0]:[1 @Label_vehicle_level_3_last_selected_1]
 Jump @Label_vehicle_level_3_end
 
@@ -190,30 +211,207 @@ Call @trainer_error_vehicle
 Return 0 0
 
 :trainer_vehicle_modify_level_3
-Function 1 0 11
+Function 1 0 35
 
 iPush_2
 pstatic2 30
-aGet 1
-Switch [0 @Label_trainer_vehicle_modify_level_3_last_selected_0]:[1 @Label_trainer_vehicle_modify_level_3_last_selected_1]:[2 @Label_trainer_vehicle_modify_level_3_last_selected_2]
+ArrayGet1 1
+Switch [0 @Label_trainer_vehicle_modify_level_3_last_selected_0]:[1 @Label_trainer_vehicle_modify_level_3_last_selected_1]:[2 @Label_trainer_vehicle_modify_level_3_last_selected_2]:[3 @Label_trainer_vehicle_modify_level_3_last_selected_3]
 Jump @Label_trainer_vehicle_modify_level_3_end
 
 :Label_trainer_vehicle_modify_level_3_last_selected_0
+StaticGet2 379
+iPush_0
+CallNative set_vehicle_mod_kit 2 0
+pFrame1 5
+Push1 25
+pPeekSet
+drop
+PushString "Spoiler"
+iPush_0
+pFrame1 5
+ArraySet1 1
+PushString "Front Bumpers"
+iPush_1
+pFrame1 5
+ArraySet1 1
+PushString "Rear Bumpers"
+iPush_2
+pFrame1 5
+ArraySet1 1
+PushString "Skirts"
+iPush_3
+pFrame1 5
+ArraySet1 1
+PushString "Exhaust"
+iPush_4
+pFrame1 5
+ArraySet1 1
+PushString "Mod T 6"
+iPush_5
+pFrame1 5
+ArraySet1 1
+PushString "Grille"
+iPush_6
+pFrame1 5
+ArraySet1 1
+PushString "Hood"
+iPush_7
+pFrame1 5
+ArraySet1 1
+PushString "Fenders"
+Push1 8
+pFrame1 5
+ArraySet1 1
+PushString "Mod T 10"
+Push1 9
+pFrame1 5
+ArraySet1 1
+PushString "Roof"
+Push1 10
+pFrame1 5
+ArraySet1 1
+PushString "Engine"
+Push1 11
+pFrame1 5
+ArraySet1 1
+PushString "Brakes"
+Push1 12
+pFrame1 5
+ArraySet1 1
+PushString "Transmission"
+Push1 13
+pFrame1 5
+ArraySet1 1
+PushString "Horn"
+Push1 14
+pFrame1 5
+ArraySet1 1
+PushString "Suspension"
+Push1 15
+pFrame1 5
+ArraySet1 1
+PushString "Armor"
+Push1 16
+pFrame1 5
+ArraySet1 1
+PushString "Mod T 18"
+Push1 17
+pFrame1 5
+ArraySet1 1
+PushString "Toggle Mod T 19"
+Push1 18
+pFrame1 5
+ArraySet1 1
+PushString "Toggle Mod T 20"
+Push1 19
+pFrame1 5
+ArraySet1 1
+PushString "Toggle Mod T 21"
+Push1 20
+pFrame1 5
+ArraySet1 1
+PushString "Mod T 22"
+Push1 21
+pFrame1 5
+ArraySet1 1
+PushString "Toggle Mod T 23"
+Push1 22
+pFrame1 5
+ArraySet1 1
+PushString "Front Wheel"
+Push1 23
+pFrame1 5
+ArraySet1 1
+PushString "Rear Wheel"
+Push1 24
+pFrame1 5
+ArraySet1 1
 
 iPush_0
 setF 3
 
-:Label_3673
+:Label_trainer_vehicle_modify_mod_level_3_while
+getF 3
+Push1 24
+JumpGT @Label_trainer_vehicle_modify_mod_level_3_end
+
+getF 3
+pFrame1 5
+ArrayGet1 1
+Call @menu_addItem
+StaticGet2 379
+getF 3
+CallNative unk_0x8A814FF9 2 1
+Push1 10
+Call @menu_addItem_number
+
+getF 3
+Add1 1
+setF 3
+Jump @Label_trainer_vehicle_modify_mod_level_3_while
+
+:Label_trainer_vehicle_modify_mod_level_3_end
+Return 0 0
+
+:Label_trainer_vehicle_modify_level_3_last_selected_1
+pFrame1 5
+Push1 9
+pPeekSet
+drop
+PushString "Extra 1"
+iPush_0
+pFrame1 5
+ArraySet1 1
+PushString "Extra 2"
+iPush_1
+pFrame1 5
+ArraySet1 1
+PushString "Extra 3"
+iPush_2
+pFrame1 5
+ArraySet1 1
+PushString "Extra 4"
+iPush_3
+pFrame1 5
+ArraySet1 1
+PushString "Extra 5"
+iPush_4
+pFrame1 5
+ArraySet1 1
+PushString "Extra 6"
+iPush_5
+pFrame1 5
+ArraySet1 1
+PushString "Extra 7"
+iPush_6
+pFrame1 5
+ArraySet1 1
+PushString "Extra 8"
+iPush_7
+pFrame1 5
+ArraySet1 1
+PushString "Extra 9"
+Push1 8
+pFrame1 5
+ArraySet1 1
+
+iPush_0
+setF 3
+
+:Label_trainer_vehicle_modify_extra_level_3_while
 getF 3
 Push1 8
-JumpGT @Label_3645
+JumpGT @Label_trainer_vehicle_modify_extra_level_3_end
 StaticGet2 379
 getF 3
 Add1 1
 CallNative does_extra_exist 2 1
-JumpFalse @Label_3672
+JumpFalse @Label_trainer_vehicle_modify_extra_level_3_not_exist
 
-PushString "Extra"
+getF 3
+pFrame1 5
+ArrayGet1 1
 Call @menu_addItem
 getF 3
 Add1 1
@@ -226,16 +424,16 @@ CallNative is_vehicle_extra_turned_on 2 1
 Call @menu_addItem_bool
 Call @menu_addItem_action
 
-:Label_3672
+:Label_trainer_vehicle_modify_extra_level_3_not_exist
 getF 3
 Add1 1
 setF 3
-Jump @Label_3673
+Jump @Label_trainer_vehicle_modify_extra_level_3_while
 
-:Label_3645
+:Label_trainer_vehicle_modify_extra_level_3_end
 Return 0 0
 
-:Label_trainer_vehicle_modify_level_3_last_selected_1
+:Label_trainer_vehicle_modify_level_3_last_selected_2
 PushString "Door"
 Call @menu_addItem
 iPush_1
@@ -243,37 +441,16 @@ iPush_6
 Call @menu_addItem_number
 Call @menu_addItem_action
 
-PushString "Control Open"
+PushString "Open"
 Call @menu_addItem
 Call @menu_addItem_action
 
-PushString "Control Close"
+PushString "Close"
 Call @menu_addItem
-Call @menu_addItem_action
-
-PushString "Fully Open"
-Call @menu_addItem
-Call @menu_addItem_action
-
-PushString "Fully Close"
-Call @menu_addItem
-Call @menu_addItem_action
-
-PushString "Lock"
-Call @menu_addItem
-Call @menu_addItem_action
-
-PushString "door angle 2"
-Call @menu_addItem
-StaticGet2 379
-iPush_2
-CallNative get_vehicle_door_angle_ratio 2 1
-Push1 10
-Call @menu_addItem_float
 Call @menu_addItem_action
 Return 0 0
 
-:Label_trainer_vehicle_modify_level_3_last_selected_2
+:Label_trainer_vehicle_modify_level_3_last_selected_3
 PushString "Interior Light"
 Call @menu_addItem
 iPush_0
@@ -289,7 +466,7 @@ Function 1 0 4
 
 iPush_2
 pstatic2 30
-aGet 1
+ArrayGet1 1
 Switch [0 @Label_trainer_vehicle_spawn_level_3_last_selected_boats]:[1 @Label_trainer_vehicle_spawn_level_3_last_selected_commercial]:[2 @Label_trainer_vehicle_spawn_level_3_last_selected_compacts]:[3 @Label_trainer_vehicle_spawn_level_3_last_selected_coupes]:[4 @Label_trainer_vehicle_spawn_level_3_last_selected_cycles]:[5 @Label_trainer_vehicle_spawn_level_3_last_selected_emergency]:[6 @Label_trainer_vehicle_spawn_level_3_last_selected_helicopters]:[7 @Label_trainer_vehicle_spawn_level_3_last_selected_industrial]:[8 @Label_trainer_vehicle_spawn_level_3_last_selected_military]:[9 @Label_trainer_vehicle_spawn_level_3_last_selected_motorcycles]:[10 @Label_trainer_vehicle_spawn_level_3_last_selected_muscle]:[11 @Label_trainer_vehicle_spawn_level_3_last_selected_off_road]:[12 @Label_trainer_vehicle_spawn_level_3_last_selected_planes]:[13 @Label_trainer_vehicle_spawn_level_3_last_selected_sedans]:[14 @Label_trainer_vehicle_spawn_level_3_last_selected_service]:[15 @Label_trainer_vehicle_spawn_level_3_last_selected_sports]:[16 @Label_trainer_vehicle_spawn_level_3_last_selected_sports_classics]:[17 @Label_trainer_vehicle_spawn_level_3_last_selected_super]:[18 @Label_trainer_vehicle_spawn_level_3_last_selected_suvs]:[19 @Label_trainer_vehicle_spawn_level_3_last_selected_utility]:[20 @Label_trainer_vehicle_spawn_level_3_last_selected_vans]
 Jump @Label_trainer_vehicle_spawn_level_3_end
 
@@ -1193,203 +1370,186 @@ Return 0 0
 :Label_trainer_vehicle_spawn_level_3_end
 Return 0 0
 
-:trainer_action_level_3
+:trainer_level_4
 Function 1 0 4
 
 iPush_0
 pstatic2 30
-aGet 1
-Switch [1 @Label_action_level_3_last_selected_1]
-Jump @Label_action_level_3_end
+ArrayGet1 1
+Switch [1 @Label_level_4_last_selected_1]
+Jump @Label_level_4_end
 
-:Label_action_level_3_last_selected_1
-Call @trainer_vehicle_action_level_3
+:Label_level_4_last_selected_1
+Call @trainer_vehicle_level_4
 Return 0 0
 
-:Label_action_level_3_end
+:Label_level_4_end
 Return 0 0
 
-:trainer_vehicle_action_level_3
-Function 1 0 4
-
-iPush_1
-pstatic2 30
-aGet 1
-Switch [0 @Label_trainer_vehicle_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_action_level_3_last_selected_1]
-Jump @Label_trainer_vehicle_action_level_3_end
-
-:Label_trainer_vehicle_action_level_3_last_selected_0
-StaticGet1 4
-pstatic1 174
-aGet 1
-Call @trainer_spawn_veh
-Return 0 0
-
-:Label_trainer_vehicle_action_level_3_last_selected_1
-Call @trainer_get_vehicle
-JumpFalse @Label_trainer_vehicle_action_level_3_error
-
-Call @trainer_vehicle_modify_action_level_3
-Return 0 0
-
-:Label_trainer_vehicle_action_level_3_end
-Return 0 0
-
-:Label_trainer_vehicle_action_level_3_error
-Call @trainer_error_vehicle
-Return 0 0
-
-:trainer_vehicle_modify_action_level_3
+:trainer_vehicle_level_4
 Function 1 0 4
 
 iPush_2
 pstatic2 30
-aGet 1
-Switch [0 @Label_trainer_vehicle_modify_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_modify_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_modify_action_level_3_last_selected_2]
-Jump @Label_trainer_vehicle_modify_action_level_3_end
+ArrayGet1 1
+Switch [0 @Label_vehicle_level_4_last_selected_0]
+Jump @Label_vehicle_level_4_end
 
-:Label_trainer_vehicle_modify_action_level_3_last_selected_0
-Call @trainer_vehicle_extra_action_level_3
+:Label_vehicle_level_4_last_selected_0
+Call @trainer_vehicle_modify_mod_level_4
 Return 0 0
 
-:Label_trainer_vehicle_modify_action_level_3_last_selected_1
-Call @trainer_vehicle_door_action_level_3
+:Label_vehicle_level_4_end
 Return 0 0
 
-:Label_trainer_vehicle_modify_action_level_3_last_selected_2
-Call @trainer_vehicle_light_action_level_3
-Return 0 0
+:trainer_vehicle_modify_mod_level_4
+Function 1 0 36
 
-:Label_trainer_vehicle_modify_action_level_3_end
-Return 0 0
-
-:trainer_vehicle_extra_action_level_3
-Function 1 0 4
-
-StaticGet2 379
-StaticGet1 4
-pstatic2 276
-aGet 1
-CallNative is_vehicle_extra_turned_on 2 1
-JumpFalse @Label_trainer_vehicle_extra_action_level_3_not_on
-
-StaticGet2 379
-StaticGet1 4
-pstatic2 276
-aGet 1
-iPush_1
-CallNative set_vehicle_extra 3 0
+pFrame1 5
+Push1 26
+pPeekSet
+drop
+PushString "Mod 1"
 iPush_0
-StaticGet1 4
-pstatic1 174
-aSet 1
-Jump @Label_trainer_vehicle_extra_action_level_3_end
-
-:Label_trainer_vehicle_extra_action_level_3_not_on
-StaticGet2 379
-StaticGet1 4
-pstatic2 276
-aGet 1
-iPush_0
-CallNative set_vehicle_extra 3 0
+pFrame1 5
+ArraySet1 1
+PushString "Mod 2"
 iPush_1
-StaticGet1 4
-pstatic1 174
-aSet 1
+pFrame1 5
+ArraySet1 1
+PushString "Mod 3"
+iPush_2
+pFrame1 5
+ArraySet1 1
+PushString "Mod 4"
+iPush_3
+pFrame1 5
+ArraySet1 1
+PushString "Mod 5"
+iPush_4
+pFrame1 5
+ArraySet1 1
+PushString "Mod 6"
+iPush_5
+pFrame1 5
+ArraySet1 1
+PushString "Mod 7"
+iPush_6
+pFrame1 5
+ArraySet1 1
+PushString "Mod 8"
+iPush_7
+pFrame1 5
+ArraySet1 1
+PushString "Mod 9"
+Push1 8
+pFrame1 5
+ArraySet1 1
+PushString "Mod 10"
+Push1 9
+pFrame1 5
+ArraySet1 1
+PushString "Mod 11"
+Push1 10
+pFrame1 5
+ArraySet1 1
+PushString "Mod 12"
+Push1 11
+pFrame1 5
+ArraySet1 1
+PushString "Mod 13"
+Push1 12
+pFrame1 5
+ArraySet1 1
+PushString "Mod 14"
+Push1 13
+pFrame1 5
+ArraySet1 1
+PushString "Mod 15"
+Push1 14
+pFrame1 5
+ArraySet1 1
+PushString "Mod 16"
+Push1 15
+pFrame1 5
+ArraySet1 1
+PushString "Mod 17"
+Push1 16
+pFrame1 5
+ArraySet1 1
+PushString "Mod 18"
+Push1 17
+pFrame1 5
+ArraySet1 1
+PushString "Mod 19"
+Push1 18
+pFrame1 5
+ArraySet1 1
+PushString "Mod 20"
+Push1 19
+pFrame1 5
+ArraySet1 1
+PushString "Mod 21"
+Push1 20
+pFrame1 5
+ArraySet1 1
+PushString "Mod 22"
+Push1 21
+pFrame1 5
+ArraySet1 1
+PushString "Mod 23"
+Push1 22
+pFrame1 5
+ArraySet1 1
+PushString "Mod 24"
+Push1 23
+pFrame1 5
+ArraySet1 1
+PushString "Mod 25"
+Push1 24
+pFrame1 5
+ArraySet1 1
+PushString "Mod 26"
+Push1 25
+pFrame1 5
+ArraySet1 1
 
-:Label_trainer_vehicle_extra_action_level_3_end
-Return 0 0
-
-:trainer_vehicle_door_action_level_3
-Function 1 0 4
+PushString "Stock"
+Call @menu_addItem
+iPush_-1
+StaticGet1 5
+pstatic2 276
+ArraySet1 1
+Call @menu_addItem_action
 
 iPush_0
-pstatic2 276
-aGet 1
-iPush_1
-Sub
 setF 3
 
-StaticGet1 4
-Switch [1 @Label_trainer_vehicle_door_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_door_action_level_3_last_selected_2]:[3 @Label_trainer_vehicle_door_action_level_3_last_selected_3]:[4 @Label_trainer_vehicle_door_action_level_3_last_selected_4]:[5 @Label_trainer_vehicle_door_action_level_3_last_selected_5]
-Jump @Label_trainer_vehicle_door_action_level_3_end
-
-:Label_trainer_vehicle_door_action_level_3_last_selected_1
-StaticGet2 379
+:Label_trainer_vehicle_modify_mod_level_4_while
 getF 3
-iPush_0
-fPush_1.0
-CallNative set_vehicle_door_control 4 0
-Return 0 0
-
-:Label_trainer_vehicle_door_action_level_3_last_selected_2
 StaticGet2 379
+iPush_3
+pstatic2 30
+ArrayGet1 1
+CallNative unk_0x8A814FF9 2 1
+JumpGE @Label_trainer_vehicle_modify_mod_level_4_end
+
 getF 3
-iPush_0
-fPush_0.0
-CallNative set_vehicle_door_control 4 0
-Return 0 0
-
-:Label_trainer_vehicle_door_action_level_3_last_selected_3
-StaticGet2 379
+pFrame1 5
+ArrayGet1 1
+Call @menu_addItem
 getF 3
-iPush_1
-iPush_0
-CallNative set_vehicle_door_open 4 0
-Return 0 0
+StaticGet1 5
+pstatic2 276
+ArraySet1 1
+Call @menu_addItem_action
 
-:Label_trainer_vehicle_door_action_level_3_last_selected_4
-StaticGet2 379
 getF 3
-iPush_1
-CallNative set_vehicle_door_shut 3 0
-Return 0 0
+Add1 1
+setF 3
+Jump @Label_trainer_vehicle_modify_mod_level_4_while
 
-:Label_trainer_vehicle_door_action_level_3_last_selected_5
-StaticGet2 379
-getF 3
-CallNative set_vehicle_doors_locked 2 0
-Return 0 0
-
-:Label_trainer_vehicle_door_action_level_3_end
-Return 0 0
-
-:trainer_vehicle_light_action_level_3
-Function 1 0 4
-
-StaticGet1 4
-Switch [0 @Label_trainer_vehicle_light_action_level_3_last_selected_0]
-Jump @Label_trainer_vehicle_light_action_level_3_end
-
-:Label_trainer_vehicle_light_action_level_3_last_selected_0
-StaticGet1 4
-pstatic1 174
-aGet 1
-Not
-JumpFalse @Label_trainer_vehicle_light_true
-
-StaticGet2 379
-iPush_1
-CallNative set_vehicle_interiorlight 2 0
-iPush_1
-StaticGet1 4
-pstatic1 174
-aSet 1
-Jump @Label_trainer_vehicle_light_end
-
-:Label_trainer_vehicle_light_true
-StaticGet2 379
-iPush_0
-CallNative set_vehicle_interiorlight 2 0
-iPush_0
-StaticGet1 4
-pstatic1 174
-aSet 1
-
-:Label_trainer_vehicle_light_end
-Return 0 0
-
-:Label_trainer_vehicle_light_action_level_3_end
+:Label_trainer_vehicle_modify_mod_level_4_end
 Return 0 0
 
 :trainer_get_vehicle
@@ -1422,10 +1582,223 @@ CallNative unk_0x08F7AF78 2 1
 drop
 Return 0 0
 
-:draw_frontend_hook
-Function 1 0 5
+:menu_action
+Function 12 0 2
+StaticGet1 7
+iPush_1
+JumpEq @Label_action1
+Jump @Label_action4
 
-:Label_draw_frontend_hook_end
+:Label_action1
+iPush_0
+StaticSet1 7
+
+StaticGet1 9
+Switch [3 @Label_action_switch_3]:[4 @Label_action_switch_4]
+Jump @Label_action_switch_22
+
+:Label_action_switch_3
+Call @trainer_action_level_3
+Jump @Label_action_switch_22
+
+:Label_action_switch_4
+Call @trainer_vehicle_action_level_4
+Jump @Label_action_switch_22
+
+:Label_action_switch_22
+Jump @Label_action2
+
+:Label_action4
+StaticGet1 7
+iPush_2
+JumpEq @Label_action5
+Jump @Label_action2
+
+:Label_action5
+iPush_0
+StaticSet1 7
+Call @menu_hide
+Jump @Label_action2
+
+
+:Label_action2
+Return 0 0
+
+:trainer_action_level_3
+Function 1 0 4
+
+iPush_0
+pstatic2 30
+ArrayGet1 1
+Switch [1 @Label_action_level_3_last_selected_1]
+Jump @Label_action_level_3_end
+
+:Label_action_level_3_last_selected_1
+Call @trainer_vehicle_action_level_3
+Return 0 0
+
+:Label_action_level_3_end
+Return 0 0
+
+:trainer_vehicle_action_level_3
+Function 1 0 4
+
+iPush_1
+pstatic2 30
+ArrayGet1 1
+Switch [0 @Label_trainer_vehicle_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_action_level_3_last_selected_1]
+Jump @Label_trainer_vehicle_action_level_3_end
+
+:Label_trainer_vehicle_action_level_3_last_selected_0
+StaticGet1 4
+pstatic1 174
+ArrayGet1 1
+Call @trainer_spawn_veh
+Return 0 0
+
+:Label_trainer_vehicle_action_level_3_last_selected_1
+Call @trainer_get_vehicle
+JumpFalse @Label_trainer_vehicle_action_level_3_error
+
+Call @trainer_vehicle_modify_action_level_3
+Return 0 0
+
+:Label_trainer_vehicle_action_level_3_end
+Return 0 0
+
+:Label_trainer_vehicle_action_level_3_error
+Call @trainer_error_vehicle
+Return 0 0
+
+:trainer_vehicle_modify_action_level_3
+Function 1 0 4
+
+iPush_2
+pstatic2 30
+ArrayGet1 1
+Switch [1 @Label_trainer_vehicle_modify_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_modify_action_level_3_last_selected_2]:[3 @Label_trainer_vehicle_modify_action_level_3_last_selected_3]
+Jump @Label_trainer_vehicle_modify_action_level_3_end
+
+:Label_trainer_vehicle_modify_action_level_3_last_selected_1
+Call @trainer_vehicle_extra_action_level_3
+Return 0 0
+
+:Label_trainer_vehicle_modify_action_level_3_last_selected_2
+Call @trainer_vehicle_door_action_level_3
+Return 0 0
+
+:Label_trainer_vehicle_modify_action_level_3_last_selected_3
+Call @trainer_vehicle_light_action_level_3
+Return 0 0
+
+:Label_trainer_vehicle_modify_action_level_3_end
+Return 0 0
+
+:trainer_vehicle_extra_action_level_3
+Function 1 0 4
+
+StaticGet2 379
+StaticGet1 4
+pstatic2 276
+ArrayGet1 1
+CallNative is_vehicle_extra_turned_on 2 1
+JumpFalse @Label_trainer_vehicle_extra_action_level_3_not_on
+
+StaticGet2 379
+StaticGet1 4
+pstatic2 276
+ArrayGet1 1
+iPush_1
+CallNative set_vehicle_extra 3 0
+iPush_0
+StaticGet1 4
+pstatic1 174
+ArraySet1 1
+Jump @Label_trainer_vehicle_extra_action_level_3_end
+
+:Label_trainer_vehicle_extra_action_level_3_not_on
+StaticGet2 379
+StaticGet1 4
+pstatic2 276
+ArrayGet1 1
+iPush_0
+CallNative set_vehicle_extra 3 0
+iPush_1
+StaticGet1 4
+pstatic1 174
+ArraySet1 1
+
+:Label_trainer_vehicle_extra_action_level_3_end
+Return 0 0
+
+:trainer_vehicle_door_action_level_3
+Function 1 0 4
+
+iPush_0
+pstatic2 276
+ArrayGet1 1
+iPush_1
+Sub
+setF 3
+
+StaticGet1 4
+Switch [1 @Label_trainer_vehicle_door_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_door_action_level_3_last_selected_2]
+Jump @Label_trainer_vehicle_door_action_level_3_end
+
+:Label_trainer_vehicle_door_action_level_3_last_selected_1
+StaticGet2 379
+getF 3
+iPush_1
+iPush_0
+CallNative set_vehicle_door_open 4 0
+Return 0 0
+
+:Label_trainer_vehicle_door_action_level_3_last_selected_2
+StaticGet2 379
+getF 3
+iPush_1
+CallNative set_vehicle_door_shut 3 0
+Return 0 0
+
+:Label_trainer_vehicle_door_action_level_3_end
+Return 0 0
+
+:trainer_vehicle_light_action_level_3
+Function 1 0 4
+
+StaticGet1 4
+Switch [0 @Label_trainer_vehicle_light_action_level_3_last_selected_0]
+Jump @Label_trainer_vehicle_light_action_level_3_end
+
+:Label_trainer_vehicle_light_action_level_3_last_selected_0
+StaticGet1 4
+pstatic1 174
+ArrayGet1 1
+Not
+JumpFalse @Label_trainer_vehicle_light_true
+
+StaticGet2 379
+iPush_1
+CallNative set_vehicle_interiorlight 2 0
+iPush_1
+StaticGet1 4
+pstatic1 174
+ArraySet1 1
+Jump @Label_trainer_vehicle_light_end
+
+:Label_trainer_vehicle_light_true
+StaticGet2 379
+iPush_0
+CallNative set_vehicle_interiorlight 2 0
+iPush_0
+StaticGet1 4
+pstatic1 174
+ArraySet1 1
+
+:Label_trainer_vehicle_light_end
+Return 0 0
+
+:Label_trainer_vehicle_light_action_level_3_end
 Return 0 0
 
 :trainer_spawn_veh
@@ -1472,9 +1845,9 @@ setF 6
 CallNative player_ped_id 0 1
 getF 3
 pFrame1 3
-arraygeti1 1
+GetImmediate1 1
 pFrame1 3
-arraygeti1 2
+GetImmediate1 2
 fPush_4.0
 fAdd
 iPush_1
@@ -1553,6 +1926,37 @@ getF 0
 CallNative set_model_as_no_longer_needed 1 0
 pstatic2 378
 CallNative set_vehicle_as_no_longer_needed 1 0
+
+iPush_2
+Push1 179
+CallNative is_control_pressed 2 1
+JumpFalse @Label_spawn_veh_goto_end
+iPush_0
+StaticSet1 11
+
+iPush_0
+StaticGet1 9
+pstatic2 30
+ArraySet1 1
+
+iPush_0
+StaticSet1 4
+
+Call @menu_clean
+
+iPush_1
+iPush_0
+pstatic2 30
+ArraySet1 1
+
+iPush_1
+iPush_1
+pstatic2 30
+ArraySet1 1
+
+iPush_2
+StaticSet1 9
+
 Jump @Label_spawn_veh_goto_end
 
 :Label_spawn_veh_error_cd
@@ -1572,58 +1976,138 @@ Jump @Label_spawn_veh_end
 :Label_spawn_veh_end
 Return 1 0
 
-:menu_set
+:trainer_vehicle_action_level_4
 Function 1 0 4
 
-StaticGet1 11
-Not
-JumpFalse @Label_menu_set_end
+iPush_2
+pstatic2 30
+ArrayGet1 1
+Switch [0 @Label_trainer_vehicle_action_level_4_last_selected_0]
+Jump @Label_trainer_vehicle_action_level_4_end
 
-Call @trainer_level_0
+:Label_trainer_vehicle_action_level_4_last_selected_0
+Call @trainer_get_vehicle
+JumpFalse @Label_trainer_vehicle_action_level_4_error
 
-iPush_1
-StaticSet1 11
-
-:Label_menu_set_end
+Call @trainer_vehicle_mod_action_level_4
 Return 0 0
 
-:menu_action
-Function 12 0 2
-StaticGet1 7
-iPush_1
-JumpEq @Label_action1
-Jump @Label_action4
+:Label_trainer_vehicle_action_level_4_end
+Return 0 0
 
-:Label_action1
+:Label_trainer_vehicle_action_level_4_error
+Call @trainer_error_vehicle
+Return 0 0
+
+:trainer_vehicle_mod_action_level_4
+Function 1 0 4
+
+StaticGet2 379
 iPush_0
-StaticSet1 7
+CallNative set_vehicle_mod_kit 2 0
 
-StaticGet1 9
-Switch [3 @Label_action_switch_3]
-Jump @Label_action_switch_22
+StaticGet1 4
+pstatic2 276
+ArrayGet1 1
+setF 3
 
-:Label_action_switch_3
-Call @trainer_action_level_3
+:Label_1027
+getF 3
+Push1 21
+CmpEq
+dup
+Not
+JumpFalse @Label_1028
+getF 3
+Push1 17
+CmpEq
+Or
 
-Jump @Label_action_switch_22
+:Label_1028
+dup
+Not
+JumpFalse @Label_1029
+getF 3
+Push1 19
+CmpEq
+Or
 
-:Label_action_switch_22
-Jump @Label_action2
+:Label_1029
+dup
+Not
+JumpFalse @Label_1030
+getF 3
+Push1 18
+CmpEq
+Or
 
-:Label_action4
-StaticGet1 7
-iPush_2
-JumpEq @Label_action5
-Jump @Label_action2
+:Label_1030
+dup
+Not
+JumpFalse @Label_1031
+getF 3
+Push1 20
+CmpEq
+Or
 
-:Label_action5
+:Label_1031
+dup
+Not
+JumpFalse @Label_1032
+getF 3
+Push1 22
+CmpEq
+Or
+
+:Label_1032
+JumpFalse @Label_1033
+StaticGet2 379
+iPush_3
+pstatic2 30
+ArrayGet1 1
+StaticGet2 379
+iPush_3
+pstatic2 30
+ArrayGet1 1
+CallNative is_toggle_mod_on 2 1
+Not
+CallNative toggle_vehicle_mod 3 0
+Jump @Label_trainer_vehicle_mod_action_level_4_end
+
+:Label_1033
+getF 3
 iPush_0
-StaticSet1 7
-Call @menu_hide
-Jump @Label_action2
+JumpLT @Label_trainer_vehicle_mod_action_level_4_1
 
+StaticGet2 379
+iPush_3
+pstatic2 30
+ArrayGet1 1
+CallNative remove_vehicle_mod 2 0
 
-:Label_action2
+StaticGet2 379
+iPush_3
+pstatic2 30
+ArrayGet1 1
+getF 3
+iPush_0
+CallNative set_vehicle_mod 4 0
+Jump @Label_trainer_vehicle_mod_action_level_4_end
+
+:Label_trainer_vehicle_mod_action_level_4_1
+StaticGet2 379
+iPush_3
+pstatic2 30
+ArrayGet1 1
+CallNative remove_vehicle_mod 2 0
+
+:Label_trainer_vehicle_mod_action_level_4_end
+Return 0 0
+
+:draw_frontend_hook
+Function 1 0 5
+
+:Label_draw_frontend_hook_end
 Return 0 0
 
 :menu_addItem
@@ -1636,7 +2120,7 @@ StaticSet1 5
 getF 0
 StaticGet1 5
 pstatic1 72
-aSet 1
+ArraySet1 1
 
 :Label_menu_addItem_end
 Return 1 0
@@ -1647,17 +2131,17 @@ Function 1 2 4
 iPush_1
 StaticGet1 5
 pstatic1 123
-aSet 1
+ArraySet1 1
 
 getF 0
 StaticGet1 5
 pstatic2 276
-aSet 1
+ArraySet1 1
 
 getF 1
 StaticGet1 5
 pstatic1 174
-aSet 1
+ArraySet1 1
 
 :Label_menu_addItem_number_end
 Return 2 0
@@ -1668,17 +2152,17 @@ Function 1 2 4
 iPush_2
 StaticGet1 5
 pstatic1 123
-aSet 1
+ArraySet1 1
 
 getF 0
 StaticGet1 5
 pstatic2 327
-aSet 1
+ArraySet1 1
 
 getF 1
 StaticGet1 5
 pstatic1 174
-aSet 1
+ArraySet1 1
 
 :Label_menu_addItem_float_end
 Return 2 0
@@ -1689,12 +2173,12 @@ Function 1 1 4
 iPush_3
 StaticGet1 5
 pstatic1 123
-aSet 1
+ArraySet1 1
 
 getF 0
 StaticGet1 5
 pstatic1 174
-aSet 1
+ArraySet1 1
 
 :Label_menu_addItem_bool_end
 Return 1 0
@@ -1709,12 +2193,12 @@ StaticSet1 5
 getF 0
 StaticGet1 5
 pstatic1 72
-aSet 1
+ArraySet1 1
 
 iPush_4
 StaticGet1 5
 pstatic1 123
-aSet 1
+ArraySet1 1
 
 :Label_menu_addItem_gxt_end
 Return 1 0
@@ -1729,12 +2213,12 @@ StaticSet1 5
 getF 0
 StaticGet1 5
 pstatic1 174
-aSet 1
+ArraySet1 1
 
 iPush_5
 StaticGet1 5
 pstatic1 123
-aSet 1
+ArraySet1 1
 
 :Label_menu_addItem_gxt_veh_hash_end
 Return 1 0
@@ -1745,7 +2229,7 @@ Function 1 0 4
 iPush_1
 StaticGet1 5
 pstatic2 225
-aSet 1
+ArraySet1 1
 
 :Label_menu_addItem_action_end
 Return 0 0
@@ -1789,7 +2273,7 @@ CallNative play_sound_frontend 3 0
 iPush_1
 StaticGet1 4
 pstatic2 225
-aGet 1
+ArrayGet1 1
 JumpEq @Label_catch_select_button_press_2
 
 iPush_0
@@ -1798,7 +2282,7 @@ StaticSet1 11
 StaticGet1 4
 StaticGet1 9
 pstatic2 30
-aSet 1
+ArraySet1 1
 
 iPush_0
 StaticSet1 4
@@ -1838,7 +2322,7 @@ StaticGet1 9
 iPush_1
 Sub
 pstatic2 30
-aGet 1
+ArrayGet1 1
 StaticSet1 4
 
 StaticGet1 9
@@ -1886,32 +2370,32 @@ JumpGE @Label_menu_clean_END
 PushString ""
 getF 3
 pstatic1 72
-aSet 1
+ArraySet1 1
 
 iPush_0
 getF 3
 pstatic1 123
-aSet 1
+ArraySet1 1
 
 iPush_0
 getF 3
 pstatic1 174
-aSet 1
+ArraySet1 1
 
 iPush_0
 getF 3
 pstatic2 225
-aSet 1
+ArraySet1 1
 
 iPush_0
 getF 3
 pstatic2 276
-aSet 1
+ArraySet1 1
 
 iPush_0
 getF 3
 pstatic2 327
-aSet 1
+ArraySet1 1
 
 
 getF 3
@@ -2105,15 +2589,6 @@ CallNative unk_0x4E8E29E6 2 0
 iPush_2
 Push1 174
 CallNative unk_0x4E8E29E6 2 0
-iPush_0
-Push1 92
-CallNative disable_control_action 2 0
-iPush_0
-Push1 67
-CallNative disable_control_action 2 0
-iPush_0
-Push1 49
-CallNative unk_0x4E8E29E6 2 0
 StaticGet1 5
 setF 3
 
@@ -2177,31 +2652,31 @@ CallNative play_sound_frontend 3 0
 iPush_1
 StaticGet1 4
 pstatic1 123
-aGet 1
+ArrayGet1 1
 JumpNE @Label_catch_button_press_5
 iPush_1
 StaticGet1 4
 pstatic2 276
-aGet 1
+ArrayGet1 1
 JumpEq @Label_catch_button_press_6
 StaticGet1 4
 pstatic2 276
-aGet 1
+ArrayGet1 1
 iPush_1
 Sub
 StaticGet1 4
 pstatic2 276
-aSet 1
+ArraySet1 1
 
 Jump @Label_catch_button_press_5
 
 :Label_catch_button_press_6
 StaticGet1 4
 pstatic1 174
-aGet 1
+ArrayGet1 1
 StaticGet1 4
 pstatic2 276
-aSet 1
+ArraySet1 1
 
 :Label_catch_button_press_5
 Jump @Label_catch_button_press_end
@@ -2218,22 +2693,22 @@ CallNative play_sound_frontend 3 0
 iPush_1
 StaticGet1 4
 pstatic1 123
-aGet 1
+ArrayGet1 1
 JumpNE @Label_catch_button_press_7
 StaticGet1 4
 pstatic2 276
-aGet 1
+ArrayGet1 1
 StaticGet1 4
 pstatic1 174
-aGet 1
+ArrayGet1 1
 JumpEq @Label_catch_button_press_8
 StaticGet1 4
 pstatic2 276
-aGet 1
+ArrayGet1 1
 Add1 1
 StaticGet1 4
 pstatic2 276
-aSet 1
+ArraySet1 1
 
 Jump @Label_catch_button_press_7
 
@@ -2241,7 +2716,7 @@ Jump @Label_catch_button_press_7
 iPush_1
 StaticGet1 4
 pstatic2 276
-aSet 1
+ArraySet1 1
 
 :Label_catch_button_press_7
 Jump @Label_catch_button_press_end
@@ -2354,7 +2829,7 @@ setF 20
 iPush_4
 getF 3
 pstatic1 123
-aGet 1
+ArrayGet1 1
 JumpNE @Label_draw_menu_gxt_end
 getF 18
 getF 19
@@ -2364,7 +2839,7 @@ iPush_0
 Call @set_up_draw
 getF 3
 pstatic1 72
-aGet 1
+ArrayGet1 1
 StaticGet1 3
 getF 5
 Call @draw_string_gxt
@@ -2374,7 +2849,7 @@ Jump @Label_draw_menu_bool
 iPush_5
 getF 3
 pstatic1 123
-aGet 1
+ArrayGet1 1
 JumpNE @Label_draw_menu_gxt_veh_hash_end
 getF 18
 getF 19
@@ -2384,7 +2859,7 @@ iPush_0
 Call @set_up_draw
 getF 3
 pstatic1 174
-aGet 1
+ArrayGet1 1
 CallNative get_display_name_from_vehicle_model 1 1
 StaticGet1 3
 getF 5
@@ -2400,7 +2875,7 @@ iPush_0
 Call @set_up_draw
 getF 3
 pstatic1 72
-aGet 1
+ArrayGet1 1
 StaticGet1 3
 getF 5
 Call @draw_string
@@ -2409,7 +2884,7 @@ Call @draw_string
 iPush_1
 getF 3
 pstatic1 123
-aGet 1
+ArrayGet1 1
 JumpNE @Label_draw_menu_number_end
 getF 18
 getF 19
@@ -2419,7 +2894,7 @@ iPush_1
 Call @set_up_draw
 getF 3
 pstatic2 276
-aGet 1
+ArrayGet1 1
 fPush_0.0
 getF 5
 Call @draw_number
@@ -2428,7 +2903,7 @@ Call @draw_number
 iPush_2
 getF 3
 pstatic1 123
-aGet 1
+ArrayGet1 1
 JumpNE @Label_draw_menu_float_end
 getF 18
 getF 19
@@ -2438,7 +2913,7 @@ iPush_1
 Call @set_up_draw
 getF 3
 pstatic2 327
-aGet 1
+ArrayGet1 1
 fPush_0.0
 getF 5
 Call @draw_float
@@ -2447,7 +2922,7 @@ Call @draw_float
 iPush_3
 getF 3
 pstatic1 123
-aGet 1
+ArrayGet1 1
 JumpNE @Label_draw_menu_bool_end
 getF 18
 getF 19
@@ -2458,7 +2933,7 @@ Call @set_up_draw
 
 getF 3
 pstatic1 174
-aGet 1
+ArrayGet1 1
 Not
 JumpFalse @Label_draw_menu_bool_true
 getF 10
@@ -2655,7 +3130,7 @@ Function 1 0 4
 
 iPush_2
 pstatic2 30
-aGet 1
+ArrayGet1 1
 Switch [0 @Label_test_trainer_vehicle_spawn_level_3_last_selected_boats]:[1 @Label_test_trainer_vehicle_spawn_level_3_last_selected_commercial]:[2 @Label_test_trainer_vehicle_spawn_level_3_last_selected_compacts]:[3 @Label_test_trainer_vehicle_spawn_level_3_last_selected_coupes]:[4 @Label_test_trainer_vehicle_spawn_level_3_last_selected_cycles]:[5 @Label_test_trainer_vehicle_spawn_level_3_last_selected_emergency]:[6 @Label_test_trainer_vehicle_spawn_level_3_last_selected_helicopters]:[7 @Label_test_trainer_vehicle_spawn_level_3_last_selected_industrial]:[8 @Label_test_trainer_vehicle_spawn_level_3_last_selected_military]:[9 @Label_test_trainer_vehicle_spawn_level_3_last_selected_motorcycles]:[10 @Label_test_trainer_vehicle_spawn_level_3_last_selected_muscle]:[11 @Label_test_trainer_vehicle_spawn_level_3_last_selected_off_road]:[12 @Label_test_trainer_vehicle_spawn_level_3_last_selected_planes]:[13 @Label_test_trainer_vehicle_spawn_level_3_last_selected_sedans]:[14 @Label_test_trainer_vehicle_spawn_level_3_last_selected_service]:[15 @Label_test_trainer_vehicle_spawn_level_3_last_selected_sports]:[16 @Label_test_trainer_vehicle_spawn_level_3_last_selected_sports_classics]:[17 @Label_test_trainer_vehicle_spawn_level_3_last_selected_super]:[18 @Label_test_trainer_vehicle_spawn_level_3_last_selected_suvs]:[19 @Label_test_trainer_vehicle_spawn_level_3_last_selected_utility]:[20 @Label_test_trainer_vehicle_spawn_level_3_last_selected_vans]
 Jump @Label_test_trainer_vehicle_spawn_level_3_end
 
