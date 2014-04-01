@@ -247,7 +247,7 @@ PushString "Exhaust"
 iPush_4
 pFrame1 5
 ArraySet1 1
-PushString "Mod T 6"
+PushString "Frame"
 iPush_5
 pFrame1 5
 ArraySet1 1
@@ -295,11 +295,11 @@ PushString "Armor"
 Push1 16
 pFrame1 5
 ArraySet1 1
-PushString "Mod T 18"
+PushString "Toggle Mod T 18"
 Push1 17
 pFrame1 5
 ArraySet1 1
-PushString "Toggle Mod T 19"
+PushString "Turbo"
 Push1 18
 pFrame1 5
 ArraySet1 1
@@ -311,11 +311,11 @@ PushString "Toggle Mod T 21"
 Push1 20
 pFrame1 5
 ArraySet1 1
-PushString "Mod T 22"
+PushString "Toggle Mod T 22"
 Push1 21
 pFrame1 5
 ArraySet1 1
-PushString "Toggle Mod T 23"
+PushString "Lights"
 Push1 22
 pFrame1 5
 ArraySet1 1
@@ -2006,8 +2006,8 @@ StaticGet2 379
 iPush_0
 CallNative set_vehicle_mod_kit 2 0
 
-StaticGet1 4
-pstatic2 276
+iPush_3
+pstatic2 30
 ArrayGet1 1
 setF 3
 
@@ -2089,7 +2089,9 @@ StaticGet2 379
 iPush_3
 pstatic2 30
 ArrayGet1 1
-getF 3
+StaticGet1 4
+pstatic2 276
+ArrayGet1 1
 iPush_0
 CallNative set_vehicle_mod 4 0
 Jump @Label_trainer_vehicle_mod_action_level_4_end
