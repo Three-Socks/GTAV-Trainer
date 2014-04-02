@@ -23,6 +23,12 @@ StaticSet1 10
 iPush_0
 StaticSet1 11
 
+iPush_2
+StaticSet1 15
+
+iPush_1
+StaticSet1 17
+
 :while
 iPush_1
 JumpFalse @Label_main3
@@ -2267,6 +2273,9 @@ iPush_2
 Push1 174
 CallNative is_control_just_released 2 1
 JumpFalse @Label_741
+StaticGet1 17
+iPush_2
+JumpGE @Label_741
 iPush_-1
 PushString "SELECT"
 PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
@@ -2294,12 +2303,11 @@ Call @menu_clean
 StaticGet1 9
 Add1 1
 StaticSet1 9
-Jump @Label_739
+Jump @Label_741
 
 :Label_catch_select_button_press_2
 iPush_1
 StaticSet1 7
-Jump @Label_739
 
 :Label_741
 iPush_2
@@ -2469,6 +2477,130 @@ getF 7
 CallNative draw_rect 8 0
 Return 8 0
 
+:menu_do_hold_pressed
+Function 1 1 4
+iPush_2
+getF 0
+CallNative is_control_pressed 2 1
+JumpFalse @Label_menu_do_hold_pressed_2
+getF 0
+StaticSet1 18
+
+StaticGet1 16
+Push1 40
+JumpLE @Label_menu_do_hold_pressed_1
+StaticGet1 17
+Add1 1
+StaticSet1 17
+iPush_0
+StaticSet1 16
+
+:Label_menu_do_hold_pressed_1
+StaticGet1 16
+Add1 1
+StaticSet1 16
+StaticGet1 15
+Add1 1
+StaticSet1 15
+
+StaticGet1 15
+StaticGet1 17
+Mult
+StaticSet1 15
+
+
+Jump @Label_menu_do_hold_pressed_end
+
+:Label_menu_do_hold_pressed_2
+getF 0
+StaticGet1 18
+JumpNE @Label_menu_do_hold_pressed_end
+iPush_1
+StaticSet1 17
+iPush_0
+StaticSet1 16
+
+:Label_menu_do_hold_pressed_end
+Return 1 0
+
+:menu_is_hold_pressed
+Function 1 1 4
+StaticGet1 15
+iPush_6
+JumpLE @Label_menu_is_hold_pressed_false
+iPush_2
+getF 0
+CallNative is_control_pressed 2 1
+JumpFalse @Label_menu_is_hold_pressed_false
+iPush_1
+Return 1 1
+
+:Label_menu_is_hold_pressed_false
+iPush_0
+Return 1 1
+
+:menu_up_pressed
+Function 1 1 4
+iPush_2
+Push1 162
+CallNative is_control_just_pressed 2 1
+JumpFalse @Label_menu_up_pressed_not
+iPush_1
+StaticSet1 14
+iPush_1
+Return 1 1
+Jump @Label_menu_up_pressed_hold
+
+:Label_menu_up_pressed_not
+Push1 162
+Call @menu_is_hold_pressed
+JumpFalse @Label_menu_up_pressed_hold
+iPush_1
+StaticSet1 14
+iPush_1
+Return 1 1
+
+:Label_menu_up_pressed_hold
+getF 0
+JumpFalse @Label_menu_up_pressed_end
+Push1 162
+Call @menu_do_hold_pressed
+
+:Label_menu_up_pressed_end
+iPush_0
+Return 1 1
+
+:menu_down_pressed
+Function 1 1 4
+iPush_2
+Push1 161
+CallNative is_control_just_pressed 2 1
+JumpFalse @Label_menu_down_pressed_not
+iPush_1
+StaticSet1 14
+iPush_1
+Return 1 1
+Jump @Label_menu_down_pressed_hold
+
+:Label_menu_down_pressed_not
+Push1 161
+Call @menu_is_hold_pressed
+JumpFalse @Label_menu_down_pressed_hold
+iPush_1
+StaticSet1 14
+iPush_1
+Return 1 1
+
+:Label_menu_down_pressed_hold
+getF 0
+JumpFalse @Label_menu_down_pressed_end
+Push1 161
+Call @menu_do_hold_pressed
+
+:Label_menu_down_pressed_end
+iPush_0
+Return 1 1
+
 :draw_frontend
 Function 1 0 4
 
@@ -2594,9 +2726,8 @@ CallNative unk_0x4E8E29E6 2 0
 StaticGet1 5
 setF 3
 
-iPush_2
-Push1 161
-CallNative is_control_just_pressed 2 1
+iPush_1
+Call @menu_down_pressed
 JumpFalse @Label_catch_up_button_press
 iPush_-1
 PushString "NAV_UP_DOWN"
@@ -2618,9 +2749,8 @@ StaticSet1 4
 Jump @Label_catch_button_press_end
 
 :Label_catch_up_button_press
-iPush_2
-Push1 162
-CallNative is_control_just_pressed 2 1
+iPush_1
+Call @menu_up_pressed
 JumpFalse @Label_catch_left_button_press
 iPush_-1
 PushString "NAV_UP_DOWN"
@@ -2724,6 +2854,14 @@ ArraySet1 1
 Jump @Label_catch_button_press_end
 
 :Label_catch_button_press_end
+StaticGet1 14
+JumpFalse @Label_catch_button_press_end2
+iPush_2
+StaticSet1 15
+iPush_0
+StaticSet1 14
+
+:Label_catch_button_press_end2
 Return 0 0
 
 :draw_menu
