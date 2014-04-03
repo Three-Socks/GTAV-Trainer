@@ -39,11 +39,17 @@ CallNative wait 1 0
 StaticGet1 6
 JumpFalse @Label_main2
 Call @menu_set
-Call @draw_window
-Call @draw_frontend
-Call @draw_menu
-Call @catch_button_press
-Call @catch_select_button_press
+Call @menu_draw_window
+Call @menu_draw_frontend
+Call @menu_draw
+Call @menu_modify_game_state
+iPush_0
+StaticGet1 7
+JumpNE @Label_main_action
+Call @menu_catch_button_press
+Call @menu_catch_select_button_press
+
+:Label_main_action
 Call @menu_action
 
 :Label_main2
@@ -168,6 +174,8 @@ PushString "Doors"
 Call @menu_addItem
 PushString "Lights"
 Call @menu_addItem
+PushString "Plate"
+Call @menu_addItem
 Return 0 0
 
 :Label_trainer_vehicle_level_2_end
@@ -222,7 +230,7 @@ Function 1 0 35
 iPush_2
 pstatic2 30
 ArrayGet1 1
-Switch [0 @Label_trainer_vehicle_modify_level_3_last_selected_0]:[1 @Label_trainer_vehicle_modify_level_3_last_selected_1]:[2 @Label_trainer_vehicle_modify_level_3_last_selected_2]:[3 @Label_trainer_vehicle_modify_level_3_last_selected_3]
+Switch [0 @Label_trainer_vehicle_modify_level_3_last_selected_0]:[1 @Label_trainer_vehicle_modify_level_3_last_selected_1]:[2 @Label_trainer_vehicle_modify_level_3_last_selected_2]:[3 @Label_trainer_vehicle_modify_level_3_last_selected_3]:[4 @Label_trainer_vehicle_modify_level_3_last_selected_4]
 Jump @Label_trainer_vehicle_modify_level_3_end
 
 :Label_trainer_vehicle_modify_level_3_last_selected_0
@@ -463,6 +471,13 @@ iPush_0
 Call @menu_addItem_bool
 Call @menu_addItem_action
 Return 0 0
+
+:Label_trainer_vehicle_modify_level_3_last_selected_4
+PushString "Change Plate Text"
+Call @menu_addItem
+Call @menu_addItem_action
+Return 0 0
+
 
 :Label_trainer_vehicle_modify_level_3_end
 Return 0 0
@@ -1589,13 +1604,10 @@ drop
 Return 0 0
 
 :menu_action
-Function 12 0 2
-StaticGet1 7
+Function 1 0 2
 iPush_1
-JumpEq @Label_action1
-Jump @Label_action4
-
-:Label_action1
+StaticGet1 7
+JumpNE @Label_action4
 iPush_0
 StaticSet1 7
 
@@ -1615,17 +1627,13 @@ Jump @Label_action_switch_22
 Jump @Label_action2
 
 :Label_action4
-StaticGet1 7
 iPush_2
-JumpEq @Label_action5
-Jump @Label_action2
-
-:Label_action5
+StaticGet1 7
+JumpNE @Label_action2
 iPush_0
 StaticSet1 7
 Call @menu_hide
 Jump @Label_action2
-
 
 :Label_action2
 Return 0 0
@@ -1682,7 +1690,7 @@ Function 1 0 4
 iPush_2
 pstatic2 30
 ArrayGet1 1
-Switch [1 @Label_trainer_vehicle_modify_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_modify_action_level_3_last_selected_2]:[3 @Label_trainer_vehicle_modify_action_level_3_last_selected_3]
+Switch [1 @Label_trainer_vehicle_modify_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_modify_action_level_3_last_selected_2]:[3 @Label_trainer_vehicle_modify_action_level_3_last_selected_3]:[4 @Label_trainer_vehicle_modify_action_level_3_last_selected_4]
 Jump @Label_trainer_vehicle_modify_action_level_3_end
 
 :Label_trainer_vehicle_modify_action_level_3_last_selected_1
@@ -1695,6 +1703,10 @@ Return 0 0
 
 :Label_trainer_vehicle_modify_action_level_3_last_selected_3
 Call @trainer_vehicle_light_action_level_3
+Return 0 0
+
+:Label_trainer_vehicle_modify_action_level_3_last_selected_4
+Call @trainer_vehicle_plate_action_level_3
 Return 0 0
 
 :Label_trainer_vehicle_modify_action_level_3_end
@@ -1807,8 +1819,108 @@ Return 0 0
 :Label_trainer_vehicle_light_action_level_3_end
 Return 0 0
 
+:trainer_vehicle_plate_action_level_3
+Function 1 0 6
+
+StaticGet1 4
+Switch [0 @Label_trainer_vehicle_plate_action_level_3_last_selected_0]
+Jump @Label_trainer_vehicle_plate_action_level_3_end
+
+:Label_trainer_vehicle_plate_action_level_3_last_selected_0
+Call @trainer_vehicle_change_plate
+JumpFalse @Label_trainer_vehicle_plate_action_level_3_false
+CallNative get_onscreen_keyboard_result 0 1
+CallNative is_string_null_or_empty 1 1
+Not
+JumpFalse @Label_trainer_vehicle_plate_action_level_3_false
+CallNative get_onscreen_keyboard_result 0 1
+pFrame1 3
+StrCopy 16
+
+StaticGet2 379
+pFrame1 3
+CallNative set_vehicle_number_plate_text 2 0
+
+:Label_trainer_vehicle_plate_action_level_3_false
+Return 0 0
+
+:Label_trainer_vehicle_plate_action_level_3_end
+Return 0 0
+
+:trainer_vehicle_change_plate
+Function 1 0 12
+
+iPush_1
+StaticSet1 7
+
+StaticGet2 380
+Switch [0 @Label_trainer_vehicle_change_plate_switch_0]:[1 @Label_trainer_vehicle_change_plate_switch_1]
+Jump @Label_trainer_vehicle_change_plate_end
+
+:Label_trainer_vehicle_change_plate_switch_0
+iPush_0
+PushString ""
+PushString ""
+PushString ""
+PushString ""
+PushString ""
+PushString ""
+Push1 9
+CallNative display_onscreen_keyboard 8 0
+iPush_1
+StaticSet2 380
+Jump @Label_trainer_vehicle_change_plate_end
+
+:Label_trainer_vehicle_change_plate_switch_1
+CallNative update_onscreen_keyboard 0 1
+StaticSet2 381
+StaticGet2 381
+Switch [0 @Label_trainer_vehicle_change_plate_update_0]:[3 @Label_trainer_vehicle_change_plate_update_3]:[2 @Label_trainer_vehicle_change_plate_update_2]:[1 @Label_trainer_vehicle_change_plate_update_1]
+Jump @Label_trainer_vehicle_change_plate_goto_end
+
+:Label_trainer_vehicle_change_plate_update_0
+iPush_0
+Return 0 1
+
+:Label_trainer_vehicle_change_plate_update_3
+iPush_0
+StaticSet1 7
+iPush_0
+StaticSet2 380
+iPush_0
+StaticSet2 381
+iPush_0
+Return 0 1
+
+:Label_trainer_vehicle_change_plate_update_2
+iPush_0
+StaticSet1 7
+iPush_0
+StaticSet2 380
+iPush_0
+StaticSet2 381
+iPush_0
+Return 0 1
+
+:Label_trainer_vehicle_change_plate_update_1
+iPush_0
+StaticSet1 7
+iPush_0
+StaticSet2 380
+iPush_0
+StaticSet2 381
+iPush_1
+Return 0 1
+
+:Label_trainer_vehicle_change_plate_goto_end
+Jump @Label_trainer_vehicle_change_plate_end
+
+:Label_trainer_vehicle_change_plate_end
+iPush_0
+Return 0 1
+
 :trainer_spawn_veh
-Function 14 1 10
+Function 1 1 10
 iPush_0
 setF 7
 getF 0
@@ -2112,10 +2224,10 @@ CallNative remove_vehicle_mod 2 0
 :Label_trainer_vehicle_mod_action_level_4_end
 Return 0 0
 
-:draw_frontend_hook
+:menu_draw_frontend_hook
 Function 1 0 5
 
-:Label_draw_frontend_hook_end
+:Label_menu_draw_frontend_hook_end
 Return 0 0
 
 :menu_addItem
@@ -2242,8 +2354,8 @@ ArraySet1 1
 :Label_menu_addItem_action_end
 Return 0 0
 
-:catch_select_button_press
-Function 11 0 2
+:menu_modify_game_state
+Function 1 0 2
 CallNative hide_help_text_this_frame 0 0
 iPush_0
 CallNative set_mobile_radio_enabled_during_gameplay 1 0
@@ -2269,6 +2381,30 @@ CallNative unk_0x4E8E29E6 2 0
 iPush_2
 Push1 175
 CallNative unk_0x4E8E29E6 2 0
+
+iPush_0
+Push1 46
+CallNative disable_control_action 2 0
+iPush_2
+Push1 161
+CallNative unk_0x4E8E29E6 2 0
+iPush_2
+Push1 162
+CallNative unk_0x4E8E29E6 2 0
+Return 0 0
+
+:menu_reverse_game_state
+Function 1 0 2
+iPush_1
+CallNative set_mobile_radio_enabled_during_gameplay 1 0
+iPush_1
+CallNative set_mobile_phone_radio_state 1 0
+iPush_1
+CallNative set_cinematic_button_active 1 0
+Return 0 0
+
+:menu_catch_select_button_press
+Function 1 0 2
 iPush_2
 Push1 174
 CallNative is_control_just_released 2 1
@@ -2349,17 +2485,12 @@ StaticSet1 7
 Return 0 0
 
 :menu_hide
-Function 60 0 2
-iPush_1
-CallNative set_mobile_radio_enabled_during_gameplay 1 0
-iPush_1
-CallNative set_mobile_phone_radio_state 1 0
+Function 1 0 2
+Call @menu_reverse_game_state
 iPush_0
 StaticSet1 13
 pstatic1 12
 CallNative set_scaleform_movie_as_no_longer_needed 1 0
-iPush_1
-CallNative set_cinematic_button_active 1 0
 CallNative terminate_this_thread 0 0
 Return 0 0
 
@@ -2418,8 +2549,8 @@ iPush_-1
 StaticSet1 5
 Return 0 0
 
-:draw_window
-Function 7 0 9
+:menu_draw_window
+Function 1 0 9
 Push1 140
 pFrame1 2
 pFrame1 3
@@ -2457,7 +2588,7 @@ Call @draw_rect
 Return 0 0
 
 :draw_rect
-Function 6 8 10
+Function 1 8 10
 getF 0
 getF 2
 fPush 0.5
@@ -2487,7 +2618,7 @@ getF 0
 StaticSet1 18
 
 StaticGet1 16
-Push1 40
+Push1 10
 JumpLE @Label_menu_do_hold_pressed_1
 StaticGet1 17
 Add1 1
@@ -2526,7 +2657,7 @@ Return 1 0
 :menu_is_hold_pressed
 Function 1 1 4
 StaticGet1 15
-iPush_6
+iPush_4
 JumpLE @Label_menu_is_hold_pressed_false
 iPush_2
 getF 0
@@ -2601,7 +2732,7 @@ Call @menu_do_hold_pressed
 iPush_0
 Return 1 1
 
-:draw_frontend
+:menu_draw_frontend
 Function 1 0 4
 
 StaticGet1 12
@@ -2667,7 +2798,7 @@ CallNative unk_0xFE272A57 1 0
 CallNative unk_0x386CE0B8 0 0
 CallNative unk_0x02DBF2D7 0 0
 
-Call @draw_frontend_hook
+Call @menu_draw_frontend_hook
 
 StaticGet1 12
 PushString "SET_BACKGROUND_COLOUR"
@@ -2709,20 +2840,8 @@ StaticSet1 13
 :Label_draw_frontend_end
 Return 0 0
 
-:catch_button_press
-Function 8 0 6
-iPush_0
-Push1 46
-CallNative disable_control_action 2 0
-iPush_2
-Push1 161
-CallNative unk_0x4E8E29E6 2 0
-iPush_2
-Push1 162
-CallNative unk_0x4E8E29E6 2 0
-iPush_2
-Push1 174
-CallNative unk_0x4E8E29E6 2 0
+:menu_catch_button_press
+Function 1 0 6
 StaticGet1 5
 setF 3
 
@@ -2864,8 +2983,8 @@ StaticSet1 14
 :Label_catch_button_press_end2
 Return 0 0
 
-:draw_menu
-Function 5 0 22
+:menu_draw
+Function 1 0 22
 
 iPush_0
 setF 3
@@ -3098,7 +3217,7 @@ Jump @Label_draw_menu_LOOP
 Return 0 0
 
 :draw_number
-Function 4 3 3
+Function 1 3 3
 PushString "NUMBER"
 CallNative unk_0x3E35563E 1 0
 getF 0
@@ -3109,7 +3228,7 @@ CallNative unk_0x6F8350CE 2 0
 Return 3 0
 
 :draw_float
-Function 4 3 3
+Function 1 3 3
 PushString "NUMBER"
 CallNative unk_0x3E35563E 1 0
 getF 0
@@ -3121,7 +3240,7 @@ CallNative unk_0x6F8350CE 2 0
 Return 3 0
 
 :draw_string
-Function 4 3 3
+Function 1 3 3
 PushString "STRING"
 CallNative unk_0x3E35563E 1 0
 getF 0
@@ -3132,7 +3251,7 @@ CallNative unk_0x6F8350CE 2 0
 Return 3 0
 
 :draw_string_gxt
-Function 4 3 3
+Function 1 3 3
 getF 0
 CallNative unk_0x3E35563E 1 0
 getF 1
