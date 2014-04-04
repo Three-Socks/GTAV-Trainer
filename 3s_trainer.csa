@@ -176,6 +176,9 @@ PushString "Lights"
 Call @menu_addItem
 PushString "Plate"
 Call @menu_addItem
+PushString "Repair"
+Call @menu_addItem
+Call @menu_addItem_action
 Return 0 0
 
 :Label_trainer_vehicle_level_2_end
@@ -215,13 +218,15 @@ Call @trainer_get_vehicle
 JumpFalse @Label_vehicle_level_3_error
 
 Call @trainer_vehicle_modify_level_3
-Return 0 0
-
-:Label_vehicle_level_3_end
-Return 0 0
+Jump @Label_vehicle_level_3_last_selected_1_end
 
 :Label_vehicle_level_3_error
 Call @trainer_error_vehicle
+
+:Label_vehicle_level_3_last_selected_1_end
+Return 0 0
+
+:Label_vehicle_level_3_end
 Return 0 0
 
 :trainer_vehicle_modify_level_3
@@ -1593,6 +1598,7 @@ Return 0 1
 
 :trainer_error_vehicle
 Function 1 0 4
+Call @menu_error
 PushString "STRING"
 CallNative unk_0x574EE85C 1 0
 PushString "Not in a vehicle."
@@ -1612,7 +1618,11 @@ iPush_0
 StaticSet1 7
 
 StaticGet1 9
-Switch [3 @Label_action_switch_3]:[4 @Label_action_switch_4]
+Switch [2 @Label_action_switch_2]:[3 @Label_action_switch_3]:[4 @Label_action_switch_4]
+Jump @Label_action_switch_22
+
+:Label_action_switch_2
+Call @trainer_action_level_2
 Jump @Label_action_switch_22
 
 :Label_action_switch_3
@@ -1637,6 +1647,46 @@ Jump @Label_action2
 
 :Label_action2
 Return 0 0
+
+:trainer_action_level_2
+Function 1 0 4
+
+StaticGet1 4
+Switch [5 @Label_action_level_2_last_selected_5]
+Jump @Label_action_level_2_end
+
+:Label_action_level_2_last_selected_5
+Call @trainer_get_vehicle
+JumpFalse @Label_trainer_vehicle_action_level_2_error
+StaticGet2 379
+CallNative set_vehicle_fixed 1 0
+StaticGet2 379
+PushS 1000
+CallNative set_entity_health 2 0
+StaticGet2 379
+fPush 1000
+CallNative set_vehicle_engine_health 2 0
+StaticGet2 379
+fPush 1000
+CallNative set_vehicle_petrol_tank_health 2 0
+StaticGet2 379
+fPush_0.0
+CallNative set_vehicle_dirt_level 2 0
+StaticGet2 379
+CallNative remove_decals_from_vehicle 1 0
+StaticGet2 379
+CallNative unk_0x58D9775F 1 0
+Jump @Label_action_level_2_last_selected_5_end
+
+:Label_trainer_vehicle_action_level_2_error
+Call @trainer_error_vehicle
+
+:Label_action_level_2_last_selected_5_end
+Return 0 0
+
+:Label_action_level_2_end
+Return 0 0
+
 
 :trainer_action_level_3
 Function 1 0 4
@@ -1675,13 +1725,15 @@ Call @trainer_get_vehicle
 JumpFalse @Label_trainer_vehicle_action_level_3_error
 
 Call @trainer_vehicle_modify_action_level_3
-Return 0 0
-
-:Label_trainer_vehicle_action_level_3_end
-Return 0 0
+Jump @Label_trainer_vehicle_action_level_3_last_selected_1_end
 
 :Label_trainer_vehicle_action_level_3_error
 Call @trainer_error_vehicle
+
+:Label_trainer_vehicle_action_level_3_last_selected_1_end
+Return 0 0
+
+:Label_trainer_vehicle_action_level_3_end
 Return 0 0
 
 :trainer_vehicle_modify_action_level_3
@@ -1848,7 +1900,7 @@ Return 0 0
 Return 0 0
 
 :trainer_vehicle_change_plate
-Function 1 0 12
+Function 1 0 6
 
 iPush_1
 StaticSet1 7
@@ -1858,17 +1910,29 @@ Switch [0 @Label_trainer_vehicle_change_plate_switch_0]:[1 @Label_trainer_vehicl
 Jump @Label_trainer_vehicle_change_plate_end
 
 :Label_trainer_vehicle_change_plate_switch_0
+
+PushString "CMOD_MOD_18_D"
+setF 4
+PushString ""
+setF 5
+
+CallNative is_xbox360_version 0 1
+JumpFalse @Label_trainer_vehicle_change_plate_1
+getF 4
+setF 5
+
+:Label_trainer_vehicle_change_plate_1
+iPush_1
+StaticSet2 380
 iPush_0
-PushString ""
-PushString ""
+getF 4
+getF 5
 PushString ""
 PushString ""
 PushString ""
 PushString ""
 Push1 9
 CallNative display_onscreen_keyboard 8 0
-iPush_1
-StaticSet2 380
 Jump @Label_trainer_vehicle_change_plate_end
 
 :Label_trainer_vehicle_change_plate_switch_1
@@ -2108,13 +2172,15 @@ Call @trainer_get_vehicle
 JumpFalse @Label_trainer_vehicle_action_level_4_error
 
 Call @trainer_vehicle_mod_action_level_4
-Return 0 0
-
-:Label_trainer_vehicle_action_level_4_end
-Return 0 0
+Jump @Label_trainer_vehicle_action_level_4_last_selected_0_end
 
 :Label_trainer_vehicle_action_level_4_error
 Call @trainer_error_vehicle
+
+:Label_trainer_vehicle_action_level_4_last_selected_0_end
+Return 0 0
+
+:Label_trainer_vehicle_action_level_4_end
 Return 0 0
 
 :trainer_vehicle_mod_action_level_4
@@ -2482,6 +2548,34 @@ iPush_2
 StaticSet1 7
 
 :Label_739
+Return 0 0
+
+:menu_error
+Function 1 0 2
+
+iPush_1
+StaticGet1 4
+pstatic2 225
+ArrayGet1 1
+JumpEq @Label_menu_error_end
+iPush_0
+StaticSet1 11
+
+Call @menu_clean
+
+StaticGet1 9
+iPush_1
+Sub
+pstatic2 30
+ArrayGet1 1
+StaticSet1 4
+
+StaticGet1 9
+iPush_1
+Sub
+StaticSet1 9
+
+:Label_menu_error_end
 Return 0 0
 
 :menu_hide
