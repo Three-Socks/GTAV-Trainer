@@ -78,10 +78,22 @@ Static[327]
 // Trainer
 
 // spawned_vehicle
-Static[378]
+Static_378
 
 // current_vehicle
-Static[379]
+Static_379
 
-// update_keyboard
-Static[380]
+// keyboard_stage
+Static_380
+
+// keyboard_update
+Static_381
+
+// network_vehicle
+Static_382
+
+// network_vehicle_model
+Static_383
+
+// network_pause_off_radar
+Static_384
