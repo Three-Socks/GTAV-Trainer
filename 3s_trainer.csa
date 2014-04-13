@@ -75,7 +75,6 @@ Call @trainer_catch_load_button_press
 :Label_main1
 StaticGet1 6
 JumpFalse @Label_main2
-Call @menu_set
 Call @menu_draw_window
 Call @menu_draw_frontend
 Call @menu_draw
@@ -88,6 +87,8 @@ Call @menu_catch_select_button_press
 
 :Label_main_action
 Call @menu_action
+
+Call @menu_set
 
 :Label_main2
 Jump @while
@@ -209,16 +210,104 @@ StaticSet1 8
 Return 0 0
 
 :menu_set
-Function 1 0 4
+Function 1 0 6
 
 StaticGet1 11
 Not
-JumpFalse @Label_menu_set_end
+JumpFalse @Label_menu_set_1
 
 Call @trainer_level_0
 
 iPush_1
 StaticSet1 11
+
+iPush_2
+Push1 175
+CallNative is_disabled_control_just_released 2 1
+JumpFalse @Label_menu_set_1
+
+StaticGet1 9
+pstatic2 30
+ArrayGet1 1
+StaticGet1 5
+JumpGT @Label_menu_set_4
+StaticGet1 9
+pstatic2 30
+ArrayGet1 1
+StaticSet1 4
+Jump @Label_menu_set_5
+
+:Label_menu_set_4
+StaticGet1 5
+StaticSet1 4
+
+:Label_menu_set_5
+iPush_0
+StaticGet1 9
+pstatic2 30
+ArraySet1 1
+
+StaticGet1 5
+StaticGet1 24
+JumpLE @Label_menu_set_1
+StaticGet1 4
+StaticGet1 25
+JumpLE @Label_menu_set_1
+StaticGet1 25
+setF 3
+
+:Label_menu_set_loop
+getF 3
+StaticGet1 4
+JumpGT @Label_menu_set_1
+
+StaticGet1 20
+StaticGet1 22
+fSub
+StaticSet1 20
+
+StaticGet1 23
+Add1 1
+StaticSet1 23
+
+getF 3
+Add1 1
+setF 3
+Jump @Label_menu_set_loop
+
+:Label_menu_set_1
+iPush_0
+Call @menu_up_pressed
+JumpFalse @Label_menu_set_end
+
+StaticGet1 5
+StaticGet1 24
+JumpLE @Label_menu_set_end
+
+StaticGet1 5
+StaticGet1 4
+JumpNE @Label_menu_set_end
+
+StaticGet1 5
+StaticGet1 25
+Sub
+setF 4
+
+getF 4
+CallNative to_float 1 1
+StaticGet1 22
+fMult
+setF 5
+
+StaticGet1 21
+getF 5
+fSub
+StaticSet1 20
+
+StaticGet1 5
+StaticGet1 25
+Add
+StaticSet1 23
 
 :Label_menu_set_end
 Return 0 0
@@ -2755,59 +2844,11 @@ JumpEq @Label_catch_select_button_press_3
 iPush_0
 StaticSet1 11
 
-Call @menu_clean
-
 StaticGet1 9
 iPush_1
 Sub
 StaticSet1 9
-
-StaticGet1 9
-pstatic2 30
-ArrayGet1 1
-StaticGet1 5
-JumpGT @Label_catch_select_button_press_4
-StaticGet1 9
-pstatic2 30
-ArrayGet1 1
-StaticSet1 4
-Jump @Label_catch_select_button_press_5
-
-:Label_catch_select_button_press_4
-StaticGet1 5
-StaticSet1 4
-
-:Label_catch_select_button_press_5
-StaticGet1 5
-StaticGet1 24
-JumpLE @Label_goto_739
-StaticGet1 4
-StaticGet1 25
-JumpLE @Label_goto_739
-StaticGet1 25
-setF 3
-
-:Label_catch_select_button_press_loop
-getF 3
-StaticGet1 4
-JumpGT @Label_goto_739
-
-StaticGet1 20
-StaticGet1 22
-fSub
-StaticSet1 20
-
-StaticGet1 23
-Add1 1
-StaticSet1 23
-
-getF 3
-Add1 1
-setF 3
-Jump @Label_catch_select_button_press_loop
-
-
-:Label_goto_739
+Call @menu_clean
 Jump @Label_739
 
 :Label_catch_select_button_press_3
@@ -2933,10 +2974,20 @@ pFrame1 5
 CallNative get_hud_colour 5 0
 
 StaticGet1 5
+StaticGet1 24
+JumpLE @Label_menu_draw_window_1
+StaticGet1 24
+Add1 1
+setF 6
+Jump @Label_menu_draw_window_2
+
+:Label_menu_draw_window_1
+StaticGet1 5
 Add1 1
 setF 6
 
-fPush 0.03472222
+:Label_menu_draw_window_2
+StaticGet1 22
 getF 6
 CallNative to_float 1 1
 fMult
@@ -2953,7 +3004,7 @@ Call @draw_rect
 fPush 0.040625
 fPush 0.040277
 fPush 0.225
-fPush 0.03472222
+StaticGet1 22
 iPush_0
 iPush_0
 iPush_0
@@ -3283,6 +3334,8 @@ StaticGet1 24
 JumpLE @Label_catch_up_button_press_end
 StaticGet1 4
 StaticGet1 25
+iPush_1
+Sub
 JumpLE @Label_catch_up_button_press_end
 StaticGet1 20
 StaticGet1 22
@@ -3300,31 +3353,6 @@ Jump @Label_catch_button_press_3
 :Label_catch_button_press_4
 getF 3
 StaticSet1 4
-
-StaticGet1 5
-StaticGet1 24
-JumpLE @Label_catch_button_press_3
-
-StaticGet1 5
-StaticGet1 25
-Sub
-setF 3
-
-getF 3
-CallNative to_float 1 1
-StaticGet1 22
-fMult
-setF 4
-
-StaticGet1 21
-getF 4
-Sub
-StaticSet1 20
-
-StaticGet1 5
-StaticGet1 25
-Add
-StaticSet1 23
 
 :Label_catch_button_press_3
 Jump @Label_catch_button_press_end
@@ -3493,12 +3521,12 @@ setF 5
 
 getF 3
 StaticGet1 23
-JumpGT @Label_draw_menu_goto
+JumpGT @Label_draw_menu_bool_end
 getF 5
 StaticGet1 21
 fPush 0.0100
 fAdd
-JumpLE @Label_draw_menu_goto
+JumpLE @Label_draw_menu_bool_end
 
 
 getF 12
@@ -3660,8 +3688,6 @@ Call @draw_string
 getF 3
 Add1 1
 setF 3
-
-:Label_draw_menu_goto
 Jump @Label_draw_menu_LOOP
 
 :Label_draw_menu_END
