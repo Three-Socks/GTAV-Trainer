@@ -356,91 +356,91 @@ Jump @Label_trainer_player_level_2_end
 PushString "Player - Change Model"
 StaticSet1 10
 
-PushString "componentpeds_a_c"
+PushString "Animals"
 Call @menu_addItem
 
-PushString "componentpeds_a_f_m"
+PushString "a Female_m"
 Call @menu_addItem
 
-PushString "componentpeds_a_f_o"
+PushString "a Female_o"
 Call @menu_addItem
 
-PushString "componentpeds_a_f_y"
+PushString "a Female_y"
 Call @menu_addItem
 
-PushString "componentpeds_a_m_m"
+PushString "a Male_m"
 Call @menu_addItem
 
-PushString "componentpeds_a_m_o"
+PushString "a Male_o"
 Call @menu_addItem
 
-PushString "componentpeds_a_m_y"
+PushString "a Male_y"
 Call @menu_addItem
 
-PushString "componentpeds_a_m_y_2"
+PushString "a Male_y_2"
 Call @menu_addItem
 
-PushString "componentpeds_csb"
+PushString "Cutscene"
 Call @menu_addItem
 
-PushString "componentpeds_g_f_y"
+PushString "g_f_y"
 Call @menu_addItem
 
-PushString "componentpeds_g_m_m"
+PushString "g Male_m"
 Call @menu_addItem
 
-PushString "componentpeds_g_m_y"
+PushString "g Male_y"
 Call @menu_addItem
 
-PushString "componentpeds_ig"
+PushString "In Game"
 Call @menu_addItem
 
-PushString "componentpeds_ig_2"
+PushString "In Game 2"
 Call @menu_addItem
 
-PushString "componentpeds_mp"
+PushString "Multiplayer"
 Call @menu_addItem
 
-PushString "componentpeds_s_f_m"
+PushString "s Female_m"
 Call @menu_addItem
 
-PushString "componentpeds_s_f_y"
+PushString "s Female_y"
 Call @menu_addItem
 
-PushString "componentpeds_s_m_m"
+PushString "s Male_m"
 Call @menu_addItem
 
-PushString "componentpeds_s_m_o"
+PushString "s Male_o"
 Call @menu_addItem
 
-PushString "componentpeds_s_m_y"
+PushString "s Male_y"
 Call @menu_addItem
 
-PushString "componentpeds_u_f_m"
+PushString "u Female_m"
 Call @menu_addItem
 
-PushString "componentpeds_u_f_o"
+PushString "u Female_o"
 Call @menu_addItem
 
-PushString "componentpeds_u_f_y"
+PushString "u Female_y"
 Call @menu_addItem
 
-PushString "componentpeds_u_m_m"
+PushString "u Male_m"
 Call @menu_addItem
 
-PushString "componentpeds_u_m_o"
+PushString "u Male_o"
 Call @menu_addItem
 
-PushString "componentpeds_u_m_y"
+PushString "u Male_y"
 Call @menu_addItem
 
-PushString "streamedpeds_a_c"
+PushString "Animals 2"
 Call @menu_addItem
 
 PushString "streamedpeds_hc"
 Call @menu_addItem
 
-PushString "streamedpeds_ig"
+PushString "In Game 3"
 Call @menu_addItem
 Return 0 0
 
