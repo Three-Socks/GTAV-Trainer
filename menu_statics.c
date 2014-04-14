@@ -54,6 +54,30 @@ Static_17 = 1;
 // (uint) press_id
 Static_18 = 0;
 
+// (uint) menu_unload_hold_pressed
+Static_19 = 0;
+
+// (float) menu_start_y
+Static_20
+
+// (float) menu_consts_start_y
+Static_21
+
+// (float) menu_spacing
+Static_22
+
+// (uint) menu_max
+Static_23
+
+// (uint) menu_consts_max
+Static_24
+
+// (uint) menu_start_scrolling
+Static_25
+
+// (uint) menu_sub_action_mode
+Static_26
+
 // (uint) last_selected (10)
 Static[30]
 
