@@ -47,13 +47,13 @@ StaticSet1 21
 fPush 0.03472222
 StaticSet1 22
 
-Push1 22
+Push1 18
 StaticSet1 23
 
 StaticGet1 23
 StaticSet1 24
 
-Push1 11
+Push1 9
 StaticSet1 25
 
 CallNative network_is_game_in_progress 0 1
@@ -214,7 +214,7 @@ Function 1 0 6
 
 StaticGet1 11
 Not
-JumpFalse @Label_menu_set_1
+JumpFalse @Label_menu_set_end
 
 Call @trainer_level_0
 
@@ -224,7 +224,7 @@ StaticSet1 11
 iPush_2
 Push1 175
 CallNative is_disabled_control_just_released 2 1
-JumpFalse @Label_menu_set_1
+JumpFalse @Label_menu_set_end
 
 StaticGet1 9
 pstatic2 30
@@ -249,17 +249,17 @@ ArraySet1 1
 
 StaticGet1 5
 StaticGet1 24
-JumpLE @Label_menu_set_1
+JumpLE @Label_menu_set_end
 StaticGet1 4
 StaticGet1 25
-JumpLE @Label_menu_set_1
+JumpLE @Label_menu_set_end
 StaticGet1 25
 setF 3
 
 :Label_menu_set_loop
 getF 3
 StaticGet1 4
-JumpGT @Label_menu_set_1
+JumpGT @Label_menu_set_end
 
 StaticGet1 20
 StaticGet1 22
@@ -274,40 +274,6 @@ getF 3
 Add1 1
 setF 3
 Jump @Label_menu_set_loop
-
-:Label_menu_set_1
-iPush_0
-Call @menu_up_pressed
-JumpFalse @Label_menu_set_end
-
-StaticGet1 5
-StaticGet1 24
-JumpLE @Label_menu_set_end
-
-StaticGet1 5
-StaticGet1 4
-JumpNE @Label_menu_set_end
-
-StaticGet1 5
-StaticGet1 25
-Sub
-setF 4
-
-getF 4
-CallNative to_float 1 1
-StaticGet1 22
-fMult
-setF 5
-
-StaticGet1 21
-getF 5
-fSub
-StaticSet1 20
-
-StaticGet1 5
-StaticGet1 25
-Add
-StaticSet1 23
 
 :Label_menu_set_end
 Return 0 0
@@ -335,6 +301,12 @@ PushString "Network"
 Call @menu_addItem
 
 :Label_trainer_level_0_end
+PushString "Safe Zone Size"
+Call @menu_addItem
+CallNative get_safe_zone_size 0 1
+fPush_0.0
+Call @menu_addItem_float
+Call @menu_add_action
 Return 0 0
 
 :Label_level_1
@@ -1781,31 +1753,84 @@ Jump @Label_trainer_player_action_level_3_end
 
 :Label_trainer_player_action_level_3_last_selected_0
 Call @menu_get_current_number
-Call @trainer_player_model_action_level_3
+Call @trainer_change_player_model_action
 Return 0 0
 
 :Label_trainer_player_action_level_3_end
 Return 0 0
 
-:trainer_player_model_action_level_3
+:trainer_change_player_model_action
 Function 1 1 4
 
+iPush_1
+StaticSet1 7
+
+StaticGet1 26
+Switch [0 @Label_trainer_change_player_model_action_0]:[1 @Label_trainer_change_player_model_action_1]
+Jump @Label_trainer_change_player_model_action_end
+
+:Label_trainer_change_player_model_action_0
 getF 0
 CallNative is_model_in_cdimage 1 1
-JumpFalse @Label_trainer_player_model_action_level_3_error_cd
+Not
+JumpFalse @Label_trainer_change_player_model_action_continue
+PushString "STRING"
+CallNative unk_0x574EE85C 1 0
+PushString "Model does not exist."
+CallNative unk_0x27A244D8 1 0
+iPush_0
+iPush_1
+CallNative unk_0x08F7AF78 2 1
+drop
+iPush_0
+StaticSet1 7
+Return 1 0
+
+:Label_trainer_change_player_model_action_continue
 getF 0
 CallNative request_model 1 0
 
-:Label_trainer_player_model_action_level_3_while
 getF 0
 CallNative has_model_loaded 1 1
-Not
-JumpFalse @Label_trainer_player_model_action_level_3_main
-iPush_0
-CallNative wait 1 0
-Jump @Label_trainer_player_model_action_level_3_while
+JumpFalse @Label_trainer_change_player_model_action_0_end
+iPush_1
+StaticSet1 26
 
-:Label_trainer_player_model_action_level_3_main
+:Label_trainer_change_player_model_action_0_end
+Return 1 0
+
+:Label_trainer_change_player_model_action_1
+iPush_0
+StaticSet1 7
+getF 0
+Call @trainer_change_player_model
+iPush_0
+StaticSet1 26
+Return 1 0
+
+:Label_trainer_change_player_model_action_end
+Return 1 0
+
+:trainer_change_player_model
+Function 1 1 5
+
+getF 0
+CallNative has_model_loaded 1 1
+JumpFalse @trainer_change_player_model_end
+
+CallNative get_gameplay_cam_relative_heading 0 1
+setF 3
+
+CallNative player_ped_id 0 1
+iPush_0
+CallNative is_ped_in_any_vehicle 2 1
+JumpFalse @Label_trainer_change_player_model_not_in_veh
+CallNative player_ped_id 0 1
+iPush_0
+CallNative get_vehicle_ped_is_in 2 1
+setF 4
+
+:Label_trainer_change_player_model_not_in_veh
 CallNative player_id 0 1
 getF 0
 CallNative set_player_model 2 0
@@ -1815,13 +1840,20 @@ CallNative set_ped_default_component_variation 1 0
 
 getF 0
 CallNative set_model_as_no_longer_needed 1 0
-Jump @trainer_player_model_action_level_3_end
 
-:Label_trainer_player_model_action_level_3_error_cd
-PushString "Model does not exist."
-Call @trainer_error
+getF 4
+CallNative does_entity_exist 1 1
+JumpFalse @Label_trainer_change_player_model_not_exist
+CallNative player_ped_id 0 1
+getF 4
+iPush_-1
+CallNative set_ped_into_vehicle 3 0
 
-:trainer_player_model_action_level_3_end
+:Label_trainer_change_player_model_not_exist
+getF 3
+CallNative set_gameplay_cam_relative_heading 1 0
+
+:trainer_change_player_model_end
 Return 1 0
 
 :trainer_vehicle_action_level_3
@@ -1854,7 +1886,7 @@ Jump @Label_trainer_vehicle_action_level_3_last_selected_0_end
 
 :Label_trainer_vehicle_action_level_3_last_selected_0_not_network
 Call @menu_get_current_extra
-Call @trainer_spawn_veh
+Call @trainer_spawn_veh_action
 
 :Label_trainer_vehicle_action_level_3_last_selected_0_end
 Return 0 0
@@ -2173,26 +2205,68 @@ Jump @Label_trainer_vehicle_change_plate_end
 iPush_0
 Return 0 1
 
-:trainer_spawn_veh
-Function 1 1 10
-iPush_0
-setF 7
+:trainer_spawn_veh_action
+Function 1 1 4
+
+iPush_1
+StaticSet1 7
+
+StaticGet1 26
+Switch [0 @Label_trainer_spawn_veh_action_0]:[1 @Label_trainer_spawn_veh_action_1]
+Jump @Label_trainer_spawn_veh_action_end
+
+:Label_trainer_spawn_veh_action_0
 getF 0
 CallNative is_model_in_cdimage 1 1
-JumpFalse @Label_spawn_veh_error_cd
+Not
+JumpFalse @Label_trainer_spawn_veh_action_continue
+PushString "STRING"
+CallNative unk_0x574EE85C 1 0
+PushString "Vehicle model does not exist."
+CallNative unk_0x27A244D8 1 0
+iPush_0
+iPush_1
+CallNative unk_0x08F7AF78 2 1
+drop
+iPush_0
+StaticSet1 7
+Return 1 0
+
+:Label_trainer_spawn_veh_action_continue
 getF 0
 CallNative request_model 1 0
 
-:Label_spawn_veh_while
 getF 0
 CallNative has_model_loaded 1 1
-Not
-JumpFalse @Label_spawn_veh_main
-iPush_0
-CallNative wait 1 0
-Jump @Label_spawn_veh_while
+JumpFalse @Label_trainer_spawn_veh_action_0_end
+iPush_1
+StaticSet1 26
 
-:Label_spawn_veh_main
+:Label_trainer_spawn_veh_action_0_end
+Return 1 0
+
+:Label_trainer_spawn_veh_action_1
+iPush_0
+StaticSet1 7
+getF 0
+Call @trainer_spawn_veh
+iPush_0
+StaticSet1 26
+Return 1 0
+
+:Label_trainer_spawn_veh_action_end
+Return 1 0
+
+:trainer_spawn_veh
+Function 1 1 10
+
+fPush_0.0
+setF 7
+
+getF 0
+CallNative has_model_loaded 1 1
+JumpFalse @Label_spawn_veh_end
+
 StaticGet2 378
 CallNative does_entity_exist 1 1
 JumpFalse @Label_spawn_veh_normal
@@ -2227,8 +2301,6 @@ iPush_0
 iPush_0
 iPush_1
 CallNative set_entity_coords 8 0
-iPush_1
-setF 7
 
 :Label_spawn_veh_delete
 pstatic2 378
@@ -2253,6 +2325,11 @@ CallNative player_ped_id 0 1
 iPush_0
 CallNative get_vehicle_ped_is_in 2 1
 setF 9
+
+getF 9
+CallNative get_entity_speed 1 1
+setF 7
+
 getF 9
 CallNative get_entity_heading 1 1
 setF 6
@@ -2295,6 +2372,14 @@ iPush_1
 iPush_1
 CallNative set_vehicle_engine_on 3 0
 
+fPush_0.0
+getF 7
+JumpEq @Label_spawn_veh_normal_not_moving
+StaticGet2 378
+getF 7
+CallNative set_vehicle_forward_speed 2 0
+
+:Label_spawn_veh_normal_not_moving
 getF 0
 CallNative set_model_as_no_longer_needed 1 0
 pstatic2 378
@@ -2303,7 +2388,7 @@ CallNative set_vehicle_as_no_longer_needed 1 0
 iPush_2
 Push1 179
 CallNative is_control_pressed 2 1
-JumpFalse @Label_spawn_veh_goto_end
+JumpFalse @Label_spawn_veh_end
 iPush_0
 StaticSet1 11
 
@@ -2329,22 +2414,6 @@ ArraySet1 1
 
 iPush_2
 StaticSet1 9
-
-Jump @Label_spawn_veh_goto_end
-
-:Label_spawn_veh_error_cd
-PushString "STRING"
-CallNative unk_0x574EE85C 1 0
-PushString "Vehicle model does not exist."
-CallNative unk_0x27A244D8 1 0
-iPush_0
-iPush_1
-CallNative unk_0x08F7AF78 2 1
-drop
-Jump @Label_spawn_veh_end
-
-:Label_spawn_veh_goto_end
-Jump @Label_spawn_veh_end
 
 :Label_spawn_veh_end
 Return 1 0
@@ -2962,6 +3031,11 @@ StaticGet1 24
 StaticSet1 23
 iPush_-1
 StaticSet1 5
+iPush_0
+StaticSet1 7
+iPush_0
+StaticSet1 26
+
 Return 0 0
 
 :menu_draw_window
@@ -3351,6 +3425,35 @@ StaticSet1 23
 Jump @Label_catch_button_press_3
 
 :Label_catch_button_press_4
+StaticGet1 5
+StaticGet1 24
+JumpLE @Label_catch_button_press_3_1
+StaticGet1 5
+StaticGet1 25
+Sub
+setF 4
+
+getF 4
+CallNative to_float 1 1
+StaticGet1 22
+fMult
+setF 5
+
+StaticGet1 21
+getF 5
+fSub
+StaticSet1 20
+
+StaticGet1 5
+StaticGet1 25
+Add
+StaticSet1 23
+
+getF 3
+StaticSet1 4
+Jump @Label_catch_button_press_3
+
+:Label_catch_button_press_3_1
 getF 3
 StaticSet1 4
 
@@ -3501,13 +3604,32 @@ setF 17
 getF 12
 getF 13
 getF 14
-iPush_0
+fPush_1.0
 iPush_0
 Call @set_up_draw
 StaticGet1 10
 StaticGet1 3
 fPush 0.04444443
 Call @draw_string
+
+StaticGet1 5
+StaticGet1 24
+JumpLE @Label_draw_menu_LOOP
+getF 12
+getF 13
+getF 14
+StaticGet1 3
+fPush 0.215625
+fAdd
+iPush_1
+Call @set_up_draw
+StaticGet1 4
+Add1 1
+StaticGet1 5
+Add1 1
+fPush_0.0
+fPush 0.04444443
+Call @draw_item_count
 
 :Label_draw_menu_LOOP
 getF 3
@@ -3570,7 +3692,7 @@ JumpNE @Label_draw_menu_gxt_end
 getF 18
 getF 19
 getF 20
-iPush_0
+fPush_1.0
 iPush_0
 Call @set_up_draw
 getF 3
@@ -3590,7 +3712,7 @@ JumpNE @Label_draw_menu_gxt_veh_hash_end
 getF 18
 getF 19
 getF 20
-iPush_0
+fPush_1.0
 iPush_0
 Call @set_up_draw
 getF 3
@@ -3606,7 +3728,7 @@ Jump @Label_draw_menu_bool
 getF 18
 getF 19
 getF 20
-iPush_0
+fPush_1.0
 iPush_0
 Call @set_up_draw
 getF 3
@@ -3625,7 +3747,9 @@ JumpNE @Label_draw_menu_number_end
 getF 18
 getF 19
 getF 20
-iPush_0
+StaticGet1 3
+fPush 0.1920
+fAdd
 iPush_1
 Call @set_up_draw
 getF 3
@@ -3644,7 +3768,9 @@ JumpNE @Label_draw_menu_float_end
 getF 18
 getF 19
 getF 20
-iPush_0
+StaticGet1 3
+fPush 0.1920
+fAdd
 iPush_1
 Call @set_up_draw
 getF 3
@@ -3663,8 +3789,10 @@ JumpNE @Label_draw_menu_bool_end
 getF 18
 getF 19
 getF 20
+StaticGet1 3
+fPush 0.2040
+fAdd
 iPush_1
-iPush_0
 Call @set_up_draw
 
 getF 3
@@ -3692,6 +3820,19 @@ Jump @Label_draw_menu_LOOP
 
 :Label_draw_menu_END
 Return 0 0
+
+:draw_item_count
+Function 1 4 4
+PushString "CM_ITEM_COUNT"
+CallNative unk_0x3E35563E 1 0
+getF 0
+CallNative unk_0xFE272A57 1 0
+getF 1
+CallNative unk_0xFE272A57 1 0
+getF 2
+getF 3
+CallNative unk_0x6F8350CE 2 0
+Return 4 0
 
 :draw_number
 Function 1 3 3
@@ -3751,34 +3892,11 @@ Push1 255
 CallNative set_text_colour 4 0
 
 fPush_0.0
-fPush_1.0
-CallNative set_text_wrap 2 0
-iPush_0
-CallNative set_text_right_justify 1 0
-
 getF 3
-JumpFalse @Label_set_up_draw_5
-fPush_0.0
-StaticGet1 3
-fPush 0.2040
-fAdd
 CallNative set_text_wrap 2 0
-iPush_1
-CallNative set_text_right_justify 1 0
-Jump @Label_set_up_draw_6
-
-:Label_set_up_draw_5
 getF 4
-JumpFalse @Label_set_up_draw_6
-fPush_0.0
-StaticGet1 3
-fPush 0.1920
-fAdd
-CallNative set_text_wrap 2 0
-iPush_1
 CallNative set_text_right_justify 1 0
 
-:Label_set_up_draw_6
 iPush_0
 CallNative set_text_centre 1 0
 iPush_0
