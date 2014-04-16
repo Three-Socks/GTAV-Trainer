@@ -3362,7 +3362,7 @@ StaticSet1 13
 Return 0 0
 
 :menu_catch_button_press
-Function 1 0 7
+Function 1 0 8
 StaticGet1 5
 setF 3
 
@@ -3466,29 +3466,34 @@ Jump @Label_catch_button_press_3
 StaticGet1 5
 StaticGet1 24
 JumpLE @Label_catch_button_press_3_1
+
+StaticGet1 25
+setF 7
+
+:Label_catch_button_press_loop
+getF 7
 StaticGet1 5
-StaticGet1 25
-Sub
-StaticGet1 25
-Sub
-setF 4
+JumpGT @Label_catch_button_press_3
 
-getF 4
-CallNative to_float 1 1
+getF 7
+getF 6
+JumpGE @Label_catch_button_press_loop_exit
+
+StaticGet1 20
 StaticGet1 22
-fMult
-setF 5
-
-StaticGet1 21
-getF 5
 fSub
 StaticSet1 20
 
-StaticGet1 5
-StaticGet1 25
-Add
+StaticGet1 23
+Add1 1
 StaticSet1 23
 
+getF 7
+Add1 1
+setF 7
+Jump @Label_catch_button_press_loop
+
+:Label_catch_button_press_loop_exit
 getF 3
 StaticSet1 4
 Jump @Label_catch_button_press_3
