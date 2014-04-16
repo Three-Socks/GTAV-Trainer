@@ -256,10 +256,19 @@ JumpLE @Label_menu_set_end
 StaticGet1 25
 setF 3
 
+StaticGet1 5
+StaticGet1 25
+Sub
+setF 4
+
 :Label_menu_set_loop
 getF 3
 StaticGet1 4
 JumpGT @Label_menu_set_end
+
+getF 3
+getF 4
+JumpGE @Label_menu_set_end
 
 StaticGet1 20
 StaticGet1 22
@@ -3393,9 +3402,14 @@ StaticSet1 13
 Return 0 0
 
 :menu_catch_button_press
-Function 1 0 6
+Function 1 0 7
 StaticGet1 5
 setF 3
+
+getF 3
+StaticGet1 25
+Sub
+setF 6
 
 iPush_1
 Call @menu_down_pressed
@@ -3414,6 +3428,12 @@ StaticSet1 4
 getF 3
 StaticGet1 24
 JumpLE @Label_catch_down_button_press_end
+
+StaticGet1 4
+getF 6
+Add1 1
+JumpGE @Label_catch_down_button_press_end
+
 StaticGet1 4
 StaticGet1 25
 JumpLE @Label_catch_down_button_press_end
@@ -3459,6 +3479,11 @@ StaticSet1 4
 getF 3
 StaticGet1 24
 JumpLE @Label_catch_up_button_press_end
+
+StaticGet1 4
+getF 6
+JumpGE @Label_catch_up_button_press_end
+
 StaticGet1 4
 StaticGet1 25
 iPush_1
@@ -3482,6 +3507,8 @@ StaticGet1 5
 StaticGet1 24
 JumpLE @Label_catch_button_press_3_1
 StaticGet1 5
+StaticGet1 25
+Sub
 StaticGet1 25
 Sub
 setF 4
