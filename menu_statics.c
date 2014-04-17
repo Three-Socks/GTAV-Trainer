@@ -78,6 +78,9 @@ Static_25
 // (uint) menu_sub_action_mode
 Static_26
 
+// (bool) menu_texture_loaded
+Static_27
+
 // (uint) last_selected (10)
 Static[30]
 
