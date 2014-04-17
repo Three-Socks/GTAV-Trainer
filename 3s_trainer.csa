@@ -38,13 +38,13 @@ StaticSet1 15
 iPush_1
 StaticSet1 17
 
-fPush 0.05277777
+fPush 0.0527
 StaticSet1 20
 
 StaticGet1 20
 StaticSet1 21
 
-fPush 0.03472222
+fPush 0.03472
 StaticSet1 22
 
 Push1 18
@@ -89,6 +89,8 @@ Call @menu_set
 Call @menu_draw_frontend
 Call @menu_draw_window
 Call @menu_draw
+Call @menu_draw_sprite
+CallNative unk_0x3FE33BD6 0 0
 
 :Label_main2
 Jump @while
@@ -510,8 +512,7 @@ Call @menu_addItem_action
 PushString "Max Wanted Level"
 Call @menu_addItem
 CallNative get_max_wanted_level 0 1
-Add1 1
-iPush_6
+iPush_5
 Call @menu_addItem_number
 Call @menu_add_action
 Return 0 0
@@ -1095,7 +1096,7 @@ Jump @Label_trainer_vehicle_modify_level_3_end
 :Label_trainer_vehicle_modify_level_3_last_selected_0
 PushString "Door"
 Call @menu_addItem
-iPush_1
+iPush_0
 iPush_6
 Call @menu_addItem_number
 Call @menu_add_action
@@ -1104,6 +1105,9 @@ PushString "Open"
 Call @menu_addItem_action
 
 PushString "Close"
+Call @menu_addItem_action
+
+PushString "Remove"
 Call @menu_addItem_action
 
 Return 0 0
@@ -1556,8 +1560,6 @@ Return 0 0
 
 :Label_trainer_player_wanted_action_level_2_last_selected_1
 Call @menu_get_current_number
-iPush_1
-Sub
 CallNative set_max_wanted_level 1 0
 
 :Label_trainer_player_wanted_action_level_2_last_selected_1_end
@@ -2030,12 +2032,10 @@ Function 1 0 4
 
 iPush_0
 Call @menu_get_number
-iPush_1
-Sub
 setF 3
 
 StaticGet1 4
-Switch [1 @Label_trainer_vehicle_door_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_door_action_level_3_last_selected_2]
+Switch [1 @Label_trainer_vehicle_door_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_door_action_level_3_last_selected_2]:[3 @Label_trainer_vehicle_door_action_level_3_last_selected_3]
 Jump @Label_trainer_vehicle_door_action_level_3_end
 
 :Label_trainer_vehicle_door_action_level_3_last_selected_1
@@ -2051,6 +2051,13 @@ StaticGet2 379
 getF 3
 iPush_1
 CallNative set_vehicle_door_shut 3 0
+Return 0 0
+
+:Label_trainer_vehicle_door_action_level_3_last_selected_3
+StaticGet2 379
+getF 3
+iPush_1
+CallNative set_vehicle_door_broken 3 0
 Return 0 0
 
 :Label_trainer_vehicle_door_action_level_3_end
@@ -2730,9 +2737,6 @@ iPush_2
 Push1 162
 CallNative disable_control_action 2 0
 
-CallNative network_is_game_in_progress 0 1
-JumpFalse @menu_modify_game_state_end
-
 Push1 10
 CallNative hide_hud_component_this_frame 1 0
 iPush_6
@@ -2966,6 +2970,10 @@ iPush_0
 StaticSet1 13
 pstatic1 12
 CallNative set_scaleform_movie_as_no_longer_needed 1 0
+iPush_0
+StaticSet1 27
+PushString "CommonMenu"
+CallNative set_streamed_texture_dict_as_no_longer_needed 1 0
 CallNative network_is_game_in_progress 0 1
 JumpFalse @menu_hide_not_network
 iPush_0
@@ -3076,7 +3084,7 @@ setF 6
 :Label_menu_draw_window_2
 StaticGet1 22
 getF 6
-CallNative to_float 1 1
+ItoF
 fMult
 setF 7
 fPush 0.05
@@ -3097,6 +3105,26 @@ iPush_0
 iPush_0
 Push1 204
 Call @draw_rect
+
+StaticGet1 5
+StaticGet1 24
+JumpLE @Label_menu_draw_window_end
+
+fPush 0.05
+getF 7
+StaticGet1 22
+fAdd
+fPush 0.04999922
+fAdd
+fPush 0.225
+StaticGet1 22
+iPush_0
+iPush_0
+iPush_0
+Push1 204
+Call @draw_rect
+
+:Label_menu_draw_window_end
 Return 0 0
 
 :draw_rect
@@ -3243,6 +3271,92 @@ Call @menu_do_hold_pressed
 :Label_menu_down_pressed_end
 iPush_0
 Return 1 1
+
+:menu_draw_sprite
+Function 1 0 20
+
+StaticGet1 27
+Not
+JumpFalse @Label_menu_draw_sprite_loaded
+
+PushString "CommonMenu"
+iPush_0
+CallNative request_streamed_texture_dict 2 0
+
+PushString "CommonMenu"
+CallNative has_streamed_texture_dict_loaded 1 1
+JumpFalse @Label_menu_draw_sprite_goto_end
+iPush_1
+StaticSet1 27
+
+:Label_menu_draw_sprite_goto_end
+Jump @Label_menu_draw_sprite_end
+
+:Label_menu_draw_sprite_loaded
+StaticGet1 5
+StaticGet1 24
+JumpLE @Label_menu_draw_sprite_end
+
+iPush_1
+pFrame1 3
+pFrame1 4
+pFrame1 5
+pFrame1 6
+CallNative get_hud_colour 5 0
+
+StaticGet1 24
+Add1 2
+setF 7
+
+StaticGet1 22
+getF 7
+ItoF
+fMult
+setF 8
+
+PushString "CommonMenu"
+PushString "shop_arrows_upANDdown"
+CallNative get_texture_resolution 2 3
+iPush_3
+pFrame1 9
+FromStack
+
+pFrame1 13
+pFrame1 14
+CallNative get_screen_resolution 2 0
+
+PushString "CommonMenu"
+PushString "shop_arrows_upANDdown"
+fPush 0.05
+fPush 0.225
+fPush 0.5
+fMult
+fAdd
+getF 8
+fPush 0.04999922
+fAdd
+StaticGet1 22
+fPush 0.5
+fMult
+fAdd
+getF 9
+getF 13
+ItoF
+fDiv
+pFrame1 9
+GetImmediate1 1
+getF 14
+ItoF
+fDiv
+fPush_0.0
+getF 3
+getF 4
+getF 5
+getF 6
+CallNative draw_sprite 11 0
+
+:Label_menu_draw_sprite_end
+Return 0 0
 
 :menu_draw_frontend
 Function 1 0 4
@@ -3506,20 +3620,20 @@ StaticSet1 4
 Jump @Label_catch_button_press_end
 
 :Label_catch_left_button_press
-iPush_2
-Push1 163
-CallNative is_disabled_control_just_pressed 2 1
-JumpFalse @Label_catch_right_button_press
-iPush_-1
-PushString "NAV_UP_DOWN"
-PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
-CallNative play_sound_frontend 3 0
 iPush_1
 StaticGet1 4
 pstatic1 123
 ArrayGet1 1
-JumpNE @Label_catch_button_press_5
-iPush_1
+JumpNE @Label_catch_button_press_end
+iPush_2
+Push1 163
+CallNative is_disabled_control_just_pressed 2 1
+JumpFalse @Label_catch_button_press_5
+iPush_-1
+PushString "NAV_UP_DOWN"
+PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
+CallNative play_sound_frontend 3 0
+iPush_0
 StaticGet1 4
 pstatic2 276
 ArrayGet1 1
@@ -3533,7 +3647,7 @@ StaticGet1 4
 pstatic2 276
 ArraySet1 1
 
-Jump @Label_catch_button_press_5
+Jump @Label_catch_button_press_goto_7
 
 :Label_catch_button_press_6
 StaticGet1 4
@@ -3543,23 +3657,18 @@ StaticGet1 4
 pstatic2 276
 ArraySet1 1
 
-:Label_catch_button_press_5
-Jump @Label_catch_button_press_end
+:Label_catch_button_press_goto_7
+Jump @Label_catch_button_press_7
 
-:Label_catch_right_button_press
+:Label_catch_button_press_5
 iPush_2
 Push1 164
 CallNative is_disabled_control_just_pressed 2 1
-JumpFalse @Label_catch_button_press_end
+JumpFalse @Label_catch_button_press_7
 iPush_-1
 PushString "NAV_UP_DOWN"
 PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
 CallNative play_sound_frontend 3 0
-iPush_1
-StaticGet1 4
-pstatic1 123
-ArrayGet1 1
-JumpNE @Label_catch_button_press_7
 StaticGet1 4
 pstatic2 276
 ArrayGet1 1
@@ -3578,7 +3687,7 @@ ArraySet1 1
 Jump @Label_catch_button_press_7
 
 :Label_catch_button_press_8
-iPush_1
+iPush_0
 StaticGet1 4
 pstatic2 276
 ArraySet1 1
@@ -3598,7 +3707,7 @@ StaticSet1 14
 Return 0 0
 
 :menu_draw
-Function 1 0 22
+Function 1 0 27
 
 iPush_0
 setF 3
@@ -3628,14 +3737,12 @@ setF 10
 PushString "Enabled"
 setF 11
 
-Push1 255
-setF 12
-
-Push1 255
-setF 13
-
-Push1 255
-setF 14
+iPush_1
+pFrame1 12
+pFrame1 13
+pFrame1 14
+pFrame1 21
+CallNative get_hud_colour 5 0
 
 iPush_0
 setF 15
@@ -3864,7 +3971,6 @@ setF 3
 Jump @Label_draw_menu_LOOP
 
 :Label_draw_menu_END
-CallNative unk_0x3FE33BD6 0 0
 Return 0 0
 
 :draw_item_count
