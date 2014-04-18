@@ -82,6 +82,7 @@ StaticGet1 7
 JumpNE @Label_main_draw
 Call @menu_catch_button_press
 Call @menu_catch_select_button_press
+Call @trainer_catch_button_press
 
 :Label_main_draw
 Call @menu_action
@@ -256,6 +257,7 @@ StaticGet1 4
 StaticGet1 25
 JumpLE @Label_menu_set_end
 StaticGet1 25
+Add1 1
 setF 3
 
 StaticGet1 5
@@ -270,6 +272,7 @@ JumpGT @Label_menu_set_end
 
 getF 3
 getF 4
+Add1 1
 JumpGE @Label_menu_set_end
 
 StaticGet1 20
@@ -347,6 +350,8 @@ PushString "Player"
 StaticSet1 10
 PushString "Change Model"
 Call @menu_addItem
+PushString "Appearance"
+Call @menu_addItem
 PushString "Wanted"
 Call @menu_addItem
 PushString "Health"
@@ -411,7 +416,7 @@ Function 1 0 4
 iPush_1
 pstatic2 30
 ArrayGet1 1
-Switch [0 @Label_trainer_player_level_2_last_selected_0]:[1 @Label_trainer_player_level_2_last_selected_1]:[2 @Label_trainer_player_level_2_last_selected_2]:[3 @Label_trainer_player_level_2_last_selected_3]
+Switch [0 @Label_trainer_player_level_2_last_selected_0]:[1 @Label_trainer_player_level_2_last_selected_1]:[2 @Label_trainer_player_level_2_last_selected_2]:[3 @Label_trainer_player_level_2_last_selected_3]:[4 @Label_trainer_player_level_2_last_selected_4]
 Jump @Label_trainer_player_level_2_end
 
 :Label_trainer_player_level_2_last_selected_0
@@ -501,6 +506,37 @@ Call @menu_addItem
 Return 0 0
 
 :Label_trainer_player_level_2_last_selected_1
+PushString "Player - Appearance"
+StaticSet1 10
+PushString "Default"
+Call @menu_addItem_action
+PushString "Random"
+Call @menu_addItem_action
+PushString "Beard"
+Call @menu_addItem
+PushString "Hair"
+Call @menu_addItem
+PushString "Torso"
+Call @menu_addItem
+PushString "Legs"
+Call @menu_addItem
+PushString "Hands"
+Call @menu_addItem
+PushString "Feet"
+Call @menu_addItem
+PushString "Teeth"
+Call @menu_addItem
+PushString "Accessories"
+Call @menu_addItem
+PushString "Task"
+Call @menu_addItem
+PushString "Decl"
+Call @menu_addItem
+PushString "Jbib"
+Call @menu_addItem
+Return 0 0
+
+:Label_trainer_player_level_2_last_selected_2
 PushString "Player - Wanted"
 StaticSet1 10
 PushString "Clear wanted"
@@ -513,14 +549,14 @@ Call @menu_addItem_number
 Call @menu_add_action
 Return 0 0
 
-:Label_trainer_player_level_2_last_selected_2
+:Label_trainer_player_level_2_last_selected_3
 PushString "Player - Health"
 StaticSet1 10
 PushString "Max Health"
 Call @menu_addItem_action
 Return 0 0
 
-:Label_trainer_player_level_2_last_selected_3
+:Label_trainer_player_level_2_last_selected_4
 PushString "Player - Weapons"
 StaticSet1 10
 PushString "All Weapons"
@@ -837,7 +873,7 @@ Jump @Label_trainer_vehicle_modify_extra_level_3_while
 StaticGet1 5
 iPush_0
 JumpGE @Label_trainer_vehicle_modify_extra_level_3_end_2
-PushString "Vehicle has no extra's"
+PushString "Vehicle has no extra's."
 Call @trainer_error
 
 :Label_trainer_vehicle_modify_extra_level_3_end_2
@@ -890,15 +926,123 @@ Function 1 0 4
 iPush_1
 pstatic2 30
 ArrayGet1 1
-Switch [0 @Label_player_level_3_last_selected_0]
+Switch [0 @Label_player_level_3_last_selected_0]:[1 @Label_player_level_3_last_selected_1]
 Jump @Label_player_level_3_end
 
 :Label_player_level_3_last_selected_0
 Call @trainer_player_model_level_3
 Return 0 0
 
+:Label_player_level_3_last_selected_1
+iPush_1
+Call @trainer_player_variation_level_3
+Return 0 0
+
 :Label_player_level_3_end
 Return 0 0
+
+:trainer_player_variation_level_3
+Function 1 1 8
+
+PushString "Player - Appearance"
+StaticSet1 10
+
+iPush_2
+pstatic2 30
+ArrayGet1 1
+iPush_2
+Sub
+setF 3
+
+CallNative player_ped_id 0 1
+getF 3
+CallNative get_number_of_ped_drawable_variations 2 1
+setF 4
+
+CallNative player_ped_id 0 1
+getF 3
+iPush_0
+Call @menu_get_number
+CallNative get_number_of_ped_texture_variations 3 1
+setF 5
+
+getF 4
+iPush_1
+CmpGt
+dup
+Not
+JumpFalse @Label_trainer_player_variation_num_or
+getF 5
+iPush_1
+CmpGt
+Or
+
+:Label_trainer_player_variation_num_or
+JumpFalse @Label_trainer_player_variation_num_or_false
+
+PushString "Model Variation"
+Call @menu_addItem
+getF 0
+JumpFalse @Label_trainer_player_variation_level_3_1
+CallNative player_ped_id 0 1
+getF 3
+CallNative get_ped_drawable_variation 2 1
+getF 4
+Call @menu_addItem_number
+Jump @Label_trainer_player_variation_level_3_2
+
+:Label_trainer_player_variation_level_3_1
+iPush_0
+Call @menu_get_number
+getF 4
+Call @menu_addItem_number
+
+:Label_trainer_player_variation_level_3_2
+Call @menu_add_action
+
+:Label_trainer_player_variation_num_or_false
+getF 5
+iPush_1
+JumpLE @Label_trainer_player_variation_level_3_end
+
+PushString "Texture Variation"
+Call @menu_addItem
+getF 0
+JumpFalse @Label_trainer_player_variation_level_3_3
+CallNative player_ped_id 0 1
+getF 3
+CallNative get_ped_texture_variation 2 1
+getF 5
+Call @menu_addItem_number
+Jump @Label_trainer_player_variation_level_3_4
+
+:Label_trainer_player_variation_level_3_3
+iPush_0
+getF 5
+Call @menu_addItem_number
+
+:Label_trainer_player_variation_level_3_4
+Call @menu_add_action
+
+:Label_trainer_player_variation_level_3_end
+
+getF 4
+iPush_2
+CmpLt
+dup
+JumpFalse @Label_trainer_player_variation_num_and
+getF 5
+iPush_2
+CmpLt
+And
+
+:Label_trainer_player_variation_num_and
+JumpFalse @Label_trainer_player_variation_level_3_end2
+PushString "No options available."
+Call @trainer_error
+
+:Label_trainer_player_variation_level_3_end2
+Return 1 0
 
 :trainer_vehicle_level_3
 Function 1 0 4
@@ -971,6 +1115,9 @@ pFrame1 4
 StrAddi 16
 
 pFrame1 4
+setF 6
+
+getF 6
 Call @menu_addItem
 getF 3
 Call @menu_add_number
@@ -1307,10 +1454,14 @@ Function 1 0 4
 iPush_1
 pstatic2 30
 ArrayGet1 1
-Switch [1 @Label_trainer_player_action_level_2_last_selected_1]:[2 @Label_trainer_player_action_level_2_last_selected_2]:[3 @Label_trainer_player_action_level_2_last_selected_3]
+Switch [1 @Label_trainer_player_action_level_2_last_selected_1]:[2 @Label_trainer_player_action_level_2_last_selected_2]:[3 @Label_trainer_player_action_level_2_last_selected_3]:[4 @Label_trainer_player_action_level_2_last_selected_4]
 Jump @Label_trainer_player_action_level_2_end
 
 :Label_trainer_player_action_level_2_last_selected_1
+Call @trainer_player_variation_action
+Return 0 0
+
+:Label_trainer_player_action_level_2_last_selected_2
 StaticGet1 4
 Switch [0 @Label_trainer_player_wanted_action_level_2_last_selected_0]:[1 @Label_trainer_player_wanted_action_level_2_last_selected_1]
 Jump @Label_trainer_player_wanted_action_level_2_end
@@ -1332,10 +1483,10 @@ Return 0 0
 :Label_trainer_player_wanted_action_level_2_end
 Return 0 0
 
-:Label_trainer_player_action_level_2_last_selected_1_end
+:Label_trainer_player_action_level_2_last_selected_2_end
 Return 0 0
 
-:Label_trainer_player_action_level_2_last_selected_2
+:Label_trainer_player_action_level_2_last_selected_3
 StaticGet1 4
 Switch [0 @Label_trainer_player_health_action_level_2_last_selected_0]
 Jump @Label_trainer_player_health_action_level_2_end
@@ -1352,10 +1503,10 @@ Return 0 0
 :Label_trainer_player_health_action_level_2_end
 Return 0 0
 
-:Label_trainer_player_action_level_2_last_selected_2_end
+:Label_trainer_player_action_level_2_last_selected_3_end
 Return 0 0
 
-:Label_trainer_player_action_level_2_last_selected_3
+:Label_trainer_player_action_level_2_last_selected_4
 StaticGet1 4
 Switch [0 @Label_trainer_player_weapon_action_level_2_last_selected_0]
 Jump @Label_trainer_player_weapon_action_level_2_end
@@ -1443,10 +1594,31 @@ Return 0 0
 :Label_trainer_player_weapon_action_level_2_end
 Return 0 0
 
-:Label_trainer_player_action_level_2_last_selected_3_end
+:Label_trainer_player_action_level_2_last_selected_4_end
 Return 0 0
 
 :Label_trainer_player_action_level_2_end
+Return 0 0
+
+:trainer_player_variation_action
+Function 1 0 4
+
+StaticGet1 4
+Switch [0 @Label_trainer_player_variation_action_last_selected_0]:[1 @Label_trainer_player_variation_action_last_selected_1]
+Jump @Label_trainer_player_variation_action_end
+
+:Label_trainer_player_variation_action_last_selected_0
+CallNative player_ped_id 0 1
+CallNative set_ped_default_component_variation 1 0
+Return 0 0
+
+:Label_trainer_player_variation_action_last_selected_1
+CallNative player_ped_id 0 1
+iPush_0
+CallNative set_ped_random_component_variation 2 0
+Return 0 0
+
+:Label_trainer_player_variation_action_end
 Return 0 0
 
 :trainer_vehicle_action_level_2
@@ -1518,12 +1690,30 @@ Function 1 0 4
 iPush_1
 pstatic2 30
 ArrayGet1 1
-Switch [0 @Label_trainer_player_action_level_3_last_selected_0]
+Switch [0 @Label_trainer_player_action_level_3_last_selected_0]:[1 @Label_trainer_player_action_level_3_last_selected_1]
 Jump @Label_trainer_player_action_level_3_end
 
 :Label_trainer_player_action_level_3_last_selected_0
 Call @menu_get_current_number
 Call @trainer_change_player_model_action
+Return 0 0
+
+:Label_trainer_player_action_level_3_last_selected_1
+iPush_2
+pstatic2 30
+ArrayGet1 1
+iPush_2
+Sub
+setF 3
+
+CallNative player_ped_id 0 1
+getF 3
+iPush_0
+Call @menu_get_number
+iPush_1
+Call @menu_get_number
+iPush_0
+CallNative set_ped_component_variation 5 0
 Return 0 0
 
 :Label_trainer_player_action_level_3_end
@@ -2306,6 +2496,51 @@ StaticSet2 383
 :Label_network_set_spawn_veh_end
 Return 1 0
 
+:trainer_catch_button_press
+Function 1 0 5
+
+iPush_2
+Push1 163
+CallNative is_disabled_control_just_pressed 2 1
+dup
+Not
+JumpFalse @Label_trainer_catch_button_press_1
+iPush_2
+Push1 164
+CallNative is_disabled_control_just_pressed 2 1
+Or
+
+:Label_trainer_catch_button_press_1
+JumpFalse @Label_trainer_catch_button_press_end
+
+iPush_3
+StaticGet1 9
+JumpNE @Label_trainer_catch_button_press_end
+iPush_0
+iPush_0
+pstatic2 30
+ArrayGet1 1
+JumpNE @Label_trainer_catch_button_press_end
+iPush_1
+iPush_1
+pstatic2 30
+ArrayGet1 1
+JumpNE @Label_trainer_catch_button_press_end
+iPush_0
+StaticGet1 4
+JumpNE @Label_trainer_catch_button_press_end
+Call @menu_get_current_number
+setF 3
+Call @menu_clean
+iPush_0
+getF 3
+Call @menu_set_number
+iPush_0
+Call @trainer_player_variation_level_3
+
+:Label_trainer_catch_button_press_end
+Return 0 0
+
 :menu_draw_frontend_hook
 Function 1 0 5
 
@@ -2358,6 +2593,15 @@ ArraySet1 1
 
 :Label_menu_add_number_end
 Return 1 0
+
+:menu_set_number
+Function 1 2 4
+
+getF 1
+getF 0
+pstatic2 276
+ArraySet1 1
+Return 2 0
 
 :menu_get_current_number
 Function 1 0 4
@@ -3341,6 +3585,7 @@ Return 0 0
 
 :menu_catch_button_press
 Function 1 0 8
+
 StaticGet1 5
 setF 3
 
