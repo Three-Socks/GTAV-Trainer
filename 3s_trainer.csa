@@ -47,13 +47,13 @@ StaticSet1 21
 fPush 0.03472
 StaticSet1 22
 
-Push1 18
+Push1 14
 StaticSet1 23
 
 StaticGet1 23
 StaticSet1 24
 
-Push1 9
+iPush_7
 StaticSet1 25
 
 CallNative network_is_game_in_progress 0 1
@@ -218,10 +218,10 @@ StaticGet1 11
 Not
 JumpFalse @Label_menu_set_end
 
-Call @trainer_level_0
-
 iPush_1
 StaticSet1 11
+
+Call @trainer_level_0
 
 iPush_2
 Push1 175
@@ -375,10 +375,6 @@ Return 0 0
 :Label_last_selected_2
 PushString "Network"
 StaticSet1 10
-PushString "Teleport Pegasus"
-Call @menu_addItem_action
-PushString "Delete Pegasus"
-Call @menu_addItem_action
 PushString "Pause Off Radar Timer"
 Call @menu_addItem
 StaticGet2 384
@@ -837,6 +833,14 @@ setF 3
 Jump @Label_trainer_vehicle_modify_extra_level_3_while
 
 :Label_trainer_vehicle_modify_extra_level_3_end
+
+StaticGet1 5
+iPush_0
+JumpGE @Label_trainer_vehicle_modify_extra_level_3_end_2
+PushString "Vehicle has no extra's"
+Call @trainer_error
+
+:Label_trainer_vehicle_modify_extra_level_3_end_2
 Return 0 0
 
 :Label_trainer_vehicle_level_2_last_selected_3
@@ -852,6 +856,8 @@ Call @menu_addItem
 PushString "Lights"
 Call @menu_addItem
 PushString "Plate"
+Call @menu_addItem
+PushString "Settings"
 Call @menu_addItem
 Return 0 0
 
@@ -931,121 +937,12 @@ Return 0 0
 Return 0 0
 
 :trainer_vehicle_mod_level_3
-Function 1 0 36
+Function 1 0 17
 
 :Label_trainer_vehicle_mod_level_3_1
 
 PushString "Vehicle - Mod"
 StaticSet1 10
-
-pFrame1 5
-Push1 26
-pPeekSet
-drop
-PushString "Mod 1"
-iPush_0
-pFrame1 5
-ArraySet1 1
-PushString "Mod 2"
-iPush_1
-pFrame1 5
-ArraySet1 1
-PushString "Mod 3"
-iPush_2
-pFrame1 5
-ArraySet1 1
-PushString "Mod 4"
-iPush_3
-pFrame1 5
-ArraySet1 1
-PushString "Mod 5"
-iPush_4
-pFrame1 5
-ArraySet1 1
-PushString "Mod 6"
-iPush_5
-pFrame1 5
-ArraySet1 1
-PushString "Mod 7"
-iPush_6
-pFrame1 5
-ArraySet1 1
-PushString "Mod 8"
-iPush_7
-pFrame1 5
-ArraySet1 1
-PushString "Mod 9"
-Push1 8
-pFrame1 5
-ArraySet1 1
-PushString "Mod 10"
-Push1 9
-pFrame1 5
-ArraySet1 1
-PushString "Mod 11"
-Push1 10
-pFrame1 5
-ArraySet1 1
-PushString "Mod 12"
-Push1 11
-pFrame1 5
-ArraySet1 1
-PushString "Mod 13"
-Push1 12
-pFrame1 5
-ArraySet1 1
-PushString "Mod 14"
-Push1 13
-pFrame1 5
-ArraySet1 1
-PushString "Mod 15"
-Push1 14
-pFrame1 5
-ArraySet1 1
-PushString "Mod 16"
-Push1 15
-pFrame1 5
-ArraySet1 1
-PushString "Mod 17"
-Push1 16
-pFrame1 5
-ArraySet1 1
-PushString "Mod 18"
-Push1 17
-pFrame1 5
-ArraySet1 1
-PushString "Mod 19"
-Push1 18
-pFrame1 5
-ArraySet1 1
-PushString "Mod 20"
-Push1 19
-pFrame1 5
-ArraySet1 1
-PushString "Mod 21"
-Push1 20
-pFrame1 5
-ArraySet1 1
-PushString "Mod 22"
-Push1 21
-pFrame1 5
-ArraySet1 1
-PushString "Mod 23"
-Push1 22
-pFrame1 5
-ArraySet1 1
-PushString "Mod 24"
-Push1 23
-pFrame1 5
-ArraySet1 1
-PushString "Mod 25"
-Push1 24
-pFrame1 5
-ArraySet1 1
-PushString "Mod 26"
-Push1 25
-pFrame1 5
-ArraySet1 1
 
 PushString "Stock"
 Call @menu_addItem
@@ -1065,9 +962,15 @@ ArrayGet1 1
 CallNative unk_0x8A814FF9 2 1
 JumpGE @Label_trainer_vehicle_mod_level_3_end
 
+PushString "Mod "
+pFrame1 4
+StrCopy 16
+
 getF 3
-pFrame1 5
-ArrayGet1 1
+pFrame1 4
+StrAddi 16
+
+pFrame1 4
 Call @menu_addItem
 getF 3
 Call @menu_add_number
@@ -1090,7 +993,7 @@ StaticSet1 10
 iPush_2
 pstatic2 30
 ArrayGet1 1
-Switch [0 @Label_trainer_vehicle_modify_level_3_last_selected_0]:[1 @Label_trainer_vehicle_modify_level_3_last_selected_1]:[2 @Label_trainer_vehicle_modify_level_3_last_selected_2]
+Switch [0 @Label_trainer_vehicle_modify_level_3_last_selected_0]:[1 @Label_trainer_vehicle_modify_level_3_last_selected_1]:[2 @Label_trainer_vehicle_modify_level_3_last_selected_2]:[3 @Label_trainer_vehicle_modify_level_3_last_selected_3]
 Jump @Label_trainer_vehicle_modify_level_3_end
 
 :Label_trainer_vehicle_modify_level_3_last_selected_0
@@ -1118,11 +1021,40 @@ Call @menu_addItem
 iPush_0
 Call @menu_addItem_bool
 Call @menu_add_action
+
+PushString "Search Light"
+Call @menu_addItem
+StaticGet2 379
+CallNative is_vehicle_searchlight_on 1 1
+Call @menu_addItem_bool
+Call @menu_add_action
+
+PushString "Search Light 2"
+Call @menu_addItem
+StaticGet2 379
+CallNative is_vehicle_searchlight_on 1 1
+Call @menu_addItem_bool
+Call @menu_add_action
 Return 0 0
 
 :Label_trainer_vehicle_modify_level_3_last_selected_2
 PushString "Edit Plate Text"
 Call @menu_addItem_action
+PushString "Plate Type"
+Call @menu_addItem
+StaticGet2 379
+CallNative get_vehicle_plate_type 1 1
+CallNative unk_0xD24BC1AE 0 1
+Call @menu_addItem_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_vehicle_modify_level_3_last_selected_3
+PushString "Slidey Wheels"
+Call @menu_addItem
+iPush_0
+Call @menu_addItem_bool
+Call @menu_add_action
 Return 0 0
 
 :Label_trainer_vehicle_modify_level_3_end
@@ -1177,7 +1109,7 @@ Return 0 1
 iPush_0
 Return 0 1
 
-:trainer_network_msg
+:trainer_msg
 Function 1 1 4
 PushString "STRING"
 CallNative unk_0x574EE85C 1 0
@@ -1319,180 +1251,12 @@ Return 0 0
 
 :trainer_network_action_level_1
 Function 1 0 7
+
 StaticGet1 4
-Switch [0 @Label_trainer_network_action_level_1_last_selected_0]:[1 @Label_trainer_network_action_level_1_last_selected_1]:[2 @Label_trainer_network_action_level_1_last_selected_2]
+Switch [0 @Label_trainer_network_action_level_1_last_selected_0]
 Jump @Label_trainer_network_action_level_1_end
 
 :Label_trainer_network_action_level_1_last_selected_0
-CallNative player_id 0 1
-pglobal3 2387040
-ArrayGetP1 209
-GetImmediate1 49
-CallNative network_does_network_id_exist 1 1
-JumpFalse @Label_trainer_network_action_level_1_last_selected_0_error1
-CallNative player_id 0 1
-pglobal3 2387040
-ArrayGetP1 209
-GetImmediate1 49
-CallNative network_has_control_of_entity 1 1
-JumpFalse @Label_trainer_network_action_level_1_last_selected_0_error2
-CallNative player_ped_id 0 1
-CallNative get_entity_heading 1 1
-setF 6
-CallNative player_ped_id 0 1
-iPush_1
-CallNative get_entity_coords 2 3
-iPush_3
-pFrame1 3
-FromStack
-
-CallNative player_id 0 1
-pglobal3 2387040
-ArrayGetP1 209
-GetImmediate1 49
-CallNative net_to_veh 1 1
-iPush_3
-pFrame1 3
-ToStack
-iPush_1
-iPush_0
-iPush_0
-iPush_1
-CallNative set_entity_coords 8 0
-CallNative player_id 0 1
-pglobal3 2387040
-ArrayGetP1 209
-GetImmediate1 49
-CallNative net_to_veh 1 1
-getF 6
-CallNative set_entity_heading 2 0
-
-CallNative player_id 0 1
-pglobal3 2387040
-ArrayGetP1 209
-GetImmediate1 49
-CallNative net_to_veh 1 1
-CallNative set_vehicle_on_ground_properly 1 1
-drop
-CallNative player_ped_id 0 1
-CallNative player_id 0 1
-pglobal3 2387040
-ArrayGetP1 209
-GetImmediate1 49
-CallNative net_to_veh 1 1
-iPush_-1
-CallNative set_ped_into_vehicle 3 0
-CallNative player_id 0 1
-pglobal3 2387040
-ArrayGetP1 209
-GetImmediate1 49
-CallNative net_to_veh 1 1
-iPush_1
-iPush_1
-CallNative set_vehicle_engine_on 3 0
-PushString "Teleported vehicle"
-Call @trainer_network_msg
-Jump @Label_trainer_network_action_level_1_last_selected_0_goto_end
-
-:Label_trainer_network_action_level_1_last_selected_0_error2
-PushString "No control of vehicle"
-Call @trainer_network_msg
-
-:Label_trainer_network_action_level_1_last_selected_0_goto_end
-Jump @Label_trainer_network_action_level_1_last_selected_0_end
-
-:Label_trainer_network_action_level_1_last_selected_0_error1
-PushString "Vehicle does not exist"
-Call @trainer_network_msg
-
-:Label_trainer_network_action_level_1_last_selected_0_end
-Return 0 0
-
-:Label_trainer_network_action_level_1_last_selected_1
-CallNative player_id 0 1
-pglobal3 2387040
-ArrayGetP1 209
-GetImmediate1 49
-CallNative network_does_network_id_exist 1 1
-JumpFalse @Label_trainer_network_action_level_1_last_selected_1_error1
-CallNative player_id 0 1
-pglobal3 2387040
-ArrayGetP1 209
-GetImmediate1 49
-CallNative network_has_control_of_entity 1 1
-Not
-JumpFalse @Label_trainer_network_action_level_1_last_selected_1_1
-CallNative player_id 0 1
-pglobal3 2387040
-ArrayGetP1 209
-GetImmediate1 49
-CallNative network_request_control_of_entity 1 1
-drop
-Jump @Label_trainer_network_action_level_1_last_selected_1_goto_end
-
-:Label_trainer_network_action_level_1_last_selected_1_1
-CallNative player_id 0 1
-pglobal3 2387040
-ArrayGetP1 209
-GetImmediate1 49
-CallNative network_has_control_of_entity 1 1
-JumpFalse @Label_trainer_network_action_level_1_last_selected_1_error2
-CallNative player_id 0 1
-pglobal3 2387040
-ArrayGetP1 209
-GetImmediate1 49
-CallNative net_to_veh 1 1
-iPush_1
-CallNative set_vehicle_doors_locked_for_all_players 2 0
-CallNative player_id 0 1
-pglobal3 2387040
-ArrayGetP1 209
-GetImmediate1 49
-CallNative net_to_veh 1 1
-iPush_0
-iPush_1
-CallNative set_entity_as_mission_entity 3 0
-CallNative player_id 0 1
-pglobal3 2387040
-ArrayGetP1 209
-GetImmediate1 49
-CallNative net_to_veh 1 1
-CallNative unk_0x3FBE904F 1 0
-CallNative player_id 0 1
-pglobal3 2387040
-ArrayGetP1 209
-GetImmediate1 49
-CallNative net_to_veh 1 1
-iPush_0
-CallNative freeze_entity_position 2 0
-
-CallNative player_id 0 1
-pglobal3 2387040
-ArrayGetP1 209
-GetImmediateP1 49
-CallNative net_to_veh 1 1
-CallNative delete_vehicle 1 0
-PushString "Deleted vehicle"
-Call @trainer_network_msg
-
-Jump @Label_trainer_network_action_level_1_last_selected_1_goto_end
-
-:Label_trainer_network_action_level_1_last_selected_1_error2
-PushString "No control of vehicle."
-Call @trainer_network_msg
-
-:Label_trainer_network_action_level_1_last_selected_1_goto_end
-Jump @Label_trainer_network_action_level_1_last_selected_1_end
-
-:Label_trainer_network_action_level_1_last_selected_1_error1
-PushString "Vehicle does not exist"
-Call @trainer_network_msg
-
-:Label_trainer_network_action_level_1_last_selected_1_end
-Return 0 0
-
-:Label_trainer_network_action_level_1_last_selected_2
-
 StaticGet2 384
 JumpFalse @Label_trainer_network_action_level_1_last_selected_2_false
 iPush_0
@@ -1780,14 +1544,8 @@ getF 0
 CallNative is_model_in_cdimage 1 1
 Not
 JumpFalse @Label_trainer_change_player_model_action_continue
-PushString "STRING"
-CallNative unk_0x574EE85C 1 0
 PushString "Model does not exist."
-CallNative unk_0x27A244D8 1 0
-iPush_0
-iPush_1
-CallNative unk_0x08F7AF78 2 1
-drop
+Call @trainer_error
 iPush_0
 StaticSet1 7
 Return 1 0
@@ -2009,7 +1767,7 @@ Function 1 0 4
 iPush_2
 pstatic2 30
 ArrayGet1 1
-Switch [0 @Label_trainer_vehicle_modify_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_modify_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_modify_action_level_3_last_selected_2]
+Switch [0 @Label_trainer_vehicle_modify_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_modify_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_modify_action_level_3_last_selected_2]:[3 @Label_trainer_vehicle_modify_action_level_3_last_selected_3]
 Jump @Label_trainer_vehicle_modify_action_level_3_end
 
 :Label_trainer_vehicle_modify_action_level_3_last_selected_0
@@ -2022,6 +1780,10 @@ Return 0 0
 
 :Label_trainer_vehicle_modify_action_level_3_last_selected_2
 Call @trainer_vehicle_plate_action_level_3
+Return 0 0
+
+:Label_trainer_vehicle_modify_action_level_3_last_selected_3
+Call @trainer_vehicle_settings_action_level_3
 Return 0 0
 
 :Label_trainer_vehicle_modify_action_level_3_end
@@ -2067,7 +1829,7 @@ Return 0 0
 Function 1 0 4
 
 StaticGet1 4
-Switch [0 @Label_trainer_vehicle_light_action_level_3_last_selected_0]
+Switch [0 @Label_trainer_vehicle_light_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_light_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_light_action_level_3_last_selected_2]
 Jump @Label_trainer_vehicle_light_action_level_3_end
 
 :Label_trainer_vehicle_light_action_level_3_last_selected_0
@@ -2092,6 +1854,54 @@ Call @menu_set_current_bool
 :Label_trainer_vehicle_light_end
 Return 0 0
 
+:Label_trainer_vehicle_light_action_level_3_last_selected_1
+StaticGet2 379
+CallNative is_vehicle_searchlight_on 1 1
+Not
+JumpFalse @Label_trainer_vehicle_searchlight_true
+StaticGet2 379
+iPush_1
+iPush_0
+CallNative set_vehicle_searchlight 3 0
+iPush_1
+Call @menu_set_current_bool
+Jump @Label_trainer_vehicle_searchlight_end
+
+:Label_trainer_vehicle_searchlight_true
+StaticGet2 379
+iPush_0
+iPush_0
+CallNative set_vehicle_searchlight 3 0
+iPush_0
+Call @menu_set_current_bool
+
+:Label_trainer_vehicle_searchlight_end
+Return 0 0
+
+:Label_trainer_vehicle_light_action_level_3_last_selected_2
+StaticGet2 379
+CallNative is_vehicle_searchlight_on 1 1
+Not
+JumpFalse @Label_trainer_vehicle_searchlight2_true
+StaticGet2 379
+iPush_1
+iPush_1
+CallNative set_vehicle_searchlight 3 0
+iPush_1
+Call @menu_set_current_bool
+Jump @Label_trainer_vehicle_searchlight2_end
+
+:Label_trainer_vehicle_searchlight2_true
+StaticGet2 379
+iPush_0
+iPush_1
+CallNative set_vehicle_searchlight 3 0
+iPush_0
+Call @menu_set_current_bool
+
+:Label_trainer_vehicle_searchlight2_end
+Return 0 0
+
 :Label_trainer_vehicle_light_action_level_3_end
 Return 0 0
 
@@ -2099,7 +1909,7 @@ Return 0 0
 Function 1 0 6
 
 StaticGet1 4
-Switch [0 @Label_trainer_vehicle_plate_action_level_3_last_selected_0]
+Switch [0 @Label_trainer_vehicle_plate_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_plate_action_level_3_last_selected_1]
 Jump @Label_trainer_vehicle_plate_action_level_3_end
 
 :Label_trainer_vehicle_plate_action_level_3_last_selected_0
@@ -2120,11 +1930,17 @@ CallNative set_vehicle_number_plate_text 2 0
 :Label_trainer_vehicle_plate_action_level_3_false
 Return 0 0
 
+:Label_trainer_vehicle_plate_action_level_3_last_selected_1
+StaticGet2 379
+Call @menu_get_current_number
+CallNative unk_0xA1A1890E 2 0
+Return 0 0
+
 :Label_trainer_vehicle_plate_action_level_3_end
 Return 0 0
 
 :trainer_vehicle_change_plate
-Function 1 0 6
+Function 1 0 8
 
 iPush_1
 StaticSet1 7
@@ -2146,11 +1962,21 @@ getF 4
 setF 5
 
 :Label_trainer_vehicle_change_plate_1
+
+StaticGet2 379
+CallNative get_vehicle_number_plate_text 1 1
+pFrame1 6
+StrCopy 16
+
 Push1 200
 CallNative do_screen_fade_out 1 0
 
 iPush_1
 StaticSet2 380
+
+pFrame1 6
+CallNative is_string_null_or_empty 1 1
+JumpFalse @Label_trainer_vehicle_change_plate_2
 iPush_0
 getF 4
 getF 5
@@ -2160,6 +1986,20 @@ PushString ""
 PushString ""
 Push1 9
 CallNative display_onscreen_keyboard 8 0
+Jump @Label_trainer_vehicle_change_plate_goto_end2
+
+:Label_trainer_vehicle_change_plate_2
+iPush_0
+getF 4
+getF 5
+pFrame1 6
+PushString ""
+PushString ""
+PushString ""
+Push1 9
+CallNative display_onscreen_keyboard 8 0
+
+:Label_trainer_vehicle_change_plate_goto_end2
 Jump @Label_trainer_vehicle_change_plate_end
 
 :Label_trainer_vehicle_change_plate_switch_1
@@ -2216,6 +2056,37 @@ Jump @Label_trainer_vehicle_change_plate_end
 iPush_0
 Return 0 1
 
+:trainer_vehicle_settings_action_level_3
+Function 1 0 3
+
+StaticGet1 4
+Switch [0 @Label_trainer_vehicle_settings_action_level_3_last_selected_0]
+Jump @Label_trainer_vehicle_settings_action_level_3_end
+
+:Label_trainer_vehicle_settings_action_level_3_last_selected_0
+Call @menu_get_current_bool
+Not
+JumpFalse @Label_trainer_vehicle_settings_slidey
+StaticGet2 379
+iPush_1
+CallNative unk_0x90D3A0D9 2 0
+iPush_1
+Call @menu_set_current_bool
+Jump @Label_trainer_vehicle_settings_slidey_end
+
+:Label_trainer_vehicle_settings_slidey
+StaticGet2 379
+iPush_0
+CallNative unk_0x90D3A0D9 2 0
+iPush_0
+Call @menu_set_current_bool
+
+:Label_trainer_vehicle_settings_slidey_end
+Return 0 0
+
+:Label_trainer_vehicle_settings_action_level_3_end
+Return 0 0
+
 :trainer_spawn_veh_action
 Function 1 1 4
 
@@ -2231,14 +2102,8 @@ getF 0
 CallNative is_model_in_cdimage 1 1
 Not
 JumpFalse @Label_trainer_spawn_veh_action_continue
-PushString "STRING"
-CallNative unk_0x574EE85C 1 0
 PushString "Vehicle model does not exist."
-CallNative unk_0x27A244D8 1 0
-iPush_0
-iPush_1
-CallNative unk_0x08F7AF78 2 1
-drop
+Call @trainer_error
 iPush_0
 StaticSet1 7
 Return 1 0
@@ -2943,6 +2808,7 @@ StaticGet1 4
 pstatic2 225
 ArrayGet1 1
 JumpEq @Label_menu_error_end
+
 iPush_0
 StaticSet1 11
 
@@ -2951,14 +2817,12 @@ Call @menu_clean
 StaticGet1 9
 iPush_1
 Sub
+StaticSet1 9
+
+StaticGet1 9
 pstatic2 30
 ArrayGet1 1
 StaticSet1 4
-
-StaticGet1 9
-iPush_1
-Sub
-StaticSet1 9
 
 :Label_menu_error_end
 Return 0 0
@@ -8006,1950 +7870,6 @@ Call @menu_add_action
 Return 0 0
 
 :Label_trainer_player_model_level_3_end
-Return 0 0
-
-:dummy_test_function
-Function 1 0 4
-
-:Label_dummy_trainer_player_model_last_selected_componentpeds_a_c
-PushString "a_c_boar"
-Call @menu_addItem
-Push -832573324
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_c_chickenhawk"
-Call @menu_addItem
-Push -1430839454
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_c_chimp"
-Call @menu_addItem
-Push -1469565163
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_c_cormorant"
-Call @menu_addItem
-Push 1457690978
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_c_cow"
-Call @menu_addItem
-Push -50684386
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_c_coyote"
-Call @menu_addItem
-Push 1682622302
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_c_crow"
-Call @menu_addItem
-Push 402729631
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_c_deer"
-Call @menu_addItem
-Push -664053099
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_c_fish"
-Call @menu_addItem
-Push 802685111
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_c_hen"
-Call @menu_addItem
-Push 1794449327
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_c_pig"
-Call @menu_addItem
-Push -1323586730
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_c_pigeon"
-Call @menu_addItem
-Push 111281960
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_c_rat"
-Call @menu_addItem
-Push -1011537562
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_c_rhesus"
-Call @menu_addItem
-Push -1026527405
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_c_seagull"
-Call @menu_addItem
-Push -745300483
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_dummy_trainer_player_model_last_selected_componentpeds_a_f_m
-PushString "a_f_m_beach_01"
-Call @menu_addItem
-Push 808859815
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_bevhills_01"
-Call @menu_addItem
-Push -1106743555
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_bevhills_02"
-Call @menu_addItem
-Push -1606864033
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_bodybuild_01"
-Call @menu_addItem
-Push 1004114196
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_business_02"
-Call @menu_addItem
-Push 532905404
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_downtown_01"
-Call @menu_addItem
-Push 1699403886
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_eastsa_01"
-Call @menu_addItem
-Push -1656894598
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_eastsa_02"
-Call @menu_addItem
-Push 1674107025
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_fatbla_01"
-Call @menu_addItem
-Push -88831029
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_fatcult_01"
-Call @menu_addItem
-Push -1244692252
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_fatwhite_01"
-Call @menu_addItem
-Push 951767867
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_ktown_01"
-Call @menu_addItem
-Push 1388848350
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_ktown_02"
-Call @menu_addItem
-Push 1090617681
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_prolhost_01"
-Call @menu_addItem
-Push 379310561
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_salton_01"
-Call @menu_addItem
-Push -569505431
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_skidrow_01"
-Call @menu_addItem
-Push -1332260293
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_soucentmc_01"
-Call @menu_addItem
-Push -840346158
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_soucent_01"
-Call @menu_addItem
-Push 1951946145
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_soucent_02"
-Call @menu_addItem
-Push -215821512
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_tourist_01"
-Call @menu_addItem
-Push 1347814329
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_trampbeac_01"
-Call @menu_addItem
-Push -1935621530
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_m_tramp_01"
-Call @menu_addItem
-Push 1224306523
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_dummy_trainer_player_model_last_selected_componentpeds_a_f_o
-PushString "a_f_o_genstreet_01"
-Call @menu_addItem
-Push 1640504453
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_o_indian_01"
-Call @menu_addItem
-Push -1160266880
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_o_ktown_01"
-Call @menu_addItem
-Push 1204772502
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_o_salton_01"
-Call @menu_addItem
-Push -855671414
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_o_soucent_01"
-Call @menu_addItem
-Push 1039800368
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_o_soucent_02"
-Call @menu_addItem
-Push -1519524074
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_dummy_trainer_player_model_last_selected_componentpeds_a_f_y
-PushString "a_f_y_beach_01"
-Call @menu_addItem
-Push -945854168
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_bevhills_01"
-Call @menu_addItem
-Push 1146800212
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_bevhills_02"
-Call @menu_addItem
-Push 1546450936
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_bevhills_03"
-Call @menu_addItem
-Push 549978415
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_bevhills_04"
-Call @menu_addItem
-Push 920595805
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_business_01"
-Call @menu_addItem
-Push 664399832
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_business_02"
-Call @menu_addItem
-Push 826475330
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_business_03"
-Call @menu_addItem
-Push -1366884940
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_business_04"
-Call @menu_addItem
-Push -1211756494
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_eastsa_01"
-Call @menu_addItem
-Push -173013091
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_eastsa_02"
-Call @menu_addItem
-Push 70821038
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_eastsa_03"
-Call @menu_addItem
-Push 1371553700
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_epsilon_01"
-Call @menu_addItem
-Push 1755064960
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_fitness_01"
-Call @menu_addItem
-Push 1165780219
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_fitness_02"
-Call @menu_addItem
-Push 331645324
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_genhot_01"
-Call @menu_addItem
-Push 793439294
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_golfer_01"
-Call @menu_addItem
-Push 2111372120
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_hiker_01"
-Call @menu_addItem
-Push 813893651
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_hippie_01"
-Call @menu_addItem
-Push 343259175
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_hipster_01"
-Call @menu_addItem
-Push -2109222095
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_hipster_02"
-Call @menu_addItem
-Push -1745486195
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_hipster_03"
-Call @menu_addItem
-Push -1514497514
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_hipster_04"
-Call @menu_addItem
-Push 429425116
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_indian_01"
-Call @menu_addItem
-Push 153984193
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_juggalo_01"
-Call @menu_addItem
-Push -619494093
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_runner_01"
-Call @menu_addItem
-Push -951490775
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_rurmeth_01"
-Call @menu_addItem
-Push 1064866854
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_scdressy_01"
-Call @menu_addItem
-Push -614546432
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_skater_01"
-Call @menu_addItem
-Push 1767892582
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_soucent_01"
-Call @menu_addItem
-Push 744758650
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_soucent_02"
-Call @menu_addItem
-Push 1519319503
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_soucent_03"
-Call @menu_addItem
-Push -2018356203
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_tennis_01"
-Call @menu_addItem
-Push 1426880966
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_topless_01"
-Call @menu_addItem
-Push -1661836925
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_tourist_01"
-Call @menu_addItem
-Push 1446741360
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_tourist_02"
-Call @menu_addItem
-Push -1859912896
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_vinewood_01"
-Call @menu_addItem
-Push 435429221
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_vinewood_02"
-Call @menu_addItem
-Push -625565461
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_vinewood_03"
-Call @menu_addItem
-Push 933092024
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_vinewood_04"
-Call @menu_addItem
-Push -85696186
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_f_y_yoga_01"
-Call @menu_addItem
-Push -1004861906
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_dummy_trainer_player_model_last_selected_componentpeds_a_m_m
-PushString "a_m_m_acult_01"
-Call @menu_addItem
-Push 1413662315
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_afriamer_01"
-Call @menu_addItem
-Push -781039234
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_beach_01"
-Call @menu_addItem
-Push 1077785853
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_beach_02"
-Call @menu_addItem
-Push 2021631368
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_bevhills_01"
-Call @menu_addItem
-Push 1423699487
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_bevhills_02"
-Call @menu_addItem
-Push 1068876755
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_business_01"
-Call @menu_addItem
-Push 2120901815
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_eastsa_01"
-Call @menu_addItem
-Push -106498753
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_eastsa_02"
-Call @menu_addItem
-Push 131961260
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_farmer_01"
-Call @menu_addItem
-Push -1806291497
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_fatlatin_01"
-Call @menu_addItem
-Push 1641152947
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_genfat_01"
-Call @menu_addItem
-Push 115168927
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_genfat_02"
-Call @menu_addItem
-Push 330231874
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_golfer_01"
-Call @menu_addItem
-Push -1444213182
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_hasjew_01"
-Call @menu_addItem
-Push 1809430156
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_hillbilly_01"
-Call @menu_addItem
-Push 1822107721
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_hillbilly_02"
-Call @menu_addItem
-Push 2064532783
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_indian_01"
-Call @menu_addItem
-Push -573920724
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_ktown_01"
-Call @menu_addItem
-Push -782401935
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_malibu_01"
-Call @menu_addItem
-Push 803106487
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_mexcntry_01"
-Call @menu_addItem
-Push -578715987
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_mexlabor_01"
-Call @menu_addItem
-Push -1302522190
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_og_boss_01"
-Call @menu_addItem
-Push 1746653202
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_paparazzi_01"
-Call @menu_addItem
-Push -322270187
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_polynesian_01"
-Call @menu_addItem
-Push -1445349730
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_prolhost_01"
-Call @menu_addItem
-Push -1760377969
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_rurmeth_01"
-Call @menu_addItem
-Push 1001210244
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_salton_01"
-Call @menu_addItem
-Push 1328415626
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_salton_02"
-Call @menu_addItem
-Push 1626646295
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_salton_03"
-Call @menu_addItem
-Push -1299428795
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_salton_04"
-Call @menu_addItem
-Push -1773858377
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_skater_01"
-Call @menu_addItem
-Push -640198516
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_skidrow_01"
-Call @menu_addItem
-Push 32417469
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_socenlat_01"
-Call @menu_addItem
-Push 193817059
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_soucent_01"
-Call @menu_addItem
-Push 1750583735
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_soucent_02"
-Call @menu_addItem
-Push -1620232223
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_soucent_03"
-Call @menu_addItem
-Push -1948675910
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_soucent_04"
-Call @menu_addItem
-Push -1023672578
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_stlat_02"
-Call @menu_addItem
-Push -1029146878
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_tennis_01"
-Call @menu_addItem
-Push 1416254276
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_tourist_01"
-Call @menu_addItem
-Push -929103484
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_trampbeac_01"
-Call @menu_addItem
-Push 1404403376
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_tramp_01"
-Call @menu_addItem
-Push 516505552
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_tranvest_01"
-Call @menu_addItem
-Push -521758348
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_m_tranvest_02"
-Call @menu_addItem
-Push -150026812
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_dummy_trainer_player_model_last_selected_componentpeds_a_m_o
-PushString "a_m_o_acult_01"
-Call @menu_addItem
-Push 1430544400
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_o_acult_02"
-Call @menu_addItem
-Push 1268862154
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_o_beach_01"
-Call @menu_addItem
-Push -2077764712
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_o_genstreet_01"
-Call @menu_addItem
-Push -1386944600
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_o_ktown_01"
-Call @menu_addItem
-Push 355916122
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_o_salton_01"
-Call @menu_addItem
-Push 539004493
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_o_soucent_01"
-Call @menu_addItem
-Push 718836251
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_o_soucent_02"
-Call @menu_addItem
-Push 1082572151
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_o_soucent_03"
-Call @menu_addItem
-Push 238213328
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_o_tramp_01"
-Call @menu_addItem
-Push 390939205
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_dummy_trainer_player_model_last_selected_componentpeds_a_m_y
-PushString "a_m_y_acult_01"
-Call @menu_addItem
-Push -1251702741
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_acult_02"
-Call @menu_addItem
-Push -2132435154
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_beachvesp_01"
-Call @menu_addItem
-Push 2114544056
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_beachvesp_02"
-Call @menu_addItem
-Push -900269486
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_beach_01"
-Call @menu_addItem
-Push -771835772
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_beach_02"
-Call @menu_addItem
-Push 600300561
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_beach_03"
-Call @menu_addItem
-Push -408329255
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_bevhills_01"
-Call @menu_addItem
-Push 1982350912
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_bevhills_02"
-Call @menu_addItem
-Push 1720428295
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_breakdance_01"
-Call @menu_addItem
-Push 933205398
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_busicas_01"
-Call @menu_addItem
-Push -1697435671
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_business_01"
-Call @menu_addItem
-Push -912318012
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_business_02"
-Call @menu_addItem
-Push -1280051738
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_business_03"
-Call @menu_addItem
-Push -1589423867
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_cyclist_01"
-Call @menu_addItem
-Push -37334073
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_dhill_01"
-Call @menu_addItem
-Push -12678997
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_downtown_01"
-Call @menu_addItem
-Push 766375082
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_eastsa_01"
-Call @menu_addItem
-Push -1538846349
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_eastsa_02"
-Call @menu_addItem
-Push 377976310
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_epsilon_01"
-Call @menu_addItem
-Push 2010389054
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_epsilon_02"
-Call @menu_addItem
-Push -1434255461
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_gay_01"
-Call @menu_addItem
-Push -775102410
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_gay_02"
-Call @menu_addItem
-Push -1519253631
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_genstreet_01"
-Call @menu_addItem
-Push -1736970383
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_genstreet_02"
-Call @menu_addItem
-Push 891398354
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_golfer_01"
-Call @menu_addItem
-Push -685776591
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_hasjew_01"
-Call @menu_addItem
-Push -512913663
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_hiker_01"
-Call @menu_addItem
-Push 1358380044
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_hippy_01"
-Call @menu_addItem
-Push 2097407511
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_hipster_01"
-Call @menu_addItem
-Push 587703123
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_hipster_02"
-Call @menu_addItem
-Push 349505262
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_hipster_03"
-Call @menu_addItem
-Push 1312913862
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_indian_01"
-Call @menu_addItem
-Push 706935758
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_jetski_01"
-Call @menu_addItem
-Push 767028979
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_juggalo_01"
-Call @menu_addItem
-Push -1849016788
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_ktown_01"
-Call @menu_addItem
-Push 452351020
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_ktown_02"
-Call @menu_addItem
-Push 696250687
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_latino_01"
-Call @menu_addItem
-Push 321657486
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_methhead_01"
-Call @menu_addItem
-Push 1768677545
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_mexthug_01"
-Call @menu_addItem
-Push 810804565
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_motox_01"
-Call @menu_addItem
-Push 1694362237
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_motox_02"
-Call @menu_addItem
-Push 2007797722
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_musclbeac_01"
-Call @menu_addItem
-Push 1264920838
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_musclbeac_02"
-Call @menu_addItem
-Push -920443780
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_polynesian_01"
-Call @menu_addItem
-Push -2088436577
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_roadcyc_01"
-Call @menu_addItem
-Push -178150202
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_runner_01"
-Call @menu_addItem
-Push 623927022
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_runner_02"
-Call @menu_addItem
-Push -2076336881
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_salton_01"
-Call @menu_addItem
-Push -681546704
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_skater_01"
-Call @menu_addItem
-Push -1044093321
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_dummy_trainer_player_model_last_selected_componentpeds_a_m_y_2
-PushString "a_m_y_skater_02"
-Call @menu_addItem
-Push -1342520604
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_soucent_01"
-Call @menu_addItem
-Push -417940021
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_soucent_02"
-Call @menu_addItem
-Push -1398552374
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_soucent_03"
-Call @menu_addItem
-Push -1007618204
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_soucent_04"
-Call @menu_addItem
-Push -1976105999
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_stbla_01"
-Call @menu_addItem
-Push -812470807
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_stbla_02"
-Call @menu_addItem
-Push -1731772337
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_stlat_01"
-Call @menu_addItem
-Push -2039163396
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_stwhi_01"
-Call @menu_addItem
-Push 605602864
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_stwhi_02"
-Call @menu_addItem
-Push 919005580
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_sunbathe_01"
-Call @menu_addItem
-Push -1222037748
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_surfer_01"
-Call @menu_addItem
-Push -356333586
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_vindouche_01"
-Call @menu_addItem
-Push -1047300121
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_vinewood_01"
-Call @menu_addItem
-Push 1264851357
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_vinewood_02"
-Call @menu_addItem
-Push 1561705728
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_vinewood_03"
-Call @menu_addItem
-Push 534725268
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_vinewood_04"
-Call @menu_addItem
-Push 835315305
-Call @menu_add_number
-Call @menu_add_action
-PushString "a_m_y_yoga_01"
-Call @menu_addItem
-Push -1425378987
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_dummy_trainer_player_model_last_selected_componentpeds_csb
-PushString "csb_abigail"
-Call @menu_addItem
-Push -1988720319
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_anita"
-Call @menu_addItem
-Push 117698822
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_anton"
-Call @menu_addItem
-Push -1513650250
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_ballasog"
-Call @menu_addItem
-Push -1410400252
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_bride"
-Call @menu_addItem
-Push -2101379423
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_burgerdrug"
-Call @menu_addItem
-Push -1931689897
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_car3guy1"
-Call @menu_addItem
-Push 71501447
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_car3guy2"
-Call @menu_addItem
-Push 327394568
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_chef"
-Call @menu_addItem
-Push -1555576182
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_chin_goon"
-Call @menu_addItem
-Push -1463670378
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_cletus"
-Call @menu_addItem
-Push -890640939
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_cop"
-Call @menu_addItem
-Push -1699520669
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_customer"
-Call @menu_addItem
-Push -1538297973
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_denise_friend"
-Call @menu_addItem
-Push -1249041111
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_fos_rep"
-Call @menu_addItem
-Push 466359675
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_g"
-Call @menu_addItem
-Push -1567723049
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_groom"
-Call @menu_addItem
-Push 2058033618
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_grove_str_dlr"
-Call @menu_addItem
-Push -396800478
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_hao"
-Call @menu_addItem
-Push -325152996
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_hugh"
-Call @menu_addItem
-Push 1863555924
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_imran"
-Call @menu_addItem
-Push -482210853
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_janitor"
-Call @menu_addItem
-Push -1040164288
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_maude"
-Call @menu_addItem
-Push -1127975477
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_mweather"
-Call @menu_addItem
-Push 1631478380
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_ortega"
-Call @menu_addItem
-Push -1059388209
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_oscar"
-Call @menu_addItem
-Push -199280229
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_porndudes"
-Call @menu_addItem
-Push 793443893
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_prologuedriver"
-Call @menu_addItem
-Push -267695653
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_prolsec"
-Call @menu_addItem
-Push 2141384740
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_ramp_gang"
-Call @menu_addItem
-Push -1031795266
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_ramp_hic"
-Call @menu_addItem
-Push -2054384456
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_ramp_hipster"
-Call @menu_addItem
-Push 569740212
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_ramp_marine"
-Call @menu_addItem
-Push 1634506681
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_ramp_mex"
-Call @menu_addItem
-Push -162605104
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_reporter"
-Call @menu_addItem
-Push 776079908
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_roccopelosi"
-Call @menu_addItem
-Push -1436281204
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_screen_writer"
-Call @menu_addItem
-Push -1948177172
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_stripper_01"
-Call @menu_addItem
-Push -1360365899
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_stripper_02"
-Call @menu_addItem
-Push -2126242959
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_tonya"
-Call @menu_addItem
-Push 1665391897
-Call @menu_add_number
-Call @menu_add_action
-PushString "csb_trafficwarden"
-Call @menu_addItem
-Push -567724045
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_dummy_trainer_player_model_last_selected_componentpeds_g_f_y
-PushString "g_f_y_ballas_01"
-Call @menu_addItem
-Push 361513884
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_f_y_families_01"
-Call @menu_addItem
-Push 1309468115
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_f_y_lost_01"
-Call @menu_addItem
-Push -44746786
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_f_y_vagos_01"
-Call @menu_addItem
-Push 1520708641
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_dummy_trainer_player_model_last_selected_componentpeds_g_m_m
-PushString "g_m_m_armboss_01"
-Call @menu_addItem
-Push -236444766
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_m_armgoon_01"
-Call @menu_addItem
-Push -39239064
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_m_armlieut_01"
-Call @menu_addItem
-Push -412008429
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_m_chemwork_01"
-Call @menu_addItem
-Push -166363761
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_m_chiboss_01"
-Call @menu_addItem
-Push -1176698112
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_m_chicold_01"
-Call @menu_addItem
-Push 275618457
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_m_chigoon_01"
-Call @menu_addItem
-Push 2119136831
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_m_chigoon_02"
-Call @menu_addItem
-Push -9308122
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_m_korboss_01"
-Call @menu_addItem
-Push 891945583
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_m_mexboss_01"
-Call @menu_addItem
-Push 1466037421
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_m_mexboss_02"
-Call @menu_addItem
-Push 1226102803
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_dummy_trainer_player_model_last_selected_componentpeds_g_m_y
-PushString "g_m_y_armgoon_02"
-Call @menu_addItem
-Push -984709238
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_azteca_01"
-Call @menu_addItem
-Push 1752208920
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_ballaeast_01"
-Call @menu_addItem
-Push -198252413
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_ballaorig_01"
-Call @menu_addItem
-Push 588969535
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_ballasout_01"
-Call @menu_addItem
-Push 599294057
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_famca_01"
-Call @menu_addItem
-Push -398748745
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_famdnf_01"
-Call @menu_addItem
-Push -613248456
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_famfor_01"
-Call @menu_addItem
-Push -2077218039
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_korean_01"
-Call @menu_addItem
-Push 611648169
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_korean_02"
-Call @menu_addItem
-Push -1880237687
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_korlieut_01"
-Call @menu_addItem
-Push 2093736314
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_lost_01"
-Call @menu_addItem
-Push 1330042375
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_lost_02"
-Call @menu_addItem
-Push 1032073858
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_lost_03"
-Call @menu_addItem
-Push 850468060
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_mexgang_01"
-Call @menu_addItem
-Push -1109568186
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_mexgoon_01"
-Call @menu_addItem
-Push 653210662
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_mexgoon_02"
-Call @menu_addItem
-Push 832784782
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_mexgoon_03"
-Call @menu_addItem
-Push -1773333796
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_pologoon_01"
-Call @menu_addItem
-Push 1329576454
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_pologoon_02"
-Call @menu_addItem
-Push -1561829034
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_salvaboss_01"
-Call @menu_addItem
-Push -1872961334
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_salvagoon_01"
-Call @menu_addItem
-Push 663522487
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_salvagoon_02"
-Call @menu_addItem
-Push 846439045
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_salvagoon_03"
-Call @menu_addItem
-Push 62440720
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_strpunk_01"
-Call @menu_addItem
-Push -48477765
-Call @menu_add_number
-Call @menu_add_action
-PushString "g_m_y_strpunk_02"
-Call @menu_addItem
-Push 228715206
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_dummy_trainer_player_model_last_selected_componentpeds_ig
-PushString "ig_abigail"
-Call @menu_addItem
-Push 1074457665
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_ashley"
-Call @menu_addItem
-Push 2129936603
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_bankman"
-Call @menu_addItem
-Push -1868718465
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_barry"
-Call @menu_addItem
-Push 797459875
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_bestmen"
-Call @menu_addItem
-Push 1464257942
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_beverly"
-Call @menu_addItem
-Push -1113448868
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_bride"
-Call @menu_addItem
-Push 1633872967
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_car3guy1"
-Call @menu_addItem
-Push -2063996617
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_car3guy2"
-Call @menu_addItem
-Push 1975732938
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_casey"
-Call @menu_addItem
-Push -520477356
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_chef"
-Call @menu_addItem
-Push 1240128502
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_chengsr"
-Call @menu_addItem
-Push -1427838341
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_chrisformage"
-Call @menu_addItem
-Push 678319271
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_clay"
-Call @menu_addItem
-Push 1825562762
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_claypain"
-Call @menu_addItem
-Push -1660909656
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_cletus"
-Call @menu_addItem
-Push -429715051
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_dale"
-Call @menu_addItem
-Push 1182012905
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_dreyfuss"
-Call @menu_addItem
-Push -628553422
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_fbisuit_01"
-Call @menu_addItem
-Push 988062523
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_groom"
-Call @menu_addItem
-Push -20018299
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_hao"
-Call @menu_addItem
-Push 1704428387
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_hunter"
-Call @menu_addItem
-Push -837606178
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_janet"
-Call @menu_addItem
-Push 225287241
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_jewelass"
-Call @menu_addItem
-Push 257763003
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_jimmyboston"
-Call @menu_addItem
-Push -308279251
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_joeminuteman"
-Call @menu_addItem
-Push -1105179493
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_johnnyklebitz"
-Call @menu_addItem
-Push -2016771922
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_josef"
-Call @menu_addItem
-Push -518348876
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_josh"
-Call @menu_addItem
-Push 2040438510
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_kerrymcintosh"
-Call @menu_addItem
-Push 1530648845
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_lifeinvad_01"
-Call @menu_addItem
-Push 1401530684
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_lifeinvad_02"
-Call @menu_addItem
-Push 666718676
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_magenta"
-Call @menu_addItem
-Push -52653814
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_manuel"
-Call @menu_addItem
-Push -46035440
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_marnie"
-Call @menu_addItem
-Push 411185872
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_maryann"
-Call @menu_addItem
-Push -1552967674
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_maude"
-Call @menu_addItem
-Push 1005070462
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_michelle"
-Call @menu_addItem
-Push -1080659212
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_mrsphillips"
-Call @menu_addItem
-Push 946007720
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_mrs_thornhill"
-Call @menu_addItem
-Push 503621995
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_natalia"
-Call @menu_addItem
-Push -568861381
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_nigel"
-Call @menu_addItem
-Push -927525251
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_old_man1a"
-Call @menu_addItem
-Push 1906124788
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_old_man2"
-Call @menu_addItem
-Push -283816889
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_oneil"
-Call @menu_addItem
-Push 768005095
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_ortega"
-Call @menu_addItem
-Push 648372919
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_paper"
-Call @menu_addItem
-Push -1717894970
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_priest"
-Call @menu_addItem
-Push 1681385341
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_prolsec_02"
-Call @menu_addItem
-Push 666086773
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_ramp_gang"
-Call @menu_addItem
-Push -449965460
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_dummy_trainer_player_model_last_selected_componentpeds_ig_2
-PushString "ig_ramp_hic"
-Call @menu_addItem
-Push 1165307954
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_ramp_hipster"
-Call @menu_addItem
-Push -554721426
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_ramp_mex"
-Call @menu_addItem
-Push -424905564
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_roccopelosi"
-Call @menu_addItem
-Push -709209345
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_russiandrunk"
-Call @menu_addItem
-Push 1024089777
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_screen_writer"
-Call @menu_addItem
-Push -1689993
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_talina"
-Call @menu_addItem
-Push -409745176
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_tanisha"
-Call @menu_addItem
-Push 226559113
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_terry"
-Call @menu_addItem
-Push 1728056212
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_tomepsilon"
-Call @menu_addItem
-Push -847807830
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_tonya"
-Call @menu_addItem
-Push -892841148
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_trafficwarden"
-Call @menu_addItem
-Push 1461287021
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_tylerdix"
-Call @menu_addItem
-Push 1382414087
-Call @menu_add_number
-Call @menu_add_action
-PushString "ig_zimbor"
-Call @menu_addItem
-Push 188012277
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_dummy_trainer_player_model_last_selected_componentpeds_mp
-PushString "mp_g_m_pros_01"
-Call @menu_addItem
-Push 1822283721
-Call @menu_add_number
-Call @menu_add_action
-PushString "mp_m_exarmy_01"
-Call @menu_addItem
-Push 1161072059
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_dummy_trainer_player_model_last_selected_componentpeds_s_f_m
-PushString "s_f_m_fembarber"
-Call @menu_addItem
-Push 373000027
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_m_maid_01"
-Call @menu_addItem
-Push -527186490
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_m_shop_high"
-Call @menu_addItem
-Push -1371020112
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_m_sweatshop_01"
-Call @menu_addItem
-Push 824925120
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_dummy_trainer_player_model_last_selected_componentpeds_s_f_y
-PushString "s_f_y_airhostess_01"
-Call @menu_addItem
-Push 1567728751
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_y_bartender_01"
-Call @menu_addItem
-Push 2014052797
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_y_baywatch_01"
-Call @menu_addItem
-Push 1250841910
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_y_cop_01"
-Call @menu_addItem
-Push 368603149
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_y_factory_01"
-Call @menu_addItem
-Push 1777626099
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_y_hooker_01"
-Call @menu_addItem
-Push 42647445
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_y_hooker_02"
-Call @menu_addItem
-Push 348382215
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_y_hooker_03"
-Call @menu_addItem
-Push 51789996
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_y_migrant_01"
-Call @menu_addItem
-Push -715445259
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_y_movprem_01"
-Call @menu_addItem
-Push 587253782
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_y_ranger_01"
-Call @menu_addItem
-Push -1614285257
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_y_scrubs_01"
-Call @menu_addItem
-Push -1420211530
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_y_sheriff_01"
-Call @menu_addItem
-Push 1096929346
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_y_shop_low"
-Call @menu_addItem
-Push -1452399100
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_y_shop_mid"
-Call @menu_addItem
-Push 1055701597
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_y_stripperlite"
-Call @menu_addItem
-Push 1544875514
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_y_stripper_01"
-Call @menu_addItem
-Push 1381498905
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_y_stripper_02"
-Call @menu_addItem
-Push 1846523796
-Call @menu_add_number
-Call @menu_add_action
-PushString "s_f_y_sweatshop_01"
-Call @menu_addItem
-Push -2063419726
-Call @menu_add_number
-Call @menu_add_action
 Return 0 0
 
 Return 0 0
