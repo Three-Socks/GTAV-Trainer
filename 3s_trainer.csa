@@ -352,6 +352,8 @@ PushString "Change Model"
 Call @menu_addItem
 PushString "Appearance"
 Call @menu_addItem
+PushString "Accessories"
+Call @menu_addItem
 PushString "Wanted"
 Call @menu_addItem
 PushString "Health"
@@ -416,7 +418,7 @@ Function 1 0 4
 iPush_1
 pstatic2 30
 ArrayGet1 1
-Switch [0 @Label_trainer_player_level_2_last_selected_0]:[1 @Label_trainer_player_level_2_last_selected_1]:[2 @Label_trainer_player_level_2_last_selected_2]:[3 @Label_trainer_player_level_2_last_selected_3]:[4 @Label_trainer_player_level_2_last_selected_4]
+Switch [0 @Label_trainer_player_level_2_last_selected_0]:[1 @Label_trainer_player_level_2_last_selected_1]:[2 @Label_trainer_player_level_2_last_selected_2]:[3 @Label_trainer_player_level_2_last_selected_3]:[4 @Label_trainer_player_level_2_last_selected_4]:[5 @Label_trainer_player_level_2_last_selected_5]
 Jump @Label_trainer_player_level_2_end
 
 :Label_trainer_player_level_2_last_selected_0
@@ -539,6 +541,52 @@ Call @menu_addItem
 Return 0 0
 
 :Label_trainer_player_level_2_last_selected_2
+PushString "Player - Accessories"
+StaticSet1 10
+
+PushString "Head"
+Call @menu_addItem
+CallNative player_ped_id 0 1
+iPush_0
+CallNative get_ped_prop_index 2 1
+Add1 1
+Push1 10
+Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "Head Texture"
+Call @menu_addItem
+CallNative player_ped_id 0 1
+iPush_0
+CallNative unk_0x922A6653 2 1
+Add1 1
+Push1 10
+Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "Face"
+Call @menu_addItem
+CallNative player_ped_id 0 1
+iPush_1
+CallNative get_ped_prop_index 2 1
+Add1 1
+Push1 10
+Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "Face Texture"
+Call @menu_addItem
+CallNative player_ped_id 0 1
+iPush_1
+CallNative unk_0x922A6653 2 1
+Add1 1
+Push1 10
+Call @menu_addItem_number
+Call @menu_add_action
+
+Return 0 0
+
+:Label_trainer_player_level_2_last_selected_3
 PushString "Player - Wanted"
 StaticSet1 10
 PushString "Clear wanted"
@@ -551,14 +599,14 @@ Call @menu_addItem_number
 Call @menu_add_action
 Return 0 0
 
-:Label_trainer_player_level_2_last_selected_3
+:Label_trainer_player_level_2_last_selected_4
 PushString "Player - Health"
 StaticSet1 10
 PushString "Max Health"
 Call @menu_addItem_action
 Return 0 0
 
-:Label_trainer_player_level_2_last_selected_4
+:Label_trainer_player_level_2_last_selected_5
 PushString "Player - Weapons"
 StaticSet1 10
 PushString "All Weapons"
@@ -569,7 +617,7 @@ Return 0 0
 Return 0 0
 
 :trainer_vehicle_level_2
-Function 1 0 35
+Function 1 0 38
 
 iPush_0
 iPush_1
@@ -886,6 +934,44 @@ Return 0 0
 :Label_trainer_vehicle_level_2_last_selected_3
 PushString "Vehicle - Respray"
 StaticSet1 10
+
+StaticGet2 379
+CallNative get_entity_model 1 1
+setF 33
+
+getF 33
+CallNative get_number_of_vehicle_model_colours 1 1
+setF 34
+
+PushString "Variation"
+Call @menu_addItem
+StaticGet2 379
+CallNative get_vehicle_colour_combination 1 1
+iPush_1
+Sub
+getF 34
+Call @menu_addItem_number
+Call @menu_add_action
+
+StaticGet2 379
+CallNative get_vehicle_livery_count 1 1
+iPush_1
+Sub
+setF 35
+
+getF 35
+iPush_0
+JumpLE @Label_trainer_vehicle_level_2_last_selected_3_end
+
+PushString "Livery"
+Call @menu_addItem
+StaticGet2 379
+CallNative get_vehicle_livery 1 1
+getF 35
+Call @menu_addItem_number
+Call @menu_add_action
+
+:Label_trainer_vehicle_level_2_last_selected_3_end
 Return 0 0
 
 :Label_trainer_vehicle_level_2_last_selected_4
@@ -1047,7 +1133,7 @@ And
 :Label_trainer_player_variation_num_and
 JumpFalse @Label_trainer_player_variation_level_3_end2
 PushString "No options available."
-iPush_0
+iPush_1
 Call @menu_error
 
 :Label_trainer_player_variation_level_3_end2
@@ -1107,6 +1193,10 @@ Call @menu_add_action
 iPush_0
 setF 3
 
+PushString "Mod"
+pFrame1 4
+StrCopy 16
+
 :Label_trainer_vehicle_mod_level_3_while
 getF 3
 StaticGet2 379
@@ -1116,18 +1206,7 @@ ArrayGet1 1
 CallNative unk_0x8A814FF9 2 1
 JumpGE @Label_trainer_vehicle_mod_level_3_end
 
-PushString "Mod "
 pFrame1 4
-StrCopy 16
-
-getF 3
-pFrame1 4
-StrAddi 16
-
-pFrame1 4
-setF 6
-
-getF 6
 Call @menu_addItem
 getF 3
 Call @menu_add_number
@@ -1429,12 +1508,12 @@ Return 0 0
 Return 0 0
 
 :trainer_player_action_level_2
-Function 1 0 4
+Function 1 0 7
 
 iPush_1
 pstatic2 30
 ArrayGet1 1
-Switch [1 @Label_trainer_player_action_level_2_last_selected_1]:[2 @Label_trainer_player_action_level_2_last_selected_2]:[3 @Label_trainer_player_action_level_2_last_selected_3]:[4 @Label_trainer_player_action_level_2_last_selected_4]
+Switch [1 @Label_trainer_player_action_level_2_last_selected_1]:[2 @Label_trainer_player_action_level_2_last_selected_2]:[3 @Label_trainer_player_action_level_2_last_selected_3]:[4 @Label_trainer_player_action_level_2_last_selected_4]:[5 @Label_trainer_player_action_level_2_last_selected_5]
 Jump @Label_trainer_player_action_level_2_end
 
 :Label_trainer_player_action_level_2_last_selected_1
@@ -1442,6 +1521,59 @@ Call @trainer_player_variation_action
 Return 0 0
 
 :Label_trainer_player_action_level_2_last_selected_2
+
+iPush_2
+StaticGet1 4
+CmpEq
+dup
+Not
+JumpFalse @Label_trainer_player_accessories_action_or
+iPush_3
+StaticGet1 4
+CmpEq
+Or
+
+:Label_trainer_player_accessories_action_or
+JumpFalse @Label_trainer_player_accessories_action_or_false
+iPush_1
+setF 3
+iPush_2
+Call @menu_get_number
+iPush_1
+Sub
+setF 4
+iPush_3
+Call @menu_get_number
+iPush_1
+Sub
+setF 5
+
+Jump @Label_trainer_player_accessories_action_1
+
+:Label_trainer_player_accessories_action_or_false
+iPush_0
+setF 3
+iPush_0
+Call @menu_get_number
+iPush_1
+Sub
+setF 4
+iPush_1
+Call @menu_get_number
+iPush_1
+Sub
+setF 5
+
+:Label_trainer_player_accessories_action_1
+CallNative player_ped_id 0 1
+getF 3
+getF 4
+getF 5
+CallNative network_is_game_in_progress 0 1
+CallNative set_ped_prop_index 5 0
+Return 0 0
+
+:Label_trainer_player_action_level_2_last_selected_3
 StaticGet1 4
 Switch [0 @Label_trainer_player_wanted_action_level_2_last_selected_0]:[1 @Label_trainer_player_wanted_action_level_2_last_selected_1]
 Jump @Label_trainer_player_wanted_action_level_2_end
@@ -1463,10 +1595,10 @@ Return 0 0
 :Label_trainer_player_wanted_action_level_2_end
 Return 0 0
 
-:Label_trainer_player_action_level_2_last_selected_2_end
+:Label_trainer_player_action_level_2_last_selected_3_end
 Return 0 0
 
-:Label_trainer_player_action_level_2_last_selected_3
+:Label_trainer_player_action_level_2_last_selected_4
 StaticGet1 4
 Switch [0 @Label_trainer_player_health_action_level_2_last_selected_0]
 Jump @Label_trainer_player_health_action_level_2_end
@@ -1483,10 +1615,10 @@ Return 0 0
 :Label_trainer_player_health_action_level_2_end
 Return 0 0
 
-:Label_trainer_player_action_level_2_last_selected_3_end
+:Label_trainer_player_action_level_2_last_selected_4_end
 Return 0 0
 
-:Label_trainer_player_action_level_2_last_selected_4
+:Label_trainer_player_action_level_2_last_selected_5
 StaticGet1 4
 Switch [0 @Label_trainer_player_weapon_action_level_2_last_selected_0]
 Jump @Label_trainer_player_weapon_action_level_2_end
@@ -1574,7 +1706,7 @@ Return 0 0
 :Label_trainer_player_weapon_action_level_2_end
 Return 0 0
 
-:Label_trainer_player_action_level_2_last_selected_4_end
+:Label_trainer_player_action_level_2_last_selected_5_end
 Return 0 0
 
 :Label_trainer_player_action_level_2_end
@@ -1607,19 +1739,10 @@ Function 1 0 4
 iPush_1
 pstatic2 30
 ArrayGet1 1
-Switch [2 @Label_trainer_vehicle_action_level_2_last_selected_2]
+Switch [2 @Label_trainer_vehicle_action_level_2_last_selected_2]:[3 @Label_trainer_vehicle_action_level_2_last_selected_3]
 Jump @Label_trainer_vehicle_action_level_2_end
 
 :Label_trainer_vehicle_action_level_2_last_selected_2
-Call @trainer_vehicle_extra_action_level_2
-Return 0 0
-
-:Label_trainer_vehicle_action_level_2_end
-Return 0 0
-
-:trainer_vehicle_extra_action_level_2
-Function 1 0 4
-
 StaticGet2 379
 Call @menu_get_current_number
 CallNative is_vehicle_extra_turned_on 2 1
@@ -1642,6 +1765,35 @@ iPush_1
 Call @menu_set_current_bool
 
 :Label_trainer_vehicle_extra_action_level_2_end
+Return 0 0
+
+:Label_trainer_vehicle_action_level_2_last_selected_3
+Call @trainer_vehicle_colour_action_level_2
+Return 0 0
+
+:Label_trainer_vehicle_action_level_2_end
+Return 0 0
+
+:trainer_vehicle_colour_action_level_2
+Function 1 0 4
+
+StaticGet1 4
+Switch [0 @Label_trainer_vehicle_colour_action_last_selected_0]:[1 @Label_trainer_vehicle_colour_action_last_selected_1]
+Jump @Label_trainer_vehicle_colour_action_level_2_end
+
+:Label_trainer_vehicle_colour_action_last_selected_0
+StaticGet2 379
+Call @menu_get_current_number
+CallNative set_vehicle_colour_combination 2 0
+Return 0 0
+
+:Label_trainer_vehicle_colour_action_last_selected_1
+StaticGet2 379
+Call @menu_get_current_number
+CallNative set_vehicle_livery 2 0
+Return 0 0
+
+:Label_trainer_vehicle_colour_action_level_2_end
 Return 0 0
 
 :trainer_action_level_3
