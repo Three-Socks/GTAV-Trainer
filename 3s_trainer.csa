@@ -1177,12 +1177,120 @@ Return 0 0
 Return 0 0
 
 :trainer_vehicle_mod_level_3
-Function 1 0 17
+Function 1 0 36
 
 :Label_trainer_vehicle_mod_level_3_1
-
 PushString "Vehicle - Mod"
 StaticSet1 10
+
+pFrame1 5
+Push1 26
+pPeekSet
+drop
+PushString "Mod 1"
+iPush_0
+pFrame1 5
+ArraySet1 1
+PushString "Mod 2"
+iPush_1
+pFrame1 5
+ArraySet1 1
+PushString "Mod 3"
+iPush_2
+pFrame1 5
+ArraySet1 1
+PushString "Mod 4"
+iPush_3
+pFrame1 5
+ArraySet1 1
+PushString "Mod 5"
+iPush_4
+pFrame1 5
+ArraySet1 1
+PushString "Mod 6"
+iPush_5
+pFrame1 5
+ArraySet1 1
+PushString "Mod 7"
+iPush_6
+pFrame1 5
+ArraySet1 1
+PushString "Mod 8"
+iPush_7
+pFrame1 5
+ArraySet1 1
+PushString "Mod 9"
+Push1 8
+pFrame1 5
+ArraySet1 1
+PushString "Mod 10"
+Push1 9
+pFrame1 5
+ArraySet1 1
+PushString "Mod 11"
+Push1 10
+pFrame1 5
+ArraySet1 1
+PushString "Mod 12"
+Push1 11
+pFrame1 5
+ArraySet1 1
+PushString "Mod 13"
+Push1 12
+pFrame1 5
+ArraySet1 1
+PushString "Mod 14"
+Push1 13
+pFrame1 5
+ArraySet1 1
+PushString "Mod 15"
+Push1 14
+pFrame1 5
+ArraySet1 1
+PushString "Mod 16"
+Push1 15
+pFrame1 5
+ArraySet1 1
+PushString "Mod 17"
+Push1 16
+pFrame1 5
+ArraySet1 1
+PushString "Mod 18"
+Push1 17
+pFrame1 5
+ArraySet1 1
+PushString "Mod 19"
+Push1 18
+pFrame1 5
+ArraySet1 1
+PushString "Mod 20"
+Push1 19
+pFrame1 5
+ArraySet1 1
+PushString "Mod 21"
+Push1 20
+pFrame1 5
+ArraySet1 1
+PushString "Mod 22"
+Push1 21
+pFrame1 5
+ArraySet1 1
+PushString "Mod 23"
+Push1 22
+pFrame1 5
+ArraySet1 1
+PushString "Mod 24"
+Push1 23
+pFrame1 5
+ArraySet1 1
+PushString "Mod 25"
+Push1 24
+pFrame1 5
+ArraySet1 1
+PushString "Mod 26"
+Push1 25
+pFrame1 5
+ArraySet1 1
 
 PushString "Stock"
 Call @menu_addItem
@@ -1193,10 +1301,6 @@ Call @menu_add_action
 iPush_0
 setF 3
 
-PushString "Mod"
-pFrame1 4
-StrCopy 16
-
 :Label_trainer_vehicle_mod_level_3_while
 getF 3
 StaticGet2 379
@@ -1206,7 +1310,9 @@ ArrayGet1 1
 CallNative unk_0x8A814FF9 2 1
 JumpGE @Label_trainer_vehicle_mod_level_3_end
 
-pFrame1 4
+getF 3
+pFrame1 5
+ArrayGet1 1
 Call @menu_addItem
 getF 3
 Call @menu_add_number
