@@ -512,6 +512,8 @@ PushString "Default"
 Call @menu_addItem_action
 PushString "Random"
 Call @menu_addItem_action
+PushString "Head"
+Call @menu_addItem
 PushString "Beard"
 Call @menu_addItem
 PushString "Hair"
@@ -577,6 +579,7 @@ JumpEq @Label_trainer_vehicle_level_2_1
 Call @trainer_get_vehicle
 Not
 JumpFalse @Label_trainer_vehicle_level_2_1
+iPush_1
 Call @trainer_error_vehicle
 Return 0 0
 
@@ -874,7 +877,8 @@ StaticGet1 5
 iPush_0
 JumpGE @Label_trainer_vehicle_modify_extra_level_3_end_2
 PushString "Vehicle has no extra's."
-Call @trainer_error
+iPush_1
+Call @menu_error
 
 :Label_trainer_vehicle_modify_extra_level_3_end_2
 Return 0 0
@@ -957,6 +961,8 @@ setF 3
 CallNative player_ped_id 0 1
 getF 3
 CallNative get_number_of_ped_drawable_variations 2 1
+iPush_1
+Sub
 setF 4
 
 CallNative player_ped_id 0 1
@@ -964,16 +970,18 @@ getF 3
 iPush_0
 Call @menu_get_number
 CallNative get_number_of_ped_texture_variations 3 1
+iPush_1
+Sub
 setF 5
 
 getF 4
-iPush_1
+iPush_0
 CmpGt
 dup
 Not
 JumpFalse @Label_trainer_player_variation_num_or
 getF 5
-iPush_1
+iPush_0
 CmpGt
 Or
 
@@ -1002,7 +1010,7 @@ Call @menu_add_action
 
 :Label_trainer_player_variation_num_or_false
 getF 5
-iPush_1
+iPush_0
 JumpLE @Label_trainer_player_variation_level_3_end
 
 PushString "Texture Variation"
@@ -1027,19 +1035,20 @@ Call @menu_add_action
 :Label_trainer_player_variation_level_3_end
 
 getF 4
-iPush_2
+iPush_1
 CmpLt
 dup
 JumpFalse @Label_trainer_player_variation_num_and
 getF 5
-iPush_2
+iPush_1
 CmpLt
 And
 
 :Label_trainer_player_variation_num_and
 JumpFalse @Label_trainer_player_variation_level_3_end2
 PushString "No options available."
-Call @trainer_error
+iPush_0
+Call @menu_error
 
 :Label_trainer_player_variation_level_3_end2
 Return 1 0
@@ -1055,6 +1064,7 @@ JumpEq @Label_trainer_vehicle_level_3_1
 Call @trainer_get_vehicle
 Not
 JumpFalse @Label_trainer_vehicle_level_3_1
+iPush_1
 Call @trainer_error_vehicle
 Return 0 0
 
@@ -1256,42 +1266,11 @@ Return 0 1
 iPush_0
 Return 0 1
 
-:trainer_msg
-Function 1 1 4
-PushString "STRING"
-CallNative unk_0x574EE85C 1 0
-getF 0
-CallNative unk_0x27A244D8 1 0
-iPush_0
-iPush_1
-CallNative unk_0x08F7AF78 2 1
-drop
-Return 1 0
-
 :trainer_error_vehicle
-Function 1 0 4
-Call @menu_error
-PushString "STRING"
-CallNative unk_0x574EE85C 1 0
-PushString "Not in a vehicle."
-CallNative unk_0x27A244D8 1 0
-iPush_0
-iPush_1
-CallNative unk_0x08F7AF78 2 1
-drop
-Return 0 0
-
-:trainer_error
 Function 1 1 4
-Call @menu_error
-PushString "STRING"
-CallNative unk_0x574EE85C 1 0
+PushString "Not in a vehicle."
 getF 0
-CallNative unk_0x27A244D8 1 0
-iPush_0
-iPush_1
-CallNative unk_0x08F7AF78 2 1
-drop
+Call @menu_error
 Return 1 0
 
 :menu_action
@@ -1388,6 +1367,7 @@ CallNative unk_0x58D9775F 1 0
 Jump @Label_trainer_vehicle_action_level_1_last_selected_5_end
 
 :Label_trainer_vehicle_action_level_1_last_selected_5_error
+iPush_0
 Call @trainer_error_vehicle
 
 :Label_trainer_vehicle_action_level_1_last_selected_5_end
@@ -1735,7 +1715,8 @@ CallNative is_model_in_cdimage 1 1
 Not
 JumpFalse @Label_trainer_change_player_model_action_continue
 PushString "Model does not exist."
-Call @trainer_error
+iPush_0
+Call @menu_error
 iPush_0
 StaticSet1 7
 Return 1 0
@@ -1821,6 +1802,7 @@ JumpEq @Label_trainer_vehicle_action_level_3_1
 Call @trainer_get_vehicle
 Not
 JumpFalse @Label_trainer_vehicle_action_level_3_1
+iPush_1
 Call @trainer_error_vehicle
 Return 0 0
 
@@ -2293,7 +2275,8 @@ CallNative is_model_in_cdimage 1 1
 Not
 JumpFalse @Label_trainer_spawn_veh_action_continue
 PushString "Vehicle model does not exist."
-Call @trainer_error
+iPush_0
+Call @menu_error
 iPush_0
 StaticSet1 7
 Return 1 0
@@ -3044,15 +3027,23 @@ StaticSet1 7
 :Label_739
 Return 0 0
 
-:menu_error
-Function 1 0 2
-
+:menu_msg
+Function 1 1 4
+PushString "STRING"
+CallNative unk_0x574EE85C 1 0
+getF 0
+CallNative unk_0x27A244D8 1 0
+iPush_0
 iPush_1
-StaticGet1 4
-pstatic2 225
-ArrayGet1 1
-JumpEq @Label_menu_error_end
+CallNative unk_0x08F7AF78 2 1
+drop
+Return 1 0
 
+:menu_error
+Function 1 2 5
+
+getF 1
+JumpFalse @Label_menu_error_1
 iPush_0
 StaticSet1 11
 
@@ -3068,8 +3059,17 @@ pstatic2 30
 ArrayGet1 1
 StaticSet1 4
 
-:Label_menu_error_end
-Return 0 0
+:Label_menu_error_1
+PushString "STRING"
+CallNative unk_0x574EE85C 1 0
+getF 0
+CallNative unk_0x27A244D8 1 0
+iPush_0
+iPush_1
+CallNative unk_0x08F7AF78 2 1
+drop
+
+Return 2 0
 
 :menu_hide
 Function 1 0 2
@@ -8115,6 +8115,3027 @@ Call @menu_add_action
 Return 0 0
 
 :Label_trainer_player_model_level_3_end
+Return 0 0
+
+Return 0 0
+
+:trainer_player_model_dummy
+Function 1 0 4
+
+:Label_trainer_dummy_player_model_last_selected_ambient_female_m
+PushString "Beach"
+Call @menu_addItem
+Push 808859815
+Call @menu_add_number
+Call @menu_add_action
+PushString "Bevhills"
+Call @menu_addItem
+Push -1106743555
+Call @menu_add_number
+Call @menu_add_action
+PushString "Bevhills 2"
+Call @menu_addItem
+Push -1606864033
+Call @menu_add_number
+Call @menu_add_action
+PushString "Bodybuild"
+Call @menu_addItem
+Push 1004114196
+Call @menu_add_number
+Call @menu_add_action
+PushString "Business 2"
+Call @menu_addItem
+Push 532905404
+Call @menu_add_number
+Call @menu_add_action
+PushString "Downtown"
+Call @menu_addItem
+Push 1699403886
+Call @menu_add_number
+Call @menu_add_action
+PushString "Eastsa"
+Call @menu_addItem
+Push -1656894598
+Call @menu_add_number
+Call @menu_add_action
+PushString "Eastsa 2"
+Call @menu_addItem
+Push 1674107025
+Call @menu_add_number
+Call @menu_add_action
+PushString "Fatbla"
+Call @menu_addItem
+Push -88831029
+Call @menu_add_number
+Call @menu_add_action
+PushString "Fatcult"
+Call @menu_addItem
+Push -1244692252
+Call @menu_add_number
+Call @menu_add_action
+PushString "Fatwhite"
+Call @menu_addItem
+Push 951767867
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ktown"
+Call @menu_addItem
+Push 1388848350
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ktown 2"
+Call @menu_addItem
+Push 1090617681
+Call @menu_add_number
+Call @menu_add_action
+PushString "Prolhost"
+Call @menu_addItem
+Push 379310561
+Call @menu_add_number
+Call @menu_add_action
+PushString "Salton"
+Call @menu_addItem
+Push -569505431
+Call @menu_add_number
+Call @menu_add_action
+PushString "Skidrow"
+Call @menu_addItem
+Push -1332260293
+Call @menu_add_number
+Call @menu_add_action
+PushString "Soucentmc"
+Call @menu_addItem
+Push -840346158
+Call @menu_add_number
+Call @menu_add_action
+PushString "Soucent"
+Call @menu_addItem
+Push 1951946145
+Call @menu_add_number
+Call @menu_add_action
+PushString "Soucent 2"
+Call @menu_addItem
+Push -215821512
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tourist"
+Call @menu_addItem
+Push 1347814329
+Call @menu_add_number
+Call @menu_add_action
+PushString "Trampbeac"
+Call @menu_addItem
+Push -1935621530
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tra01"
+Call @menu_addItem
+Push 1224306523
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_ambient_female_o
+PushString "Genstreet"
+Call @menu_addItem
+Push 1640504453
+Call @menu_add_number
+Call @menu_add_action
+PushString "Indian"
+Call @menu_addItem
+Push -1160266880
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ktown"
+Call @menu_addItem
+Push 1204772502
+Call @menu_add_number
+Call @menu_add_action
+PushString "Salton"
+Call @menu_addItem
+Push -855671414
+Call @menu_add_number
+Call @menu_add_action
+PushString "Soucent"
+Call @menu_addItem
+Push 1039800368
+Call @menu_add_number
+Call @menu_add_action
+PushString "Soucent 2"
+Call @menu_addItem
+Push -1519524074
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_ambient_female_y
+PushString "Beach"
+Call @menu_addItem
+Push -945854168
+Call @menu_add_number
+Call @menu_add_action
+PushString "Bevhills"
+Call @menu_addItem
+Push 1146800212
+Call @menu_add_number
+Call @menu_add_action
+PushString "Bevhills 2"
+Call @menu_addItem
+Push 1546450936
+Call @menu_add_number
+Call @menu_add_action
+PushString "Bevhills 3"
+Call @menu_addItem
+Push 549978415
+Call @menu_add_number
+Call @menu_add_action
+PushString "Bevhills 4"
+Call @menu_addItem
+Push 920595805
+Call @menu_add_number
+Call @menu_add_action
+PushString "Business"
+Call @menu_addItem
+Push 664399832
+Call @menu_add_number
+Call @menu_add_action
+PushString "Business 2"
+Call @menu_addItem
+Push 826475330
+Call @menu_add_number
+Call @menu_add_action
+PushString "Business 3"
+Call @menu_addItem
+Push -1366884940
+Call @menu_add_number
+Call @menu_add_action
+PushString "Business 4"
+Call @menu_addItem
+Push -1211756494
+Call @menu_add_number
+Call @menu_add_action
+PushString "Eastsa"
+Call @menu_addItem
+Push -173013091
+Call @menu_add_number
+Call @menu_add_action
+PushString "Eastsa 2"
+Call @menu_addItem
+Push 70821038
+Call @menu_add_number
+Call @menu_add_action
+PushString "Eastsa 3"
+Call @menu_addItem
+Push 1371553700
+Call @menu_add_number
+Call @menu_add_action
+PushString "Epsilon"
+Call @menu_addItem
+Push 1755064960
+Call @menu_add_number
+Call @menu_add_action
+PushString "Fitness"
+Call @menu_addItem
+Push 1165780219
+Call @menu_add_number
+Call @menu_add_action
+PushString "Fitness 2"
+Call @menu_addItem
+Push 331645324
+Call @menu_add_number
+Call @menu_add_action
+PushString "Genhot"
+Call @menu_addItem
+Push 793439294
+Call @menu_add_number
+Call @menu_add_action
+PushString "Golfer"
+Call @menu_addItem
+Push 2111372120
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hiker"
+Call @menu_addItem
+Push 813893651
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hippie"
+Call @menu_addItem
+Push 343259175
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hipster"
+Call @menu_addItem
+Push -2109222095
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hipster 2"
+Call @menu_addItem
+Push -1745486195
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hipster 3"
+Call @menu_addItem
+Push -1514497514
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hipster 4"
+Call @menu_addItem
+Push 429425116
+Call @menu_add_number
+Call @menu_add_action
+PushString "Indian"
+Call @menu_addItem
+Push 153984193
+Call @menu_add_number
+Call @menu_add_action
+PushString "Juggalo"
+Call @menu_addItem
+Push -619494093
+Call @menu_add_number
+Call @menu_add_action
+PushString "Runner"
+Call @menu_addItem
+Push -951490775
+Call @menu_add_number
+Call @menu_add_action
+PushString "Rurmeth"
+Call @menu_addItem
+Push 1064866854
+Call @menu_add_number
+Call @menu_add_action
+PushString "Scdressy"
+Call @menu_addItem
+Push -614546432
+Call @menu_add_number
+Call @menu_add_action
+PushString "Skater"
+Call @menu_addItem
+Push 1767892582
+Call @menu_add_number
+Call @menu_add_action
+PushString "Soucent"
+Call @menu_addItem
+Push 744758650
+Call @menu_add_number
+Call @menu_add_action
+PushString "Soucent 2"
+Call @menu_addItem
+Push 1519319503
+Call @menu_add_number
+Call @menu_add_action
+PushString "Soucent 3"
+Call @menu_addItem
+Push -2018356203
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tennis"
+Call @menu_addItem
+Push 1426880966
+Call @menu_add_number
+Call @menu_add_action
+PushString "Topless"
+Call @menu_addItem
+Push -1661836925
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tourist"
+Call @menu_addItem
+Push 1446741360
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tourist 2"
+Call @menu_addItem
+Push -1859912896
+Call @menu_add_number
+Call @menu_add_action
+PushString "Vinewood"
+Call @menu_addItem
+Push 435429221
+Call @menu_add_number
+Call @menu_add_action
+PushString "Vinewood 2"
+Call @menu_addItem
+Push -625565461
+Call @menu_add_number
+Call @menu_add_action
+PushString "Vinewood 3"
+Call @menu_addItem
+Push 933092024
+Call @menu_add_number
+Call @menu_add_action
+PushString "Vinewood 4"
+Call @menu_addItem
+Push -85696186
+Call @menu_add_number
+Call @menu_add_action
+PushString "Yoga"
+Call @menu_addItem
+Push -1004861906
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_ambient_male_m
+PushString "Acult"
+Call @menu_addItem
+Push 1413662315
+Call @menu_add_number
+Call @menu_add_action
+PushString "Afriamer"
+Call @menu_addItem
+Push -781039234
+Call @menu_add_number
+Call @menu_add_action
+PushString "Beach"
+Call @menu_addItem
+Push 1077785853
+Call @menu_add_number
+Call @menu_add_action
+PushString "Beach 2"
+Call @menu_addItem
+Push 2021631368
+Call @menu_add_number
+Call @menu_add_action
+PushString "Bevhills"
+Call @menu_addItem
+Push 1423699487
+Call @menu_add_number
+Call @menu_add_action
+PushString "Bevhills 2"
+Call @menu_addItem
+Push 1068876755
+Call @menu_add_number
+Call @menu_add_action
+PushString "Business"
+Call @menu_addItem
+Push 2120901815
+Call @menu_add_number
+Call @menu_add_action
+PushString "Eastsa"
+Call @menu_addItem
+Push -106498753
+Call @menu_add_number
+Call @menu_add_action
+PushString "Eastsa 2"
+Call @menu_addItem
+Push 131961260
+Call @menu_add_number
+Call @menu_add_action
+PushString "Farmer"
+Call @menu_addItem
+Push -1806291497
+Call @menu_add_number
+Call @menu_add_action
+PushString "Fatlatin"
+Call @menu_addItem
+Push 1641152947
+Call @menu_add_number
+Call @menu_add_action
+PushString "Genfat"
+Call @menu_addItem
+Push 115168927
+Call @menu_add_number
+Call @menu_add_action
+PushString "Genfat 2"
+Call @menu_addItem
+Push 330231874
+Call @menu_add_number
+Call @menu_add_action
+PushString "Golfer"
+Call @menu_addItem
+Push -1444213182
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hasjew"
+Call @menu_addItem
+Push 1809430156
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hillbilly"
+Call @menu_addItem
+Push 1822107721
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hillbilly 2"
+Call @menu_addItem
+Push 2064532783
+Call @menu_add_number
+Call @menu_add_action
+PushString "Indian"
+Call @menu_addItem
+Push -573920724
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ktown"
+Call @menu_addItem
+Push -782401935
+Call @menu_add_number
+Call @menu_add_action
+PushString "Malibu"
+Call @menu_addItem
+Push 803106487
+Call @menu_add_number
+Call @menu_add_action
+PushString "Mexcntry"
+Call @menu_addItem
+Push -578715987
+Call @menu_add_number
+Call @menu_add_action
+PushString "Mexlabor"
+Call @menu_addItem
+Push -1302522190
+Call @menu_add_number
+Call @menu_add_action
+PushString "Og boss"
+Call @menu_addItem
+Push 1746653202
+Call @menu_add_number
+Call @menu_add_action
+PushString "Paparazzi"
+Call @menu_addItem
+Push -322270187
+Call @menu_add_number
+Call @menu_add_action
+PushString "Polynesian"
+Call @menu_addItem
+Push -1445349730
+Call @menu_add_number
+Call @menu_add_action
+PushString "Prolhost"
+Call @menu_addItem
+Push -1760377969
+Call @menu_add_number
+Call @menu_add_action
+PushString "Rurmeth"
+Call @menu_addItem
+Push 1001210244
+Call @menu_add_number
+Call @menu_add_action
+PushString "Salton"
+Call @menu_addItem
+Push 1328415626
+Call @menu_add_number
+Call @menu_add_action
+PushString "Salton 2"
+Call @menu_addItem
+Push 1626646295
+Call @menu_add_number
+Call @menu_add_action
+PushString "Salton 3"
+Call @menu_addItem
+Push -1299428795
+Call @menu_add_number
+Call @menu_add_action
+PushString "Salton 4"
+Call @menu_addItem
+Push -1773858377
+Call @menu_add_number
+Call @menu_add_action
+PushString "Skater"
+Call @menu_addItem
+Push -640198516
+Call @menu_add_number
+Call @menu_add_action
+PushString "Skidrow"
+Call @menu_addItem
+Push 32417469
+Call @menu_add_number
+Call @menu_add_action
+PushString "Socenlat"
+Call @menu_addItem
+Push 193817059
+Call @menu_add_number
+Call @menu_add_action
+PushString "Soucent"
+Call @menu_addItem
+Push 1750583735
+Call @menu_add_number
+Call @menu_add_action
+PushString "Soucent 2"
+Call @menu_addItem
+Push -1620232223
+Call @menu_add_number
+Call @menu_add_action
+PushString "Soucent 3"
+Call @menu_addItem
+Push -1948675910
+Call @menu_add_number
+Call @menu_add_action
+PushString "Soucent 4"
+Call @menu_addItem
+Push -1023672578
+Call @menu_add_number
+Call @menu_add_action
+PushString "Stlat 2"
+Call @menu_addItem
+Push -1029146878
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tennis"
+Call @menu_addItem
+Push 1416254276
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tourist"
+Call @menu_addItem
+Push -929103484
+Call @menu_add_number
+Call @menu_add_action
+PushString "Trampbeac"
+Call @menu_addItem
+Push 1404403376
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tra01"
+Call @menu_addItem
+Push 516505552
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tranvest"
+Call @menu_addItem
+Push -521758348
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tranvest 2"
+Call @menu_addItem
+Push -150026812
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_ambient_male_o
+PushString "Acult"
+Call @menu_addItem
+Push 1430544400
+Call @menu_add_number
+Call @menu_add_action
+PushString "Acult 2"
+Call @menu_addItem
+Push 1268862154
+Call @menu_add_number
+Call @menu_add_action
+PushString "Beach"
+Call @menu_addItem
+Push -2077764712
+Call @menu_add_number
+Call @menu_add_action
+PushString "Genstreet"
+Call @menu_addItem
+Push -1386944600
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ktown"
+Call @menu_addItem
+Push 355916122
+Call @menu_add_number
+Call @menu_add_action
+PushString "Salton"
+Call @menu_addItem
+Push 539004493
+Call @menu_add_number
+Call @menu_add_action
+PushString "Soucent"
+Call @menu_addItem
+Push 718836251
+Call @menu_add_number
+Call @menu_add_action
+PushString "Soucent 2"
+Call @menu_addItem
+Push 1082572151
+Call @menu_add_number
+Call @menu_add_action
+PushString "Soucent 3"
+Call @menu_addItem
+Push 238213328
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tra01"
+Call @menu_addItem
+Push 390939205
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_ambient_male_y
+PushString "Acult"
+Call @menu_addItem
+Push -1251702741
+Call @menu_add_number
+Call @menu_add_action
+PushString "Acult 2"
+Call @menu_addItem
+Push -2132435154
+Call @menu_add_number
+Call @menu_add_action
+PushString "Beachvesp"
+Call @menu_addItem
+Push 2114544056
+Call @menu_add_number
+Call @menu_add_action
+PushString "Beachvesp 2"
+Call @menu_addItem
+Push -900269486
+Call @menu_add_number
+Call @menu_add_action
+PushString "Beach"
+Call @menu_addItem
+Push -771835772
+Call @menu_add_number
+Call @menu_add_action
+PushString "Beach 2"
+Call @menu_addItem
+Push 600300561
+Call @menu_add_number
+Call @menu_add_action
+PushString "Beach 3"
+Call @menu_addItem
+Push -408329255
+Call @menu_add_number
+Call @menu_add_action
+PushString "Bevhills"
+Call @menu_addItem
+Push 1982350912
+Call @menu_add_number
+Call @menu_add_action
+PushString "Bevhills 2"
+Call @menu_addItem
+Push 1720428295
+Call @menu_add_number
+Call @menu_add_action
+PushString "Breakdance"
+Call @menu_addItem
+Push 933205398
+Call @menu_add_number
+Call @menu_add_action
+PushString "Busicas"
+Call @menu_addItem
+Push -1697435671
+Call @menu_add_number
+Call @menu_add_action
+PushString "Business"
+Call @menu_addItem
+Push -912318012
+Call @menu_add_number
+Call @menu_add_action
+PushString "Business 2"
+Call @menu_addItem
+Push -1280051738
+Call @menu_add_number
+Call @menu_add_action
+PushString "Business 3"
+Call @menu_addItem
+Push -1589423867
+Call @menu_add_number
+Call @menu_add_action
+PushString "Cyclist"
+Call @menu_addItem
+Push -37334073
+Call @menu_add_number
+Call @menu_add_action
+PushString "Dhill"
+Call @menu_addItem
+Push -12678997
+Call @menu_add_number
+Call @menu_add_action
+PushString "Downtown"
+Call @menu_addItem
+Push 766375082
+Call @menu_add_number
+Call @menu_add_action
+PushString "Eastsa"
+Call @menu_addItem
+Push -1538846349
+Call @menu_add_number
+Call @menu_add_action
+PushString "Eastsa 2"
+Call @menu_addItem
+Push 377976310
+Call @menu_add_number
+Call @menu_add_action
+PushString "Epsilon"
+Call @menu_addItem
+Push 2010389054
+Call @menu_add_number
+Call @menu_add_action
+PushString "Epsilon 2"
+Call @menu_addItem
+Push -1434255461
+Call @menu_add_number
+Call @menu_add_action
+PushString "Gay"
+Call @menu_addItem
+Push -775102410
+Call @menu_add_number
+Call @menu_add_action
+PushString "Gay 2"
+Call @menu_addItem
+Push -1519253631
+Call @menu_add_number
+Call @menu_add_action
+PushString "Genstreet"
+Call @menu_addItem
+Push -1736970383
+Call @menu_add_number
+Call @menu_add_action
+PushString "Genstreet 2"
+Call @menu_addItem
+Push 891398354
+Call @menu_add_number
+Call @menu_add_action
+PushString "Golfer"
+Call @menu_addItem
+Push -685776591
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hasjew"
+Call @menu_addItem
+Push -512913663
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hiker"
+Call @menu_addItem
+Push 1358380044
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hippy"
+Call @menu_addItem
+Push 2097407511
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hipster"
+Call @menu_addItem
+Push 587703123
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hipster 2"
+Call @menu_addItem
+Push 349505262
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hipster 3"
+Call @menu_addItem
+Push 1312913862
+Call @menu_add_number
+Call @menu_add_action
+PushString "Indian"
+Call @menu_addItem
+Push 706935758
+Call @menu_add_number
+Call @menu_add_action
+PushString "Jetski"
+Call @menu_addItem
+Push 767028979
+Call @menu_add_number
+Call @menu_add_action
+PushString "Juggalo"
+Call @menu_addItem
+Push -1849016788
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ktown"
+Call @menu_addItem
+Push 452351020
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ktown 2"
+Call @menu_addItem
+Push 696250687
+Call @menu_add_number
+Call @menu_add_action
+PushString "Latino"
+Call @menu_addItem
+Push 321657486
+Call @menu_add_number
+Call @menu_add_action
+PushString "Methhead"
+Call @menu_addItem
+Push 1768677545
+Call @menu_add_number
+Call @menu_add_action
+PushString "Mexthug"
+Call @menu_addItem
+Push 810804565
+Call @menu_add_number
+Call @menu_add_action
+PushString "Motox"
+Call @menu_addItem
+Push 1694362237
+Call @menu_add_number
+Call @menu_add_action
+PushString "Motox 2"
+Call @menu_addItem
+Push 2007797722
+Call @menu_add_number
+Call @menu_add_action
+PushString "Musclbeac"
+Call @menu_addItem
+Push 1264920838
+Call @menu_add_number
+Call @menu_add_action
+PushString "Musclbeac 2"
+Call @menu_addItem
+Push -920443780
+Call @menu_add_number
+Call @menu_add_action
+PushString "Polynesian"
+Call @menu_addItem
+Push -2088436577
+Call @menu_add_number
+Call @menu_add_action
+PushString "Roadcyc"
+Call @menu_addItem
+Push -178150202
+Call @menu_add_number
+Call @menu_add_action
+PushString "Runner"
+Call @menu_addItem
+Push 623927022
+Call @menu_add_number
+Call @menu_add_action
+PushString "Runner 2"
+Call @menu_addItem
+Push -2076336881
+Call @menu_add_number
+Call @menu_add_action
+PushString "Salton"
+Call @menu_addItem
+Push -681546704
+Call @menu_add_number
+Call @menu_add_action
+PushString "Skater"
+Call @menu_addItem
+Push -1044093321
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_ambient_male_y_2
+PushString "Skater 2"
+Call @menu_addItem
+Push -1342520604
+Call @menu_add_number
+Call @menu_add_action
+PushString "Soucent"
+Call @menu_addItem
+Push -417940021
+Call @menu_add_number
+Call @menu_add_action
+PushString "Soucent 2"
+Call @menu_addItem
+Push -1398552374
+Call @menu_add_number
+Call @menu_add_action
+PushString "Soucent 3"
+Call @menu_addItem
+Push -1007618204
+Call @menu_add_number
+Call @menu_add_action
+PushString "Soucent 4"
+Call @menu_addItem
+Push -1976105999
+Call @menu_add_number
+Call @menu_add_action
+PushString "Stbla"
+Call @menu_addItem
+Push -812470807
+Call @menu_add_number
+Call @menu_add_action
+PushString "Stbla 2"
+Call @menu_addItem
+Push -1731772337
+Call @menu_add_number
+Call @menu_add_action
+PushString "Stlat"
+Call @menu_addItem
+Push -2039163396
+Call @menu_add_number
+Call @menu_add_action
+PushString "Stwhi"
+Call @menu_addItem
+Push 605602864
+Call @menu_add_number
+Call @menu_add_action
+PushString "Stwhi 2"
+Call @menu_addItem
+Push 919005580
+Call @menu_add_number
+Call @menu_add_action
+PushString "Sunbathe"
+Call @menu_addItem
+Push -1222037748
+Call @menu_add_number
+Call @menu_add_action
+PushString "Surfer"
+Call @menu_addItem
+Push -356333586
+Call @menu_add_number
+Call @menu_add_action
+PushString "Vindouche"
+Call @menu_addItem
+Push -1047300121
+Call @menu_add_number
+Call @menu_add_action
+PushString "Vinewood"
+Call @menu_addItem
+Push 1264851357
+Call @menu_add_number
+Call @menu_add_action
+PushString "Vinewood 2"
+Call @menu_addItem
+Push 1561705728
+Call @menu_add_number
+Call @menu_add_action
+PushString "Vinewood 3"
+Call @menu_addItem
+Push 534725268
+Call @menu_add_number
+Call @menu_add_action
+PushString "Vinewood 4"
+Call @menu_addItem
+Push 835315305
+Call @menu_add_number
+Call @menu_add_action
+PushString "Yoga"
+Call @menu_addItem
+Push -1425378987
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_animals
+PushString "Boar"
+Call @menu_addItem
+Push -832573324
+Call @menu_add_number
+Call @menu_add_action
+PushString "Chickenhawk"
+Call @menu_addItem
+Push -1430839454
+Call @menu_add_number
+Call @menu_add_action
+PushString "Chimp"
+Call @menu_addItem
+Push -1469565163
+Call @menu_add_number
+Call @menu_add_action
+PushString "Chop"
+Call @menu_addItem
+Push 351016938
+Call @menu_add_number
+Call @menu_add_action
+PushString "Cormorant"
+Call @menu_addItem
+Push 1457690978
+Call @menu_add_number
+Call @menu_add_action
+PushString "Cow"
+Call @menu_addItem
+Push -50684386
+Call @menu_add_number
+Call @menu_add_action
+PushString "Coyote"
+Call @menu_addItem
+Push 1682622302
+Call @menu_add_number
+Call @menu_add_action
+PushString "Crow"
+Call @menu_addItem
+Push 402729631
+Call @menu_add_number
+Call @menu_add_action
+PushString "Deer"
+Call @menu_addItem
+Push -664053099
+Call @menu_add_number
+Call @menu_add_action
+PushString "Fish"
+Call @menu_addItem
+Push 802685111
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hen"
+Call @menu_addItem
+Push 1794449327
+Call @menu_add_number
+Call @menu_add_action
+PushString "Husky"
+Call @menu_addItem
+Push 1318032802
+Call @menu_add_number
+Call @menu_add_action
+PushString "Mtlion"
+Call @menu_addItem
+Push 307287994
+Call @menu_add_number
+Call @menu_add_action
+PushString "Pig"
+Call @menu_addItem
+Push -1323586730
+Call @menu_add_number
+Call @menu_add_action
+PushString "Pigeon"
+Call @menu_addItem
+Push 111281960
+Call @menu_add_number
+Call @menu_add_action
+PushString "Rat"
+Call @menu_addItem
+Push -1011537562
+Call @menu_add_number
+Call @menu_add_action
+PushString "Retriever"
+Call @menu_addItem
+Push 882848737
+Call @menu_add_number
+Call @menu_add_action
+PushString "Rhesus"
+Call @menu_addItem
+Push -1026527405
+Call @menu_add_number
+Call @menu_add_action
+PushString "Rottweiler"
+Call @menu_addItem
+Push -1788665315
+Call @menu_add_number
+Call @menu_add_action
+PushString "Seagull"
+Call @menu_addItem
+Push -745300483
+Call @menu_add_number
+Call @menu_add_action
+PushString "Sharktiger"
+Call @menu_addItem
+Push 113504370
+Call @menu_add_number
+Call @menu_add_action
+PushString "Shepherd"
+Call @menu_addItem
+Push 1126154828
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_cutscene
+PushString "Abigail"
+Call @menu_addItem
+Push -1988720319
+Call @menu_add_number
+Call @menu_add_action
+PushString "Anita"
+Call @menu_addItem
+Push 117698822
+Call @menu_add_number
+Call @menu_add_action
+PushString "Anton"
+Call @menu_addItem
+Push -1513650250
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ballasog"
+Call @menu_addItem
+Push -1410400252
+Call @menu_add_number
+Call @menu_add_action
+PushString "Bride"
+Call @menu_addItem
+Push -2101379423
+Call @menu_add_number
+Call @menu_add_action
+PushString "Burgerdrug"
+Call @menu_addItem
+Push -1931689897
+Call @menu_add_number
+Call @menu_add_action
+PushString "Car3guy1"
+Call @menu_addItem
+Push 71501447
+Call @menu_add_number
+Call @menu_add_action
+PushString "Car3guy2"
+Call @menu_addItem
+Push 327394568
+Call @menu_add_number
+Call @menu_add_action
+PushString "Chef"
+Call @menu_addItem
+Push -1555576182
+Call @menu_add_number
+Call @menu_add_action
+PushString "Chin goon"
+Call @menu_addItem
+Push -1463670378
+Call @menu_add_number
+Call @menu_add_action
+PushString "Cletus"
+Call @menu_addItem
+Push -890640939
+Call @menu_add_number
+Call @menu_add_action
+PushString "Cop"
+Call @menu_addItem
+Push -1699520669
+Call @menu_add_number
+Call @menu_add_action
+PushString "Customer"
+Call @menu_addItem
+Push -1538297973
+Call @menu_add_number
+Call @menu_add_action
+PushString "Denise friend"
+Call @menu_addItem
+Push -1249041111
+Call @menu_add_number
+Call @menu_add_action
+PushString "Fos rep"
+Call @menu_addItem
+Push 466359675
+Call @menu_add_number
+Call @menu_add_action
+PushString "G"
+Call @menu_addItem
+Push -1567723049
+Call @menu_add_number
+Call @menu_add_action
+PushString "Groom"
+Call @menu_addItem
+Push 2058033618
+Call @menu_add_number
+Call @menu_add_action
+PushString "Grove str dlr"
+Call @menu_addItem
+Push -396800478
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hao"
+Call @menu_addItem
+Push -325152996
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hugh"
+Call @menu_addItem
+Push 1863555924
+Call @menu_add_number
+Call @menu_add_action
+PushString "Imran"
+Call @menu_addItem
+Push -482210853
+Call @menu_add_number
+Call @menu_add_action
+PushString "Janitor"
+Call @menu_addItem
+Push -1040164288
+Call @menu_add_number
+Call @menu_add_action
+PushString "Maude"
+Call @menu_addItem
+Push -1127975477
+Call @menu_add_number
+Call @menu_add_action
+PushString "Mweather"
+Call @menu_addItem
+Push 1631478380
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ortega"
+Call @menu_addItem
+Push -1059388209
+Call @menu_add_number
+Call @menu_add_action
+PushString "Oscar"
+Call @menu_addItem
+Push -199280229
+Call @menu_add_number
+Call @menu_add_action
+PushString "Porndudes"
+Call @menu_addItem
+Push 793443893
+Call @menu_add_number
+Call @menu_add_action
+PushString "Prologuedriver"
+Call @menu_addItem
+Push -267695653
+Call @menu_add_number
+Call @menu_add_action
+PushString "Prolsec"
+Call @menu_addItem
+Push 2141384740
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ragang"
+Call @menu_addItem
+Push -1031795266
+Call @menu_add_number
+Call @menu_add_action
+PushString "Rahic"
+Call @menu_addItem
+Push -2054384456
+Call @menu_add_number
+Call @menu_add_action
+PushString "Rahipster"
+Call @menu_addItem
+Push 569740212
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ramarine"
+Call @menu_addItem
+Push 1634506681
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ramex"
+Call @menu_addItem
+Push -162605104
+Call @menu_add_number
+Call @menu_add_action
+PushString "Reporter"
+Call @menu_addItem
+Push 776079908
+Call @menu_add_number
+Call @menu_add_action
+PushString "Roccopelosi"
+Call @menu_addItem
+Push -1436281204
+Call @menu_add_number
+Call @menu_add_action
+PushString "Screen writer"
+Call @menu_addItem
+Push -1948177172
+Call @menu_add_number
+Call @menu_add_action
+PushString "Stripper"
+Call @menu_addItem
+Push -1360365899
+Call @menu_add_number
+Call @menu_add_action
+PushString "Stripper 2"
+Call @menu_addItem
+Push -2126242959
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tonya"
+Call @menu_addItem
+Push 1665391897
+Call @menu_add_number
+Call @menu_add_action
+PushString "Trafficwarden"
+Call @menu_addItem
+Push -567724045
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_gangs_female_y
+PushString "Ballas"
+Call @menu_addItem
+Push 361513884
+Call @menu_add_number
+Call @menu_add_action
+PushString "Families"
+Call @menu_addItem
+Push 1309468115
+Call @menu_add_number
+Call @menu_add_action
+PushString "Lost"
+Call @menu_addItem
+Push -44746786
+Call @menu_add_number
+Call @menu_add_action
+PushString "Vagos"
+Call @menu_addItem
+Push 1520708641
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_gangs_male_m
+PushString "Armboss"
+Call @menu_addItem
+Push -236444766
+Call @menu_add_number
+Call @menu_add_action
+PushString "Armgoon"
+Call @menu_addItem
+Push -39239064
+Call @menu_add_number
+Call @menu_add_action
+PushString "Armlieut"
+Call @menu_addItem
+Push -412008429
+Call @menu_add_number
+Call @menu_add_action
+PushString "Chemwork"
+Call @menu_addItem
+Push -166363761
+Call @menu_add_number
+Call @menu_add_action
+PushString "Chiboss"
+Call @menu_addItem
+Push -1176698112
+Call @menu_add_number
+Call @menu_add_action
+PushString "Chicold"
+Call @menu_addItem
+Push 275618457
+Call @menu_add_number
+Call @menu_add_action
+PushString "Chigoon"
+Call @menu_addItem
+Push 2119136831
+Call @menu_add_number
+Call @menu_add_action
+PushString "Chigoon 2"
+Call @menu_addItem
+Push -9308122
+Call @menu_add_number
+Call @menu_add_action
+PushString "Korboss"
+Call @menu_addItem
+Push 891945583
+Call @menu_add_number
+Call @menu_add_action
+PushString "Mexboss"
+Call @menu_addItem
+Push 1466037421
+Call @menu_add_number
+Call @menu_add_action
+PushString "Mexboss 2"
+Call @menu_addItem
+Push 1226102803
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_gangs_male_y
+PushString "Armgoon 2"
+Call @menu_addItem
+Push -984709238
+Call @menu_add_number
+Call @menu_add_action
+PushString "Azteca"
+Call @menu_addItem
+Push 1752208920
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ballaeast"
+Call @menu_addItem
+Push -198252413
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ballaor01"
+Call @menu_addItem
+Push 588969535
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ballasout"
+Call @menu_addItem
+Push 599294057
+Call @menu_add_number
+Call @menu_add_action
+PushString "Famca"
+Call @menu_addItem
+Push -398748745
+Call @menu_add_number
+Call @menu_add_action
+PushString "Famdnf"
+Call @menu_addItem
+Push -613248456
+Call @menu_add_number
+Call @menu_add_action
+PushString "Famfor"
+Call @menu_addItem
+Push -2077218039
+Call @menu_add_number
+Call @menu_add_action
+PushString "Korean"
+Call @menu_addItem
+Push 611648169
+Call @menu_add_number
+Call @menu_add_action
+PushString "Korean 2"
+Call @menu_addItem
+Push -1880237687
+Call @menu_add_number
+Call @menu_add_action
+PushString "Korlieut"
+Call @menu_addItem
+Push 2093736314
+Call @menu_add_number
+Call @menu_add_action
+PushString "Lost"
+Call @menu_addItem
+Push 1330042375
+Call @menu_add_number
+Call @menu_add_action
+PushString "Lost 2"
+Call @menu_addItem
+Push 1032073858
+Call @menu_add_number
+Call @menu_add_action
+PushString "Lost 3"
+Call @menu_addItem
+Push 850468060
+Call @menu_add_number
+Call @menu_add_action
+PushString "Mexgang"
+Call @menu_addItem
+Push -1109568186
+Call @menu_add_number
+Call @menu_add_action
+PushString "Mexgoon"
+Call @menu_addItem
+Push 653210662
+Call @menu_add_number
+Call @menu_add_action
+PushString "Mexgoon 2"
+Call @menu_addItem
+Push 832784782
+Call @menu_add_number
+Call @menu_add_action
+PushString "Mexgoon 3"
+Call @menu_addItem
+Push -1773333796
+Call @menu_add_number
+Call @menu_add_action
+PushString "Pologoon"
+Call @menu_addItem
+Push 1329576454
+Call @menu_add_number
+Call @menu_add_action
+PushString "Pologoon 2"
+Call @menu_addItem
+Push -1561829034
+Call @menu_add_number
+Call @menu_add_action
+PushString "Salvaboss"
+Call @menu_addItem
+Push -1872961334
+Call @menu_add_number
+Call @menu_add_action
+PushString "Salvagoon"
+Call @menu_addItem
+Push 663522487
+Call @menu_add_number
+Call @menu_add_action
+PushString "Salvagoon 2"
+Call @menu_addItem
+Push 846439045
+Call @menu_add_number
+Call @menu_add_action
+PushString "Salvagoon 3"
+Call @menu_addItem
+Push 62440720
+Call @menu_add_number
+Call @menu_add_action
+PushString "Strpunk"
+Call @menu_addItem
+Push -48477765
+Call @menu_add_number
+Call @menu_add_action
+PushString "Strpunk 2"
+Call @menu_addItem
+Push 228715206
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_multiplayer
+PushString "Deadhooker"
+Call @menu_addItem
+Push 1943971979
+Call @menu_add_number
+Call @menu_add_action
+PushString "Female Freemode"
+Call @menu_addItem
+Push -1667301416
+Call @menu_add_number
+Call @menu_add_action
+PushString "Misty"
+Call @menu_addItem
+Push -785842275
+Call @menu_add_number
+Call @menu_add_action
+PushString "Stripperlite"
+Call @menu_addItem
+Push 695248020
+Call @menu_add_number
+Call @menu_add_action
+PushString "Pros"
+Call @menu_addItem
+Push 1822283721
+Call @menu_add_number
+Call @menu_add_action
+PushString "Claude"
+Call @menu_addItem
+Push -1057787465
+Call @menu_add_number
+Call @menu_add_action
+PushString "Exarmy"
+Call @menu_addItem
+Push 1161072059
+Call @menu_add_number
+Call @menu_add_action
+PushString "Famdd"
+Call @menu_addItem
+Push 866411749
+Call @menu_add_number
+Call @menu_add_action
+PushString "Fibsec"
+Call @menu_addItem
+Push 1558115333
+Call @menu_add_number
+Call @menu_add_action
+PushString "Male Freemode"
+Call @menu_addItem
+Push 1885233650
+Call @menu_add_number
+Call @menu_add_action
+PushString "Marston"
+Call @menu_addItem
+Push 943915367
+Call @menu_add_number
+Call @menu_add_action
+PushString "Niko"
+Call @menu_addItem
+Push -287649847
+Call @menu_add_number
+Call @menu_add_action
+PushString "Shopkeep"
+Call @menu_addItem
+Push 416176080
+Call @menu_add_number
+Call @menu_add_action
+PushString "Armoured"
+Call @menu_addItem
+Push -839953400
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_players
+PushString "Franklin Clinton"
+Call @menu_addItem
+Push -1692214353
+Call @menu_add_number
+Call @menu_add_action
+PushString "Trevor Philips"
+Call @menu_addItem
+Push -1686040670
+Call @menu_add_number
+Call @menu_add_action
+PushString "Michael De Santa"
+Call @menu_addItem
+Push 225514697
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_scenario_female_m
+PushString "Fembarber"
+Call @menu_addItem
+Push 373000027
+Call @menu_add_number
+Call @menu_add_action
+PushString "Maid"
+Call @menu_addItem
+Push -527186490
+Call @menu_add_number
+Call @menu_add_action
+PushString "Shop high"
+Call @menu_addItem
+Push -1371020112
+Call @menu_add_number
+Call @menu_add_action
+PushString "Sweatshop"
+Call @menu_addItem
+Push 824925120
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_scenario_female_y
+PushString "Airhostess"
+Call @menu_addItem
+Push 1567728751
+Call @menu_add_number
+Call @menu_add_action
+PushString "Bartender"
+Call @menu_addItem
+Push 2014052797
+Call @menu_add_number
+Call @menu_add_action
+PushString "Baywatch"
+Call @menu_addItem
+Push 1250841910
+Call @menu_add_number
+Call @menu_add_action
+PushString "Cop"
+Call @menu_addItem
+Push 368603149
+Call @menu_add_number
+Call @menu_add_action
+PushString "Factory"
+Call @menu_addItem
+Push 1777626099
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hooker"
+Call @menu_addItem
+Push 42647445
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hooker 2"
+Call @menu_addItem
+Push 348382215
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hooker 3"
+Call @menu_addItem
+Push 51789996
+Call @menu_add_number
+Call @menu_add_action
+PushString "Migrant"
+Call @menu_addItem
+Push -715445259
+Call @menu_add_number
+Call @menu_add_action
+PushString "Movprem"
+Call @menu_addItem
+Push 587253782
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ranger"
+Call @menu_addItem
+Push -1614285257
+Call @menu_add_number
+Call @menu_add_action
+PushString "Scrubs"
+Call @menu_addItem
+Push -1420211530
+Call @menu_add_number
+Call @menu_add_action
+PushString "Sheriff"
+Call @menu_addItem
+Push 1096929346
+Call @menu_add_number
+Call @menu_add_action
+PushString "Shop low"
+Call @menu_addItem
+Push -1452399100
+Call @menu_add_number
+Call @menu_add_action
+PushString "Shop mid"
+Call @menu_addItem
+Push 1055701597
+Call @menu_add_number
+Call @menu_add_action
+PushString "Stripperlite"
+Call @menu_addItem
+Push 1544875514
+Call @menu_add_number
+Call @menu_add_action
+PushString "Stripper"
+Call @menu_addItem
+Push 1381498905
+Call @menu_add_number
+Call @menu_add_action
+PushString "Stripper 2"
+Call @menu_addItem
+Push 1846523796
+Call @menu_add_number
+Call @menu_add_action
+PushString "Sweatshop"
+Call @menu_addItem
+Push -2063419726
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_scenario_male_m
+PushString "Ammucountry"
+Call @menu_addItem
+Push 233415434
+Call @menu_add_number
+Call @menu_add_action
+PushString "Armoured"
+Call @menu_addItem
+Push -1782092083
+Call @menu_add_number
+Call @menu_add_action
+PushString "Armoured 2"
+Call @menu_addItem
+Push 1669696074
+Call @menu_add_number
+Call @menu_add_action
+PushString "Autoshop"
+Call @menu_addItem
+Push 68070371
+Call @menu_add_number
+Call @menu_add_action
+PushString "Autoshop 2"
+Call @menu_addItem
+Push -261389155
+Call @menu_add_number
+Call @menu_add_action
+PushString "Bouncer"
+Call @menu_addItem
+Push -1613485779
+Call @menu_add_number
+Call @menu_add_action
+PushString "Chemsec"
+Call @menu_addItem
+Push 788443093
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ciasec"
+Call @menu_addItem
+Push 1650288984
+Call @menu_add_number
+Call @menu_add_action
+PushString "Cntrybar"
+Call @menu_addItem
+Push 436345731
+Call @menu_add_number
+Call @menu_add_action
+PushString "Dockwork"
+Call @menu_addItem
+Push 349680864
+Call @menu_add_number
+Call @menu_add_action
+PushString "Doctor"
+Call @menu_addItem
+Push -730659924
+Call @menu_add_number
+Call @menu_add_action
+PushString "Fiboffice"
+Call @menu_addItem
+Push -306416314
+Call @menu_add_number
+Call @menu_add_action
+PushString "Fiboffice 2"
+Call @menu_addItem
+Push 653289389
+Call @menu_add_number
+Call @menu_add_action
+PushString "Gaffer"
+Call @menu_addItem
+Push -1453933154
+Call @menu_add_number
+Call @menu_add_action
+PushString "Gardener"
+Call @menu_addItem
+Push 1240094341
+Call @menu_add_number
+Call @menu_add_action
+PushString "Gentransport"
+Call @menu_addItem
+Push 411102470
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hairdress"
+Call @menu_addItem
+Push 1099825042
+Call @menu_add_number
+Call @menu_add_action
+PushString "Highsec"
+Call @menu_addItem
+Push -245247470
+Call @menu_add_number
+Call @menu_add_action
+PushString "Highsec 2"
+Call @menu_addItem
+Push 691061163
+Call @menu_add_number
+Call @menu_add_action
+PushString "Janitor"
+Call @menu_addItem
+Push -1452549652
+Call @menu_add_number
+Call @menu_add_action
+PushString "Lathandy"
+Call @menu_addItem
+Push -1635724594
+Call @menu_add_number
+Call @menu_add_action
+PushString "Lifeinvad"
+Call @menu_addItem
+Push -570394627
+Call @menu_add_number
+Call @menu_add_action
+PushString "Linecook"
+Call @menu_addItem
+Push -610530921
+Call @menu_add_number
+Call @menu_add_action
+PushString "Lsmetro"
+Call @menu_addItem
+Push 1985653476
+Call @menu_add_number
+Call @menu_add_action
+PushString "Mariachi"
+Call @menu_addItem
+Push 2124742566
+Call @menu_add_number
+Call @menu_add_action
+PushString "Marine"
+Call @menu_addItem
+Push -220552467
+Call @menu_add_number
+Call @menu_add_action
+PushString "Marine 2"
+Call @menu_addItem
+Push -265970301
+Call @menu_add_number
+Call @menu_add_action
+PushString "Migrant"
+Call @menu_addItem
+Push -317922106
+Call @menu_add_number
+Call @menu_add_action
+PushString "Movalien"
+Call @menu_addItem
+Push 1684083350
+Call @menu_add_number
+Call @menu_add_action
+PushString "Movprem"
+Call @menu_addItem
+Push -664900312
+Call @menu_add_number
+Call @menu_add_action
+PushString "Movspace"
+Call @menu_addItem
+Push -407694286
+Call @menu_add_number
+Call @menu_add_action
+PushString "Paramedic"
+Call @menu_addItem
+Push -1286380898
+Call @menu_add_number
+Call @menu_add_action
+PushString "Pilot"
+Call @menu_addItem
+Push -413447396
+Call @menu_add_number
+Call @menu_add_action
+PushString "Pilot 2"
+Call @menu_addItem
+Push -163714847
+Call @menu_add_number
+Call @menu_add_action
+PushString "Postal"
+Call @menu_addItem
+Push 1650036788
+Call @menu_add_number
+Call @menu_add_action
+PushString "Postal 2"
+Call @menu_addItem
+Push 1936142927
+Call @menu_add_number
+Call @menu_add_action
+PushString "Prisguard"
+Call @menu_addItem
+Push 1456041926
+Call @menu_add_number
+Call @menu_add_action
+PushString "Scientist"
+Call @menu_addItem
+Push 1092080539
+Call @menu_add_number
+Call @menu_add_action
+PushString "Security"
+Call @menu_addItem
+Push -681004504
+Call @menu_add_number
+Call @menu_add_action
+PushString "Snowcop"
+Call @menu_addItem
+Push 451459928
+Call @menu_add_number
+Call @menu_add_action
+PushString "Strperf"
+Call @menu_addItem
+Push 2035992488
+Call @menu_add_number
+Call @menu_add_action
+PushString "Strpreach"
+Call @menu_addItem
+Push 469792763
+Call @menu_add_number
+Call @menu_add_action
+PushString "Strvend"
+Call @menu_addItem
+Push -829353047
+Call @menu_add_number
+Call @menu_add_action
+PushString "Trucker"
+Call @menu_addItem
+Push 1498487404
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ups"
+Call @menu_addItem
+Push -1614577886
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ups 2"
+Call @menu_addItem
+Push -792862442
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_scenario_male_o
+PushString "Busker"
+Call @menu_addItem
+Push -1382092357
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_scenario_male_y
+PushString "Airworker"
+Call @menu_addItem
+Push 1644266841
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ammucity"
+Call @menu_addItem
+Push -1643617475
+Call @menu_add_number
+Call @menu_add_action
+PushString "Armymech"
+Call @menu_addItem
+Push 1657546978
+Call @menu_add_number
+Call @menu_add_action
+PushString "Autopsy"
+Call @menu_addItem
+Push -1306051250
+Call @menu_add_number
+Call @menu_add_action
+PushString "Barman"
+Call @menu_addItem
+Push -442429178
+Call @menu_add_number
+Call @menu_add_action
+PushString "Baywatch"
+Call @menu_addItem
+Push 189425762
+Call @menu_add_number
+Call @menu_add_action
+PushString "Blackops"
+Call @menu_addItem
+Push -1275859404
+Call @menu_add_number
+Call @menu_add_action
+PushString "Blackops 2"
+Call @menu_addItem
+Push 2047212121
+Call @menu_add_number
+Call @menu_add_action
+PushString "Busboy"
+Call @menu_addItem
+Push -654717625
+Call @menu_add_number
+Call @menu_add_action
+PushString "Chef"
+Call @menu_addItem
+Push 261586155
+Call @menu_add_number
+Call @menu_add_action
+PushString "Clown"
+Call @menu_addItem
+Push 71929310
+Call @menu_add_number
+Call @menu_add_action
+PushString "Construct"
+Call @menu_addItem
+Push -673538407
+Call @menu_add_number
+Call @menu_add_action
+PushString "Construct 2"
+Call @menu_addItem
+Push -973145378
+Call @menu_add_number
+Call @menu_add_action
+PushString "Cop"
+Call @menu_addItem
+Push 1581098148
+Call @menu_add_number
+Call @menu_add_action
+PushString "Dealer"
+Call @menu_addItem
+Push -459818001
+Call @menu_add_number
+Call @menu_add_action
+PushString "Devinsec"
+Call @menu_addItem
+Push -1688898956
+Call @menu_add_number
+Call @menu_add_action
+PushString "Dockwork"
+Call @menu_addItem
+Push -2039072303
+Call @menu_add_number
+Call @menu_add_action
+PushString "Doorman"
+Call @menu_addItem
+Push 579932932
+Call @menu_add_number
+Call @menu_add_action
+PushString "Dwservice"
+Call @menu_addItem
+Push 1976765073
+Call @menu_add_number
+Call @menu_add_action
+PushString "Dwservice 2"
+Call @menu_addItem
+Push -175076858
+Call @menu_add_number
+Call @menu_add_action
+PushString "Factory"
+Call @menu_addItem
+Push 1097048408
+Call @menu_add_number
+Call @menu_add_action
+PushString "Fireman"
+Call @menu_addItem
+Push -1229853272
+Call @menu_add_number
+Call @menu_add_action
+PushString "Garbage"
+Call @menu_addItem
+Push -294281201
+Call @menu_add_number
+Call @menu_add_action
+PushString "Grip"
+Call @menu_addItem
+Push 815693290
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hwaycop"
+Call @menu_addItem
+Push 1939545845
+Call @menu_add_number
+Call @menu_add_action
+PushString "Marine"
+Call @menu_addItem
+Push 1702441027
+Call @menu_add_number
+Call @menu_add_action
+PushString "Marine 2"
+Call @menu_addItem
+Push 1490458366
+Call @menu_add_number
+Call @menu_add_action
+PushString "Marine 3"
+Call @menu_addItem
+Push 1925237458
+Call @menu_add_number
+Call @menu_add_action
+PushString "Mime"
+Call @menu_addItem
+Push 1021093698
+Call @menu_add_number
+Call @menu_add_action
+PushString "Pestcont"
+Call @menu_addItem
+Push 1209091352
+Call @menu_add_number
+Call @menu_add_action
+PushString "Pilot"
+Call @menu_addItem
+Push -1422914553
+Call @menu_add_number
+Call @menu_add_action
+PushString "Prismuscl"
+Call @menu_addItem
+Push 1596003233
+Call @menu_add_number
+Call @menu_add_action
+PushString "Prisoner"
+Call @menu_addItem
+Push -1313105063
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ranger"
+Call @menu_addItem
+Push -277793362
+Call @menu_add_number
+Call @menu_add_action
+PushString "Robber"
+Call @menu_addItem
+Push -1067576423
+Call @menu_add_number
+Call @menu_add_action
+PushString "Sheriff"
+Call @menu_addItem
+Push -1320879687
+Call @menu_add_number
+Call @menu_add_action
+PushString "Shop mask"
+Call @menu_addItem
+Push 1846684678
+Call @menu_add_number
+Call @menu_add_action
+PushString "Strvend"
+Call @menu_addItem
+Push -1837161693
+Call @menu_add_number
+Call @menu_add_action
+PushString "Swat"
+Call @menu_addItem
+Push -1920001264
+Call @menu_add_number
+Call @menu_add_action
+PushString "Uscg"
+Call @menu_addItem
+Push -905948951
+Call @menu_add_number
+Call @menu_add_action
+PushString "Valet"
+Call @menu_addItem
+Push 999748158
+Call @menu_add_number
+Call @menu_add_action
+PushString "Waiter"
+Call @menu_addItem
+Push -1387498932
+Call @menu_add_number
+Call @menu_add_action
+PushString "Winclean"
+Call @menu_addItem
+Push 1426951581
+Call @menu_add_number
+Call @menu_add_action
+PushString "Xmech"
+Call @menu_addItem
+Push 1142162924
+Call @menu_add_number
+Call @menu_add_action
+PushString "Xmech 2"
+Call @menu_addItem
+Push -1105135100
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_story
+PushString "Abigail"
+Call @menu_addItem
+Push 1074457665
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ashley"
+Call @menu_addItem
+Push 2129936603
+Call @menu_add_number
+Call @menu_add_action
+PushString "Bankman"
+Call @menu_addItem
+Push -1868718465
+Call @menu_add_number
+Call @menu_add_action
+PushString "Barry"
+Call @menu_addItem
+Push 797459875
+Call @menu_add_number
+Call @menu_add_action
+PushString "Bestmen"
+Call @menu_addItem
+Push 1464257942
+Call @menu_add_number
+Call @menu_add_action
+PushString "Beverly"
+Call @menu_addItem
+Push -1113448868
+Call @menu_add_number
+Call @menu_add_action
+PushString "Bride"
+Call @menu_addItem
+Push 1633872967
+Call @menu_add_number
+Call @menu_add_action
+PushString "Car3guy1"
+Call @menu_addItem
+Push -2063996617
+Call @menu_add_number
+Call @menu_add_action
+PushString "Car3guy2"
+Call @menu_addItem
+Push 1975732938
+Call @menu_add_number
+Call @menu_add_action
+PushString "Casey"
+Call @menu_addItem
+Push -520477356
+Call @menu_add_number
+Call @menu_add_action
+PushString "Chef"
+Call @menu_addItem
+Push 1240128502
+Call @menu_add_number
+Call @menu_add_action
+PushString "Chengsr"
+Call @menu_addItem
+Push -1427838341
+Call @menu_add_number
+Call @menu_add_action
+PushString "Chrisformage"
+Call @menu_addItem
+Push 678319271
+Call @menu_add_number
+Call @menu_add_action
+PushString "Clay"
+Call @menu_addItem
+Push 1825562762
+Call @menu_add_number
+Call @menu_add_action
+PushString "Claypain"
+Call @menu_addItem
+Push -1660909656
+Call @menu_add_number
+Call @menu_add_action
+PushString "Cletus"
+Call @menu_addItem
+Push -429715051
+Call @menu_add_number
+Call @menu_add_action
+PushString "Dale"
+Call @menu_addItem
+Push 1182012905
+Call @menu_add_number
+Call @menu_add_action
+PushString "Dreyfuss"
+Call @menu_addItem
+Push -628553422
+Call @menu_add_number
+Call @menu_add_action
+PushString "Fbisuit"
+Call @menu_addItem
+Push 988062523
+Call @menu_add_number
+Call @menu_add_action
+PushString "Groom"
+Call @menu_addItem
+Push -20018299
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hao"
+Call @menu_addItem
+Push 1704428387
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hunter"
+Call @menu_addItem
+Push -837606178
+Call @menu_add_number
+Call @menu_add_action
+PushString "Janet"
+Call @menu_addItem
+Push 225287241
+Call @menu_add_number
+Call @menu_add_action
+PushString "Jewelass"
+Call @menu_addItem
+Push 257763003
+Call @menu_add_number
+Call @menu_add_action
+PushString "Jimmyboston"
+Call @menu_addItem
+Push -308279251
+Call @menu_add_number
+Call @menu_add_action
+PushString "Joeminuteman"
+Call @menu_addItem
+Push -1105179493
+Call @menu_add_number
+Call @menu_add_action
+PushString "Johnnyklebitz"
+Call @menu_addItem
+Push -2016771922
+Call @menu_add_number
+Call @menu_add_action
+PushString "Josef"
+Call @menu_addItem
+Push -518348876
+Call @menu_add_number
+Call @menu_add_action
+PushString "Josh"
+Call @menu_addItem
+Push 2040438510
+Call @menu_add_number
+Call @menu_add_action
+PushString "Kerrymcintosh"
+Call @menu_addItem
+Push 1530648845
+Call @menu_add_number
+Call @menu_add_action
+PushString "Lifeinvad"
+Call @menu_addItem
+Push 1401530684
+Call @menu_add_number
+Call @menu_add_action
+PushString "Lifeinvad 2"
+Call @menu_addItem
+Push 666718676
+Call @menu_add_number
+Call @menu_add_action
+PushString "Magenta"
+Call @menu_addItem
+Push -52653814
+Call @menu_add_number
+Call @menu_add_action
+PushString "Manuel"
+Call @menu_addItem
+Push -46035440
+Call @menu_add_number
+Call @menu_add_action
+PushString "Marnie"
+Call @menu_addItem
+Push 411185872
+Call @menu_add_number
+Call @menu_add_action
+PushString "Maryann"
+Call @menu_addItem
+Push -1552967674
+Call @menu_add_number
+Call @menu_add_action
+PushString "Maude"
+Call @menu_addItem
+Push 1005070462
+Call @menu_add_number
+Call @menu_add_action
+PushString "Michelle"
+Call @menu_addItem
+Push -1080659212
+Call @menu_add_number
+Call @menu_add_action
+PushString "Mrsphillips"
+Call @menu_addItem
+Push 946007720
+Call @menu_add_number
+Call @menu_add_action
+PushString "Mrs thornhill"
+Call @menu_addItem
+Push 503621995
+Call @menu_add_number
+Call @menu_add_action
+PushString "Natalia"
+Call @menu_addItem
+Push -568861381
+Call @menu_add_number
+Call @menu_add_action
+PushString "Nigel"
+Call @menu_addItem
+Push -927525251
+Call @menu_add_number
+Call @menu_add_action
+PushString "Old man1a"
+Call @menu_addItem
+Push 1906124788
+Call @menu_add_number
+Call @menu_add_action
+PushString "Old man2"
+Call @menu_addItem
+Push -283816889
+Call @menu_add_number
+Call @menu_add_action
+PushString "Oneil"
+Call @menu_addItem
+Push 768005095
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ortega"
+Call @menu_addItem
+Push 648372919
+Call @menu_add_number
+Call @menu_add_action
+PushString "Paper"
+Call @menu_addItem
+Push -1717894970
+Call @menu_add_number
+Call @menu_add_action
+PushString "Priest"
+Call @menu_addItem
+Push 1681385341
+Call @menu_add_number
+Call @menu_add_action
+PushString "Prolsec 2"
+Call @menu_addItem
+Push 666086773
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ragang"
+Call @menu_addItem
+Push -449965460
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_story_2
+PushString "Hacker"
+Call @menu_addItem
+Push -1715797768
+Call @menu_add_number
+Call @menu_add_action
+PushString "Heist Driver"
+Call @menu_addItem
+Push 1664614745
+Call @menu_add_number
+Call @menu_add_action
+PushString "Heist Gunman"
+Call @menu_addItem
+Push 1693907245
+Call @menu_add_number
+Call @menu_add_action
+PushString "Amandatownley"
+Call @menu_addItem
+Push 1830688247
+Call @menu_add_number
+Call @menu_add_action
+PushString "Andreas"
+Call @menu_addItem
+Push 1206185632
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ballasog"
+Call @menu_addItem
+Push -1492432238
+Call @menu_add_number
+Call @menu_add_action
+PushString "Brad"
+Call @menu_addItem
+Push -1111799518
+Call @menu_add_number
+Call @menu_add_action
+PushString "Davenorton"
+Call @menu_addItem
+Push 365775923
+Call @menu_add_number
+Call @menu_add_action
+PushString "Denise"
+Call @menu_addItem
+Push -2113195075
+Call @menu_add_number
+Call @menu_add_action
+PushString "Devin"
+Call @menu_addItem
+Push 1952555184
+Call @menu_add_number
+Call @menu_add_action
+PushString "Dom"
+Call @menu_addItem
+Push -1674727288
+Call @menu_add_number
+Call @menu_add_action
+PushString "Drfriedlander"
+Call @menu_addItem
+Push -872673803
+Call @menu_add_number
+Call @menu_add_action
+PushString "Fabien"
+Call @menu_addItem
+Push -795819184
+Call @menu_add_number
+Call @menu_add_action
+PushString "Floyd"
+Call @menu_addItem
+Push -1313761614
+Call @menu_add_number
+Call @menu_add_action
+PushString "Jay norris"
+Call @menu_addItem
+Push 2050158196
+Call @menu_add_number
+Call @menu_add_action
+PushString "Jimmydisanto"
+Call @menu_addItem
+Push 1459905209
+Call @menu_add_number
+Call @menu_add_action
+PushString "Lamardavis"
+Call @menu_addItem
+Push 1706635382
+Call @menu_add_number
+Call @menu_add_action
+PushString "Lazlow"
+Call @menu_addItem
+Push -538688539
+Call @menu_add_number
+Call @menu_add_action
+PushString "Lestercrest"
+Call @menu_addItem
+Push 1302784073
+Call @menu_add_number
+Call @menu_add_action
+PushString "Milton"
+Call @menu_addItem
+Push -886023758
+Call @menu_add_number
+Call @menu_add_action
+PushString "Molly"
+Call @menu_addItem
+Push -1358701087
+Call @menu_add_number
+Call @menu_add_action
+PushString "Mrk"
+Call @menu_addItem
+Push -304305299
+Call @menu_add_number
+Call @menu_add_action
+PushString "Nervousron"
+Call @menu_addItem
+Push -1124046095
+Call @menu_add_number
+Call @menu_add_action
+PushString "Omega"
+Call @menu_addItem
+Push 1625728984
+Call @menu_add_number
+Call @menu_add_action
+PushString "Orleans"
+Call @menu_addItem
+Push 1641334641
+Call @menu_add_number
+Call @menu_add_action
+PushString "Patricia"
+Call @menu_addItem
+Push -982642292
+Call @menu_add_number
+Call @menu_add_action
+PushString "Rahic"
+Call @menu_addItem
+Push 1165307954
+Call @menu_add_number
+Call @menu_add_action
+PushString "Rahipster"
+Call @menu_addItem
+Push -554721426
+Call @menu_add_number
+Call @menu_add_action
+PushString "Ramex"
+Call @menu_addItem
+Push -424905564
+Call @menu_add_number
+Call @menu_add_action
+PushString "Roccopelosi"
+Call @menu_addItem
+Push -709209345
+Call @menu_add_number
+Call @menu_add_action
+PushString "Russiandrunk"
+Call @menu_addItem
+Push 1024089777
+Call @menu_add_number
+Call @menu_add_action
+PushString "Screen writer"
+Call @menu_addItem
+Push -1689993
+Call @menu_add_number
+Call @menu_add_action
+PushString "Siemonyetarian"
+Call @menu_addItem
+Push 1283141381
+Call @menu_add_number
+Call @menu_add_action
+PushString "Solomon"
+Call @menu_addItem
+Push -2034368986
+Call @menu_add_number
+Call @menu_add_action
+PushString "Stevehains"
+Call @menu_addItem
+Push 941695432
+Call @menu_add_number
+Call @menu_add_action
+PushString "Stretch"
+Call @menu_addItem
+Push 915948376
+Call @menu_add_number
+Call @menu_add_action
+PushString "Talina"
+Call @menu_addItem
+Push -409745176
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tanisha"
+Call @menu_addItem
+Push 226559113
+Call @menu_add_number
+Call @menu_add_action
+PushString "Taocheng"
+Call @menu_addItem
+Push -597926235
+Call @menu_add_number
+Call @menu_add_action
+PushString "Taostranslator"
+Call @menu_addItem
+Push 2089096292
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tenniscoach"
+Call @menu_addItem
+Push -1573167273
+Call @menu_add_number
+Call @menu_add_action
+PushString "Terry"
+Call @menu_addItem
+Push 1728056212
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tomepsilon"
+Call @menu_addItem
+Push -847807830
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tonya"
+Call @menu_addItem
+Push -892841148
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tracydisanto"
+Call @menu_addItem
+Push -566941131
+Call @menu_add_number
+Call @menu_add_action
+PushString "Trafficwarden"
+Call @menu_addItem
+Push 1461287021
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tylerdix"
+Call @menu_addItem
+Push 1382414087
+Call @menu_add_number
+Call @menu_add_action
+PushString "Wade"
+Call @menu_addItem
+Push -1835459726
+Call @menu_add_number
+Call @menu_add_action
+PushString "Zimbor"
+Call @menu_addItem
+Push 188012277
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_story_ambient_female
+PushString "Corpse"
+Call @menu_addItem
+Push 773063444
+Call @menu_add_number
+Call @menu_add_action
+PushString "Miranda"
+Call @menu_addItem
+Push 1095737979
+Call @menu_add_number
+Call @menu_add_action
+PushString "Promourn"
+Call @menu_addItem
+Push -1576494617
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_story_ambient_female_2
+PushString "Moviestar"
+Call @menu_addItem
+Push 894928436
+Call @menu_add_number
+Call @menu_add_action
+PushString "Prolhost"
+Call @menu_addItem
+Push -988619485
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_story_ambient_female_3
+PushString "Bikerchic"
+Call @menu_addItem
+Push -96953009
+Call @menu_add_number
+Call @menu_add_action
+PushString "Comjane"
+Call @menu_addItem
+Push -1230338610
+Call @menu_add_number
+Call @menu_add_action
+PushString "Corpse"
+Call @menu_addItem
+Push -1670377315
+Call @menu_add_number
+Call @menu_add_action
+PushString "Corpse 2"
+Call @menu_addItem
+Push 228356856
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hotposh"
+Call @menu_addItem
+Push -1768198658
+Call @menu_add_number
+Call @menu_add_action
+PushString "Jewelass"
+Call @menu_addItem
+Push -254493138
+Call @menu_add_number
+Call @menu_add_action
+PushString "Mistress"
+Call @menu_addItem
+Push 1573528872
+Call @menu_add_number
+Call @menu_add_action
+PushString "Poppymich"
+Call @menu_addItem
+Push 602513566
+Call @menu_add_number
+Call @menu_add_action
+PushString "Princess"
+Call @menu_addItem
+Push -756833660
+Call @menu_add_number
+Call @menu_add_action
+PushString "Spyactress"
+Call @menu_addItem
+Push 1535236204
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_story_ambient_male_m
+PushString "Aldinapoli"
+Call @menu_addItem
+Push -252946718
+Call @menu_add_number
+Call @menu_add_action
+PushString "Bankman"
+Call @menu_addItem
+Push -1022961931
+Call @menu_add_number
+Call @menu_add_action
+PushString "Bikehire"
+Call @menu_addItem
+Push 1984382277
+Call @menu_add_number
+Call @menu_add_action
+PushString "Fibarchitect"
+Call @menu_addItem
+Push 874722259
+Call @menu_add_number
+Call @menu_add_action
+PushString "Filmdirector"
+Call @menu_addItem
+Push 728636342
+Call @menu_add_number
+Call @menu_add_action
+PushString "Glenstank"
+Call @menu_addItem
+Push 1169888870
+Call @menu_add_number
+Call @menu_add_action
+PushString "Griff"
+Call @menu_addItem
+Push -1001079621
+Call @menu_add_number
+Call @menu_add_action
+PushString "Jesus"
+Call @menu_addItem
+Push -835930287
+Call @menu_add_number
+Call @menu_add_action
+PushString "Jewelsec"
+Call @menu_addItem
+Push -1395868234
+Call @menu_add_number
+Call @menu_add_action
+PushString "Jewelthief"
+Call @menu_addItem
+Push -422822692
+Call @menu_add_number
+Call @menu_add_action
+PushString "Markfost"
+Call @menu_addItem
+Push 479578891
+Call @menu_add_number
+Call @menu_add_action
+PushString "Partytarget"
+Call @menu_addItem
+Push -2114499097
+Call @menu_add_number
+Call @menu_add_action
+PushString "Prolsec"
+Call @menu_addItem
+Push 1888624839
+Call @menu_add_number
+Call @menu_add_action
+PushString "Promourn"
+Call @menu_addItem
+Push -829029621
+Call @menu_add_number
+Call @menu_add_action
+PushString "Rivalpap"
+Call @menu_addItem
+Push 1624626906
+Call @menu_add_number
+Call @menu_add_action
+PushString "Spyactor"
+Call @menu_addItem
+Push -1408326184
+Call @menu_add_number
+Call @menu_add_action
+PushString "Willyfist"
+Call @menu_addItem
+Push -1871275377
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_story_ambient_male_o
+PushString "Finguru"
+Call @menu_addItem
+Push 1189322339
+Call @menu_add_number
+Call @menu_add_action
+PushString "Taphillbilly"
+Call @menu_addItem
+Push -1709285806
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tra01"
+Call @menu_addItem
+Push 1787764635
+Call @menu_add_number
+Call @menu_add_action
+Return 0 0
+
+:Label_trainer_dummy_player_model_last_selected_story_ambient_male_y
+PushString "Abner"
+Call @menu_addItem
+Push -257153498
+Call @menu_add_number
+Call @menu_add_action
+PushString "Antonb"
+Call @menu_addItem
+Push -815646164
+Call @menu_add_number
+Call @menu_add_action
+PushString "Babyd"
+Call @menu_addItem
+Push -636391810
+Call @menu_add_number
+Call @menu_add_action
+PushString "Baygor"
+Call @menu_addItem
+Push 1380197501
+Call @menu_add_number
+Call @menu_add_action
+PushString "Burgerdrug"
+Call @menu_addItem
+Push -1954728090
+Call @menu_add_number
+Call @menu_add_action
+PushString "Chip"
+Call @menu_addItem
+Push 610290475
+Call @menu_add_number
+Call @menu_add_action
+PushString "Cyclist"
+Call @menu_addItem
+Push 755956971
+Call @menu_add_number
+Call @menu_add_action
+PushString "Fibmugger"
+Call @menu_addItem
+Push -2051422616
+Call @menu_add_number
+Call @menu_add_action
+PushString "Guido"
+Call @menu_addItem
+Push -961242577
+Call @menu_add_number
+Call @menu_add_action
+PushString "Gunvend"
+Call @menu_addItem
+Push -1289578670
+Call @menu_add_number
+Call @menu_add_action
+PushString "Hippie"
+Call @menu_addItem
+Push -264140789
+Call @menu_add_number
+Call @menu_add_action
+PushString "Imporage"
+Call @menu_addItem
+Push 880829941
+Call @menu_add_number
+Call @menu_add_action
+PushString "Justin"
+Call @menu_addItem
+Push 2109968527
+Call @menu_add_number
+Call @menu_add_action
+PushString "Mani"
+Call @menu_addItem
+Push -927261102
+Call @menu_add_number
+Call @menu_add_action
+PushString "Militarybum"
+Call @menu_addItem
+Push 1191548746
+Call @menu_add_number
+Call @menu_add_action
+PushString "Paparazzi"
+Call @menu_addItem
+Push 1346941736
+Call @menu_add_number
+Call @menu_add_action
+PushString "Party"
+Call @menu_addItem
+Push 921110016
+Call @menu_add_number
+Call @menu_add_action
+PushString "Pogo"
+Call @menu_addItem
+Push -598109171
+Call @menu_add_number
+Call @menu_add_action
+PushString "Prisoner"
+Call @menu_addItem
+Push 2073775040
+Call @menu_add_number
+Call @menu_add_action
+PushString "Proldriver"
+Call @menu_addItem
+Push -2057423197
+Call @menu_add_number
+Call @menu_add_action
+PushString "Rsranger"
+Call @menu_addItem
+Push 1011059922
+Call @menu_add_number
+Call @menu_add_action
+PushString "Sbike"
+Call @menu_addItem
+Push 1794381917
+Call @menu_add_number
+Call @menu_add_action
+PushString "Staggrm"
+Call @menu_addItem
+Push -1852518909
+Call @menu_add_number
+Call @menu_add_action
+PushString "Tattoo"
+Call @menu_addItem
+Push -1800524916
+Call @menu_add_number
+Call @menu_add_action
+PushString "Zombie"
+Call @menu_addItem
+Push -1404353274
+Call @menu_add_number
+Call @menu_add_action
 Return 0 0
 
 Return 0 0
