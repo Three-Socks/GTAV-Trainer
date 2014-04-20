@@ -550,7 +550,7 @@ CallNative player_ped_id 0 1
 iPush_0
 CallNative get_ped_prop_index 2 1
 Add1 1
-Push1 10
+Push1 30
 Call @menu_addItem_number
 Call @menu_add_action
 
@@ -560,7 +560,7 @@ CallNative player_ped_id 0 1
 iPush_0
 CallNative unk_0x922A6653 2 1
 Add1 1
-Push1 10
+Push1 30
 Call @menu_addItem_number
 Call @menu_add_action
 
@@ -570,7 +570,7 @@ CallNative player_ped_id 0 1
 iPush_1
 CallNative get_ped_prop_index 2 1
 Add1 1
-Push1 10
+Push1 30
 Call @menu_addItem_number
 Call @menu_add_action
 
@@ -580,7 +580,7 @@ CallNative player_ped_id 0 1
 iPush_1
 CallNative unk_0x922A6653 2 1
 Add1 1
-Push1 10
+Push1 30
 Call @menu_addItem_number
 Call @menu_add_action
 
@@ -825,6 +825,76 @@ Push1 24
 JumpGT @Label_trainer_vehicle_mod_level_2_end
 
 getF 3
+Push1 21
+CmpEq
+dup
+Not
+JumpFalse @Label_trainer_vehicle_mod_level_2_or
+getF 3
+Push1 17
+CmpEq
+Or
+
+:Label_trainer_vehicle_mod_level_2_or
+dup
+Not
+JumpFalse @Label_trainer_vehicle_mod_level_2_or2
+getF 3
+Push1 19
+CmpEq
+Or
+
+:Label_trainer_vehicle_mod_level_2_or2
+dup
+Not
+JumpFalse @Label_trainer_vehicle_mod_level_2_or3
+getF 3
+Push1 18
+CmpEq
+Or
+
+:Label_trainer_vehicle_mod_level_2_or3
+dup
+Not
+JumpFalse @Label_trainer_vehicle_mod_level_2_or4
+getF 3
+Push1 20
+CmpEq
+Or
+
+:Label_trainer_vehicle_mod_level_2_or4
+dup
+Not
+JumpFalse @Label_trainer_vehicle_mod_level_2_or5
+getF 3
+Push1 22
+CmpEq
+Or
+
+:Label_trainer_vehicle_mod_level_2_or5
+JumpFalse @Label_trainer_vehicle_mod_level_2_count
+
+getF 3
+pFrame1 5
+ArrayGet1 1
+Call @menu_addItem
+StaticGet2 379
+getF 3
+CallNative is_toggle_mod_on 2 1
+Call @menu_addItem_bool
+getF 3
+Call @menu_add_number
+Call @menu_add_action
+Jump @Label_trainer_vehicle_mod_level_2_mod_count
+
+:Label_trainer_vehicle_mod_level_2_count
+StaticGet2 379
+getF 3
+CallNative unk_0x8A814FF9 2 1
+iPush_0
+JumpLE @Label_trainer_vehicle_mod_level_2_mod_count
+
+getF 3
 pFrame1 5
 ArrayGet1 1
 Call @menu_addItem
@@ -834,6 +904,12 @@ CallNative unk_0x8A814FF9 2 1
 Push1 10
 Call @menu_addItem_number
 
+getF 3
+StaticGet1 5
+pstatic2 385
+ArraySet1 1
+
+:Label_trainer_vehicle_mod_level_2_mod_count
 getF 3
 Add1 1
 setF 3
@@ -1051,6 +1127,20 @@ iPush_1
 Sub
 setF 4
 
+getF 0
+JumpFalse @Label_trainer_player_variation_level_3_num_tex
+CallNative player_ped_id 0 1
+getF 3
+CallNative player_ped_id 0 1
+getF 3
+CallNative get_ped_drawable_variation 2 1
+CallNative get_number_of_ped_texture_variations 3 1
+iPush_1
+Sub
+setF 5
+Jump @Label_trainer_player_variation_level_3_num_tex_else
+
+:Label_trainer_player_variation_level_3_num_tex
 CallNative player_ped_id 0 1
 getF 3
 iPush_0
@@ -1060,6 +1150,7 @@ iPush_1
 Sub
 setF 5
 
+:Label_trainer_player_variation_level_3_num_tex_else
 getF 4
 iPush_0
 CmpGt
@@ -1306,6 +1397,8 @@ getF 3
 StaticGet2 379
 iPush_2
 pstatic2 30
+ArrayGet1 1
+pstatic2 385
 ArrayGet1 1
 CallNative unk_0x8A814FF9 2 1
 JumpGE @Label_trainer_vehicle_mod_level_3_end
@@ -1671,12 +1764,40 @@ Sub
 setF 5
 
 :Label_trainer_player_accessories_action_1
+iPush_0
+Call @menu_get_current_number
+JumpNE @Label_trainer_player_accessories_action_or2_false
+
+iPush_0
+StaticGet1 4
+CmpEq
+dup
+Not
+JumpFalse @Label_trainer_player_accessories_action_or2
+iPush_2
+StaticGet1 4
+CmpEq
+Or
+
+:Label_trainer_player_accessories_action_or2
+JumpFalse @Label_trainer_player_accessories_action_goto_end
+
+CallNative player_ped_id 0 1
+getF 3
+CallNative clear_ped_prop 2 0
+
+:Label_trainer_player_accessories_action_goto_end
+Jump @Label_trainer_player_accessories_action_end
+
+:Label_trainer_player_accessories_action_or2_false
 CallNative player_ped_id 0 1
 getF 3
 getF 4
 getF 5
 CallNative network_is_game_in_progress 0 1
 CallNative set_ped_prop_index 5 0
+
+:Label_trainer_player_accessories_action_end
 Return 0 0
 
 :Label_trainer_player_action_level_2_last_selected_3
@@ -1842,6 +1963,19 @@ Return 0 0
 :trainer_vehicle_action_level_2
 Function 1 0 4
 
+iPush_0
+iPush_1
+pstatic2 30
+ArrayGet1 1
+JumpEq @Label_trainer_vehicle_action_level_2_1
+Call @trainer_get_vehicle
+Not
+JumpFalse @Label_trainer_vehicle_action_level_2_1
+iPush_1
+Call @trainer_error_vehicle
+Return 0 0
+
+:Label_trainer_vehicle_action_level_2_1
 iPush_1
 pstatic2 30
 ArrayGet1 1
@@ -2105,6 +2239,8 @@ CallNative set_vehicle_mod_kit 2 0
 
 iPush_2
 pstatic2 30
+ArrayGet1 1
+pstatic2 385
 ArrayGet1 1
 setF 3
 
@@ -2576,7 +2712,7 @@ JumpFalse @Label_spawn_veh_end
 
 StaticGet2 378
 CallNative does_entity_exist 1 1
-JumpFalse @Label_spawn_veh_normal
+JumpFalse @Label_spawn_veh_cc_place
 StaticGet2 378
 CallNative is_entity_dead 1 1
 Not
@@ -2612,6 +2748,74 @@ CallNative set_entity_coords 8 0
 :Label_spawn_veh_delete
 pstatic2 378
 CallNative delete_vehicle 1 0
+
+:Label_spawn_veh_cc_place
+iPush_2
+Push1 179
+CallNative is_control_pressed 2 1
+JumpFalse @Label_spawn_veh_normal
+
+CallNative player_ped_id 0 1
+CallNative get_entity_heading 1 1
+setF 6
+
+getF 0
+CallNative is_this_model_a_plane 1 1
+JumpFalse @Label_spawn_veh_25
+CallNative player_ped_id 0 1
+fPush -4.0
+fPush 8.5
+fPush_1.0
+CallNative get_offset_from_entity_in_world_coords 4 3
+iPush_3
+pFrame1 3
+FromStack
+Jump @Label_spawn_veh_26
+
+:Label_spawn_veh_25
+getF 0
+CallNative is_this_model_a_heli 1 1
+JumpFalse @Label_spawn_veh_27
+CallNative player_ped_id 0 1
+fPush_0.0
+fPush_6.0
+fPush_2.0
+CallNative get_offset_from_entity_in_world_coords 4 3
+iPush_3
+pFrame1 3
+FromStack
+Jump @Label_spawn_veh_26
+
+:Label_spawn_veh_27
+CallNative player_ped_id 0 1
+fPush_0.0
+fPush 3.5
+fPush_1.0
+CallNative get_offset_from_entity_in_world_coords 4 3
+iPush_3
+pFrame1 3
+FromStack
+
+:Label_spawn_veh_26
+getF 0
+iPush_3
+pFrame1 3
+ToStack
+getF 6
+Call @trainer_cc_place_veh
+Not
+JumpFalse @Label_spawn_veh_normal_goto_not_in_veh
+getF 0
+CallNative set_model_as_no_longer_needed 1 0
+PushString "No space to spawn vehicle:"
+getF 0
+CallNative get_display_name_from_vehicle_model 1 1
+iPush_0
+Call @menu_error_2_strings_gxt
+Return 1 0
+
+:Label_spawn_veh_normal_goto_not_in_veh
+Jump @Label_spawn_veh_normal_not_in_veh
 
 :Label_spawn_veh_normal
 CallNative player_ped_id 0 1
@@ -2692,38 +2896,408 @@ CallNative set_model_as_no_longer_needed 1 0
 pstatic2 378
 CallNative set_vehicle_as_no_longer_needed 1 0
 
-iPush_2
-Push1 179
-CallNative is_control_pressed 2 1
-JumpFalse @Label_spawn_veh_end
-iPush_0
-StaticSet1 11
-
-iPush_0
-StaticGet1 9
-pstatic2 30
-ArraySet1 1
-
-iPush_0
-StaticSet1 4
-
-Call @menu_clean
-
-iPush_1
-iPush_0
-pstatic2 30
-ArraySet1 1
-
-iPush_4
-iPush_1
-pstatic2 30
-ArraySet1 1
-
-iPush_2
-StaticSet1 9
-
 :Label_spawn_veh_end
 Return 1 0
+
+:trainer_cc_place_veh
+Function 1 5 59
+pFrame1 7
+Push1 9
+pPeekSet
+drop
+getF 0
+pFrame1 35
+pFrame1 38
+CallNative get_model_dimensions 3 0
+getF 38
+getF 35
+fSub
+CallNative absf 1 1
+fPush_2.0
+fDiv
+setF 41
+pFrame1 38
+GetImmediate1 1
+pFrame1 35
+GetImmediate1 1
+fSub
+CallNative absf 1 1
+fPush_2.0
+fDiv
+pFrame1 41
+SetImmediate1 1
+pFrame1 38
+GetImmediate1 2
+pFrame1 35
+GetImmediate1 2
+fSub
+CallNative absf 1 1
+fPush_2.0
+fDiv
+pFrame1 41
+SetImmediate1 2
+iPush_3
+pFrame1 1
+ToStack
+iPush_3
+iPush_0
+pFrame1 7
+ArrayGetP1 3
+FromStack
+iPush_3
+pFrame1 1
+ToStack
+getF 4
+getF 41
+fNeg
+pFrame1 41
+GetImmediate1 1
+fNeg
+pFrame1 41
+GetImmediate1 2
+fNeg
+CallNative unk_0x87A42A12 7 3
+iPush_3
+iPush_1
+pFrame1 7
+ArrayGetP1 3
+FromStack
+iPush_3
+pFrame1 1
+ToStack
+getF 4
+getF 41
+pFrame1 41
+GetImmediate1 1
+fNeg
+pFrame1 41
+GetImmediate1 2
+fNeg
+CallNative unk_0x87A42A12 7 3
+iPush_3
+iPush_2
+pFrame1 7
+ArrayGetP1 3
+FromStack
+iPush_3
+pFrame1 1
+ToStack
+getF 4
+getF 41
+pFrame1 41
+GetImmediate1 1
+pFrame1 41
+GetImmediate1 2
+fNeg
+CallNative unk_0x87A42A12 7 3
+iPush_3
+iPush_3
+pFrame1 7
+ArrayGetP1 3
+FromStack
+iPush_3
+pFrame1 1
+ToStack
+getF 4
+getF 41
+fNeg
+pFrame1 41
+GetImmediate1 1
+pFrame1 41
+GetImmediate1 2
+fNeg
+CallNative unk_0x87A42A12 7 3
+iPush_3
+iPush_4
+pFrame1 7
+ArrayGetP1 3
+FromStack
+iPush_3
+pFrame1 1
+ToStack
+getF 4
+getF 41
+fNeg
+pFrame1 41
+GetImmediate1 1
+fNeg
+pFrame1 41
+GetImmediate1 2
+CallNative unk_0x87A42A12 7 3
+iPush_3
+iPush_5
+pFrame1 7
+ArrayGetP1 3
+FromStack
+iPush_3
+pFrame1 1
+ToStack
+getF 4
+getF 41
+pFrame1 41
+GetImmediate1 1
+fNeg
+pFrame1 41
+GetImmediate1 2
+CallNative unk_0x87A42A12 7 3
+iPush_3
+iPush_6
+pFrame1 7
+ArrayGetP1 3
+FromStack
+iPush_3
+pFrame1 1
+ToStack
+getF 4
+getF 41
+pFrame1 41
+GetImmediate1 1
+pFrame1 41
+GetImmediate1 2
+CallNative unk_0x87A42A12 7 3
+iPush_3
+iPush_7
+pFrame1 7
+ArrayGetP1 3
+FromStack
+iPush_3
+pFrame1 1
+ToStack
+getF 4
+getF 41
+fNeg
+pFrame1 41
+GetImmediate1 1
+pFrame1 41
+GetImmediate1 2
+CallNative unk_0x87A42A12 7 3
+iPush_3
+Push1 8
+pFrame1 7
+ArrayGetP1 3
+FromStack
+iPush_3
+pFrame1 1
+ToStack
+CallNative unk_0x7762249C 3 1
+Not
+JumpFalse @Label_trainer_cc_place_56
+iPush_0
+Return 5 1
+
+:Label_trainer_cc_place_56
+CallNative player_id 0 1
+Call @Label_trainer_cc_place_57
+fPush_0.0
+fPush_0.0
+fPush_1.0
+vAdd
+iPush_3
+pFrame1 1
+ToStack
+Push1 87
+CallNative player_ped_id 0 1
+iPush_0
+CallNative unk_0x8251485D 9 1
+setF 57
+getF 57
+pFrame1 50
+pFrame1 44
+pFrame1 47
+pFrame1 58
+CallNative unk_0xF3C2875A 5 1
+drop
+getF 50
+iPush_0
+JumpEQ @Label_trainer_cc_place_58
+iPush_0
+Return 5 1
+
+:Label_trainer_cc_place_58
+iPush_3
+iPush_1
+pFrame1 7
+ArrayGetP1 3
+ToStack
+iPush_3
+iPush_3
+pFrame1 7
+ArrayGetP1 3
+ToStack
+Push1 87
+CallNative player_ped_id 0 1
+iPush_0
+CallNative unk_0x8251485D 9 1
+setF 51
+getF 51
+pFrame1 50
+pFrame1 44
+pFrame1 47
+pFrame1 58
+CallNative unk_0xF3C2875A 5 1
+drop
+getF 50
+iPush_0
+JumpEQ @Label_trainer_cc_place_59
+iPush_0
+Return 5 1
+
+:Label_trainer_cc_place_59
+iPush_3
+iPush_2
+pFrame1 7
+ArrayGetP1 3
+ToStack
+iPush_3
+iPush_4
+pFrame1 7
+ArrayGetP1 3
+ToStack
+Push1 87
+CallNative player_ped_id 0 1
+iPush_0
+CallNative unk_0x8251485D 9 1
+setF 52
+getF 52
+pFrame1 50
+pFrame1 44
+pFrame1 47
+pFrame1 58
+CallNative unk_0xF3C2875A 5 1
+drop
+getF 50
+iPush_0
+JumpEQ @Label_trainer_cc_place_60
+iPush_0
+Return 5 1
+
+:Label_trainer_cc_place_60
+iPush_3
+iPush_5
+pFrame1 7
+ArrayGetP1 3
+ToStack
+iPush_3
+iPush_7
+pFrame1 7
+ArrayGetP1 3
+ToStack
+Push1 87
+CallNative player_ped_id 0 1
+iPush_0
+CallNative unk_0x8251485D 9 1
+setF 53
+getF 53
+pFrame1 50
+pFrame1 44
+pFrame1 47
+pFrame1 58
+CallNative unk_0xF3C2875A 5 1
+drop
+getF 50
+iPush_0
+JumpEQ @Label_trainer_cc_place_61
+iPush_0
+Return 5 1
+
+:Label_trainer_cc_place_61
+iPush_3
+iPush_6
+pFrame1 7
+ArrayGetP1 3
+ToStack
+iPush_3
+Push1 8
+pFrame1 7
+ArrayGetP1 3
+ToStack
+Push1 87
+CallNative player_ped_id 0 1
+iPush_0
+CallNative unk_0x8251485D 9 1
+setF 54
+getF 54
+pFrame1 50
+pFrame1 44
+pFrame1 47
+pFrame1 58
+CallNative unk_0xF3C2875A 5 1
+drop
+getF 50
+iPush_0
+JumpEQ @Label_trainer_cc_place_62
+iPush_0
+Return 5 1
+
+:Label_trainer_cc_place_62
+iPush_3
+iPush_1
+pFrame1 7
+ArrayGetP1 3
+ToStack
+iPush_3
+Push1 8
+pFrame1 7
+ArrayGetP1 3
+ToStack
+Push1 87
+CallNative player_ped_id 0 1
+iPush_0
+CallNative unk_0x8251485D 9 1
+setF 55
+getF 55
+pFrame1 50
+pFrame1 44
+pFrame1 47
+pFrame1 58
+CallNative unk_0xF3C2875A 5 1
+drop
+getF 50
+iPush_0
+JumpEQ @Label_trainer_cc_place_63
+iPush_0
+Return 5 1
+
+:Label_trainer_cc_place_63
+iPush_3
+iPush_2
+pFrame1 7
+ArrayGetP1 3
+ToStack
+iPush_3
+iPush_7
+pFrame1 7
+ArrayGetP1 3
+ToStack
+Push1 87
+CallNative player_ped_id 0 1
+iPush_0
+CallNative unk_0x8251485D 9 1
+setF 56
+getF 56
+pFrame1 50
+pFrame1 44
+pFrame1 47
+pFrame1 58
+CallNative unk_0xF3C2875A 5 1
+drop
+getF 50
+iPush_0
+JumpEQ @Label_trainer_cc_place_64
+iPush_0
+Return 5 1
+
+:Label_trainer_cc_place_64
+iPush_1
+Return 5 1
+
+:Label_trainer_cc_place_57
+Function 15 1 3
+getF 0
+CallNative get_player_ped 1 1
+iPush_0
+CallNative get_entity_coords 2 3
+Return 1 3
 
 :trainer_network_set_spawn_veh
 Function 1 1 12
@@ -3317,6 +3891,8 @@ pstatic2 30
 ArrayGet1 1
 StaticSet1 4
 
+Call @menu_set
+
 :Label_menu_error_1
 PushString "STRING"
 CallNative unk_0x574EE85C 1 0
@@ -3328,6 +3904,42 @@ CallNative unk_0x08F7AF78 2 1
 drop
 
 Return 2 0
+
+:menu_error_2_strings_gxt
+Function 1 3 6
+
+getF 2
+JumpFalse @Label_menu_error_2_strings_gxt_1
+iPush_0
+StaticSet1 11
+
+Call @menu_clean
+
+StaticGet1 9
+iPush_1
+Sub
+StaticSet1 9
+
+StaticGet1 9
+pstatic2 30
+ArrayGet1 1
+StaticSet1 4
+
+Call @menu_set
+
+:Label_menu_error_2_strings_gxt_1
+PushString "TWOSTRINGS"
+CallNative unk_0x574EE85C 1 0
+getF 0
+CallNative unk_0x27A244D8 1 0
+getF 1
+CallNative unk_0xDCE05406 1 0
+iPush_0
+iPush_1
+CallNative unk_0x08F7AF78 2 1
+drop
+
+Return 3 0
 
 :menu_hide
 Function 1 0 2
@@ -11158,240 +11770,6 @@ Call @menu_add_action
 PushString "Spyactress"
 Call @menu_addItem
 Push 1535236204
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_trainer_dummy_player_model_last_selected_story_ambient_male_m
-PushString "Aldinapoli"
-Call @menu_addItem
-Push -252946718
-Call @menu_add_number
-Call @menu_add_action
-PushString "Bankman"
-Call @menu_addItem
-Push -1022961931
-Call @menu_add_number
-Call @menu_add_action
-PushString "Bikehire"
-Call @menu_addItem
-Push 1984382277
-Call @menu_add_number
-Call @menu_add_action
-PushString "Fibarchitect"
-Call @menu_addItem
-Push 874722259
-Call @menu_add_number
-Call @menu_add_action
-PushString "Filmdirector"
-Call @menu_addItem
-Push 728636342
-Call @menu_add_number
-Call @menu_add_action
-PushString "Glenstank"
-Call @menu_addItem
-Push 1169888870
-Call @menu_add_number
-Call @menu_add_action
-PushString "Griff"
-Call @menu_addItem
-Push -1001079621
-Call @menu_add_number
-Call @menu_add_action
-PushString "Jesus"
-Call @menu_addItem
-Push -835930287
-Call @menu_add_number
-Call @menu_add_action
-PushString "Jewelsec"
-Call @menu_addItem
-Push -1395868234
-Call @menu_add_number
-Call @menu_add_action
-PushString "Jewelthief"
-Call @menu_addItem
-Push -422822692
-Call @menu_add_number
-Call @menu_add_action
-PushString "Markfost"
-Call @menu_addItem
-Push 479578891
-Call @menu_add_number
-Call @menu_add_action
-PushString "Partytarget"
-Call @menu_addItem
-Push -2114499097
-Call @menu_add_number
-Call @menu_add_action
-PushString "Prolsec"
-Call @menu_addItem
-Push 1888624839
-Call @menu_add_number
-Call @menu_add_action
-PushString "Promourn"
-Call @menu_addItem
-Push -829029621
-Call @menu_add_number
-Call @menu_add_action
-PushString "Rivalpap"
-Call @menu_addItem
-Push 1624626906
-Call @menu_add_number
-Call @menu_add_action
-PushString "Spyactor"
-Call @menu_addItem
-Push -1408326184
-Call @menu_add_number
-Call @menu_add_action
-PushString "Willyfist"
-Call @menu_addItem
-Push -1871275377
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_trainer_dummy_player_model_last_selected_story_ambient_male_o
-PushString "Finguru"
-Call @menu_addItem
-Push 1189322339
-Call @menu_add_number
-Call @menu_add_action
-PushString "Taphillbilly"
-Call @menu_addItem
-Push -1709285806
-Call @menu_add_number
-Call @menu_add_action
-PushString "Tra01"
-Call @menu_addItem
-Push 1787764635
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_trainer_dummy_player_model_last_selected_story_ambient_male_y
-PushString "Abner"
-Call @menu_addItem
-Push -257153498
-Call @menu_add_number
-Call @menu_add_action
-PushString "Antonb"
-Call @menu_addItem
-Push -815646164
-Call @menu_add_number
-Call @menu_add_action
-PushString "Babyd"
-Call @menu_addItem
-Push -636391810
-Call @menu_add_number
-Call @menu_add_action
-PushString "Baygor"
-Call @menu_addItem
-Push 1380197501
-Call @menu_add_number
-Call @menu_add_action
-PushString "Burgerdrug"
-Call @menu_addItem
-Push -1954728090
-Call @menu_add_number
-Call @menu_add_action
-PushString "Chip"
-Call @menu_addItem
-Push 610290475
-Call @menu_add_number
-Call @menu_add_action
-PushString "Cyclist"
-Call @menu_addItem
-Push 755956971
-Call @menu_add_number
-Call @menu_add_action
-PushString "Fibmugger"
-Call @menu_addItem
-Push -2051422616
-Call @menu_add_number
-Call @menu_add_action
-PushString "Guido"
-Call @menu_addItem
-Push -961242577
-Call @menu_add_number
-Call @menu_add_action
-PushString "Gunvend"
-Call @menu_addItem
-Push -1289578670
-Call @menu_add_number
-Call @menu_add_action
-PushString "Hippie"
-Call @menu_addItem
-Push -264140789
-Call @menu_add_number
-Call @menu_add_action
-PushString "Imporage"
-Call @menu_addItem
-Push 880829941
-Call @menu_add_number
-Call @menu_add_action
-PushString "Justin"
-Call @menu_addItem
-Push 2109968527
-Call @menu_add_number
-Call @menu_add_action
-PushString "Mani"
-Call @menu_addItem
-Push -927261102
-Call @menu_add_number
-Call @menu_add_action
-PushString "Militarybum"
-Call @menu_addItem
-Push 1191548746
-Call @menu_add_number
-Call @menu_add_action
-PushString "Paparazzi"
-Call @menu_addItem
-Push 1346941736
-Call @menu_add_number
-Call @menu_add_action
-PushString "Party"
-Call @menu_addItem
-Push 921110016
-Call @menu_add_number
-Call @menu_add_action
-PushString "Pogo"
-Call @menu_addItem
-Push -598109171
-Call @menu_add_number
-Call @menu_add_action
-PushString "Prisoner"
-Call @menu_addItem
-Push 2073775040
-Call @menu_add_number
-Call @menu_add_action
-PushString "Proldriver"
-Call @menu_addItem
-Push -2057423197
-Call @menu_add_number
-Call @menu_add_action
-PushString "Rsranger"
-Call @menu_addItem
-Push 1011059922
-Call @menu_add_number
-Call @menu_add_action
-PushString "Sbike"
-Call @menu_addItem
-Push 1794381917
-Call @menu_add_number
-Call @menu_add_action
-PushString "Staggrm"
-Call @menu_addItem
-Push -1852518909
-Call @menu_add_number
-Call @menu_add_action
-PushString "Tattoo"
-Call @menu_addItem
-Push -1800524916
-Call @menu_add_number
-Call @menu_add_action
-PushString "Zombie"
-Call @menu_addItem
-Push -1404353274
 Call @menu_add_number
 Call @menu_add_action
 Return 0 0
