@@ -124,3 +124,6 @@ Static_383
 
 // network_pause_off_radar
 Static_384
+
+// trainer_stored_selected (25)
+Static[385]
