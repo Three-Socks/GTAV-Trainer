@@ -899,6 +899,11 @@ Call @menu_addItem_bool
 getF 3
 Call @menu_add_number
 Call @menu_add_action
+
+getF 3
+StaticGet1 5
+pstatic2 385
+ArraySet1 1
 Jump @Label_trainer_vehicle_mod_level_2_mod_count
 
 :Label_trainer_vehicle_mod_level_2_count
@@ -912,12 +917,27 @@ getF 3
 pFrame1 5
 ArrayGet1 1
 Call @menu_addItem
-StaticGet2 379
+
+Push1 23
 getF 3
-CallNative unk_0x8A814FF9 2 1
-Push1 10
+CmpEq
+dup
+Not
+JumpFalse @Label_trainer_vehicle_mod_level_2_mod_wheel_or
+Push1 24
+getF 3
+CmpEq
+Or
+
+:Label_trainer_vehicle_mod_level_2_mod_wheel_or
+JumpFalse @Label_trainer_vehicle_mod_level_2_mod_wheel
+
+StaticGet2 379
+CallNative get_vehicle_wheel_type 1 1
+Push1 7
 Call @menu_addItem_number
 
+:Label_trainer_vehicle_mod_level_2_mod_wheel
 getF 3
 StaticGet1 5
 pstatic2 385
@@ -2102,7 +2122,6 @@ CallNative toggle_vehicle_mod 3 0
 StaticGet2 379
 Call @menu_get_current_number
 CallNative is_toggle_mod_on 2 1
-Not
 Call @menu_set_current_bool
 Return 0 0
 
@@ -3524,6 +3543,42 @@ Or
 :Label_trainer_catch_button_press_1
 JumpFalse @Label_trainer_catch_button_press_end
 
+iPush_2
+StaticGet1 9
+JumpNE @Label_trainer_catch_button_level_3
+iPush_1
+iPush_0
+pstatic2 30
+ArrayGet1 1
+JumpNE @Label_trainer_catch_button_level_3
+iPush_1
+iPush_1
+pstatic2 30
+ArrayGet1 1
+JumpNE @Label_trainer_catch_button_level_3
+
+Push1 23
+StaticGet1 4
+pstatic2 385
+ArrayGet1 1
+CmpEq
+dup
+Not
+JumpFalse @Label_trainer_catch_button_wheel_or
+Push1 24
+StaticGet1 4
+pstatic2 385
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_trainer_catch_button_wheel_or
+JumpFalse @Label_trainer_catch_button_level_3
+StaticGet2 379
+Call @menu_get_current_number
+CallNative set_vehicle_wheel_type 2 0
+
+:Label_trainer_catch_button_level_3
 iPush_3
 StaticGet1 9
 JumpNE @Label_trainer_catch_button_press_end
@@ -4471,6 +4526,124 @@ pFrame1 13
 pFrame1 14
 CallNative get_screen_resolution 2 0
 
+iPush_1
+StaticGet1 4
+pstatic1 123
+ArrayGet1 1
+JumpNE @Label_menu_draw_sprite_scroll
+
+iPush_2
+pFrame1 3
+pFrame1 4
+pFrame1 5
+pFrame1 6
+CallNative get_hud_colour 5 0
+
+StaticGet1 4
+Add1 1
+setF 7
+
+StaticGet1 22
+getF 7
+ItoF
+fMult
+setF 8
+
+
+iPush_0
+iPush_0
+iPush_0
+StaticGet1 3
+fPush 0.20215625
+fAdd
+iPush_1
+Call @set_up_draw
+
+StaticGet1 4
+pstatic2 276
+ArrayGet1 1
+Call @get_number_width
+fPush 0.01171875
+fAdd
+setF 15
+
+PushString "CommonMenu"
+PushString "arrowleft"
+CallNative get_texture_resolution 2 3
+iPush_3
+pFrame1 9
+FromStack
+
+PushString "CommonMenu"
+PushString "arrowleft"
+fPush 0.05
+getF 15
+fSub
+fPush 0.425
+fPush 0.5
+fMult
+fAdd
+getF 8
+fPush 0.04999922
+fAdd
+StaticGet1 22
+fPush 0.5
+fMult
+fAdd
+getF 9
+getF 13
+ItoF
+fDiv
+pFrame1 9
+GetImmediate1 1
+getF 14
+ItoF
+fDiv
+fPush_0.0
+getF 3
+getF 4
+getF 5
+getF 6
+CallNative draw_sprite 11 0
+
+PushString "CommonMenu"
+PushString "arrowright"
+CallNative get_texture_resolution 2 3
+iPush_3
+pFrame1 9
+FromStack
+
+PushString "CommonMenu"
+PushString "arrowright"
+fPush 0.05
+fPush 0.425
+fPush 0.5
+fMult
+fAdd
+getF 8
+fPush 0.04999922
+fAdd
+StaticGet1 22
+fPush 0.5
+fMult
+fAdd
+getF 9
+getF 13
+ItoF
+fDiv
+pFrame1 9
+GetImmediate1 1
+getF 14
+ItoF
+fDiv
+fPush_0.0
+getF 3
+getF 4
+getF 5
+getF 6
+CallNative draw_sprite 11 0
+
+:Label_menu_draw_sprite_scroll
 StaticGet1 5
 StaticGet1 24
 JumpLE @Label_menu_draw_sprite_end
@@ -5075,7 +5248,7 @@ getF 18
 getF 19
 getF 20
 StaticGet1 3
-fPush 0.1920
+fPush 0.20215625
 fAdd
 iPush_1
 Call @set_up_draw
