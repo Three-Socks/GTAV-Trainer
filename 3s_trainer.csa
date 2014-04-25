@@ -310,18 +310,11 @@ Call @menu_addItem
 PushString "Vehicle"
 Call @menu_addItem
 
-CallNative network_is_game_in_progress 0 1
-JumpFalse @Label_trainer_level_0_end
 PushString "Network"
 Call @menu_addItem
 
-:Label_trainer_level_0_end
-PushString "Global 2623866"
+PushString "Debug"
 Call @menu_addItem
-globalget3 2623866
-iPush_5
-Call @menu_addItem_number
-Call @menu_add_action
 Return 0 0
 
 :Label_level_1
@@ -344,12 +337,12 @@ Return 0 0
 Return 0 0
 
 :trainer_level_1
-Function 1 0 4
+Function 1 0 7
 
 iPush_0
 pstatic2 30
 ArrayGet1 1
-Switch [0 @Label_last_selected_0]:[1 @Label_last_selected_1]:[2 @Label_last_selected_2]
+Switch [0 @Label_last_selected_0]:[1 @Label_last_selected_1]:[2 @Label_last_selected_2]:[3 @Label_last_selected_3]
 Jump @Label_level_1_end
 
 :Label_last_selected_0
@@ -393,6 +386,30 @@ PushString "Pause Off Radar Timer"
 Call @menu_addItem
 StaticGet2 384
 Call @menu_addItem_bool
+Call @menu_add_action
+Return 0 0
+
+:Label_last_selected_3
+PushString "Debug"
+StaticSet1 10
+
+CallNative player_ped_id 0 1
+pFrame1 4
+CallNative get_ped_last_damage_bone 2 1
+drop
+
+PushString "get_ped_last_damage_bone"
+Call @menu_addItem
+getF 4
+iPush_0
+Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "Global 2623866"
+Call @menu_addItem
+globalget3 2623866
+iPush_5
+Call @menu_addItem_number
 Call @menu_add_action
 Return 0 0
 
@@ -1149,6 +1166,18 @@ Return 0 0
 PushString "Vehicle - Respray"
 StaticSet1 10
 
+PushString "Colour 1"
+Call @menu_addItem
+
+PushString "Colour 2"
+Call @menu_addItem
+
+PushString "Colour Extra 1"
+Call @menu_addItem
+
+PushString "Colour Extra 2"
+Call @menu_addItem
+
 StaticGet2 379
 CallNative get_entity_model 1 1
 setF 33
@@ -1389,7 +1418,7 @@ Return 0 0
 iPush_1
 pstatic2 30
 ArrayGet1 1
-Switch [0 @Label_vehicle_level_3_last_selected_0]:[1 @Label_vehicle_level_3_last_selected_1]:[4 @Label_vehicle_level_3_last_selected_4]
+Switch [0 @Label_vehicle_level_3_last_selected_0]:[1 @Label_vehicle_level_3_last_selected_1]:[3 @Label_vehicle_level_3_last_selected_3]:[4 @Label_vehicle_level_3_last_selected_4]
 Jump @Label_vehicle_level_3_end
 
 :Label_vehicle_level_3_last_selected_0
@@ -1398,6 +1427,16 @@ Return 0 0
 
 :Label_vehicle_level_3_last_selected_1
 Call @trainer_vehicle_mod_level_3
+Return 0 0
+
+:Label_vehicle_level_3_last_selected_3
+PushString "Vehicle - Respray"
+StaticSet1 10
+
+PushString "Stock"
+Call @menu_addItem
+PushString "Custom"
+Call @menu_addItem
 Return 0 0
 
 :Label_vehicle_level_3_last_selected_4
@@ -1557,6 +1596,332 @@ setF 3
 Jump @Label_trainer_vehicle_mod_level_3_while
 
 :Label_trainer_vehicle_mod_level_3_end
+Return 0 0
+
+:trainer_vehicle_colour_stock
+Function 1 0 4
+
+PushString "Metallic Black"
+Call @menu_addItem
+PushString "Metallic Graphite Black"
+Call @menu_addItem
+PushString "Metallic Black Steal"
+Call @menu_addItem
+PushString "Metallic Dark Silver"
+Call @menu_addItem
+PushString "Metallic Silver"
+Call @menu_addItem
+PushString "Metallic Blue Silver"
+Call @menu_addItem
+PushString "Metallic Steel Gray"
+Call @menu_addItem
+PushString "Metallic Shadow Silver"
+Call @menu_addItem
+PushString "Metallic Stone Silver"
+Call @menu_addItem
+PushString "Metallic Midnight Silver"
+Call @menu_addItem
+PushString "Metallic Gun Metal"
+Call @menu_addItem
+PushString "Metallic Anthracite Grey"
+Call @menu_addItem
+PushString "Matte Black"
+Call @menu_addItem
+PushString "Matte Gray"
+Call @menu_addItem
+PushString "Matte Light Grey"
+Call @menu_addItem
+PushString "Util Black"
+Call @menu_addItem
+PushString "Util Black Poly"
+Call @menu_addItem
+PushString "Util Dark silver"
+Call @menu_addItem
+PushString "Util Silver"
+Call @menu_addItem
+PushString "Util Gun Metal"
+Call @menu_addItem
+PushString "Util Shadow Silver"
+Call @menu_addItem
+PushString "Worn Black"
+Call @menu_addItem
+PushString "Worn Graphite"
+Call @menu_addItem
+PushString "Worn Silver Grey"
+Call @menu_addItem
+PushString "Worn Silver"
+Call @menu_addItem
+PushString "Worn Blue Silver"
+Call @menu_addItem
+PushString "Worn Shadow Silver"
+Call @menu_addItem
+PushString "Metallic Red"
+Call @menu_addItem
+PushString "Metallic Torino Red"
+Call @menu_addItem
+PushString "Metallic Formula Red"
+Call @menu_addItem
+PushString "Metallic Blaze Red"
+Call @menu_addItem
+PushString "Metallic Graceful Red"
+Call @menu_addItem
+PushString "Metallic Garnet Red"
+Call @menu_addItem
+PushString "Metallic Desert Red"
+Call @menu_addItem
+PushString "Metallic Cabernet Red"
+Call @menu_addItem
+PushString "Metallic Candy Red"
+Call @menu_addItem
+PushString "Metallic Sunrise Orange"
+Call @menu_addItem
+PushString "Metallic Classic Gold"
+Call @menu_addItem
+PushString "Metallic Orange"
+Call @menu_addItem
+PushString "Matte Red"
+Call @menu_addItem
+PushString "Matte Dark Red"
+Call @menu_addItem
+PushString "Matte Orange"
+Call @menu_addItem
+PushString "Matte Yellow"
+Call @menu_addItem
+PushString "Util Red"
+Call @menu_addItem
+PushString "Util Bright Red"
+Call @menu_addItem
+PushString "Util Garnet Red"
+Call @menu_addItem
+PushString "Worn Red"
+Call @menu_addItem
+PushString "Worn Golden Red"
+Call @menu_addItem
+PushString "Worn Dark Red"
+Call @menu_addItem
+PushString "Metallic Dark Green"
+Call @menu_addItem
+PushString "Metallic Racing Green"
+Call @menu_addItem
+PushString "Metallic Sea Green"
+Call @menu_addItem
+PushString "Metallic Olive Green"
+Call @menu_addItem
+PushString "Metallic Green"
+Call @menu_addItem
+PushString "Metallic Gasoline Blue Green"
+Call @menu_addItem
+PushString "Matte Lime Green"
+Call @menu_addItem
+PushString "Util Dark Green"
+Call @menu_addItem
+PushString "Util Green"
+Call @menu_addItem
+PushString "Worn Dark Green "
+Call @menu_addItem
+PushString "Worn Green"
+Call @menu_addItem
+PushString "Worn Sea Wash"
+Call @menu_addItem
+PushString "Metallic Midnight Blue"
+Call @menu_addItem
+PushString "Metallic Dark Blue"
+Call @menu_addItem
+PushString "Metallic Saxony Blue"
+Call @menu_addItem
+PushString "Metallic Blue"
+Call @menu_addItem
+PushString "Metallic Mariner Blue"
+Call @menu_addItem
+PushString "Metallic Harbor Blue"
+Call @menu_addItem
+PushString "Metallic Diamond Blue"
+Call @menu_addItem
+PushString "Metallic Surf Blue"
+Call @menu_addItem
+PushString "Metallic Nautical Blue"
+Call @menu_addItem
+PushString "Metallic Bright Blue"
+Call @menu_addItem
+PushString "Metallic Purple Blue"
+Call @menu_addItem
+PushString "Metallic Spinnaker Blue"
+Call @menu_addItem
+PushString "Metallic Ultra Blue"
+Call @menu_addItem
+PushString "Metallic Bright Blue"
+Call @menu_addItem
+PushString "Util Dark Blue"
+Call @menu_addItem
+PushString "Util Midnight Blue"
+Call @menu_addItem
+PushString "Util Blue"
+Call @menu_addItem
+PushString "Util Sea Foam Blue"
+Call @menu_addItem
+PushString "Uil Lightning blue"
+Call @menu_addItem
+PushString "Util Maui Blue Poly"
+Call @menu_addItem
+PushString "Util Bright Blue"
+Call @menu_addItem
+PushString "Matte Dark Blue"
+Call @menu_addItem
+PushString "Matte Blue"
+Call @menu_addItem
+PushString "Matte Midnight Blue"
+Call @menu_addItem
+PushString "Worn Dark blue"
+Call @menu_addItem
+PushString "Worn Blue"
+Call @menu_addItem
+PushString "Worn Light blue"
+Call @menu_addItem
+PushString "Metallic Taxi Yellow"
+Call @menu_addItem
+PushString "Metallic Race Yellow"
+Call @menu_addItem
+PushString "Metallic Bronze"
+Call @menu_addItem
+PushString "Metallic Yellow Bird"
+Call @menu_addItem
+PushString "Metallic Lime"
+Call @menu_addItem
+PushString "Metallic Champagne"
+Call @menu_addItem
+PushString "Metallic Pueblo Beige"
+Call @menu_addItem
+PushString "Metallic Dark Ivory"
+Call @menu_addItem
+PushString "Metallic Choco Brown"
+Call @menu_addItem
+PushString "Metallic Golden Brown"
+Call @menu_addItem
+PushString "Metallic Light Brown"
+Call @menu_addItem
+PushString "Metallic Straw Beige"
+Call @menu_addItem
+PushString "Metallic Moss Brown"
+Call @menu_addItem
+PushString "Metallic Biston Brown"
+Call @menu_addItem
+PushString "Metallic Beechwood"
+Call @menu_addItem
+PushString "Metallic Dark Beechwood"
+Call @menu_addItem
+PushString "Metallic Choco Orange"
+Call @menu_addItem
+PushString "Metallic Beach Sand"
+Call @menu_addItem
+PushString "Metallic Sun Bleeched Sand"
+Call @menu_addItem
+PushString "Metallic Cream"
+Call @menu_addItem
+PushString "Util Brown"
+Call @menu_addItem
+PushString "Util Medium Brown"
+Call @menu_addItem
+PushString "Util Light Brown"
+Call @menu_addItem
+PushString "Metallic White"
+Call @menu_addItem
+PushString "Metallic Frost White"
+Call @menu_addItem
+PushString "Worn Honey Beige"
+Call @menu_addItem
+PushString "Worn Brown"
+Call @menu_addItem
+PushString "Worn Dark Brown"
+Call @menu_addItem
+PushString "Worn straw beige"
+Call @menu_addItem
+PushString "Brushed Steel"
+Call @menu_addItem
+PushString "Brushed Black steel"
+Call @menu_addItem
+PushString "Brushed Aluminium"
+Call @menu_addItem
+PushString "Chrome"
+Call @menu_addItem
+PushString "Worn Off White"
+Call @menu_addItem
+PushString "Util Off White"
+Call @menu_addItem
+PushString "Worn Orange"
+Call @menu_addItem
+PushString "Worn Light Orange"
+Call @menu_addItem
+PushString "Metallic Securicor Green"
+Call @menu_addItem
+PushString "Worn Taxi Yellow"
+Call @menu_addItem
+PushString "Police car blue"
+Call @menu_addItem
+PushString "Matte Green"
+Call @menu_addItem
+PushString "Matte Brown"
+Call @menu_addItem
+PushString "Worn Orange"
+Call @menu_addItem
+PushString "Matte White"
+Call @menu_addItem
+PushString "Worn White"
+Call @menu_addItem
+PushString "Worn Olive Army Green"
+Call @menu_addItem
+PushString "Pure White"
+Call @menu_addItem
+PushString "Hot Pink"
+Call @menu_addItem
+PushString "Salmon pink"
+Call @menu_addItem
+PushString "Metallic Vermillion Pink"
+Call @menu_addItem
+PushString "Orange"
+Call @menu_addItem
+PushString "Green"
+Call @menu_addItem
+PushString "Blue"
+Call @menu_addItem
+PushString "Mettalic Black Blue"
+Call @menu_addItem
+PushString "Metallic Black Purple"
+Call @menu_addItem
+PushString "Metallic Black Red"
+Call @menu_addItem
+PushString "hunter green"
+Call @menu_addItem
+PushString "Metallic Purple"
+Call @menu_addItem
+PushString "Metaillic V Dark Blue"
+Call @menu_addItem
+PushString "MODSHOP BLACK1"
+Call @menu_addItem
+PushString "Matte Purple"
+Call @menu_addItem
+PushString "Matte Dark Purple"
+Call @menu_addItem
+PushString "Metallic Lava Red"
+Call @menu_addItem
+PushString "Matte Forest Green"
+Call @menu_addItem
+PushString "Matte Olive Drab"
+Call @menu_addItem
+PushString "Matte Desert Brown"
+Call @menu_addItem
+PushString "Matte Desert Tan"
+Call @menu_addItem
+PushString "Matte Foilage Green"
+Call @menu_addItem
+PushString "DEFAULT ALLOY COLOR"
+Call @menu_addItem
+PushString "Epsilon Blue"
+Call @menu_addItem
+
+Return 0 0
+
+:trainer_vehicle_colour_custom
+Function 1 0 4
 Return 0 0
 
 :trainer_vehicle_modify_level_3
@@ -1730,13 +2095,7 @@ Call @menu_add_action
 PushString "Engine BJXL_ARMENIAN_3"
 Call @menu_addItem_action
 
-PushString "Engine LAZER"
-Call @menu_addItem_action
-
 PushString "Engine STRETCH_MICHAEL_4"
-Call @menu_addItem_action
-
-PushString "Engine CARBONIZZARE"
 Call @menu_addItem_action
 Return 0 0
 
@@ -1849,19 +2208,19 @@ Function 1 0 4
 iPush_0
 pstatic2 30
 ArrayGet1 1
-Switch [1 @Label_action_level_1_last_selected_1]:[2 @Label_action_level_1_last_selected_2]
+Switch [1 @Label_action_level_1_last_selected_1]:[2 @Label_action_level_1_last_selected_2]:[3 @Label_action_level_1_last_selected_3]
 Jump @Label_action_level_1_end
 
 :Label_action_level_1_last_selected_1
 Call @trainer_vehicle_action_level_1
-
-:Label_action_level_1_last_selected_1_end
 Return 0 0
 
 :Label_action_level_1_last_selected_2
 Call @trainer_network_action_level_1
+Return 0 0
 
-:Label_action_level_1_last_selected_2_end
+:Label_action_level_1_last_selected_3
+Call @trainer_debug_action_level_1
 Return 0 0
 
 :Label_action_level_1_end
@@ -1933,6 +2292,23 @@ Call @menu_set_current_bool
 Return 0 0
 
 :Label_trainer_network_action_level_1_end
+Return 0 0
+
+:trainer_debug_action_level_1
+Function 1 0 4
+
+StaticGet1 4
+Switch [0 @Label_trainer_debug_action_level_1_last_selected_0]
+Jump @Label_trainer_debug_action_level_1_end
+
+:Label_trainer_debug_action_level_1_last_selected_0
+CallNative player_ped_id 0 1
+CallNative clear_ped_last_damage_bone 1 0
+PushString "Cleared last damage bone"
+Call @menu_msg
+Return 0 0
+
+:Label_trainer_debug_action_level_1_end
 Return 0 0
 
 :trainer_action_level_2
@@ -2393,16 +2769,16 @@ Return 0 0
 Function 1 0 4
 
 StaticGet1 4
-Switch [0 @Label_trainer_vehicle_colour_action_last_selected_0]:[1 @Label_trainer_vehicle_colour_action_last_selected_1]
+Switch [4 @Label_trainer_vehicle_colour_action_last_selected_4]:[5 @Label_trainer_vehicle_colour_action_last_selected_5]
 Jump @Label_trainer_vehicle_colour_action_level_2_end
 
-:Label_trainer_vehicle_colour_action_last_selected_0
+:Label_trainer_vehicle_colour_action_last_selected_4
 StaticGet2 379
 Call @menu_get_current_number
 CallNative set_vehicle_colour_combination 2 0
 Return 0 0
 
-:Label_trainer_vehicle_colour_action_last_selected_1
+:Label_trainer_vehicle_colour_action_last_selected_5
 StaticGet2 379
 Call @menu_get_current_number
 CallNative set_vehicle_livery 2 0
@@ -2954,7 +3330,7 @@ Return 0 1
 Function 1 0 3
 
 StaticGet1 4
-Switch [0 @Label_trainer_vehicle_settings_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_settings_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_settings_action_level_3_last_selected_2]:[3 @Label_trainer_vehicle_settings_action_level_3_last_selected_3]:[4 @Label_trainer_vehicle_settings_action_level_3_last_selected_4]:[5 @Label_trainer_vehicle_settings_action_level_3_last_selected_5]:[6 @Label_trainer_vehicle_settings_action_level_3_last_selected_6]:[7 @Label_trainer_vehicle_settings_action_level_3_last_selected_7]:[8 @Label_trainer_vehicle_settings_action_level_3_last_selected_8]
+Switch [0 @Label_trainer_vehicle_settings_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_settings_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_settings_action_level_3_last_selected_2]:[3 @Label_trainer_vehicle_settings_action_level_3_last_selected_3]:[4 @Label_trainer_vehicle_settings_action_level_3_last_selected_4]:[5 @Label_trainer_vehicle_settings_action_level_3_last_selected_5]:[6 @Label_trainer_vehicle_settings_action_level_3_last_selected_6]
 Jump @Label_trainer_vehicle_settings_action_level_3_end
 
 :Label_trainer_vehicle_settings_action_level_3_last_selected_0
@@ -3070,19 +3446,7 @@ Return 0 0
 
 :Label_trainer_vehicle_settings_action_level_3_last_selected_6
 StaticGet2 379
-PushString "LAZER"
-CallNative unk_0x33B0B007 2 0
-Return 0 0
-
-:Label_trainer_vehicle_settings_action_level_3_last_selected_7
-StaticGet2 379
 PushString "STRETCH_MICHAEL_4"
-CallNative unk_0x33B0B007 2 0
-Return 0 0
-
-:Label_trainer_vehicle_settings_action_level_3_last_selected_8
-StaticGet2 379
-PushString "CARBONIZZARE"
 CallNative unk_0x33B0B007 2 0
 Return 0 0
 
@@ -5391,12 +5755,21 @@ pstatic2 276
 ArrayGet1 1
 CallNative unk_0xFE272A57 1 0
 
+getF 3
+pstatic2 276
+ArrayGet1 1
+Push1 10
+JumpGE @Label_draw_menu_number_1
+fPush 0.0192
+setF 28
+Jump @Label_draw_menu_number_2
+
+:Label_draw_menu_number_1
 iPush_1
 CallNative unk_0xD12A643A 1 1
-fPush 0.00859375
-fAdd
 setF 28
 
+:Label_draw_menu_number_2
 getF 18
 getF 19
 getF 20
@@ -11736,220 +12109,6 @@ Call @menu_add_action
 PushString "Trafficwarden"
 Call @menu_addItem
 Push -567724045
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_trainer_dummy_player_model_last_selected_gangs_female_y
-PushString "Ballas"
-Call @menu_addItem
-Push 361513884
-Call @menu_add_number
-Call @menu_add_action
-PushString "Families"
-Call @menu_addItem
-Push 1309468115
-Call @menu_add_number
-Call @menu_add_action
-PushString "Lost"
-Call @menu_addItem
-Push -44746786
-Call @menu_add_number
-Call @menu_add_action
-PushString "Vagos"
-Call @menu_addItem
-Push 1520708641
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_trainer_dummy_player_model_last_selected_gangs_male_m
-PushString "Armboss"
-Call @menu_addItem
-Push -236444766
-Call @menu_add_number
-Call @menu_add_action
-PushString "Armgoon"
-Call @menu_addItem
-Push -39239064
-Call @menu_add_number
-Call @menu_add_action
-PushString "Armlieut"
-Call @menu_addItem
-Push -412008429
-Call @menu_add_number
-Call @menu_add_action
-PushString "Chemwork"
-Call @menu_addItem
-Push -166363761
-Call @menu_add_number
-Call @menu_add_action
-PushString "Chiboss"
-Call @menu_addItem
-Push -1176698112
-Call @menu_add_number
-Call @menu_add_action
-PushString "Chicold"
-Call @menu_addItem
-Push 275618457
-Call @menu_add_number
-Call @menu_add_action
-PushString "Chigoon"
-Call @menu_addItem
-Push 2119136831
-Call @menu_add_number
-Call @menu_add_action
-PushString "Chigoon 2"
-Call @menu_addItem
-Push -9308122
-Call @menu_add_number
-Call @menu_add_action
-PushString "Korboss"
-Call @menu_addItem
-Push 891945583
-Call @menu_add_number
-Call @menu_add_action
-PushString "Mexboss"
-Call @menu_addItem
-Push 1466037421
-Call @menu_add_number
-Call @menu_add_action
-PushString "Mexboss 2"
-Call @menu_addItem
-Push 1226102803
-Call @menu_add_number
-Call @menu_add_action
-Return 0 0
-
-:Label_trainer_dummy_player_model_last_selected_gangs_male_y
-PushString "Armgoon 2"
-Call @menu_addItem
-Push -984709238
-Call @menu_add_number
-Call @menu_add_action
-PushString "Azteca"
-Call @menu_addItem
-Push 1752208920
-Call @menu_add_number
-Call @menu_add_action
-PushString "Ballaeast"
-Call @menu_addItem
-Push -198252413
-Call @menu_add_number
-Call @menu_add_action
-PushString "Ballaor01"
-Call @menu_addItem
-Push 588969535
-Call @menu_add_number
-Call @menu_add_action
-PushString "Ballasout"
-Call @menu_addItem
-Push 599294057
-Call @menu_add_number
-Call @menu_add_action
-PushString "Famca"
-Call @menu_addItem
-Push -398748745
-Call @menu_add_number
-Call @menu_add_action
-PushString "Famdnf"
-Call @menu_addItem
-Push -613248456
-Call @menu_add_number
-Call @menu_add_action
-PushString "Famfor"
-Call @menu_addItem
-Push -2077218039
-Call @menu_add_number
-Call @menu_add_action
-PushString "Korean"
-Call @menu_addItem
-Push 611648169
-Call @menu_add_number
-Call @menu_add_action
-PushString "Korean 2"
-Call @menu_addItem
-Push -1880237687
-Call @menu_add_number
-Call @menu_add_action
-PushString "Korlieut"
-Call @menu_addItem
-Push 2093736314
-Call @menu_add_number
-Call @menu_add_action
-PushString "Lost"
-Call @menu_addItem
-Push 1330042375
-Call @menu_add_number
-Call @menu_add_action
-PushString "Lost 2"
-Call @menu_addItem
-Push 1032073858
-Call @menu_add_number
-Call @menu_add_action
-PushString "Lost 3"
-Call @menu_addItem
-Push 850468060
-Call @menu_add_number
-Call @menu_add_action
-PushString "Mexgang"
-Call @menu_addItem
-Push -1109568186
-Call @menu_add_number
-Call @menu_add_action
-PushString "Mexgoon"
-Call @menu_addItem
-Push 653210662
-Call @menu_add_number
-Call @menu_add_action
-PushString "Mexgoon 2"
-Call @menu_addItem
-Push 832784782
-Call @menu_add_number
-Call @menu_add_action
-PushString "Mexgoon 3"
-Call @menu_addItem
-Push -1773333796
-Call @menu_add_number
-Call @menu_add_action
-PushString "Pologoon"
-Call @menu_addItem
-Push 1329576454
-Call @menu_add_number
-Call @menu_add_action
-PushString "Pologoon 2"
-Call @menu_addItem
-Push -1561829034
-Call @menu_add_number
-Call @menu_add_action
-PushString "Salvaboss"
-Call @menu_addItem
-Push -1872961334
-Call @menu_add_number
-Call @menu_add_action
-PushString "Salvagoon"
-Call @menu_addItem
-Push 663522487
-Call @menu_add_number
-Call @menu_add_action
-PushString "Salvagoon 2"
-Call @menu_addItem
-Push 846439045
-Call @menu_add_number
-Call @menu_add_action
-PushString "Salvagoon 3"
-Call @menu_addItem
-Push 62440720
-Call @menu_add_number
-Call @menu_add_action
-PushString "Strpunk"
-Call @menu_addItem
-Push -48477765
-Call @menu_add_number
-Call @menu_add_action
-PushString "Strpunk 2"
-Call @menu_addItem
-Push 228715206
 Call @menu_add_number
 Call @menu_add_action
 Return 0 0
