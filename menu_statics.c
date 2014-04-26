@@ -2,11 +2,11 @@
 	Statics 1-327 Menu reserved
 */
 
-// Not used.
-Static_2 = 1;
+// instructional_buttons_count
+Static_2 = -1;
 
 // (float) menu_x
-Static_3 = 0.0453125f;
+Static_3 = 0.0546875;
 
 // (uint) menu_item_highlighted
 Static_4 = 0;
@@ -17,7 +17,7 @@ Static_5 = 0;
 // (bool) menu_hidden
 Static_6 = 0;
 
-// (uint) menu_action_mode (1 = forward, 2= back)
+// (uint) menu_action_mode (1 = forward, 2= back, 3 = keyboard)
 Static_7 = 0;
 
 // (uint) menu_load_hold_pressed
@@ -58,13 +58,13 @@ Static_18 = 0;
 Static_19 = 0;
 
 // (float) menu_start_y
-Static_20
+Static_20 = 0.0527
 
 // (float) menu_consts_start_y
 Static_21
 
 // (float) menu_spacing
-Static_22
+Static_22 = 0.03472
 
 // (uint) menu_max
 Static_23
@@ -81,13 +81,19 @@ Static_26
 // (bool) menu_texture_loaded
 Static_27
 
+// (uint) menu_keyboard_update
+Static_28
+
+// (uint) menu_keyboard_custom_length
+Static_29
+
 // (uint) last_selected (10)
 Static[30]
 
 // (char) menu_items_name (50)
 Static[72]
 
-// (uint) menu_items_type (1 = number, 2 = float, 3 = bool, 4 = GXT, 5 = vehicle hash) (50)
+// (uint) menu_items_type (1 = number, 2 = float, 3 = bool, 4 = GXT, 5 = vehicle hash, 6 = keyboard string, 7 = keyboard number) (50)
 Static[123]
 
 // (int) menu_items_extra_val (50)
