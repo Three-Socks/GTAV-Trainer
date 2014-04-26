@@ -1,5 +1,5 @@
 Function 0 0 2
-iPush_1
+iPush_-1
 StaticSet1 2
 fPush 0.0546875
 StaticSet1 3
@@ -1152,6 +1152,12 @@ Call @menu_addItem
 PushString "Secondary Color"
 Call @menu_addItem
 
+PushString "Primary Pearlescent Color"
+Call @menu_addItem
+
+PushString "Secondary Pearlescent Color"
+Call @menu_addItem
+
 StaticGet2 379
 CallNative get_entity_model 1 1
 setF 33
@@ -1423,6 +1429,9 @@ Return 0 0
 PushString "Vehicle - Respray"
 StaticSet1 10
 
+PushString "Custom"
+Call @menu_addItem
+
 PushString "Chrome"
 Call @menu_addItem
 
@@ -1444,7 +1453,7 @@ Call @menu_addItem
 PushString "Metals"
 Call @menu_addItem
 
-PushString "Pearlescent"
+PushString "Miscellaneous"
 Call @menu_addItem
 Return 0 0
 
@@ -1830,38 +1839,127 @@ StaticSet1 10
 iPush_3
 pstatic2 30
 ArrayGet1 1
-Switch [0 @Label_vehicle_colour_level_4_last_selected_0]:[1 @Label_vehicle_colour_level_4_last_selected_1]:[2 @Label_vehicle_colour_level_4_last_selected_2]:[3 @Label_vehicle_colour_level_4_last_selected_3]:[4 @Label_vehicle_colour_level_4_last_selected_4]:[5 @Label_vehicle_colour_level_4_last_selected_5]:[6 @Label_vehicle_colour_level_4_last_selected_6]
+Switch [0 @Label_vehicle_colour_level_4_last_selected_0]:[1 @Label_vehicle_colour_level_4_last_selected_1]:[2 @Label_vehicle_colour_level_4_last_selected_2]:[3 @Label_vehicle_colour_level_4_last_selected_3]:[4 @Label_vehicle_colour_level_4_last_selected_4]:[5 @Label_vehicle_colour_level_4_last_selected_5]:[6 @Label_vehicle_colour_level_4_last_selected_6]:[7 @Label_vehicle_colour_level_4_last_selected_7]:[8 @Label_vehicle_colour_level_4_last_selected_8]
 Jump @Label_trainer_vehicle_colour_level_4_end
 
 :Label_vehicle_colour_level_4_last_selected_0
-Call @trainer_vehicle_colour_6
+Call @trainer_vehicle_colour_custom
 Return 0 0
 
 :Label_vehicle_colour_level_4_last_selected_1
-Call @trainer_vehicle_colour_2
+Call @trainer_vehicle_colour_6
 Return 0 0
 
 :Label_vehicle_colour_level_4_last_selected_2
-Call @trainer_vehicle_colour_3
+Call @trainer_vehicle_colour_2
 Return 0 0
 
 :Label_vehicle_colour_level_4_last_selected_3
-Call @trainer_vehicle_colour_4
+Call @trainer_vehicle_colour_3
 Return 0 0
 
 :Label_vehicle_colour_level_4_last_selected_4
-Call @trainer_vehicle_colour_0
+Call @trainer_vehicle_colour_4
 Return 0 0
 
 :Label_vehicle_colour_level_4_last_selected_5
-Call @trainer_vehicle_colour_1
+Call @trainer_vehicle_colour_0
 Return 0 0
 
 :Label_vehicle_colour_level_4_last_selected_6
+Call @trainer_vehicle_colour_1
+Return 0 0
+
+:Label_vehicle_colour_level_4_last_selected_7
 Call @trainer_vehicle_colour_5
 Return 0 0
 
+:Label_vehicle_colour_level_4_last_selected_8
+Call @trainer_vehicle_colour_7
+Return 0 0
+
 :Label_trainer_vehicle_colour_level_4_end
+Return 0 0
+
+:trainer_vehicle_colour_custom
+Function 1 0 6
+
+iPush_0
+iPush_2
+pstatic2 30
+ArrayGet1 1
+CmpEq
+dup
+Not
+JumpFalse @Label_trainer_vehicle_colour_custom_or
+iPush_2
+iPush_2
+pstatic2 30
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_trainer_vehicle_colour_custom_or
+JumpFalse @Label_trainer_vehicle_colour_custom_or_false
+
+StaticGet2 379
+pFrame1 3
+pFrame1 4
+pFrame1 5
+CallNative get_vehicle_custom_primary_colour 4 0
+Jump @Label_trainer_vehicle_colour_custom_1
+
+:Label_trainer_vehicle_colour_custom_or_false
+iPush_1
+iPush_2
+pstatic2 30
+ArrayGet1 1
+CmpEq
+dup
+Not
+JumpFalse @Label_trainer_vehicle_colour_custom_or2
+iPush_3
+iPush_2
+pstatic2 30
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_trainer_vehicle_colour_custom_or2
+JumpFalse @Label_trainer_vehicle_colour_custom_1
+
+StaticGet2 379
+pFrame1 3
+pFrame1 4
+pFrame1 5
+CallNative get_vehicle_custom_secondary_colour 4 0
+
+:Label_trainer_vehicle_colour_custom_1
+iPush_3
+StaticSet1 29
+
+PushString "Red"
+Call @menu_addItem
+getF 3
+Push1 255
+Call @menu_addItem_number_keyboard
+Call @menu_add_action
+
+PushString "Green"
+Call @menu_addItem
+getF 4
+Push1 255
+Call @menu_addItem_number_keyboard
+Call @menu_add_action
+
+PushString "Blue"
+Call @menu_addItem
+getF 5
+Push1 255
+Call @menu_addItem_number_keyboard
+Call @menu_add_action
+
+:Label_trainer_vehicle_colour_custom_end
 Return 0 0
 
 :trainer_vehicle_colour_0
@@ -3298,6 +3396,312 @@ Call @menu_add_action
 :Label_trainer_vehicle_colour_6_end
 Return 0 0
 
+:trainer_vehicle_colour_7
+Function 1 0 4
+
+PushString "Util Black Poly"
+Call @menu_addItem
+Push1 16
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Util Dark silver"
+Call @menu_addItem
+Push1 17
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Util Gun Metal"
+Call @menu_addItem
+Push1 19
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Util Shadow Silver"
+Call @menu_addItem
+Push1 20
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn Black"
+Call @menu_addItem
+Push1 21
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn Graphite"
+Call @menu_addItem
+Push1 22
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn Silver Grey"
+Call @menu_addItem
+Push1 23
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn Silver"
+Call @menu_addItem
+Push1 24
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Util Red"
+Call @menu_addItem
+Push1 43
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Util Bright Red"
+Call @menu_addItem
+Push1 44
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Util Garnet Red"
+Call @menu_addItem
+Push1 45
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn Red"
+Call @menu_addItem
+Push1 46
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn Dark Red"
+Call @menu_addItem
+Push1 48
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Util Dark Green"
+Call @menu_addItem
+Push1 56
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Util Green"
+Call @menu_addItem
+Push1 57
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn Dark Green "
+Call @menu_addItem
+Push1 58
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Util Dark Blue"
+Call @menu_addItem
+Push1 75
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Util Midnight Blue"
+Call @menu_addItem
+Push1 76
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Util Blue"
+Call @menu_addItem
+Push1 77
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Util Sea Foam Blue"
+Call @menu_addItem
+Push1 78
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Uil Lightning blue"
+Call @menu_addItem
+Push1 79
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Util Maui Blue Poly"
+Call @menu_addItem
+Push1 80
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Util Bright Blue"
+Call @menu_addItem
+Push1 81
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn Dark blue"
+Call @menu_addItem
+Push1 85
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn Blue"
+Call @menu_addItem
+Push1 86
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Metallic Champagne"
+Call @menu_addItem
+Push1 93
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Util Brown"
+Call @menu_addItem
+Push1 108
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Util Medium Brown"
+Call @menu_addItem
+Push1 109
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Util Light Brown"
+Call @menu_addItem
+Push1 110
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn Honey Beige"
+Call @menu_addItem
+Push1 113
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn Brown"
+Call @menu_addItem
+Push1 114
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn Dark Brown"
+Call @menu_addItem
+Push1 115
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn straw beige"
+Call @menu_addItem
+Push1 116
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn Off White"
+Call @menu_addItem
+Push1 121
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Util Off White"
+Call @menu_addItem
+Push1 122
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn Orange"
+Call @menu_addItem
+Push1 123
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn Light Orange"
+Call @menu_addItem
+Push1 124
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Metallic Securicor Green"
+Call @menu_addItem
+Push1 125
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn Taxi Yellow"
+Call @menu_addItem
+Push1 126
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Police car blue"
+Call @menu_addItem
+Push1 127
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Matte Brown"
+Call @menu_addItem
+Push1 129
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn Orange"
+Call @menu_addItem
+Push1 130
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn White"
+Call @menu_addItem
+Push1 132
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Worn Olive Army Green"
+Call @menu_addItem
+Push1 133
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Pure White"
+Call @menu_addItem
+Push1 134
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Green"
+Call @menu_addItem
+Push1 139
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Blue"
+Call @menu_addItem
+Push1 140
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "hunter green"
+Call @menu_addItem
+Push1 144
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "DEFAULT ALLOY COLOR"
+Call @menu_addItem
+Push1 156
+Call @menu_add_number
+Call @menu_add_action
+
+PushString "Epsilon Blue"
+Call @menu_addItem
+Push1 157
+Call @menu_add_number
+Call @menu_add_action
+
+:Label_trainer_vehicle_colour_7_end
+Return 0 0
+
 :trainer_get_vehicle
 Function 1 0 5
 
@@ -3324,7 +3728,8 @@ Call @menu_error
 Return 1 0
 
 :menu_action
-Function 1 0 2
+Function 1 0 17
+
 iPush_1
 StaticGet1 7
 JumpNE @Label_action4
@@ -3352,7 +3757,7 @@ Call @trainer_action_level_4
 Jump @Label_action_switch_22
 
 :Label_action_switch_22
-Jump @Label_action2
+Jump @Label_action_end
 
 :Label_action4
 iPush_2
@@ -3361,9 +3766,38 @@ JumpNE @Label_action2
 iPush_0
 StaticSet1 7
 Call @menu_hide
-Jump @Label_action2
+Jump @Label_action_end
 
 :Label_action2
+iPush_3
+StaticGet1 7
+JumpNE @Label_action_end
+
+iPush_7
+StaticGet1 4
+pstatic1 123
+ArrayGet1 1
+JumpNE @Label_action_end
+Call @menu_keyboard
+JumpFalse @Label_action_end
+CallNative get_onscreen_keyboard_result 0 1
+CallNative is_string_null_or_empty 1 1
+Not
+JumpFalse @Label_action_end
+CallNative get_onscreen_keyboard_result 0 1
+pFrame1 3
+StrCopy 16
+
+pFrame1 3
+pFrame1 13
+CallNative string_to_int 2 1
+JumpFalse @Label_action_end
+
+StaticGet1 4
+getF 13
+Call @menu_set_number
+
+:Label_action_end
 Return 0 0
 
 :trainer_action_level_1
@@ -3933,16 +4367,16 @@ Return 0 0
 Function 1 0 4
 
 StaticGet1 4
-Switch [2 @Label_trainer_vehicle_colour_action_last_selected_2]:[3 @Label_trainer_vehicle_colour_action_last_selected_3]
+Switch [4 @Label_trainer_vehicle_colour_action_last_selected_4]:[5 @Label_trainer_vehicle_colour_action_last_selected_5]
 Jump @Label_trainer_vehicle_colour_action_level_2_end
 
-:Label_trainer_vehicle_colour_action_last_selected_2
+:Label_trainer_vehicle_colour_action_last_selected_4
 StaticGet2 379
 Call @menu_get_current_number
 CallNative set_vehicle_colour_combination 2 0
 Return 0 0
 
-:Label_trainer_vehicle_colour_action_last_selected_3
+:Label_trainer_vehicle_colour_action_last_selected_5
 StaticGet2 379
 Call @menu_get_current_number
 CallNative set_vehicle_livery 2 0
@@ -4704,7 +5138,7 @@ iPush_1
 iPush_2
 pstatic2 30
 ArrayGet1 1
-JumpNE @Label_trainer_vehicle_action_colour_end
+JumpNE @Label_trainer_vehicle_action_colour_2
 
 StaticGet2 379
 getF 3
@@ -4714,6 +5148,34 @@ CallNative set_vehicle_colours 3 0
 StaticGet2 379
 getF 5
 Call @menu_get_current_extra
+CallNative set_vehicle_extra_colours 3 0
+
+Jump @Label_trainer_vehicle_action_colour_end
+
+:Label_trainer_vehicle_action_colour_2
+iPush_2
+iPush_2
+pstatic2 30
+ArrayGet1 1
+JumpNE @Label_trainer_vehicle_action_colour_3
+
+StaticGet2 379
+Call @menu_get_current_number
+getF 6
+CallNative set_vehicle_extra_colours 3 0
+
+Jump @Label_trainer_vehicle_action_colour_end
+
+:Label_trainer_vehicle_action_colour_3
+iPush_3
+iPush_2
+pstatic2 30
+ArrayGet1 1
+JumpNE @Label_trainer_vehicle_action_colour_end
+
+StaticGet2 379
+getF 5
+Call @menu_get_current_number
 CallNative set_vehicle_extra_colours 3 0
 
 :Label_trainer_vehicle_action_colour_end
@@ -5698,6 +6160,27 @@ ArraySet1 1
 :Label_menu_addItem_gxt_veh_hash_end
 Return 1 0
 
+:menu_addItem_number_keyboard
+Function 1 2 4
+
+iPush_7
+StaticGet1 5
+pstatic1 123
+ArraySet1 1
+
+getF 0
+StaticGet1 5
+pstatic2 276
+ArraySet1 1
+
+getF 1
+StaticGet1 5
+pstatic1 174
+ArraySet1 1
+
+:Label_menu_addItem_number_keyboard_end
+Return 2 0
+
 :menu_get_current_extra
 Function 1 0 4
 
@@ -5947,7 +6430,7 @@ CallNative is_disabled_control_just_released 2 1
 JumpFalse @Label_741
 StaticGet1 17
 iPush_2
-JumpGE @Label_741
+JumpGE @Label_catch_select_button_press_goto_end
 iPush_-1
 PushString "SELECT"
 PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
@@ -5975,17 +6458,20 @@ Call @menu_clean
 StaticGet1 9
 Add1 1
 StaticSet1 9
-Jump @Label_741
+Jump @Label_catch_select_button_press_goto_end
 
 :Label_catch_select_button_press_2
 iPush_1
 StaticSet1 7
 
+:Label_catch_select_button_press_goto_end
+Jump @Label_catch_select_button_press_end
+
 :Label_741
 iPush_2
 Push1 175
 CallNative is_disabled_control_just_released 2 1
-JumpFalse @Label_739
+JumpFalse @Label_catch_select_button_press_square
 
 iPush_0
 StaticGet1 9
@@ -6004,7 +6490,7 @@ iPush_1
 Sub
 StaticSet1 9
 Call @menu_clean
-Jump @Label_739
+Jump @Label_catch_select_button_press_goto_end2
 
 :Label_catch_select_button_press_3
 iPush_-1
@@ -6015,8 +6501,120 @@ CallNative play_sound_frontend 3 0
 iPush_2
 StaticSet1 7
 
-:Label_739
+:Label_catch_select_button_press_goto_end2
+Jump @Label_catch_select_button_press_end
+
+:Label_catch_select_button_press_square
+iPush_2
+Push1 176
+CallNative is_disabled_control_just_released 2 1
+JumpFalse @Label_catch_select_button_press_end
+
+iPush_7
+StaticGet1 4
+pstatic1 123
+ArrayGet1 1
+JumpNE @Label_catch_select_button_press_end
+iPush_-1
+PushString "SELECT"
+PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
+CallNative play_sound_frontend 3 0
+
+iPush_3
+StaticSet1 7
+
+:Label_catch_select_button_press_end
 Return 0 0
+
+:menu_keyboard
+Function 1 0 8
+
+StaticGet1 26
+Switch [0 @Label_menu_keyboard_switch_0]:[1 @Label_menu_keyboard_switch_1]
+Jump @Label_menu_keyboard_end
+
+:Label_menu_keyboard_switch_0
+
+PushString "CELL_221"
+setF 4
+PushString ""
+setF 5
+
+CallNative is_xbox360_version 0 1
+JumpFalse @Label_menu_keyboard_1
+getF 4
+setF 5
+
+:Label_menu_keyboard_1
+
+iPush_1
+StaticSet1 26
+
+iPush_0
+StaticGet1 29
+JumpNE @Label_menu_keyboard_2
+iPush_3
+StaticSet1 29
+
+:Label_menu_keyboard_2
+iPush_0
+getF 4
+getF 5
+PushString ""
+PushString ""
+PushString ""
+PushString ""
+StaticGet1 29
+CallNative display_onscreen_keyboard 8 0
+Jump @Label_menu_keyboard_end
+
+:Label_menu_keyboard_switch_1
+CallNative update_onscreen_keyboard 0 1
+StaticSet1 28
+StaticGet1 28
+Switch [0 @Label_menu_keyboard_update_0]:[3 @Label_menu_keyboard_update_3]:[2 @Label_menu_keyboard_update_2]:[1 @Label_menu_keyboard_update_1]
+Jump @Label_menu_keyboard_goto_end
+
+:Label_menu_keyboard_update_0
+iPush_0
+Return 0 1
+
+:Label_menu_keyboard_update_3
+iPush_0
+StaticSet1 7
+iPush_0
+StaticSet1 26
+iPush_0
+StaticSet1 28
+iPush_0
+Return 0 1
+
+:Label_menu_keyboard_update_2
+iPush_0
+StaticSet1 7
+iPush_0
+StaticSet1 26
+iPush_0
+StaticSet1 28
+iPush_0
+Return 0 1
+
+:Label_menu_keyboard_update_1
+iPush_0
+StaticSet1 7
+iPush_0
+StaticSet1 26
+iPush_0
+StaticSet1 28
+iPush_1
+Return 0 1
+
+:Label_menu_keyboard_goto_end
+Jump @Label_menu_keyboard_end
+
+:Label_menu_keyboard_end
+iPush_0
+Return 0 1
 
 :menu_msg
 Function 1 1 4
@@ -6184,6 +6782,12 @@ iPush_0
 StaticSet1 7
 iPush_0
 StaticSet1 26
+
+iPush_0
+StaticSet1 28
+
+iPush_0
+StaticSet1 29
 
 Return 0 0
 
@@ -6409,6 +7013,68 @@ Call @menu_do_hold_pressed
 iPush_0
 Return 1 1
 
+:menu_left_pressed
+Function 1 1 4
+iPush_2
+Push1 163
+CallNative is_disabled_control_just_pressed 2 1
+JumpFalse @Label_menu_left_pressed_not
+iPush_1
+StaticSet1 14
+iPush_1
+Return 1 1
+Jump @Label_menu_left_pressed_hold
+
+:Label_menu_left_pressed_not
+Push1 163
+Call @menu_is_hold_pressed
+JumpFalse @Label_menu_left_pressed_hold
+iPush_1
+StaticSet1 14
+iPush_1
+Return 1 1
+
+:Label_menu_left_pressed_hold
+getF 0
+JumpFalse @Label_menu_left_pressed_end
+Push1 163
+Call @menu_do_hold_pressed
+
+:Label_menu_left_pressed_end
+iPush_0
+Return 1 1
+
+:menu_right_pressed
+Function 1 1 4
+iPush_2
+Push1 164
+CallNative is_disabled_control_just_pressed 2 1
+JumpFalse @Label_menu_right_pressed_not
+iPush_1
+StaticSet1 14
+iPush_1
+Return 1 1
+Jump @Label_menu_right_pressed_hold
+
+:Label_menu_right_pressed_not
+Push1 164
+Call @menu_is_hold_pressed
+JumpFalse @Label_menu_right_pressed_hold
+iPush_1
+StaticSet1 14
+iPush_1
+Return 1 1
+
+:Label_menu_right_pressed_hold
+getF 0
+JumpFalse @Label_menu_right_pressed_end
+Push1 164
+Call @menu_do_hold_pressed
+
+:Label_menu_right_pressed_end
+iPush_0
+Return 1 1
+
 :menu_load_sprite
 Function 1 0 3
 
@@ -6437,6 +7103,11 @@ CallNative has_scaleform_movie_loaded 1 1
 JumpFalse @Label_draw_frontend_not_loaded
 StaticGet1 13
 JumpFalse @Label_draw_frontend_loaded
+
+StaticGet1 2
+Add1 1
+StaticSet1 2
+
 StaticGet1 12
 PushString "CLEAR_ALL"
 CallNative unk_0x215ABBE8 2 1
@@ -6455,7 +7126,7 @@ StaticGet1 12
 PushString "SET_DATA_SLOT"
 CallNative unk_0x215ABBE8 2 1
 drop
-iPush_0
+StaticGet1 2
 CallNative unk_0x716777CB 1 0
 Push1 30
 CallNative unk_0x716777CB 1 0
@@ -6468,11 +7139,15 @@ CallNative unk_0xFE272A57 1 0
 CallNative unk_0x386CE0B8 0 0
 CallNative unk_0x02DBF2D7 0 0
 
+StaticGet1 2
+Add1 1
+StaticSet1 2
+
 StaticGet1 12
 PushString "SET_DATA_SLOT"
 CallNative unk_0x215ABBE8 2 1
 drop
-iPush_1
+StaticGet1 2
 CallNative unk_0x716777CB 1 0
 Push1 31
 CallNative unk_0x716777CB 1 0
@@ -6495,6 +7170,36 @@ CallNative unk_0xFE272A57 1 0
 CallNative unk_0x386CE0B8 0 0
 CallNative unk_0x02DBF2D7 0 0
 
+iPush_7
+StaticGet1 4
+pstatic1 123
+ArrayGet1 1
+JumpNE @Label_draw_frontend_false_hook
+
+StaticGet1 2
+Add1 1
+StaticSet1 2
+
+StaticGet1 12
+PushString "SET_DATA_SLOT"
+CallNative unk_0x215ABBE8 2 1
+drop
+StaticGet1 2
+CallNative unk_0x716777CB 1 0
+Push1 32
+CallNative unk_0x716777CB 1 0
+
+PushString "STRING"
+CallNative clear_player_has_2_characters_enable 1 0
+PushString "Open Keyboard"
+CallNative unk_0x27A244D8 1 0
+
+iPush_-1
+CallNative unk_0xFE272A57 1 0
+CallNative unk_0x386CE0B8 0 0
+CallNative unk_0x02DBF2D7 0 0
+
+:Label_draw_frontend_false_hook
 Call @menu_draw_frontend_hook
 
 StaticGet1 12
@@ -6696,10 +7401,22 @@ iPush_1
 StaticGet1 4
 pstatic1 123
 ArrayGet1 1
-JumpNE @Label_catch_button_press_end
-iPush_2
-Push1 163
-CallNative is_disabled_control_just_pressed 2 1
+CmpEq
+dup
+Not
+JumpFalse @Label_catch_left_button_press_or
+iPush_7
+StaticGet1 4
+pstatic1 123
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_catch_left_button_press_or
+JumpFalse @Label_catch_button_press_end
+
+iPush_1
+Call @menu_left_pressed
 JumpFalse @Label_catch_button_press_5
 iPush_-1
 PushString "NAV_LEFT_RIGHT"
@@ -6733,9 +7450,8 @@ ArraySet1 1
 Jump @Label_catch_button_press_7
 
 :Label_catch_button_press_5
-iPush_2
-Push1 164
-CallNative is_disabled_control_just_pressed 2 1
+iPush_1
+Call @menu_right_pressed
 JumpFalse @Label_catch_button_press_7
 iPush_-1
 PushString "NAV_LEFT_RIGHT"
@@ -6971,13 +7687,24 @@ iPush_1
 getF 3
 pstatic1 123
 ArrayGet1 1
-JumpNE @Label_draw_menu_number_end
+CmpEq
+dup
+Not
+JumpFalse @Label_draw_menu_number_or
+iPush_7
+getF 3
+pstatic1 123
+ArrayGet1 1
+CmpEq
+Or
 
+:Label_draw_menu_number_or
+JumpFalse @Label_draw_menu_number_end
 getF 18
 getF 19
 getF 20
 StaticGet1 3
-fPush 0.20234375
+fPush 0.203125
 fAdd
 iPush_1
 Call @set_up_draw
@@ -7000,7 +7727,7 @@ getF 18
 getF 19
 getF 20
 StaticGet1 3
-fPush 0.20234375
+fPush 0.203125
 fAdd
 iPush_1
 Call @set_up_draw
@@ -7099,18 +7826,6 @@ getF 25
 getF 26
 getF 27
 CallNative draw_sprite 11 0
-getF 18
-getF 19
-getF 20
-StaticGet1 3
-fPush 0.30
-fAdd
-iPush_1
-Call @set_up_draw
-getF 28
-fPush_0.0
-getF 5
-Call @draw_float
 
 :Label_draw_menu_number_end
 iPush_2
@@ -7122,7 +7837,7 @@ getF 18
 getF 19
 getF 20
 StaticGet1 3
-fPush 0.20234375
+fPush 0.203125
 fAdd
 iPush_1
 Call @set_up_draw
@@ -7143,7 +7858,7 @@ getF 18
 getF 19
 getF 20
 StaticGet1 3
-fPush 0.20234375
+fPush 0.203125
 fAdd
 iPush_1
 Call @set_up_draw
