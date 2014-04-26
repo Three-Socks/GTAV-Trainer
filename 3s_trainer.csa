@@ -1164,8 +1164,6 @@ setF 33
 
 getF 33
 CallNative get_number_of_vehicle_model_colours 1 1
-iPush_1
-Sub
 setF 34
 
 PushString "Variation"
@@ -1194,8 +1192,6 @@ Call @menu_add_action
 
 StaticGet2 379
 CallNative get_vehicle_livery_count 1 1
-iPush_1
-Sub
 setF 35
 
 getF 35
@@ -1206,6 +1202,7 @@ PushString "Livery"
 Call @menu_addItem
 StaticGet2 379
 CallNative get_vehicle_livery 1 1
+Add1 1
 getF 35
 Call @menu_addItem_number
 Call @menu_add_action
@@ -1465,120 +1462,11 @@ Return 0 0
 Return 0 0
 
 :trainer_vehicle_mod_level_3
-Function 1 0 36
+Function 1 0 50
 
 :Label_trainer_vehicle_mod_level_3_1
 PushString "Vehicle - Mod"
 StaticSet1 10
-
-pFrame1 5
-Push1 26
-pPeekSet
-drop
-PushString "Mod 1"
-iPush_0
-pFrame1 5
-ArraySet1 1
-PushString "Mod 2"
-iPush_1
-pFrame1 5
-ArraySet1 1
-PushString "Mod 3"
-iPush_2
-pFrame1 5
-ArraySet1 1
-PushString "Mod 4"
-iPush_3
-pFrame1 5
-ArraySet1 1
-PushString "Mod 5"
-iPush_4
-pFrame1 5
-ArraySet1 1
-PushString "Mod 6"
-iPush_5
-pFrame1 5
-ArraySet1 1
-PushString "Mod 7"
-iPush_6
-pFrame1 5
-ArraySet1 1
-PushString "Mod 8"
-iPush_7
-pFrame1 5
-ArraySet1 1
-PushString "Mod 9"
-Push1 8
-pFrame1 5
-ArraySet1 1
-PushString "Mod 10"
-Push1 9
-pFrame1 5
-ArraySet1 1
-PushString "Mod 11"
-Push1 10
-pFrame1 5
-ArraySet1 1
-PushString "Mod 12"
-Push1 11
-pFrame1 5
-ArraySet1 1
-PushString "Mod 13"
-Push1 12
-pFrame1 5
-ArraySet1 1
-PushString "Mod 14"
-Push1 13
-pFrame1 5
-ArraySet1 1
-PushString "Mod 15"
-Push1 14
-pFrame1 5
-ArraySet1 1
-PushString "Mod 16"
-Push1 15
-pFrame1 5
-ArraySet1 1
-PushString "Mod 17"
-Push1 16
-pFrame1 5
-ArraySet1 1
-PushString "Mod 18"
-Push1 17
-pFrame1 5
-ArraySet1 1
-PushString "Mod 19"
-Push1 18
-pFrame1 5
-ArraySet1 1
-PushString "Mod 20"
-Push1 19
-pFrame1 5
-ArraySet1 1
-PushString "Mod 21"
-Push1 20
-pFrame1 5
-ArraySet1 1
-PushString "Mod 22"
-Push1 21
-pFrame1 5
-ArraySet1 1
-PushString "Mod 23"
-Push1 22
-pFrame1 5
-ArraySet1 1
-PushString "Mod 24"
-Push1 23
-pFrame1 5
-ArraySet1 1
-PushString "Mod 25"
-Push1 24
-pFrame1 5
-ArraySet1 1
-PushString "Mod 26"
-Push1 25
-pFrame1 5
-ArraySet1 1
 
 PushString "Stock"
 Call @menu_addItem
@@ -1600,9 +1488,15 @@ ArrayGet1 1
 CallNative unk_0x8A814FF9 2 1
 JumpGE @Label_trainer_vehicle_mod_level_3_end
 
+PushString "Mod "
+pFrame1 4
+StrCopy 16
+
 getF 3
-pFrame1 5
-ArrayGet1 1
+pFrame1 4
+StrAddi 16
+
+pFrame1 4
 Call @menu_addItem
 getF 3
 Call @menu_add_number
@@ -4373,12 +4267,16 @@ Jump @Label_trainer_vehicle_colour_action_level_2_end
 :Label_trainer_vehicle_colour_action_last_selected_4
 StaticGet2 379
 Call @menu_get_current_number
+iPush_1
+Sub
 CallNative set_vehicle_colour_combination 2 0
 Return 0 0
 
 :Label_trainer_vehicle_colour_action_last_selected_5
 StaticGet2 379
 Call @menu_get_current_number
+iPush_1
+Sub
 CallNative set_vehicle_livery 2 0
 Return 0 0
 
@@ -5121,6 +5019,22 @@ pstatic2 30
 ArrayGet1 1
 JumpNE @Label_trainer_vehicle_action_colour_1
 
+iPush_0
+iPush_3
+pstatic2 30
+ArrayGet1 1
+JumpNE @Label_trainer_vehicle_action_colour_not_custom_1
+StaticGet2 379
+iPush_0
+Call @menu_get_number
+iPush_1
+Call @menu_get_number
+iPush_2
+Call @menu_get_number
+CallNative set_vehicle_custom_primary_colour 4 0
+Jump @Label_trainer_vehicle_action_colour_goto_end_1
+
+:Label_trainer_vehicle_action_colour_not_custom_1
 StaticGet2 379
 Call @menu_get_current_number
 getF 4
@@ -5131,6 +5045,7 @@ Call @menu_get_current_extra
 getF 6
 CallNative set_vehicle_extra_colours 3 0
 
+:Label_trainer_vehicle_action_colour_goto_end_1
 Jump @Label_trainer_vehicle_action_colour_end
 
 :Label_trainer_vehicle_action_colour_1
@@ -5140,6 +5055,22 @@ pstatic2 30
 ArrayGet1 1
 JumpNE @Label_trainer_vehicle_action_colour_2
 
+iPush_0
+iPush_3
+pstatic2 30
+ArrayGet1 1
+JumpNE @Label_trainer_vehicle_action_colour_not_custom_2
+StaticGet2 379
+iPush_0
+Call @menu_get_number
+iPush_1
+Call @menu_get_number
+iPush_2
+Call @menu_get_number
+CallNative set_vehicle_custom_secondary_colour 4 0
+Jump @Label_trainer_vehicle_action_colour_goto_end_2
+
+:Label_trainer_vehicle_action_colour_not_custom_2
 StaticGet2 379
 getF 3
 Call @menu_get_current_number
@@ -5150,6 +5081,7 @@ getF 5
 Call @menu_get_current_extra
 CallNative set_vehicle_extra_colours 3 0
 
+:Label_trainer_vehicle_action_colour_goto_end_2
 Jump @Label_trainer_vehicle_action_colour_end
 
 :Label_trainer_vehicle_action_colour_2
@@ -6565,6 +6497,7 @@ PushString ""
 PushString ""
 PushString ""
 StaticGet1 29
+Add1 1
 CallNative display_onscreen_keyboard 8 0
 Jump @Label_menu_keyboard_end
 
@@ -7104,10 +7037,6 @@ JumpFalse @Label_draw_frontend_not_loaded
 StaticGet1 13
 JumpFalse @Label_draw_frontend_loaded
 
-StaticGet1 2
-Add1 1
-StaticSet1 2
-
 StaticGet1 12
 PushString "CLEAR_ALL"
 CallNative unk_0x215ABBE8 2 1
@@ -7126,7 +7055,7 @@ StaticGet1 12
 PushString "SET_DATA_SLOT"
 CallNative unk_0x215ABBE8 2 1
 drop
-StaticGet1 2
+iPush_0
 CallNative unk_0x716777CB 1 0
 Push1 30
 CallNative unk_0x716777CB 1 0
@@ -7139,15 +7068,11 @@ CallNative unk_0xFE272A57 1 0
 CallNative unk_0x386CE0B8 0 0
 CallNative unk_0x02DBF2D7 0 0
 
-StaticGet1 2
-Add1 1
-StaticSet1 2
-
 StaticGet1 12
 PushString "SET_DATA_SLOT"
 CallNative unk_0x215ABBE8 2 1
 drop
-StaticGet1 2
+iPush_1
 CallNative unk_0x716777CB 1 0
 Push1 31
 CallNative unk_0x716777CB 1 0
@@ -7174,17 +7099,13 @@ iPush_7
 StaticGet1 4
 pstatic1 123
 ArrayGet1 1
-JumpNE @Label_draw_frontend_false_hook
-
-StaticGet1 2
-Add1 1
-StaticSet1 2
+JumpNE @Label_draw_frontend_keyboard_false
 
 StaticGet1 12
 PushString "SET_DATA_SLOT"
 CallNative unk_0x215ABBE8 2 1
 drop
-StaticGet1 2
+iPush_2
 CallNative unk_0x716777CB 1 0
 Push1 32
 CallNative unk_0x716777CB 1 0
@@ -7199,7 +7120,7 @@ CallNative unk_0xFE272A57 1 0
 CallNative unk_0x386CE0B8 0 0
 CallNative unk_0x02DBF2D7 0 0
 
-:Label_draw_frontend_false_hook
+:Label_draw_frontend_keyboard_false
 Call @menu_draw_frontend_hook
 
 StaticGet1 12
