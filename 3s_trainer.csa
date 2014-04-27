@@ -387,6 +387,13 @@ Call @menu_addItem
 StaticGet2 384
 Call @menu_addItem_bool
 Call @menu_add_action
+
+PushString "Boost Mode"
+Call @menu_addItem
+pglobal3 1332333
+GetImmediate1 3
+Call @menu_addItem_bool
+Call @menu_add_action
 Return 0 0
 
 :Label_last_selected_3
@@ -405,12 +412,75 @@ iPush_0
 Call @menu_addItem_number
 Call @menu_add_action
 
-PushString "Global 2623866"
+PushString "Global_2623872"
 Call @menu_addItem
-globalget3 2623866
+globalget3 2623872
 iPush_5
 Call @menu_addItem_number
 Call @menu_add_action
+
+PushString "get_vehicle_mod_kit_type"
+Call @menu_addItem
+StaticGet2 379
+CallNative get_vehicle_mod_kit_type 1 1
+iPush_5
+Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "get_num_mod_colors 0"
+Call @menu_addItem
+iPush_0
+iPush_1
+CallNative unk_0x73722CD9 2 1
+iPush_5
+Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "get_num_mod_colors 1"
+Call @menu_addItem
+iPush_1
+iPush_1
+CallNative unk_0x73722CD9 2 1
+iPush_5
+Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "get_num_mod_colors 2"
+Call @menu_addItem
+iPush_2
+iPush_1
+CallNative unk_0x73722CD9 2 1
+iPush_5
+Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "get_num_mod_colors 3"
+Call @menu_addItem
+iPush_3
+iPush_1
+CallNative unk_0x73722CD9 2 1
+iPush_5
+Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "get_num_mod_colors 4"
+Call @menu_addItem
+iPush_4
+iPush_1
+CallNative unk_0x73722CD9 2 1
+iPush_5
+Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "get_num_mod_colors 5"
+Call @menu_addItem
+iPush_5
+iPush_1
+CallNative unk_0x73722CD9 2 1
+iPush_5
+Call @menu_addItem_number
+Call @menu_add_action
+
 Return 0 0
 
 :Label_level_1_end
@@ -462,7 +532,7 @@ Call @menu_addItem
 PushString "Ambient Male 2"
 Call @menu_addItem
 
-PushString "Ambient_Male 3"
+PushString "Ambient Male 3"
 Call @menu_addItem
 
 PushString "Animals"
@@ -1056,6 +1126,7 @@ Return 0 0
 :Label_trainer_vehicle_level_2_last_selected_2
 PushString "Vehicle - Extras"
 StaticSet1 10
+
 pFrame1 5
 Push1 9
 pPeekSet
@@ -1152,10 +1223,10 @@ Call @menu_addItem
 PushString "Secondary Color"
 Call @menu_addItem
 
-PushString "Primary Pearlescent Color"
+PushString "Pearlescent Color"
 Call @menu_addItem
 
-PushString "Secondary Pearlescent Color"
+PushString "Wheel Color"
 Call @menu_addItem
 
 StaticGet2 379
@@ -1462,11 +1533,120 @@ Return 0 0
 Return 0 0
 
 :trainer_vehicle_mod_level_3
-Function 1 0 50
+Function 1 0 36
 
 :Label_trainer_vehicle_mod_level_3_1
 PushString "Vehicle - Mod"
 StaticSet1 10
+
+pFrame1 5
+Push1 26
+pPeekSet
+drop
+PushString "Mod 1"
+iPush_0
+pFrame1 5
+ArraySet1 1
+PushString "Mod 2"
+iPush_1
+pFrame1 5
+ArraySet1 1
+PushString "Mod 3"
+iPush_2
+pFrame1 5
+ArraySet1 1
+PushString "Mod 4"
+iPush_3
+pFrame1 5
+ArraySet1 1
+PushString "Mod 5"
+iPush_4
+pFrame1 5
+ArraySet1 1
+PushString "Mod 6"
+iPush_5
+pFrame1 5
+ArraySet1 1
+PushString "Mod 7"
+iPush_6
+pFrame1 5
+ArraySet1 1
+PushString "Mod 8"
+iPush_7
+pFrame1 5
+ArraySet1 1
+PushString "Mod 9"
+Push1 8
+pFrame1 5
+ArraySet1 1
+PushString "Mod 10"
+Push1 9
+pFrame1 5
+ArraySet1 1
+PushString "Mod 11"
+Push1 10
+pFrame1 5
+ArraySet1 1
+PushString "Mod 12"
+Push1 11
+pFrame1 5
+ArraySet1 1
+PushString "Mod 13"
+Push1 12
+pFrame1 5
+ArraySet1 1
+PushString "Mod 14"
+Push1 13
+pFrame1 5
+ArraySet1 1
+PushString "Mod 15"
+Push1 14
+pFrame1 5
+ArraySet1 1
+PushString "Mod 16"
+Push1 15
+pFrame1 5
+ArraySet1 1
+PushString "Mod 17"
+Push1 16
+pFrame1 5
+ArraySet1 1
+PushString "Mod 18"
+Push1 17
+pFrame1 5
+ArraySet1 1
+PushString "Mod 19"
+Push1 18
+pFrame1 5
+ArraySet1 1
+PushString "Mod 20"
+Push1 19
+pFrame1 5
+ArraySet1 1
+PushString "Mod 21"
+Push1 20
+pFrame1 5
+ArraySet1 1
+PushString "Mod 22"
+Push1 21
+pFrame1 5
+ArraySet1 1
+PushString "Mod 23"
+Push1 22
+pFrame1 5
+ArraySet1 1
+PushString "Mod 24"
+Push1 23
+pFrame1 5
+ArraySet1 1
+PushString "Mod 25"
+Push1 24
+pFrame1 5
+ArraySet1 1
+PushString "Mod 26"
+Push1 25
+pFrame1 5
+ArraySet1 1
 
 PushString "Stock"
 Call @menu_addItem
@@ -1488,15 +1668,9 @@ ArrayGet1 1
 CallNative unk_0x8A814FF9 2 1
 JumpGE @Label_trainer_vehicle_mod_level_3_end
 
-PushString "Mod "
-pFrame1 4
-StrCopy 16
-
 getF 3
-pFrame1 4
-StrAddi 16
-
-pFrame1 4
+pFrame1 5
+ArrayGet1 1
 Call @menu_addItem
 getF 3
 Call @menu_add_number
@@ -1851,6 +2025,10 @@ Call @menu_addItem
 getF 5
 Push1 255
 Call @menu_addItem_number_keyboard
+Call @menu_add_action
+
+PushString "Set"
+Call @menu_addItem
 Call @menu_add_action
 
 :Label_trainer_vehicle_colour_custom_end
@@ -3672,12 +3850,14 @@ StaticGet1 4
 pstatic1 123
 ArrayGet1 1
 JumpNE @Label_action_end
+PushString "CELL_221"
 Call @menu_keyboard
 JumpFalse @Label_action_end
 CallNative get_onscreen_keyboard_result 0 1
 CallNative is_string_null_or_empty 1 1
 Not
 JumpFalse @Label_action_end
+
 CallNative get_onscreen_keyboard_result 0 1
 pFrame1 3
 StrCopy 16
@@ -3687,6 +3867,13 @@ pFrame1 13
 CallNative string_to_int 2 1
 JumpFalse @Label_action_end
 
+getF 13
+Call @menu_get_current_extra
+JumpLE @Label_action_number_keyboard_set
+Call @menu_get_current_extra
+setF 13
+
+:Label_action_number_keyboard_set
 StaticGet1 4
 getF 13
 Call @menu_set_number
@@ -3762,25 +3949,46 @@ Return 0 0
 Function 1 0 7
 
 StaticGet1 4
-Switch [0 @Label_trainer_network_action_level_1_last_selected_0]
+Switch [0 @Label_trainer_network_action_level_1_last_selected_0]:[1 @Label_trainer_network_action_level_1_last_selected_1]
 Jump @Label_trainer_network_action_level_1_end
 
 :Label_trainer_network_action_level_1_last_selected_0
 StaticGet2 384
-JumpFalse @Label_trainer_network_action_level_1_last_selected_2_false
+JumpFalse @Label_trainer_network_action_level_1_last_selected_0_false
 iPush_0
 StaticSet2 384
 iPush_0
 Call @menu_set_current_bool
-Jump @Label_trainer_network_action_level_1_last_selected_2_end
+Jump @Label_trainer_network_action_level_1_last_selected_0_end
 
-:Label_trainer_network_action_level_1_last_selected_2_false
+:Label_trainer_network_action_level_1_last_selected_0_false
 iPush_1
 StaticSet2 384
 iPush_1
 Call @menu_set_current_bool
 
-:Label_trainer_network_action_level_1_last_selected_2_end
+:Label_trainer_network_action_level_1_last_selected_0_end
+Return 0 0
+
+:Label_trainer_network_action_level_1_last_selected_1
+pglobal3 1332333
+GetImmediate1 3
+JumpFalse @Label_trainer_network_action_level_1_last_selected_1_false
+iPush_0
+pglobal3 1332333
+SetImmediate1 3
+iPush_0
+Call @menu_set_current_bool
+Jump @Label_trainer_network_action_level_1_last_selected_1_end
+
+:Label_trainer_network_action_level_1_last_selected_1_false
+iPush_1
+pglobal3 1332333
+SetImmediate1 3
+iPush_1
+Call @menu_set_current_bool
+
+:Label_trainer_network_action_level_1_last_selected_1_end
 Return 0 0
 
 :Label_trainer_network_action_level_1_end
@@ -3790,13 +3998,20 @@ Return 0 0
 Function 1 0 4
 
 StaticGet1 4
-Switch [0 @Label_trainer_debug_action_level_1_last_selected_0]
+Switch [0 @Label_trainer_debug_action_level_1_last_selected_0]:[1 @Label_trainer_debug_action_level_1_last_selected_1]
 Jump @Label_trainer_debug_action_level_1_end
 
 :Label_trainer_debug_action_level_1_last_selected_0
 CallNative player_ped_id 0 1
 CallNative clear_ped_last_damage_bone 1 0
 PushString "Cleared last damage bone"
+Call @menu_msg
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_1
+iPush_1
+globalset3 2623872
+PushString "Global_2623872 set to 1"
 Call @menu_msg
 Return 0 0
 
@@ -4266,6 +4481,11 @@ Jump @Label_trainer_vehicle_colour_action_level_2_end
 
 :Label_trainer_vehicle_colour_action_last_selected_4
 StaticGet2 379
+CallNative clear_vehicle_custom_primary_colour 1 0
+StaticGet2 379
+CallNative clear_vehicle_custom_secondary_colour 1 0
+
+StaticGet2 379
 Call @menu_get_current_number
 iPush_1
 Sub
@@ -4569,6 +4789,12 @@ CallNative set_vehicle_door_shut 3 0
 Return 0 0
 
 :Label_trainer_vehicle_door_action_level_3_last_selected_3
+StaticGet2 379
+getF 3
+iPush_1
+iPush_0
+CallNative set_vehicle_door_open 4 0
+
 StaticGet2 379
 getF 3
 iPush_1
@@ -4998,11 +5224,19 @@ Return 0 0
 :trainer_vehicle_action_colour
 Function 1 0 8
 
+
+iPush_2
+Push1 179
+CallNative is_control_pressed 2 1
+Not
+JumpFalse @trainer_vehicle_action_colour_not_clear
+
 StaticGet2 379
 CallNative clear_vehicle_custom_primary_colour 1 0
 StaticGet2 379
 CallNative clear_vehicle_custom_secondary_colour 1 0
 
+:trainer_vehicle_action_colour_not_clear
 StaticGet2 379
 pFrame1 3
 pFrame1 4
@@ -5077,8 +5311,8 @@ Call @menu_get_current_number
 CallNative set_vehicle_colours 3 0
 
 StaticGet2 379
-getF 5
 Call @menu_get_current_extra
+getF 6
 CallNative set_vehicle_extra_colours 3 0
 
 :Label_trainer_vehicle_action_colour_goto_end_2
@@ -6459,15 +6693,14 @@ StaticSet1 7
 Return 0 0
 
 :menu_keyboard
-Function 1 0 8
+Function 1 1 36
 
 StaticGet1 26
 Switch [0 @Label_menu_keyboard_switch_0]:[1 @Label_menu_keyboard_switch_1]
 Jump @Label_menu_keyboard_end
 
 :Label_menu_keyboard_switch_0
-
-PushString "CELL_221"
+getF 0
 setF 4
 PushString ""
 setF 5
@@ -6489,6 +6722,21 @@ iPush_3
 StaticSet1 29
 
 :Label_menu_keyboard_2
+
+iPush_7
+StaticGet1 4
+pstatic1 123
+ArrayGet1 1
+JumpNE @Label_menu_keyboard_string
+
+Call @menu_get_current_number
+pFrame1 6
+ItoS 8
+
+:Label_menu_keyboard_string
+pFrame1 6
+CallNative is_string_null_or_empty 1 1
+JumpFalse @Label_menu_keyboard_3
 iPush_0
 getF 4
 getF 5
@@ -6499,6 +6747,21 @@ PushString ""
 StaticGet1 29
 Add1 1
 CallNative display_onscreen_keyboard 8 0
+Jump @Label_menu_keyboard_goto_end_1
+
+:Label_menu_keyboard_3
+iPush_0
+getF 4
+getF 5
+pFrame1 6
+PushString ""
+PushString ""
+PushString ""
+StaticGet1 29
+Add1 1
+CallNative display_onscreen_keyboard 8 0
+
+:Label_menu_keyboard_goto_end_1
 Jump @Label_menu_keyboard_end
 
 :Label_menu_keyboard_switch_1
@@ -6510,7 +6773,7 @@ Jump @Label_menu_keyboard_goto_end
 
 :Label_menu_keyboard_update_0
 iPush_0
-Return 0 1
+Return 1 1
 
 :Label_menu_keyboard_update_3
 iPush_0
@@ -6520,7 +6783,7 @@ StaticSet1 26
 iPush_0
 StaticSet1 28
 iPush_0
-Return 0 1
+Return 1 1
 
 :Label_menu_keyboard_update_2
 iPush_0
@@ -6530,7 +6793,7 @@ StaticSet1 26
 iPush_0
 StaticSet1 28
 iPush_0
-Return 0 1
+Return 1 1
 
 :Label_menu_keyboard_update_1
 iPush_0
@@ -6540,14 +6803,14 @@ StaticSet1 26
 iPush_0
 StaticSet1 28
 iPush_1
-Return 0 1
+Return 1 1
 
 :Label_menu_keyboard_goto_end
 Jump @Label_menu_keyboard_end
 
 :Label_menu_keyboard_end
 iPush_0
-Return 0 1
+Return 1 1
 
 :menu_msg
 Function 1 1 4
