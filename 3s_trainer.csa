@@ -1836,13 +1836,13 @@ Call @menu_add_action
 
 PushString "Visable Damage"
 Call @menu_addItem
-iPush_0
+iPush_1
 Call @menu_addItem_bool
 Call @menu_add_action
 
 PushString "Can Break"
 Call @menu_addItem
-iPush_0
+iPush_1
 Call @menu_addItem_bool
 Call @menu_add_action
 
@@ -4812,84 +4812,33 @@ Switch [0 @Label_trainer_vehicle_light_action_level_3_last_selected_0]:[1 @Label
 Jump @Label_trainer_vehicle_light_action_level_3_end
 
 :Label_trainer_vehicle_light_action_level_3_last_selected_0
+StaticGet2 379
 Call @menu_get_current_bool
 Not
-JumpFalse @Label_trainer_vehicle_light_true
-
-StaticGet2 379
-iPush_1
 CallNative set_vehicle_interiorlight 2 0
-iPush_1
-Call @menu_set_current_bool
-Jump @Label_trainer_vehicle_light_end
-
-:Label_trainer_vehicle_light_true
-StaticGet2 379
-iPush_0
-CallNative set_vehicle_interiorlight 2 0
-iPush_0
-Call @menu_set_current_bool
-
-:Label_trainer_vehicle_light_end
+Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_vehicle_light_action_level_3_last_selected_1
+StaticGet2 379
 Call @menu_get_current_bool
 Not
-JumpFalse @Label_trainer_vehicle_searchlight_true
-StaticGet2 379
-iPush_1
 iPush_0
 CallNative set_vehicle_searchlight 3 0
-iPush_1
-Call @menu_set_current_bool
+Call @menu_toggle_current_bool
 iPush_2
-iPush_1
-Call @menu_set_bool
-Jump @Label_trainer_vehicle_searchlight_end
-
-:Label_trainer_vehicle_searchlight_true
-StaticGet2 379
-iPush_0
-iPush_0
-CallNative set_vehicle_searchlight 3 0
-iPush_0
-Call @menu_set_current_bool
-iPush_2
-iPush_0
-Call @menu_set_bool
-
-:Label_trainer_vehicle_searchlight_end
+Call @menu_toggle_bool
 Return 0 0
 
 :Label_trainer_vehicle_light_action_level_3_last_selected_2
+StaticGet2 379
 Call @menu_get_current_bool
 Not
-JumpFalse @Label_trainer_vehicle_searchlight2_true
-StaticGet2 379
-iPush_1
 iPush_1
 CallNative set_vehicle_searchlight 3 0
+Call @menu_toggle_current_bool
 iPush_1
-Call @menu_set_current_bool
-iPush_1
-iPush_1
-Call @menu_set_bool
-Jump @Label_trainer_vehicle_searchlight2_end
-
-:Label_trainer_vehicle_searchlight2_true
-StaticGet2 379
-iPush_0
-iPush_1
-CallNative set_vehicle_searchlight 3 0
-iPush_0
-Call @menu_set_current_bool
-iPush_1
-iPush_0
-Call @menu_set_bool
-
-
-:Label_trainer_vehicle_searchlight2_end
+Call @menu_toggle_bool
 Return 0 0
 
 :Label_trainer_vehicle_light_action_level_3_end
@@ -5056,108 +5005,43 @@ Switch [0 @Label_trainer_vehicle_settings_action_level_3_last_selected_0]:[1 @La
 Jump @Label_trainer_vehicle_settings_action_level_3_end
 
 :Label_trainer_vehicle_settings_action_level_3_last_selected_0
+StaticGet2 379
 Call @menu_get_current_bool
 Not
-JumpFalse @Label_trainer_vehicle_settings_invincible
-StaticGet2 379
-iPush_1
 CallNative set_entity_invincible 2 0
-iPush_1
-Call @menu_set_current_bool
-Jump @Label_trainer_vehicle_settings_invincible_end
-
-:Label_trainer_vehicle_settings_invincible
-StaticGet2 379
-iPush_0
-CallNative set_entity_invincible 2 0
-iPush_0
-Call @menu_set_current_bool
-
-:Label_trainer_vehicle_settings_invincible_end
+Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_vehicle_settings_action_level_3_last_selected_1
+StaticGet2 379
 Call @menu_get_current_bool
 Not
-JumpFalse @Label_trainer_vehicle_settings_boost
-StaticGet2 379
-iPush_1
 CallNative unk_0x072F15F2 2 0
-iPush_1
-Call @menu_set_current_bool
-Jump @Label_trainer_vehicle_settings_boost_end
-
-:Label_trainer_vehicle_settings_boost
-StaticGet2 379
-iPush_0
-CallNative unk_0x072F15F2 2 0
-iPush_0
-Call @menu_set_current_bool
-
-:Label_trainer_vehicle_settings_boost_end
+Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_vehicle_settings_action_level_3_last_selected_2
+StaticGet2 379
 Call @menu_get_current_bool
 Not
-JumpFalse @Label_trainer_vehicle_settings_visibly_damaged
-StaticGet2 379
-iPush_1
 CallNative set_vehicle_can_be_visibly_damaged 2 0
-iPush_1
-Call @menu_set_current_bool
-Jump @Label_trainer_vehicle_settings_visibly_damaged_end
-
-:Label_trainer_vehicle_settings_visibly_damaged
-StaticGet2 379
-iPush_0
-CallNative set_vehicle_can_be_visibly_damaged 2 0
-iPush_0
-Call @menu_set_current_bool
-
-:Label_trainer_vehicle_settings_visibly_damaged_end
+Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_vehicle_settings_action_level_3_last_selected_3
+StaticGet2 379
 Call @menu_get_current_bool
 Not
-JumpFalse @Label_trainer_vehicle_settings_can_break
-StaticGet2 379
-iPush_1
 CallNative set_vehicle_can_break 2 0
-iPush_1
-Call @menu_set_current_bool
-Jump @Label_trainer_vehicle_settings_can_break_end
-
-:Label_trainer_vehicle_settings_can_break
-StaticGet2 379
-iPush_0
-CallNative set_vehicle_can_break 2 0
-iPush_0
-Call @menu_set_current_bool
-
-:Label_trainer_vehicle_settings_can_break_end
+Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_vehicle_settings_action_level_3_last_selected_4
+StaticGet2 379
 Call @menu_get_current_bool
 Not
-JumpFalse @Label_trainer_vehicle_settings_slidey
-StaticGet2 379
-iPush_1
 CallNative unk_0x90D3A0D9 2 0
-iPush_1
-Call @menu_set_current_bool
-Jump @Label_trainer_vehicle_settings_slidey_end
-
-:Label_trainer_vehicle_settings_slidey
-StaticGet2 379
-iPush_0
-CallNative unk_0x90D3A0D9 2 0
-iPush_0
-Call @menu_set_current_bool
-
-:Label_trainer_vehicle_settings_slidey_end
+Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_vehicle_settings_action_level_3_last_selected_5
@@ -6269,6 +6153,25 @@ getF 0
 pstatic1 174
 ArraySet1 1
 Return 2 0
+
+:menu_toggle_bool
+Function 1 1 4
+
+Call @menu_get_current_bool
+Not
+getF 0
+pstatic1 174
+ArraySet1 1
+Return 1 0
+
+:menu_toggle_current_bool
+Function 1 0 4
+Call @menu_get_current_bool
+Not
+StaticGet1 4
+pstatic1 174
+ArraySet1 1
+Return 0 0
 
 :menu_get_current_bool
 Function 1 0 4
