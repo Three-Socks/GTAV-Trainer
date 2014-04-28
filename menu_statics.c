@@ -2,16 +2,13 @@
 	Statics 1-327 Menu reserved
 */
 
-// instructional_buttons_count
-Static_2 = -1;
-
 // (float) menu_x
 Static_3 = 0.0546875;
 
 // (uint) menu_item_highlighted
 Static_4 = 0;
 
-// (uint) menu_count
+// (int) menu_count
 Static_5 = 0;
 
 // (bool) menu_hidden
@@ -87,6 +84,18 @@ Static_28
 // (uint) menu_keyboard_custom_length
 Static_29
 
+// (bool) frontend_items_set
+Static_45
+
+// (int) frontend_count
+Static_46
+
+// (char) frontend_items_button (6)
+Static[47]
+
+// (char) frontend_items_name (6)
+Static[54]
+
 // (uint) last_selected (10)
 Static[61]
 
@@ -133,3 +142,6 @@ Static_384
 
 // trainer_stored_selected (25)
 Static[385]
+
+// network_boost_mode_always_on
+Static_411
