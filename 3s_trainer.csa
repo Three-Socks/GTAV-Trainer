@@ -372,12 +372,14 @@ PushString "get_ped_last_damage_bone"
 Call @menu_addItem
 getF 4
 iPush_0
+iPush_0
 Call @menu_addItem_number
 Call @menu_add_action
 
 PushString "Global_2623872"
 Call @menu_addItem
 globalget3 2623872
+iPush_0
 iPush_5
 Call @menu_addItem_number
 Call @menu_add_action
@@ -386,6 +388,7 @@ PushString "get_vehicle_mod_kit_type"
 Call @menu_addItem
 StaticGet2 379
 CallNative get_vehicle_mod_kit_type 1 1
+iPush_0
 iPush_5
 Call @menu_addItem_number
 Call @menu_add_action
@@ -548,6 +551,7 @@ CallNative player_ped_id 0 1
 iPush_0
 CallNative get_ped_prop_index 2 1
 Add1 1
+iPush_0
 Push1 30
 Call @menu_addItem_number
 Call @menu_add_action
@@ -564,6 +568,7 @@ CallNative player_ped_id 0 1
 iPush_0
 CallNative unk_0x922A6653 2 1
 Add1 2
+iPush_1
 Push1 30
 Call @menu_addItem_number
 Jump @Label_trainer_player_level_2_last_selected_2_2
@@ -573,6 +578,7 @@ CallNative player_ped_id 0 1
 iPush_0
 CallNative unk_0x922A6653 2 1
 Add1 1
+iPush_1
 Push1 30
 Call @menu_addItem_number
 
@@ -585,6 +591,7 @@ CallNative player_ped_id 0 1
 iPush_1
 CallNative get_ped_prop_index 2 1
 Add1 1
+iPush_0
 Push1 30
 Call @menu_addItem_number
 Call @menu_add_action
@@ -601,6 +608,7 @@ CallNative player_ped_id 0 1
 iPush_1
 CallNative unk_0x922A6653 2 1
 Add1 2
+iPush_1
 Push1 30
 Call @menu_addItem_number
 Jump @Label_trainer_player_level_2_last_selected_2_4
@@ -610,6 +618,7 @@ CallNative player_ped_id 0 1
 iPush_1
 CallNative unk_0x922A6653 2 1
 Add1 1
+iPush_1
 Push1 30
 Call @menu_addItem_number
 
@@ -626,6 +635,7 @@ Call @menu_addItem_action
 PushString "Max Wanted Level"
 Call @menu_addItem
 CallNative get_max_wanted_level 0 1
+iPush_0
 iPush_5
 Call @menu_addItem_number
 Call @menu_add_action
@@ -982,6 +992,7 @@ JumpNE @Label_trainer_vehicle_mod_level_2_mod_tinted_1
 StaticGet2 379
 CallNative get_vehicle_window_tint 1 1
 Add1 1
+iPush_0
 CallNative unk_0x625C7B66 0 1
 Call @menu_addItem_number
 Jump @Label_trainer_vehicle_mod_level_2_mod_tinted_2
@@ -989,6 +1000,7 @@ Jump @Label_trainer_vehicle_mod_level_2_mod_tinted_2
 :Label_trainer_vehicle_mod_level_2_mod_tinted_1
 StaticGet2 379
 CallNative get_vehicle_window_tint 1 1
+iPush_0
 CallNative unk_0x625C7B66 0 1
 Call @menu_addItem_number
 
@@ -1029,6 +1041,7 @@ JumpFalse @Label_trainer_vehicle_mod_level_2_mod_wheel
 
 StaticGet2 379
 CallNative get_vehicle_wheel_type 1 1
+iPush_0
 Push1 7
 Call @menu_addItem_number
 
@@ -1171,14 +1184,17 @@ JumpNE @Label_trainer_vehicle_level_2_last_selected_3_1
 StaticGet2 379
 CallNative get_vehicle_colour_combination 1 1
 Add1 2
+iPush_1
 getF 34
 Call @menu_addItem_number
+
 Jump @Label_trainer_vehicle_level_2_last_selected_3_2
 
 :Label_trainer_vehicle_level_2_last_selected_3_1
 StaticGet2 379
 CallNative get_vehicle_colour_combination 1 1
 Add1 1
+iPush_1
 getF 34
 Call @menu_addItem_number
 
@@ -1198,6 +1214,7 @@ Call @menu_addItem
 StaticGet2 379
 CallNative get_vehicle_livery 1 1
 Add1 1
+iPush_1
 getF 35
 Call @menu_addItem_number
 Call @menu_add_action
@@ -1329,6 +1346,7 @@ JumpFalse @Label_trainer_player_variation_level_3_1
 CallNative player_ped_id 0 1
 getF 3
 CallNative get_ped_drawable_variation 2 1
+iPush_0
 getF 4
 Call @menu_addItem_number
 Jump @Label_trainer_player_variation_level_3_2
@@ -1336,6 +1354,7 @@ Jump @Label_trainer_player_variation_level_3_2
 :Label_trainer_player_variation_level_3_1
 iPush_0
 Call @menu_get_number
+iPush_0
 getF 4
 Call @menu_addItem_number
 
@@ -1354,11 +1373,13 @@ JumpFalse @Label_trainer_player_variation_level_3_3
 CallNative player_ped_id 0 1
 getF 3
 CallNative get_ped_texture_variation 2 1
+iPush_0
 getF 5
 Call @menu_addItem_number
 Jump @Label_trainer_player_variation_level_3_4
 
 :Label_trainer_player_variation_level_3_3
+iPush_0
 iPush_0
 getF 5
 Call @menu_addItem_number
@@ -1624,6 +1645,7 @@ Jump @Label_trainer_vehicle_modify_level_3_end
 PushString "Door"
 Call @menu_addItem
 iPush_0
+iPush_0
 iPush_6
 Call @menu_addItem_number
 Call @menu_add_action
@@ -1669,6 +1691,7 @@ Call @menu_addItem
 StaticGet2 379
 CallNative get_vehicle_plate_type 1 1
 Add1 1
+iPush_0
 CallNative unk_0xD24BC1AE 0 1
 Call @menu_addItem_number
 Call @menu_add_action
@@ -1933,6 +1956,7 @@ StaticSet1 29
 PushString "Red"
 Call @menu_addItem
 getF 3
+iPush_0
 Push1 255
 Call @menu_addItem_number_keyboard
 Call @menu_add_action
@@ -1940,6 +1964,7 @@ Call @menu_add_action
 PushString "Green"
 Call @menu_addItem
 getF 4
+iPush_0
 Push1 255
 Call @menu_addItem_number_keyboard
 Call @menu_add_action
@@ -1947,6 +1972,7 @@ Call @menu_add_action
 PushString "Blue"
 Call @menu_addItem
 getF 5
+iPush_0
 Push1 255
 Call @menu_addItem_number_keyboard
 Call @menu_add_action
@@ -6021,27 +6047,6 @@ ArraySet1 1
 Return 1 0
 
 :menu_addItem_number
-Function 1 2 4
-
-iPush_1
-StaticGet1 5
-pstatic1 123
-ArraySet1 1
-
-getF 0
-StaticGet1 5
-pstatic2 276
-ArraySet1 1
-
-getF 1
-StaticGet1 5
-pstatic1 174
-ArraySet1 1
-
-:Label_menu_addItem_number_end
-Return 2 0
-
-:menu_addItem_number_min_test
 Function 1 3 5
 
 iPush_1
@@ -6056,15 +6061,15 @@ ArraySet1 1
 
 getF 1
 StaticGet1 5
-pstatic1 174
+pstatic2 327
 ArraySet1 1
 
 getF 2
 StaticGet1 5
-pstatic2 327
+pstatic1 174
 ArraySet1 1
 
-:Label_menu_addItem_number_min_test_end
+:Label_menu_addItem_number_end
 Return 3 0
 
 :menu_add_number
@@ -6245,7 +6250,7 @@ ArraySet1 1
 Return 1 0
 
 :menu_addItem_number_keyboard
-Function 1 2 4
+Function 1 3 5
 
 iPush_7
 StaticGet1 5
@@ -6259,11 +6264,16 @@ ArraySet1 1
 
 getF 1
 StaticGet1 5
+pstatic2 327
+ArraySet1 1
+
+getF 2
+StaticGet1 5
 pstatic1 174
 ArraySet1 1
 
 :Label_menu_addItem_number_keyboard_end
-Return 2 0
+Return 3 0
 
 :menu_get_current_extra
 Function 1 0 4
@@ -6520,9 +6530,6 @@ Push1 20
 CallNative disable_control_action 2 0
 iPush_0
 Push1 59
-CallNative disable_control_action 2 0
-iPush_0
-Push1 62
 CallNative disable_control_action 2 0
 
 iPush_0
@@ -7664,7 +7671,10 @@ iPush_-1
 PushString "NAV_LEFT_RIGHT"
 PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
 CallNative play_sound_frontend 3 0
-iPush_0
+StaticGet1 4
+pstatic2 327
+ArrayGet1 1
+
 StaticGet1 4
 pstatic2 276
 ArrayGet1 1
@@ -7717,7 +7727,10 @@ ArraySet1 1
 Jump @Label_catch_button_press_7
 
 :Label_catch_button_press_8
-iPush_0
+StaticGet1 4
+pstatic2 327
+ArrayGet1 1
+
 StaticGet1 4
 pstatic2 276
 ArraySet1 1
