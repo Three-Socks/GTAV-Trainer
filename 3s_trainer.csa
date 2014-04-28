@@ -231,12 +231,12 @@ CallNative is_disabled_control_just_released 2 1
 JumpFalse @Label_menu_set_end
 
 StaticGet1 9
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 StaticGet1 5
 JumpGT @Label_menu_set_4
 StaticGet1 9
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 StaticSet1 4
 Jump @Label_menu_set_5
@@ -248,7 +248,7 @@ StaticSet1 4
 :Label_menu_set_5
 iPush_0
 StaticGet1 9
-pstatic2 30
+pstatic2 61
 ArraySet1 1
 
 StaticGet1 5
@@ -340,7 +340,7 @@ Return 0 0
 Function 1 0 7
 
 iPush_0
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [0 @Label_last_selected_0]:[1 @Label_last_selected_1]:[2 @Label_last_selected_2]:[3 @Label_last_selected_3]
 Jump @Label_level_1_end
@@ -490,7 +490,7 @@ Return 0 0
 Function 1 0 4
 
 iPush_0
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [0 @Label_level_2_last_selected_0]:[1 @Label_level_2_last_selected_1]
 Jump @Label_level_2_end
@@ -510,7 +510,7 @@ Return 0 0
 Function 1 0 4
 
 iPush_1
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [0 @Label_trainer_player_level_2_last_selected_0]:[1 @Label_trainer_player_level_2_last_selected_1]:[2 @Label_trainer_player_level_2_last_selected_2]:[3 @Label_trainer_player_level_2_last_selected_3]:[4 @Label_trainer_player_level_2_last_selected_4]:[5 @Label_trainer_player_level_2_last_selected_5]
 Jump @Label_trainer_player_level_2_end
@@ -737,7 +737,7 @@ Function 1 0 40
 
 iPush_0
 iPush_1
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 JumpEq @Label_trainer_vehicle_level_2_1
 Call @trainer_get_vehicle
@@ -749,7 +749,7 @@ Return 0 0
 
 :Label_trainer_vehicle_level_2_1
 iPush_1
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [0 @Label_trainer_vehicle_level_2_last_selected_0]:[1 @Label_trainer_vehicle_level_2_last_selected_1]:[2 @Label_trainer_vehicle_level_2_last_selected_2]:[3 @Label_trainer_vehicle_level_2_last_selected_3]:[4 @Label_trainer_vehicle_level_2_last_selected_4]
 Jump @Label_trainer_vehicle_level_2_end
@@ -1303,7 +1303,7 @@ Return 0 0
 Function 1 0 4
 
 iPush_0
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [0 @Label_level_3_last_selected_0]:[1 @Label_level_3_last_selected_1]
 Jump @Label_level_3_end
@@ -1323,7 +1323,7 @@ Return 0 0
 Function 1 0 4
 
 iPush_1
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [0 @Label_player_level_3_last_selected_0]:[1 @Label_player_level_3_last_selected_1]
 Jump @Label_player_level_3_end
@@ -1347,7 +1347,7 @@ PushString "Player - Appearance"
 StaticSet1 10
 
 iPush_2
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 iPush_2
 Sub
@@ -1468,7 +1468,7 @@ Function 1 0 4
 
 iPush_0
 iPush_1
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 JumpEq @Label_trainer_vehicle_level_3_1
 Call @trainer_get_vehicle
@@ -1480,7 +1480,7 @@ Return 0 0
 
 :Label_trainer_vehicle_level_3_1
 iPush_1
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [0 @Label_vehicle_level_3_last_selected_0]:[1 @Label_vehicle_level_3_last_selected_1]:[3 @Label_vehicle_level_3_last_selected_3]:[4 @Label_vehicle_level_3_last_selected_4]
 Jump @Label_vehicle_level_3_end
@@ -1661,7 +1661,7 @@ setF 3
 getF 3
 StaticGet2 379
 iPush_2
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 pstatic2 385
 ArrayGet1 1
@@ -1691,7 +1691,7 @@ PushString "Vehicle - Modify"
 StaticSet1 10
 
 iPush_2
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [0 @Label_trainer_vehicle_modify_level_3_last_selected_0]:[1 @Label_trainer_vehicle_modify_level_3_last_selected_1]:[2 @Label_trainer_vehicle_modify_level_3_last_selected_2]:[3 @Label_trainer_vehicle_modify_level_3_last_selected_3]:[4 @Label_trainer_vehicle_modify_level_3_last_selected_4]
 Jump @Label_trainer_vehicle_modify_level_3_end
@@ -1866,7 +1866,7 @@ Return 0 0
 Function 1 0 4
 
 iPush_0
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [1 @Label_level_4_last_selected_1]
 Jump @Label_level_4_end
@@ -1882,7 +1882,7 @@ Return 0 0
 Function 1 0 4
 
 iPush_1
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [3 @Label_vehicle_level_4_last_selected_3]:[4 @Label_vehicle_level_4_last_selected_4]
 Jump @Label_vehicle_level_4_end
@@ -1905,7 +1905,7 @@ PushString "Vehicle - Respray"
 StaticSet1 10
 
 iPush_3
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [0 @Label_vehicle_colour_level_4_last_selected_0]:[1 @Label_vehicle_colour_level_4_last_selected_1]:[2 @Label_vehicle_colour_level_4_last_selected_2]:[3 @Label_vehicle_colour_level_4_last_selected_3]:[4 @Label_vehicle_colour_level_4_last_selected_4]:[5 @Label_vehicle_colour_level_4_last_selected_5]:[6 @Label_vehicle_colour_level_4_last_selected_6]:[7 @Label_vehicle_colour_level_4_last_selected_7]:[8 @Label_vehicle_colour_level_4_last_selected_8]
 Jump @Label_trainer_vehicle_colour_level_4_end
@@ -1954,7 +1954,7 @@ Function 1 0 6
 
 iPush_0
 iPush_2
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 CmpEq
 dup
@@ -1962,7 +1962,7 @@ Not
 JumpFalse @Label_trainer_vehicle_colour_custom_or
 iPush_2
 iPush_2
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 CmpEq
 Or
@@ -1980,7 +1980,7 @@ Jump @Label_trainer_vehicle_colour_custom_1
 :Label_trainer_vehicle_colour_custom_or_false
 iPush_1
 iPush_2
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 CmpEq
 dup
@@ -1988,7 +1988,7 @@ Not
 JumpFalse @Label_trainer_vehicle_colour_custom_or2
 iPush_3
 iPush_2
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 CmpEq
 Or
@@ -3885,7 +3885,7 @@ Return 0 0
 Function 1 0 4
 
 iPush_0
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [1 @Label_action_level_1_last_selected_1]:[2 @Label_action_level_1_last_selected_2]:[3 @Label_action_level_1_last_selected_3]
 Jump @Label_action_level_1_end
@@ -4022,7 +4022,7 @@ Return 0 0
 Function 1 0 4
 
 iPush_0
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [0 @Label_action_level_2_last_selected_0]:[1 @Label_action_level_2_last_selected_1]
 Jump @Label_action_level_2_end
@@ -4046,7 +4046,7 @@ Return 0 0
 Function 1 0 7
 
 iPush_1
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [1 @Label_trainer_player_action_level_2_last_selected_1]:[2 @Label_trainer_player_action_level_2_last_selected_2]:[3 @Label_trainer_player_action_level_2_last_selected_3]:[4 @Label_trainer_player_action_level_2_last_selected_4]:[5 @Label_trainer_player_action_level_2_last_selected_5]
 Jump @Label_trainer_player_action_level_2_end
@@ -4366,7 +4366,7 @@ Function 1 0 4
 
 iPush_0
 iPush_1
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 JumpEq @Label_trainer_vehicle_action_level_2_1
 Call @trainer_get_vehicle
@@ -4378,7 +4378,7 @@ Return 0 0
 
 :Label_trainer_vehicle_action_level_2_1
 iPush_1
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [1 @Label_trainer_vehicle_action_level_2_last_selected_1]:[2 @Label_trainer_vehicle_action_level_2_last_selected_2]:[3 @Label_trainer_vehicle_action_level_2_last_selected_3]
 Jump @Label_trainer_vehicle_action_level_2_end
@@ -4507,7 +4507,7 @@ Return 0 0
 Function 1 0 4
 
 iPush_0
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [0 @Label_action_level_3_last_selected_0]:[1 @Label_action_level_3_last_selected_1]
 Jump @Label_action_level_3_end
@@ -4527,7 +4527,7 @@ Return 0 0
 Function 1 0 4
 
 iPush_1
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [0 @Label_trainer_player_action_level_3_last_selected_0]:[1 @Label_trainer_player_action_level_3_last_selected_1]
 Jump @Label_trainer_player_action_level_3_end
@@ -4539,7 +4539,7 @@ Return 0 0
 
 :Label_trainer_player_action_level_3_last_selected_1
 iPush_2
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 iPush_2
 Sub
@@ -4655,7 +4655,7 @@ Function 1 0 4
 
 iPush_0
 iPush_1
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 JumpEq @Label_trainer_vehicle_action_level_3_1
 Call @trainer_get_vehicle
@@ -4667,7 +4667,7 @@ Return 0 0
 
 :Label_trainer_vehicle_action_level_3_1
 iPush_1
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [0 @Label_trainer_vehicle_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_action_level_3_last_selected_1]:[4 @Label_trainer_vehicle_action_level_3_last_selected_4]
 Jump @Label_trainer_vehicle_action_level_3_end
@@ -4705,7 +4705,7 @@ iPush_0
 CallNative set_vehicle_mod_kit 2 0
 
 iPush_2
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 pstatic2 385
 ArrayGet1 1
@@ -4738,7 +4738,7 @@ Return 0 0
 Function 1 0 4
 
 iPush_2
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [0 @Label_trainer_vehicle_modify_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_modify_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_modify_action_level_3_last_selected_2]:[4 @Label_trainer_vehicle_modify_action_level_3_last_selected_4]
 Jump @Label_trainer_vehicle_modify_action_level_3_end
@@ -5063,7 +5063,7 @@ Return 0 0
 Function 1 0 4
 
 iPush_0
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [1 @Label_action_level_4_last_selected_1]
 Jump @Label_action_level_4_end
@@ -5087,7 +5087,7 @@ Return 0 0
 
 :Label_trainer_vehicle_action_level_4_1
 iPush_1
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [3 @Label_trainer_vehicle_action_level_4_last_selected_3]:[4 @Label_trainer_vehicle_action_level_4_last_selected_4]
 Jump @Label_trainer_vehicle_action_level_4_end
@@ -5133,13 +5133,13 @@ CallNative get_vehicle_extra_colours 3 0
 
 iPush_0
 iPush_2
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 JumpNE @Label_trainer_vehicle_action_colour_1
 
 iPush_0
 iPush_3
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 JumpNE @Label_trainer_vehicle_action_colour_not_custom_1
 StaticGet2 379
@@ -5169,13 +5169,13 @@ Jump @Label_trainer_vehicle_action_colour_end
 :Label_trainer_vehicle_action_colour_1
 iPush_1
 iPush_2
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 JumpNE @Label_trainer_vehicle_action_colour_2
 
 iPush_0
 iPush_3
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 JumpNE @Label_trainer_vehicle_action_colour_not_custom_2
 StaticGet2 379
@@ -5205,7 +5205,7 @@ Jump @Label_trainer_vehicle_action_colour_end
 :Label_trainer_vehicle_action_colour_2
 iPush_2
 iPush_2
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 JumpNE @Label_trainer_vehicle_action_colour_3
 
@@ -5219,7 +5219,7 @@ Jump @Label_trainer_vehicle_action_colour_end
 :Label_trainer_vehicle_action_colour_3
 iPush_3
 iPush_2
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 JumpNE @Label_trainer_vehicle_action_colour_end
 
@@ -5339,7 +5339,7 @@ Not
 JumpFalse @Label_spawn_veh_cc_place_or
 Push1 19
 iPush_2
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 CmpEq
 Or
@@ -5358,7 +5358,7 @@ setF 6
 
 Push1 19
 iPush_2
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 JumpNE @Label_spawn_veh_model_not_trailer
 CallNative player_ped_id 0 1
@@ -5951,12 +5951,12 @@ StaticGet1 9
 JumpNE @Label_trainer_catch_button_level_3
 iPush_1
 iPush_0
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 JumpNE @Label_trainer_catch_button_level_3
 iPush_1
 iPush_1
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 JumpNE @Label_trainer_catch_button_level_3
 
@@ -5987,12 +5987,12 @@ StaticGet1 9
 JumpNE @Label_trainer_catch_button_press_end
 iPush_0
 iPush_0
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 JumpNE @Label_trainer_catch_button_press_end
 iPush_1
 iPush_1
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 JumpNE @Label_trainer_catch_button_press_end
 iPush_0
@@ -6516,7 +6516,7 @@ StaticSet1 11
 
 StaticGet1 4
 StaticGet1 9
-pstatic2 30
+pstatic2 61
 ArraySet1 1
 
 iPush_0
@@ -6743,7 +6743,7 @@ Sub
 StaticSet1 9
 
 StaticGet1 9
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 StaticSet1 4
 
@@ -6777,7 +6777,7 @@ Sub
 StaticSet1 9
 
 StaticGet1 9
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 StaticSet1 4
 
@@ -8134,14 +8134,14 @@ Function 1 0 4
 
 iPush_0
 iPush_1
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 JumpNE @Label_trainer_vehicle_spawn_level_3_1
 PushString "Vehicle - Spawn"
 StaticSet1 10
 
 iPush_2
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 setF 3
 Jump @Label_trainer_vehicle_spawn_level_3_2
@@ -8151,7 +8151,7 @@ PushString "Vehicle - Modify"
 StaticSet1 10
 
 iPush_3
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 setF 3
 
@@ -9810,7 +9810,7 @@ PushString "Player - Change Model"
 StaticSet1 10
 
 iPush_2
-pstatic2 30
+pstatic2 61
 ArrayGet1 1
 Switch [0 @Label_trainer_player_model_last_selected_ambient_female]:[1 @Label_trainer_player_model_last_selected_ambient_female_2]:[2 @Label_trainer_player_model_last_selected_ambient_male]:[3 @Label_trainer_player_model_last_selected_ambient_male_2]:[4 @Label_trainer_player_model_last_selected_ambient_male_3]:[5 @Label_trainer_player_model_last_selected_animals]:[6 @Label_trainer_player_model_last_selected_cutscene]:[7 @Label_trainer_player_model_last_selected_cutscene_2]:[8 @Label_trainer_player_model_last_selected_cutscene_3]:[9 @Label_trainer_player_model_last_selected_gangs_female]:[10 @Label_trainer_player_model_last_selected_gangs_male]:[11 @Label_trainer_player_model_last_selected_multiplayer]:[12 @Label_trainer_player_model_last_selected_players]:[13 @Label_trainer_player_model_last_selected_scenario_female]:[14 @Label_trainer_player_model_last_selected_scenario_male]:[15 @Label_trainer_player_model_last_selected_scenario_male_2]:[16 @Label_trainer_player_model_last_selected_story]:[17 @Label_trainer_player_model_last_selected_story_2]:[18 @Label_trainer_player_model_last_selected_story_scenario_female]:[19 @Label_trainer_player_model_last_selected_story_scenario_male]
 Jump @Label_trainer_player_model_level_3_end

@@ -88,7 +88,7 @@ Static_28
 Static_29
 
 // (uint) last_selected (10)
-Static[30]
+Static[61]
 
 // (char) menu_items_name (50)
 Static[72]
