@@ -6,42 +6,50 @@ CallNative network_set_script_is_safe_for_network_game 0 0
 
 :while
 iPush_1
-JumpFalse @Label_main3
+JumpFalse @Label_main_end
 iPush_0
 CallNative wait 1 0
 CallNative network_is_game_in_progress 0 1
-JumpFalse @Label_main4
+JumpFalse @Label_main_1
 Call @trainer_network_while_set
 
-:Label_main4
+:Label_main_1
 Call @trainer_catch_load_button_press
 
-:Label_main1
 StaticGet1 6
-JumpFalse @Label_main2
+JumpFalse @Label_main_2
 
 Call @menu_modify_game_state
 iPush_0
 StaticGet1 7
-JumpNE @Label_main_draw
+JumpNE @Label_main_3
 Call @menu_catch_button_press
 Call @menu_catch_select_button_press
 Call @trainer_catch_button_press
 
-:Label_main_draw
+:Label_main_3
 Call @menu_action
 Call @menu_set_frontend
+StaticGet1 11
+Not
+JumpFalse @Label_main_draw
 Call @menu_set
+iPush_0
+StaticGet1 7
+JumpNE @Label_main_draw
+Call @menu_set_last_selected
+
+:Label_main_draw
 Call @menu_draw_frontend
 Call @menu_draw_window
 Call @menu_draw
 Call @menu_load_sprite
 CallNative unk_0x3FE33BD6 0 0
 
-:Label_main2
+:Label_main_2
 Jump @while
 
-:Label_main3
+:Label_main_end
 Return 0 0
 
 :trainer_network_while_set
@@ -173,79 +181,10 @@ Return 0 0
 :menu_set
 Function 1 0 6
 
-StaticGet1 11
-Not
-JumpFalse @Label_menu_set_end
-
 iPush_1
 StaticSet1 11
 
 Call @trainer_level_0
-
-iPush_2
-Push1 175
-CallNative is_disabled_control_just_released 2 1
-JumpFalse @Label_menu_set_end
-
-StaticGet1 9
-pstatic2 61
-ArrayGet1 1
-StaticGet1 5
-JumpGT @Label_menu_set_4
-StaticGet1 9
-pstatic2 61
-ArrayGet1 1
-StaticSet1 4
-Jump @Label_menu_set_5
-
-:Label_menu_set_4
-StaticGet1 5
-StaticSet1 4
-
-:Label_menu_set_5
-iPush_0
-StaticGet1 9
-pstatic2 61
-ArraySet1 1
-
-StaticGet1 5
-StaticGet1 24
-JumpLE @Label_menu_set_end
-StaticGet1 4
-StaticGet1 25
-JumpLE @Label_menu_set_end
-StaticGet1 25
-Add1 1
-setF 3
-
-StaticGet1 5
-StaticGet1 25
-Sub
-setF 4
-
-:Label_menu_set_loop
-getF 3
-StaticGet1 4
-JumpGT @Label_menu_set_end
-
-getF 3
-getF 4
-Add1 1
-JumpGE @Label_menu_set_end
-
-StaticGet1 20
-StaticGet1 22
-fSub
-StaticSet1 20
-
-StaticGet1 23
-Add1 1
-StaticSet1 23
-
-getF 3
-Add1 1
-setF 3
-Jump @Label_menu_set_loop
 
 :Label_menu_set_end
 Return 0 0
@@ -406,6 +345,9 @@ PushString "air_drag -1.0"
 Call @menu_addItem_action
 
 PushString "air_drag -10.0"
+Call @menu_addItem_action
+
+PushString "air_drag 0.5"
 Call @menu_addItem_action
 
 Return 0 0
@@ -1685,13 +1627,18 @@ Return 0 0
 
 :Label_trainer_vehicle_modify_level_3_last_selected_2
 PushString "Edit Plate Text"
-Call @menu_addItem_action
+StaticGet2 379
+CallNative get_vehicle_number_plate_text 1 1
+Push1 8
+Call @menu_addItem_keyboard
+Call @menu_add_action
+
 PushString "Plate Type"
 Call @menu_addItem
 StaticGet2 379
 CallNative get_vehicle_plate_type 1 1
 Add1 1
-iPush_0
+iPush_1
 CallNative unk_0xD24BC1AE 0 1
 Call @menu_addItem_number
 Call @menu_add_action
@@ -3750,7 +3697,7 @@ Call @menu_error
 Return 1 0
 
 :menu_action
-Function 1 0 17
+Function 1 0 26
 
 iPush_1
 StaticGet1 7
@@ -3795,6 +3742,32 @@ iPush_3
 StaticGet1 7
 JumpNE @Label_action_end
 
+iPush_6
+StaticGet1 4
+pstatic1 123
+ArrayGet1 1
+JumpNE @Label_action_keyboard_number
+PushString "CELL_221"
+Call @menu_keyboard
+JumpFalse @Label_action_keyboard_goto_end
+CallNative get_onscreen_keyboard_result 0 1
+CallNative is_string_null_or_empty 1 1
+Not
+JumpFalse @Label_action_keyboard_goto_end
+
+CallNative get_onscreen_keyboard_result 0 1
+CallNative get_length_of_literal_string 1 1
+Push1 16
+JumpGT @Label_action_keyboard_goto_end
+
+StaticGet1 4
+CallNative get_onscreen_keyboard_result 0 1
+Call @menu_set_number
+
+:Label_action_keyboard_goto_end
+Jump @Label_action_end
+
+:Label_action_keyboard_number
 iPush_7
 StaticGet1 4
 pstatic1 123
@@ -3932,7 +3905,7 @@ Return 0 0
 Function 1 0 4
 
 StaticGet1 4
-Switch [0 @Label_trainer_debug_action_level_1_last_selected_0]:[1 @Label_trainer_debug_action_level_1_last_selected_1]:[3 @Label_trainer_debug_action_level_1_last_selected_3]:[4 @Label_trainer_debug_action_level_1_last_selected_4]:[5 @Label_trainer_debug_action_level_1_last_selected_5]:[6 @Label_trainer_debug_action_level_1_last_selected_6]:[7 @Label_trainer_debug_action_level_1_last_selected_7]
+Switch [0 @Label_trainer_debug_action_level_1_last_selected_0]:[1 @Label_trainer_debug_action_level_1_last_selected_1]:[3 @Label_trainer_debug_action_level_1_last_selected_3]:[4 @Label_trainer_debug_action_level_1_last_selected_4]:[5 @Label_trainer_debug_action_level_1_last_selected_5]:[6 @Label_trainer_debug_action_level_1_last_selected_6]:[7 @Label_trainer_debug_action_level_1_last_selected_7]:[8 @Label_trainer_debug_action_level_1_last_selected_8]
 Jump @Label_trainer_debug_action_level_1_end
 
 :Label_trainer_debug_action_level_1_last_selected_0
@@ -3986,6 +3959,14 @@ CallNative player_id 0 1
 fPush -10.0
 CallNative set_air_drag_multiplier_for_players_vehicle 2 0
 PushString "air_drag set to -10.0"
+Call @menu_msg
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_8
+CallNative player_id 0 1
+fPush 0.5
+CallNative set_air_drag_multiplier_for_players_vehicle 2 0
+PushString "air_drag set to 0.5"
 Call @menu_msg
 Return 0 0
 
@@ -4826,21 +4807,10 @@ Switch [0 @Label_trainer_vehicle_plate_action_level_3_last_selected_0]:[1 @Label
 Jump @Label_trainer_vehicle_plate_action_level_3_end
 
 :Label_trainer_vehicle_plate_action_level_3_last_selected_0
-Call @trainer_vehicle_change_plate
-JumpFalse @Label_trainer_vehicle_plate_action_level_3_false
-CallNative get_onscreen_keyboard_result 0 1
-CallNative is_string_null_or_empty 1 1
-Not
-JumpFalse @Label_trainer_vehicle_plate_action_level_3_false
-CallNative get_onscreen_keyboard_result 0 1
-pFrame1 3
-StrCopy 16
-
 StaticGet2 379
-pFrame1 3
+Call @menu_get_current_keyboard
 CallNative set_vehicle_number_plate_text 2 0
 
-:Label_trainer_vehicle_plate_action_level_3_false
 Return 0 0
 
 :Label_trainer_vehicle_plate_action_level_3_last_selected_1
@@ -6018,11 +5988,23 @@ Return 0 0
 :menu_draw_frontend_hook
 Function 1 0 4
 
+iPush_6
+StaticGet1 4
+pstatic1 123
+ArrayGet1 1
+CmpEq
+dup
+Not
+JumpFalse @Label_menu_draw_frontend_hook_or
 iPush_7
 StaticGet1 4
 pstatic1 123
 ArrayGet1 1
-JumpNE @Label_menu_draw_frontend_hook_end
+CmpEq
+Or
+
+:Label_menu_draw_frontend_hook_or
+JumpFalse @Label_menu_draw_frontend_hook_end
 
 Push1 32
 PushString "Edit With Keyboard"
@@ -6249,6 +6231,34 @@ ArraySet1 1
 :Label_menu_addItem_gxt_veh_hash_end
 Return 1 0
 
+:menu_addItem_keyboard
+Function 1 3 5
+
+StaticGet1 5
+Add1 1
+StaticSet1 5
+
+getF 0
+StaticGet1 5
+pstatic1 72
+ArraySet1 1
+
+iPush_6
+StaticGet1 5
+pstatic1 123
+ArraySet1 1
+
+getF 1
+StaticGet1 5
+pstatic2 276
+ArraySet1 1
+
+getF 2
+StaticSet1 29
+
+:Label_menu_addItem_keyboard_end
+Return 3 0
+
 :menu_addItem_number_keyboard
 Function 1 3 5
 
@@ -6274,6 +6284,15 @@ ArraySet1 1
 
 :Label_menu_addItem_number_keyboard_end
 Return 3 0
+
+:menu_get_current_keyboard
+Function 1 0 4
+
+StaticGet1 4
+pstatic2 276
+ArrayGet1 1
+Return 0 1
+
 
 :menu_get_current_extra
 Function 1 0 4
@@ -6656,6 +6675,326 @@ iPush_1
 CallNative set_cinematic_button_active 1 0
 Return 0 0
 
+:menu_catch_button_press
+Function 1 0 8
+
+StaticGet1 5
+setF 3
+
+getF 3
+StaticGet1 25
+Sub
+setF 6
+
+iPush_1
+Call @menu_down_pressed
+JumpFalse @Label_catch_up_button_press
+iPush_-1
+PushString "NAV_UP_DOWN"
+PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
+CallNative play_sound_frontend 3 0
+StaticGet1 4
+getF 3
+JumpGE @Label_catch_button_press_1
+StaticGet1 4
+Add1 1
+StaticSet1 4
+
+getF 3
+StaticGet1 24
+JumpLE @Label_catch_down_button_press_end
+
+StaticGet1 4
+getF 6
+Add1 1
+JumpGE @Label_catch_down_button_press_end
+
+StaticGet1 4
+StaticGet1 25
+JumpLE @Label_catch_down_button_press_end
+StaticGet1 20
+StaticGet1 22
+fSub
+StaticSet1 20
+
+StaticGet1 23
+Add1 1
+StaticSet1 23
+
+:Label_catch_down_button_press_end
+Jump @Label_catch_button_press_2
+
+:Label_catch_button_press_1
+StaticGet1 21
+StaticSet1 20
+StaticGet1 24
+StaticSet1 23
+iPush_0
+StaticSet1 4
+
+:Label_catch_button_press_2
+Jump @Label_catch_button_press_end
+
+:Label_catch_up_button_press
+iPush_1
+Call @menu_up_pressed
+JumpFalse @Label_catch_left_button_press
+iPush_-1
+PushString "NAV_UP_DOWN"
+PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
+CallNative play_sound_frontend 3 0
+StaticGet1 4
+iPush_0
+JumpLE @Label_catch_button_press_4
+StaticGet1 4
+iPush_1
+Sub
+StaticSet1 4
+
+getF 3
+StaticGet1 24
+JumpLE @Label_catch_up_button_press_end
+
+StaticGet1 4
+getF 6
+JumpGE @Label_catch_up_button_press_end
+
+StaticGet1 4
+StaticGet1 25
+iPush_1
+Sub
+JumpLE @Label_catch_up_button_press_end
+StaticGet1 20
+StaticGet1 22
+fAdd
+StaticSet1 20
+
+StaticGet1 23
+iPush_1
+Sub
+StaticSet1 23
+
+:Label_catch_up_button_press_end
+Jump @Label_catch_button_press_3
+
+:Label_catch_button_press_4
+StaticGet1 5
+StaticGet1 24
+JumpLE @Label_catch_button_press_3_1
+
+StaticGet1 25
+setF 7
+
+:Label_catch_button_press_loop
+getF 7
+StaticGet1 5
+JumpGT @Label_catch_button_press_3
+
+getF 7
+getF 6
+JumpGE @Label_catch_button_press_loop_exit
+
+StaticGet1 20
+StaticGet1 22
+fSub
+StaticSet1 20
+
+StaticGet1 23
+Add1 1
+StaticSet1 23
+
+getF 7
+Add1 1
+setF 7
+Jump @Label_catch_button_press_loop
+
+:Label_catch_button_press_loop_exit
+getF 3
+StaticSet1 4
+Jump @Label_catch_button_press_3
+
+:Label_catch_button_press_3_1
+getF 3
+StaticSet1 4
+
+:Label_catch_button_press_3
+Jump @Label_catch_button_press_end
+
+:Label_catch_left_button_press
+iPush_1
+StaticGet1 4
+pstatic1 123
+ArrayGet1 1
+CmpEq
+dup
+Not
+JumpFalse @Label_catch_left_button_press_or
+iPush_7
+StaticGet1 4
+pstatic1 123
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_catch_left_button_press_or
+JumpFalse @Label_catch_button_press_end
+
+iPush_1
+Call @menu_left_pressed
+JumpFalse @Label_catch_button_press_5
+iPush_-1
+PushString "NAV_LEFT_RIGHT"
+PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
+CallNative play_sound_frontend 3 0
+StaticGet1 4
+pstatic2 327
+ArrayGet1 1
+
+StaticGet1 4
+pstatic2 276
+ArrayGet1 1
+JumpEq @Label_catch_button_press_6
+StaticGet1 4
+pstatic2 276
+ArrayGet1 1
+iPush_1
+Sub
+StaticGet1 4
+pstatic2 276
+ArraySet1 1
+
+Jump @Label_catch_button_press_goto_7
+
+:Label_catch_button_press_6
+StaticGet1 4
+pstatic1 174
+ArrayGet1 1
+StaticGet1 4
+pstatic2 276
+ArraySet1 1
+
+:Label_catch_button_press_goto_7
+Jump @Label_catch_button_press_7
+
+:Label_catch_button_press_5
+iPush_1
+Call @menu_right_pressed
+JumpFalse @Label_catch_button_press_7
+iPush_-1
+PushString "NAV_LEFT_RIGHT"
+PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
+CallNative play_sound_frontend 3 0
+StaticGet1 4
+pstatic2 276
+ArrayGet1 1
+StaticGet1 4
+pstatic1 174
+ArrayGet1 1
+JumpEq @Label_catch_button_press_8
+StaticGet1 4
+pstatic2 276
+ArrayGet1 1
+Add1 1
+StaticGet1 4
+pstatic2 276
+ArraySet1 1
+
+Jump @Label_catch_button_press_7
+
+:Label_catch_button_press_8
+StaticGet1 4
+pstatic2 327
+ArrayGet1 1
+
+StaticGet1 4
+pstatic2 276
+ArraySet1 1
+
+:Label_catch_button_press_7
+Jump @Label_catch_button_press_end
+
+:Label_catch_button_press_end
+StaticGet1 14
+JumpFalse @Label_catch_button_press_end2
+iPush_2
+StaticSet1 15
+iPush_0
+StaticSet1 14
+
+:Label_catch_button_press_end2
+Return 0 0
+
+:menu_set_last_selected
+Function 1 0 3
+
+iPush_2
+Push1 175
+CallNative is_disabled_control_just_released 2 1
+JumpFalse @Label_menu_set_last_selected_end
+
+StaticGet1 9
+pstatic2 61
+ArrayGet1 1
+StaticGet1 5
+JumpGT @Label_menu_set_last_selected_4
+StaticGet1 9
+pstatic2 61
+ArrayGet1 1
+StaticSet1 4
+Jump @Label_menu_set_last_selected_5
+
+:Label_menu_set_last_selected_4
+StaticGet1 5
+StaticSet1 4
+
+:Label_menu_set_last_selected_5
+iPush_0
+StaticGet1 9
+pstatic2 61
+ArraySet1 1
+
+StaticGet1 5
+StaticGet1 24
+JumpLE @Label_menu_set_last_selected_end
+StaticGet1 4
+StaticGet1 25
+JumpLE @Label_menu_set_last_selected_end
+StaticGet1 25
+Add1 1
+setF 3
+
+StaticGet1 5
+StaticGet1 25
+Sub
+setF 4
+
+:Label_menu_set_last_selected_loop
+getF 3
+StaticGet1 4
+JumpGT @Label_menu_set_last_selected_end
+
+getF 3
+getF 4
+Add1 1
+JumpGE @Label_menu_set_last_selected_end
+
+StaticGet1 20
+StaticGet1 22
+fSub
+StaticSet1 20
+
+StaticGet1 23
+Add1 1
+StaticSet1 23
+
+getF 3
+Add1 1
+setF 3
+Jump @Label_menu_set_last_selected_loop
+
+:Label_menu_set_last_selected_end
+Return 0 0
+
 :menu_catch_select_button_press
 Function 1 0 4
 iPush_2
@@ -6744,11 +7083,23 @@ Push1 176
 CallNative is_disabled_control_just_released 2 1
 JumpFalse @Label_catch_select_button_press_end
 
+iPush_6
+StaticGet1 4
+pstatic1 123
+ArrayGet1 1
+CmpEq
+dup
+Not
+JumpFalse @Label_catch_select_button_press_or
 iPush_7
 StaticGet1 4
 pstatic1 123
 ArrayGet1 1
-JumpNE @Label_catch_select_button_press_end
+CmpEq
+Or
+
+:Label_catch_select_button_press_or
+JumpFalse @Label_catch_select_button_press_end
 iPush_-1
 PushString "SELECT"
 PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
@@ -6790,21 +7141,6 @@ iPush_3
 StaticSet1 29
 
 :Label_menu_keyboard_2
-
-iPush_7
-StaticGet1 4
-pstatic1 123
-ArrayGet1 1
-JumpNE @Label_menu_keyboard_string
-
-Call @menu_get_current_number
-pFrame1 6
-ItoS 8
-
-:Label_menu_keyboard_string
-pFrame1 6
-CallNative is_string_null_or_empty 1 1
-JumpFalse @Label_menu_keyboard_3
 iPush_0
 getF 4
 getF 5
@@ -6815,21 +7151,6 @@ PushString ""
 StaticGet1 29
 Add1 1
 CallNative display_onscreen_keyboard 8 0
-Jump @Label_menu_keyboard_goto_end_1
-
-:Label_menu_keyboard_3
-iPush_0
-getF 4
-getF 5
-pFrame1 6
-PushString ""
-PushString ""
-PushString ""
-StaticGet1 29
-Add1 1
-CallNative display_onscreen_keyboard 8 0
-
-:Label_menu_keyboard_goto_end_1
 Jump @Label_menu_keyboard_end
 
 :Label_menu_keyboard_switch_1
@@ -7500,255 +7821,6 @@ StaticSet1 13
 :Label_draw_frontend_end
 Return 0 0
 
-:menu_catch_button_press
-Function 1 0 8
-
-StaticGet1 5
-setF 3
-
-getF 3
-StaticGet1 25
-Sub
-setF 6
-
-iPush_1
-Call @menu_down_pressed
-JumpFalse @Label_catch_up_button_press
-iPush_-1
-PushString "NAV_UP_DOWN"
-PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
-CallNative play_sound_frontend 3 0
-StaticGet1 4
-getF 3
-JumpGE @Label_catch_button_press_1
-StaticGet1 4
-Add1 1
-StaticSet1 4
-
-getF 3
-StaticGet1 24
-JumpLE @Label_catch_down_button_press_end
-
-StaticGet1 4
-getF 6
-Add1 1
-JumpGE @Label_catch_down_button_press_end
-
-StaticGet1 4
-StaticGet1 25
-JumpLE @Label_catch_down_button_press_end
-StaticGet1 20
-StaticGet1 22
-fSub
-StaticSet1 20
-
-StaticGet1 23
-Add1 1
-StaticSet1 23
-
-:Label_catch_down_button_press_end
-Jump @Label_catch_button_press_2
-
-:Label_catch_button_press_1
-StaticGet1 21
-StaticSet1 20
-StaticGet1 24
-StaticSet1 23
-iPush_0
-StaticSet1 4
-
-:Label_catch_button_press_2
-Jump @Label_catch_button_press_end
-
-:Label_catch_up_button_press
-iPush_1
-Call @menu_up_pressed
-JumpFalse @Label_catch_left_button_press
-iPush_-1
-PushString "NAV_UP_DOWN"
-PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
-CallNative play_sound_frontend 3 0
-StaticGet1 4
-iPush_0
-JumpLE @Label_catch_button_press_4
-StaticGet1 4
-iPush_1
-Sub
-StaticSet1 4
-
-getF 3
-StaticGet1 24
-JumpLE @Label_catch_up_button_press_end
-
-StaticGet1 4
-getF 6
-JumpGE @Label_catch_up_button_press_end
-
-StaticGet1 4
-StaticGet1 25
-iPush_1
-Sub
-JumpLE @Label_catch_up_button_press_end
-StaticGet1 20
-StaticGet1 22
-fAdd
-StaticSet1 20
-
-StaticGet1 23
-iPush_1
-Sub
-StaticSet1 23
-
-:Label_catch_up_button_press_end
-Jump @Label_catch_button_press_3
-
-:Label_catch_button_press_4
-StaticGet1 5
-StaticGet1 24
-JumpLE @Label_catch_button_press_3_1
-
-StaticGet1 25
-setF 7
-
-:Label_catch_button_press_loop
-getF 7
-StaticGet1 5
-JumpGT @Label_catch_button_press_3
-
-getF 7
-getF 6
-JumpGE @Label_catch_button_press_loop_exit
-
-StaticGet1 20
-StaticGet1 22
-fSub
-StaticSet1 20
-
-StaticGet1 23
-Add1 1
-StaticSet1 23
-
-getF 7
-Add1 1
-setF 7
-Jump @Label_catch_button_press_loop
-
-:Label_catch_button_press_loop_exit
-getF 3
-StaticSet1 4
-Jump @Label_catch_button_press_3
-
-:Label_catch_button_press_3_1
-getF 3
-StaticSet1 4
-
-:Label_catch_button_press_3
-Jump @Label_catch_button_press_end
-
-:Label_catch_left_button_press
-iPush_1
-StaticGet1 4
-pstatic1 123
-ArrayGet1 1
-CmpEq
-dup
-Not
-JumpFalse @Label_catch_left_button_press_or
-iPush_7
-StaticGet1 4
-pstatic1 123
-ArrayGet1 1
-CmpEq
-Or
-
-:Label_catch_left_button_press_or
-JumpFalse @Label_catch_button_press_end
-
-iPush_1
-Call @menu_left_pressed
-JumpFalse @Label_catch_button_press_5
-iPush_-1
-PushString "NAV_LEFT_RIGHT"
-PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
-CallNative play_sound_frontend 3 0
-StaticGet1 4
-pstatic2 327
-ArrayGet1 1
-
-StaticGet1 4
-pstatic2 276
-ArrayGet1 1
-JumpEq @Label_catch_button_press_6
-StaticGet1 4
-pstatic2 276
-ArrayGet1 1
-iPush_1
-Sub
-StaticGet1 4
-pstatic2 276
-ArraySet1 1
-
-Jump @Label_catch_button_press_goto_7
-
-:Label_catch_button_press_6
-StaticGet1 4
-pstatic1 174
-ArrayGet1 1
-StaticGet1 4
-pstatic2 276
-ArraySet1 1
-
-:Label_catch_button_press_goto_7
-Jump @Label_catch_button_press_7
-
-:Label_catch_button_press_5
-iPush_1
-Call @menu_right_pressed
-JumpFalse @Label_catch_button_press_7
-iPush_-1
-PushString "NAV_LEFT_RIGHT"
-PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
-CallNative play_sound_frontend 3 0
-StaticGet1 4
-pstatic2 276
-ArrayGet1 1
-StaticGet1 4
-pstatic1 174
-ArrayGet1 1
-JumpEq @Label_catch_button_press_8
-StaticGet1 4
-pstatic2 276
-ArrayGet1 1
-Add1 1
-StaticGet1 4
-pstatic2 276
-ArraySet1 1
-
-Jump @Label_catch_button_press_7
-
-:Label_catch_button_press_8
-StaticGet1 4
-pstatic2 327
-ArrayGet1 1
-
-StaticGet1 4
-pstatic2 276
-ArraySet1 1
-
-:Label_catch_button_press_7
-Jump @Label_catch_button_press_end
-
-:Label_catch_button_press_end
-StaticGet1 14
-JumpFalse @Label_catch_button_press_end2
-iPush_2
-StaticSet1 15
-iPush_0
-StaticSet1 14
-
-:Label_catch_button_press_end2
-Return 0 0
-
 :menu_draw
 Function 1 0 38
 
@@ -7923,7 +7995,43 @@ getF 5
 Call @draw_string_gxt
 Jump @Label_draw_menu_bool
 
+
 :Label_draw_menu_gxt_veh_hash_end
+iPush_6
+getF 3
+pstatic1 123
+ArrayGet1 1
+JumpNE @Label_draw_menu_keyboard_end
+getF 18
+getF 19
+getF 20
+fPush_1.0
+iPush_0
+Call @set_up_draw
+getF 3
+pstatic1 72
+ArrayGet1 1
+StaticGet1 3
+getF 5
+Call @draw_string
+
+getF 18
+getF 19
+getF 20
+StaticGet1 3
+fPush 0.203125
+fAdd
+iPush_1
+Call @set_up_draw
+getF 3
+pstatic2 276
+ArrayGet1 1
+fPush_0.0
+getF 5
+Call @draw_string
+Jump @Label_draw_menu_bool
+
+:Label_draw_menu_keyboard_end
 getF 18
 getF 19
 getF 20
@@ -8308,7 +8416,7 @@ JumpNE @Label_trainer_vehicle_spawn_level_3_1
 PushString "Vehicle - Spawn"
 StaticSet1 10
 
-Push1 35
+Push1 36
 PushString "Alternative Spawn (Hold)"
 Call @menu_addItem_frontend
 
