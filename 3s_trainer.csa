@@ -16,7 +16,7 @@ Call @trainer_network_while_set
 :Label_main_1
 Call @trainer_catch_load_button_press
 
-StaticGet1 6
+Call @trainer_get_open_state
 JumpFalse @Label_main_2
 
 Call @menu_modify_game_state
@@ -51,6 +51,20 @@ Jump @while
 
 :Label_main_end
 Return 0 0
+
+:trainer_get_open_state
+Function 1 0 4
+
+StaticGet1 6
+Return 0 1
+
+:trainer_set_open_state
+Function 1 1 4
+
+getF 0
+StaticSet1 6
+
+Return 1 0
 
 :trainer_network_while_set
 Function 1 0 4
@@ -101,7 +115,7 @@ Function 1 0 3
 StaticGet1 19
 Push1 10
 JumpLE @Label_catch_load_2
-StaticGet1 6
+Call @trainer_get_open_state
 JumpFalse @Label_catch_load_2
 iPush_-1
 PushString "CANCEL"
@@ -114,11 +128,11 @@ Call @menu_hide
 StaticGet1 8
 Push1 10
 JumpLE @Label_catch_load_4
-StaticGet1 6
+Call @trainer_get_open_state
 Not
 JumpFalse @Label_catch_load_4
 iPush_1
-StaticSet1 6
+Call @trainer_set_open_state
 iPush_0
 StaticSet1 11
 Call @menu_clean
@@ -144,7 +158,15 @@ iPush_2
 Push1 176
 CallNative is_control_pressed 2 1
 JumpFalse @Label_network_load_pressed_3
-StaticGet1 6
+
+iPush_0
+Push1 22
+CallNative disable_control_action 2 0
+iPush_0
+Push1 42
+CallNative disable_control_action 2 0
+
+Call @trainer_get_open_state
 JumpFalse @Label_network_load_pressed_4
 
 iPush_0
@@ -302,6 +324,13 @@ Return 0 0
 PushString "Debug"
 StaticSet1 10
 
+Call @trainer_get_vehicle
+Not
+JumpFalse @Label_debug_last_selected_3_1
+PushString "Warning no vehicle handle ID."
+Call @menu_msg
+
+:Label_debug_last_selected_3_1
 CallNative player_ped_id 0 1
 pFrame1 4
 CallNative get_ped_last_damage_bone 2 1
@@ -349,6 +378,61 @@ Call @menu_addItem_action
 
 PushString "air_drag 0.5"
 Call @menu_addItem_action
+
+PushString "garage 0"
+Call @menu_addItem
+iPush_0
+iPush_0
+pglobal3 2097152
+ArrayGetP2 3214
+ArrayGetP1 81
+GetImmediate1 42
+iPush_0
+iPush_5
+Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "garage 1"
+Call @menu_addItem
+iPush_1
+iPush_0
+pglobal3 2097152
+ArrayGetP2 3214
+ArrayGetP1 81
+GetImmediate1 42
+iPush_0
+iPush_5
+Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "garage 2"
+Call @menu_addItem
+iPush_2
+iPush_0
+pglobal3 2097152
+ArrayGetP2 3214
+ArrayGetP1 81
+GetImmediate1 42
+iPush_0
+iPush_5
+Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "set mod kit"
+Call @menu_addItem
+StaticGet2 412
+iPush_0
+Push1 10
+Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "set mod variation"
+Call @menu_addItem
+StaticGet2 413
+iPush_0
+Push1 10
+Call @menu_addItem_number
+Call @menu_add_action
 
 Return 0 0
 
@@ -707,7 +791,7 @@ Return 0 0
 PushString "Vehicle - Mod"
 StaticSet1 10
 StaticGet2 379
-iPush_0
+StaticGet2 412
 CallNative set_vehicle_mod_kit 2 0
 pFrame1 5
 Push1 27
@@ -1636,7 +1720,7 @@ Call @menu_add_action
 PushString "Plate Type"
 Call @menu_addItem
 StaticGet2 379
-CallNative get_vehicle_plate_type 1 1
+CallNative unk_0x499747B6 1 1
 Add1 1
 iPush_1
 CallNative unk_0xD24BC1AE 0 1
@@ -1775,6 +1859,19 @@ Return 0 0
 :trainer_vehicle_level_4
 Function 1 0 4
 
+iPush_0
+iPush_1
+pstatic2 61
+ArrayGet1 1
+JumpEq @Label_trainer_vehicle_level_4_1
+Call @trainer_get_vehicle
+Not
+JumpFalse @Label_trainer_vehicle_level_4_1
+iPush_1
+Call @trainer_error_vehicle
+Return 0 0
+
+:Label_trainer_vehicle_level_4_1
 iPush_1
 pstatic2 61
 ArrayGet1 1
@@ -3904,8 +4001,11 @@ Return 0 0
 :trainer_debug_action_level_1
 Function 1 0 4
 
+Call @trainer_get_vehicle
+drop
+
 StaticGet1 4
-Switch [0 @Label_trainer_debug_action_level_1_last_selected_0]:[1 @Label_trainer_debug_action_level_1_last_selected_1]:[3 @Label_trainer_debug_action_level_1_last_selected_3]:[4 @Label_trainer_debug_action_level_1_last_selected_4]:[5 @Label_trainer_debug_action_level_1_last_selected_5]:[6 @Label_trainer_debug_action_level_1_last_selected_6]:[7 @Label_trainer_debug_action_level_1_last_selected_7]:[8 @Label_trainer_debug_action_level_1_last_selected_8]
+Switch [0 @Label_trainer_debug_action_level_1_last_selected_0]:[1 @Label_trainer_debug_action_level_1_last_selected_1]:[3 @Label_trainer_debug_action_level_1_last_selected_3]:[4 @Label_trainer_debug_action_level_1_last_selected_4]:[5 @Label_trainer_debug_action_level_1_last_selected_5]:[6 @Label_trainer_debug_action_level_1_last_selected_6]:[7 @Label_trainer_debug_action_level_1_last_selected_7]:[8 @Label_trainer_debug_action_level_1_last_selected_8]:[9 @Label_trainer_debug_action_level_1_last_selected_9]:[10 @Label_trainer_debug_action_level_1_last_selected_10]
 Jump @Label_trainer_debug_action_level_1_end
 
 :Label_trainer_debug_action_level_1_last_selected_0
@@ -3967,6 +4067,20 @@ CallNative player_id 0 1
 fPush 0.5
 CallNative set_air_drag_multiplier_for_players_vehicle 2 0
 PushString "air_drag set to 0.5"
+Call @menu_msg
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_9
+Call @menu_get_current_number
+StaticSet2 412
+PushString "debug_mod_kit set"
+Call @menu_msg
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_10
+Call @menu_get_current_number
+StaticSet2 413
+PushString "debug_mod_variation set"
 Call @menu_msg
 Return 0 0
 
@@ -4656,7 +4770,7 @@ Return 0 0
 Function 1 0 4
 
 StaticGet2 379
-iPush_0
+StaticGet2 412
 CallNative set_vehicle_mod_kit 2 0
 
 iPush_2
@@ -4677,7 +4791,7 @@ CallNative remove_vehicle_mod 2 0
 StaticGet2 379
 getF 3
 Call @menu_get_current_number
-iPush_0
+StaticGet2 413
 CallNative set_vehicle_mod 4 0
 Jump @Label_trainer_vehicle_mod_action_level_3_end
 
@@ -6417,12 +6531,12 @@ StaticSet1 5
 CallNative network_is_game_in_progress 0 1
 JumpFalse @Label_menu_setup_not_network
 iPush_0
-StaticSet1 6
+Call @trainer_set_open_state
 Jump @Label_menu_setup_continue
 
 :Label_menu_setup_not_network
 iPush_1
-StaticSet1 6
+Call @trainer_set_open_state
 
 :Label_menu_setup_continue
 iPush_0
@@ -6473,6 +6587,19 @@ Return 0 0
 
 :menu_modify_game_state
 Function 1 0 2
+
+pglobal2 13241
+GetImmediate2 6183
+Not
+JumpFalse @Label_menu_modify_game_state_1
+Call @menu_modify_game_state_globals
+
+:Label_menu_modify_game_state_1
+iPush_0
+pglobal2 13241
+SetImmediate2 6183
+
+
 CallNative hide_help_text_this_frame 0 0
 iPush_0
 CallNative set_cinematic_button_active 1 0
@@ -6668,6 +6795,264 @@ CallNative disable_control_action 2 0
 
 :menu_modify_game_state_end
 Return 0 0
+
+:menu_modify_game_state_globals
+Function 1 0 2
+pglobal2 10433
+GetImmediate1 1
+iPush_1
+CmpEq
+Not
+JumpFalse @menu_modify_game_state_globals_end
+iPush_0
+Call @menu_get_mobile_globals
+JumpFalse @menu_modify_game_state_globals_1
+iPush_0
+Call @Label_menu_set_mobile_globals_297
+
+:menu_modify_game_state_globals_1
+pglobal2 1687
+iPush_2
+CallNative set_bit 2 0
+
+:menu_modify_game_state_globals_end
+Return 0 0
+
+:Label_menu_set_mobile_globals_297
+Function 38 1 3
+globalget2 10588
+JumpFalse @Label_menu_set_mobile_globals_298
+iPush_0
+iPush_0
+Call @menu_set_mobile_position_299
+
+:Label_menu_set_mobile_globals_298
+pglobal2 10433
+GetImmediate1 1
+Push1 10
+CmpEq
+dup
+Not
+JumpFalse @Label_menu_set_mobile_globals_300
+pglobal2 10433
+GetImmediate1 1
+Push1 9
+CmpEq
+Or
+
+:Label_menu_set_mobile_globals_300
+JumpFalse @Label_menu_set_mobile_globals_301
+pglobal2 1687
+Push1 16
+CallNative set_bit 2 0
+
+:Label_menu_set_mobile_globals_301
+CallNative is_mobile_phone_call_ongoing 0 1
+JumpFalse @Label_menu_set_mobile_globals_302
+iPush_0
+CallNative stop_scripted_conversation 1 1
+drop
+
+:Label_menu_set_mobile_globals_302
+iPush_5
+globalset2 11728
+getF 0
+iPush_1
+JumpNE @Label_menu_set_mobile_globals_303
+pglobal2 1686
+Push1 30
+CallNative set_bit 2 0
+Jump @Label_menu_set_mobile_globals_304
+
+:Label_menu_set_mobile_globals_303
+pglobal2 1686
+Push1 30
+CallNative clear_bit 2 0
+
+:Label_menu_set_mobile_globals_304
+Call @menu_set_mobile_globals_2_305
+Not
+JumpFalse @Label_menu_set_mobile_globals_306
+iPush_3
+pglobal2 10433
+SetImmediate1 1
+
+:Label_menu_set_mobile_globals_306
+Return 1 0
+
+:menu_set_mobile_globals_2_305
+Function 1 0 2
+pglobal2 10433
+GetImmediate1 1
+iPush_1
+CmpEq
+dup
+Not
+JumpFalse @Label_menu_set_mobile_globals_2_307
+pglobal2 10433
+GetImmediate1 1
+iPush_0
+CmpEq
+Or
+
+:Label_menu_set_mobile_globals_2_307
+JumpFalse @Label_menu_set_mobile_globals_2_308
+iPush_1
+Return 0 1
+
+:Label_menu_set_mobile_globals_2_308
+iPush_0
+Return 0 1
+
+:menu_set_mobile_position_299
+Function 1 2 4
+getF 0
+JumpFalse @Label_menu_set_mobile_position_309
+iPush_0
+Call @menu_get_mobile_globals_2_295
+JumpFalse @Label_menu_set_mobile_position_310
+iPush_1
+globalset2 10588
+getF 1
+JumpFalse @Label_menu_set_mobile_position_311
+pglobal2 10370
+CallNative get_mobile_phone_position 1 0
+
+:Label_menu_set_mobile_position_311
+iPush_3
+globalget2 10378
+pglobal2 10379
+ArrayGetP1 3
+ToStack
+iPush_3
+pglobal2 10361
+FromStack
+iPush_3
+pglobal2 10361
+ToStack
+CallNative set_mobile_phone_position 3 0
+
+:Label_menu_set_mobile_position_310
+Jump @Label_menu_set_mobile_position_312
+
+:Label_menu_set_mobile_position_309
+globalget2 10588
+iPush_1
+JumpNE @Label_menu_set_mobile_position_312
+iPush_0
+globalset2 10588
+iPush_3
+globalget2 10378
+pglobal2 10386
+ArrayGetP1 3
+ToStack
+iPush_3
+pglobal2 10361
+FromStack
+getF 1
+JumpFalse @Label_menu_set_mobile_position_313
+iPush_3
+pglobal2 10370
+ToStack
+CallNative set_mobile_phone_position 3 0
+Jump @Label_menu_set_mobile_position_312
+
+:Label_menu_set_mobile_position_313
+iPush_3
+pglobal2 10361
+ToStack
+CallNative set_mobile_phone_position 3 0
+
+:Label_menu_set_mobile_position_312
+Return 2 0
+
+:menu_get_mobile_globals_2_295
+Function 41 1 3
+getF 0
+iPush_1
+JumpNE @Label_menu_get_mobile_globals_2_314
+pglobal2 10433
+GetImmediate1 1
+iPush_3
+JumpLE @Label_menu_get_mobile_globals_2_315
+globalget2 1686
+Push1 14
+CallNative is_bit_set 2 1
+JumpFalse @Label_menu_get_mobile_globals_2_316
+iPush_1
+Return 1 1
+
+:Label_menu_get_mobile_globals_2_316
+iPush_0
+Return 1 1
+
+:Label_menu_get_mobile_globals_2_315
+iPush_0
+Return 1 1
+
+:Label_menu_get_mobile_globals_2_314
+Push -754107665
+CallNative unk_0x029D3841 1 1
+iPush_0
+JumpLE @Label_menu_get_mobile_globals_2_319
+iPush_1
+Return 1 1
+
+:Label_menu_get_mobile_globals_2_319
+pglobal2 10433
+GetImmediate1 1
+iPush_3
+JumpLE @Label_menu_get_mobile_globals_2_320
+iPush_1
+Return 1 1
+
+:Label_menu_get_mobile_globals_2_320
+iPush_0
+Return 1 1
+
+:menu_get_mobile_globals
+Function 41 1 3
+getF 0
+iPush_1
+JumpNE @Label_menu_get_mobile_globals_314
+pglobal2 10433
+GetImmediate1 1
+iPush_3
+JumpLE @Label_menu_get_mobile_globals_315
+globalget2 1686
+Push1 14
+CallNative is_bit_set 2 1
+JumpFalse @Label_menu_get_mobile_globals_316
+iPush_1
+Return 1 1
+
+:Label_menu_get_mobile_globals_316
+iPush_0
+Return 1 1
+
+:Label_menu_get_mobile_globals_315
+iPush_0
+Return 1 1
+
+:Label_menu_get_mobile_globals_314
+Push -754107665
+CallNative unk_0x029D3841 1 1
+iPush_0
+JumpLE @Label_menu_get_mobile_globals_319
+iPush_1
+Return 1 1
+
+:Label_menu_get_mobile_globals_319
+pglobal2 10433
+GetImmediate1 1
+iPush_3
+JumpLE @Label_menu_get_mobile_globals_320
+iPush_1
+Return 1 1
+
+:Label_menu_get_mobile_globals_320
+iPush_0
+Return 1 1
 
 :menu_reverse_game_state
 Function 1 0 2
@@ -7297,7 +7682,7 @@ CallNative set_streamed_texture_dict_as_no_longer_needed 1 0
 CallNative network_is_game_in_progress 0 1
 JumpFalse @menu_hide_not_network
 iPush_0
-StaticSet1 6
+Call @trainer_set_open_state
 Jump @menu_hide_end
 
 :menu_hide_not_network

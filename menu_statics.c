@@ -143,5 +143,11 @@ Static_384
 // trainer_stored_selected (25)
 Static[385]
 
-// network_boost_mode_always_on
+// (bool) network_boost_mode_always_on
 Static_411
+
+// (uint) debug_mod_kit
+Static_412
+
+// (uint) debug_mod_variation
+Static_413
