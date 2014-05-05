@@ -5981,12 +5981,12 @@ iPush_1
 iPush_0
 pstatic2 61
 ArrayGet1 1
-JumpNE @Label_trainer_catch_button_level_3
+JumpNE @Label_trainer_catch_button_wheel_goto_end
 iPush_1
 iPush_1
 pstatic2 61
 ArrayGet1 1
-JumpNE @Label_trainer_catch_button_level_3
+JumpNE @Label_trainer_catch_button_wheel_goto_end
 
 Push1 23
 StaticGet1 4
@@ -6004,10 +6004,16 @@ CmpEq
 Or
 
 :Label_trainer_catch_button_wheel_or
-JumpFalse @Label_trainer_catch_button_level_3
+JumpFalse @Label_trainer_catch_button_wheel_goto_end
 StaticGet2 379
 Call @menu_get_current_number
 CallNative set_vehicle_wheel_type 2 0
+iPush_0
+StaticSet1 11
+Call @menu_clean
+
+:Label_trainer_catch_button_wheel_goto_end
+Jump @Label_trainer_catch_button_press_end
 
 :Label_trainer_catch_button_level_3
 iPush_3
