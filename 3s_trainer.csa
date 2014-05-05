@@ -1474,9 +1474,6 @@ Return 0 0
 PushString "Vehicle - Respray"
 StaticSet1 10
 
-PushString "Custom"
-Call @menu_addItem
-
 PushString "Chrome"
 Call @menu_addItem
 
@@ -1500,6 +1497,29 @@ Call @menu_addItem
 
 PushString "Miscellaneous"
 Call @menu_addItem
+
+iPush_0
+iPush_2
+pstatic2 61
+ArrayGet1 1
+CmpEq
+dup
+Not
+JumpFalse @Label_trainer_vehicle_colour_level_3_or
+iPush_1
+iPush_2
+pstatic2 61
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_trainer_vehicle_colour_level_3_or
+JumpFalse @Label_trainer_vehicle_colour_level_3_end
+
+PushString "Custom"
+Call @menu_addItem
+
+:Label_trainer_vehicle_colour_level_3_end
 Return 0 0
 
 :Label_vehicle_level_3_last_selected_4
@@ -1796,39 +1816,39 @@ Switch [0 @Label_vehicle_colour_level_4_last_selected_0]:[1 @Label_vehicle_colou
 Jump @Label_trainer_vehicle_colour_level_4_end
 
 :Label_vehicle_colour_level_4_last_selected_0
-Call @trainer_vehicle_colour_custom
-Return 0 0
-
-:Label_vehicle_colour_level_4_last_selected_1
 Call @trainer_vehicle_colour_6
 Return 0 0
 
-:Label_vehicle_colour_level_4_last_selected_2
+:Label_vehicle_colour_level_4_last_selected_1
 Call @trainer_vehicle_colour_2
 Return 0 0
 
-:Label_vehicle_colour_level_4_last_selected_3
+:Label_vehicle_colour_level_4_last_selected_2
 Call @trainer_vehicle_colour_3
 Return 0 0
 
-:Label_vehicle_colour_level_4_last_selected_4
+:Label_vehicle_colour_level_4_last_selected_3
 Call @trainer_vehicle_colour_4
 Return 0 0
 
-:Label_vehicle_colour_level_4_last_selected_5
+:Label_vehicle_colour_level_4_last_selected_4
 Call @trainer_vehicle_colour_0
 Return 0 0
 
-:Label_vehicle_colour_level_4_last_selected_6
+:Label_vehicle_colour_level_4_last_selected_5
 Call @trainer_vehicle_colour_1
 Return 0 0
 
-:Label_vehicle_colour_level_4_last_selected_7
+:Label_vehicle_colour_level_4_last_selected_6
 Call @trainer_vehicle_colour_5
 Return 0 0
 
-:Label_vehicle_colour_level_4_last_selected_8
+:Label_vehicle_colour_level_4_last_selected_7
 Call @trainer_vehicle_colour_7
+Return 0 0
+
+:Label_vehicle_colour_level_4_last_selected_8
+Call @trainer_vehicle_colour_custom
 Return 0 0
 
 :Label_trainer_vehicle_colour_level_4_end
@@ -4574,14 +4594,14 @@ iPush_1
 StaticSet1 7
 
 StaticGet1 26
-Switch [0 @Label_trainer_change_player_model_action_0]:[1 @Label_trainer_change_player_model_action_1]
+Switch [0 @Label_trainer_change_player_model_action_0]:[1 @Label_trainer_change_player_model_action_1]:[2 @Label_trainer_change_player_model_action_2]
 Jump @Label_trainer_change_player_model_action_end
 
 :Label_trainer_change_player_model_action_0
 getF 0
 CallNative is_model_in_cdimage 1 1
 Not
-JumpFalse @Label_trainer_change_player_model_action_continue
+JumpFalse @Label_trainer_change_player_model_action_0_end
 PushString "Model does not exist."
 iPush_0
 Call @menu_error
@@ -4589,20 +4609,25 @@ iPush_0
 StaticSet1 7
 Return 1 0
 
-:Label_trainer_change_player_model_action_continue
+:Label_trainer_change_player_model_action_0_end
+iPush_1
+StaticSet1 26
+Return 1 0
+
+:Label_trainer_change_player_model_action_1
 getF 0
 CallNative request_model 1 0
 
 getF 0
 CallNative has_model_loaded 1 1
-JumpFalse @Label_trainer_change_player_model_action_0_end
-iPush_1
+JumpFalse @Label_trainer_change_player_model_action_1_end
+iPush_2
 StaticSet1 26
 
-:Label_trainer_change_player_model_action_0_end
+:Label_trainer_change_player_model_action_1_end
 Return 1 0
 
-:Label_trainer_change_player_model_action_1
+:Label_trainer_change_player_model_action_2
 iPush_0
 StaticSet1 7
 getF 0
@@ -4638,12 +4663,6 @@ CallNative player_id 0 1
 getF 0
 CallNative set_player_model 2 0
 
-CallNative player_ped_id 0 1
-CallNative set_ped_default_component_variation 1 0
-
-getF 0
-CallNative set_model_as_no_longer_needed 1 0
-
 getF 4
 CallNative does_entity_exist 1 1
 JumpFalse @Label_trainer_change_player_model_not_exist
@@ -4653,6 +4672,12 @@ iPush_-1
 CallNative set_ped_into_vehicle 3 0
 
 :Label_trainer_change_player_model_not_exist
+CallNative player_ped_id 0 1
+CallNative set_ped_default_component_variation 1 0
+
+getF 0
+CallNative set_model_as_no_longer_needed 1 0
+
 getF 3
 CallNative set_gameplay_cam_relative_heading 1 0
 
@@ -5135,7 +5160,7 @@ pstatic2 61
 ArrayGet1 1
 JumpNE @Label_trainer_vehicle_action_colour_1
 
-iPush_0
+Push1 8
 iPush_3
 pstatic2 61
 ArrayGet1 1
@@ -5171,7 +5196,7 @@ pstatic2 61
 ArrayGet1 1
 JumpNE @Label_trainer_vehicle_action_colour_2
 
-iPush_0
+Push1 8
 iPush_3
 pstatic2 61
 ArrayGet1 1
@@ -5236,7 +5261,7 @@ iPush_1
 StaticSet1 7
 
 StaticGet1 26
-Switch [0 @Label_trainer_spawn_veh_action_0]:[1 @Label_trainer_spawn_veh_action_1]
+Switch [0 @Label_trainer_spawn_veh_action_0]:[1 @Label_trainer_spawn_veh_action_1]:[2 @Label_trainer_spawn_veh_action_2]
 Jump @Label_trainer_spawn_veh_action_end
 
 :Label_trainer_spawn_veh_action_0
@@ -5252,19 +5277,24 @@ StaticSet1 7
 Return 1 0
 
 :Label_trainer_spawn_veh_action_continue
+iPush_1
+StaticSet1 26
+Return 1 0
+
+:Label_trainer_spawn_veh_action_1
 getF 0
 CallNative request_model 1 0
 
 getF 0
 CallNative has_model_loaded 1 1
-JumpFalse @Label_trainer_spawn_veh_action_0_end
-iPush_1
+JumpFalse @Label_trainer_spawn_veh_action_1_end
+iPush_2
 StaticSet1 26
 
-:Label_trainer_spawn_veh_action_0_end
+:Label_trainer_spawn_veh_action_1_end
 Return 1 0
 
-:Label_trainer_spawn_veh_action_1
+:Label_trainer_spawn_veh_action_2
 iPush_0
 StaticSet1 7
 getF 0
