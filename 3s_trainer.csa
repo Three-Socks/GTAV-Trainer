@@ -555,11 +555,11 @@ Call @menu_addItem
 iPush_-1
 CallNative player_ped_id 0 1
 iPush_0
-CallNative unk_0x922A6653 2 1
+CallNative get_ped_prop_texture_index 2 1
 JumpNE @Label_trainer_player_level_2_last_selected_2_1
 CallNative player_ped_id 0 1
 iPush_0
-CallNative unk_0x922A6653 2 1
+CallNative get_ped_prop_texture_index 2 1
 Add1 2
 iPush_1
 Push1 30
@@ -569,7 +569,7 @@ Jump @Label_trainer_player_level_2_last_selected_2_2
 :Label_trainer_player_level_2_last_selected_2_1
 CallNative player_ped_id 0 1
 iPush_0
-CallNative unk_0x922A6653 2 1
+CallNative get_ped_prop_texture_index 2 1
 Add1 1
 iPush_1
 Push1 30
@@ -595,11 +595,11 @@ Call @menu_addItem
 iPush_-1
 CallNative player_ped_id 0 1
 iPush_1
-CallNative unk_0x922A6653 2 1
+CallNative get_ped_prop_texture_index 2 1
 JumpNE @Label_trainer_player_level_2_last_selected_2_3
 CallNative player_ped_id 0 1
 iPush_1
-CallNative unk_0x922A6653 2 1
+CallNative get_ped_prop_texture_index 2 1
 Add1 2
 iPush_1
 Push1 30
@@ -609,7 +609,7 @@ Jump @Label_trainer_player_level_2_last_selected_2_4
 :Label_trainer_player_level_2_last_selected_2_3
 CallNative player_ped_id 0 1
 iPush_1
-CallNative unk_0x922A6653 2 1
+CallNative get_ped_prop_texture_index 2 1
 Add1 1
 iPush_1
 Push1 30
@@ -1039,7 +1039,7 @@ StaticGet2 379
 CallNative get_vehicle_window_tint 1 1
 Add1 1
 iPush_0
-CallNative unk_0x625C7B66 0 1
+CallNative get_num_vehicle_window_tints 0 1
 Call @menu_addItem_number
 Jump @Label_trainer_vehicle_mod_level_2_mod_tinted_2
 
@@ -1047,7 +1047,7 @@ Jump @Label_trainer_vehicle_mod_level_2_mod_tinted_2
 StaticGet2 379
 CallNative get_vehicle_window_tint 1 1
 iPush_0
-CallNative unk_0x625C7B66 0 1
+CallNative get_num_vehicle_window_tints 0 1
 Call @menu_addItem_number
 
 :Label_trainer_vehicle_mod_level_2_mod_tinted_2
@@ -1062,7 +1062,7 @@ Jump @Label_trainer_vehicle_mod_level_2_mod_count
 :Label_trainer_vehicle_mod_level_2_mod_normal
 StaticGet2 379
 getF 3
-CallNative unk_0x8A814FF9 2 1
+CallNative get_num_vehicle_mods 2 1
 iPush_0
 JumpLE @Label_trainer_vehicle_mod_level_2_mod_count
 
@@ -1939,7 +1939,7 @@ pstatic2 61
 ArrayGet1 1
 pstatic2 385
 ArrayGet1 1
-CallNative unk_0x8A814FF9 2 1
+CallNative get_num_vehicle_mods 2 1
 JumpGE @Label_trainer_vehicle_mod_level_3_end
 
 Push1 23
@@ -2117,10 +2117,10 @@ Call @menu_add_action
 PushString "Plate Type"
 Call @menu_addItem
 StaticGet2 379
-CallNative unk_0x499747B6 1 1
+CallNative get_vehicle_number_plate_text_index 1 1
 Add1 1
 iPush_1
-CallNative unk_0xD24BC1AE 0 1
+CallNative get_number_of_vehicle_number_plates 0 1
 Call @menu_addItem_number
 Call @menu_add_action
 Return 0 0
@@ -5408,7 +5408,7 @@ StaticGet2 379
 Call @menu_get_current_number
 iPush_1
 Sub
-CallNative unk_0xA1A1890E 2 0
+CallNative set_vehicle_number_plate_text_index 2 0
 Return 0 0
 
 :Label_trainer_vehicle_plate_action_level_3_end
@@ -5433,7 +5433,7 @@ Return 0 0
 StaticGet2 379
 Call @menu_get_current_bool
 Not
-CallNative unk_0x072F15F2 2 0
+CallNative set_vehicle_boost_active 2 0
 Call @menu_toggle_current_bool
 Return 0 0
 
