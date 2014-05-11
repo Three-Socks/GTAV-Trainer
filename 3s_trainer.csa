@@ -8707,19 +8707,18 @@ Return 1 1
 
 :menu_up_pressed
 Function 1 1 4
+
 iPush_2
 Push1 162
 CallNative is_disabled_control_just_pressed 2 1
-JumpFalse @Label_menu_up_pressed_not
-iPush_1
-StaticSet1 14
-iPush_1
-Return 1 1
-Jump @Label_menu_up_pressed_hold
-
-:Label_menu_up_pressed_not
+dup
+Not
+JumpFalse @Label_menu_up_pressed_or
 Push1 162
 Call @menu_is_hold_pressed
+Or
+
+:Label_menu_up_pressed_or
 JumpFalse @Label_menu_up_pressed_hold
 iPush_1
 StaticSet1 14
@@ -8741,16 +8740,14 @@ Function 1 1 4
 iPush_2
 Push1 161
 CallNative is_disabled_control_just_pressed 2 1
-JumpFalse @Label_menu_down_pressed_not
-iPush_1
-StaticSet1 14
-iPush_1
-Return 1 1
-Jump @Label_menu_down_pressed_hold
-
-:Label_menu_down_pressed_not
+dup
+Not
+JumpFalse @Label_menu_down_pressed_or
 Push1 161
 Call @menu_is_hold_pressed
+Or
+
+:Label_menu_down_pressed_or
 JumpFalse @Label_menu_down_pressed_hold
 iPush_1
 StaticSet1 14
@@ -8772,16 +8769,14 @@ Function 1 1 4
 iPush_2
 Push1 163
 CallNative is_disabled_control_just_pressed 2 1
-JumpFalse @Label_menu_left_pressed_not
-iPush_1
-StaticSet1 14
-iPush_1
-Return 1 1
-Jump @Label_menu_left_pressed_hold
-
-:Label_menu_left_pressed_not
+dup
+Not
+JumpFalse @Label_menu_left_pressed_or
 Push1 163
 Call @menu_is_hold_pressed
+Or
+
+:Label_menu_left_pressed_or
 JumpFalse @Label_menu_left_pressed_hold
 iPush_1
 StaticSet1 14
@@ -8803,16 +8798,14 @@ Function 1 1 4
 iPush_2
 Push1 164
 CallNative is_disabled_control_just_pressed 2 1
-JumpFalse @Label_menu_right_pressed_not
-iPush_1
-StaticSet1 14
-iPush_1
-Return 1 1
-Jump @Label_menu_right_pressed_hold
-
-:Label_menu_right_pressed_not
+dup
+Not
+JumpFalse @Label_menu_right_pressed_or
 Push1 164
 Call @menu_is_hold_pressed
+Or
+
+:Label_menu_right_pressed_or
 JumpFalse @Label_menu_right_pressed_hold
 iPush_1
 StaticSet1 14
