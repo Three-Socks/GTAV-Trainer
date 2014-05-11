@@ -55,15 +55,14 @@ Return 0 0
 :menu_get_open_state
 Function 1 0 4
 
-StaticGet1 6
+globalget3 2623872
 Return 0 1
 
 :menu_set_open_state
 Function 1 1 4
 
 getF 0
-StaticSet1 6
-
+globalset3 2623872
 Return 1 0
 
 :trainer_network_while_set
@@ -131,6 +130,22 @@ JumpLE @Label_catch_load_4
 Call @menu_get_open_state
 Not
 JumpFalse @Label_catch_load_4
+
+CallNative player_ped_id 0 1
+CallNative is_ped_going_into_cover 1 1
+dup
+Not
+JumpFalse @Label_catch_load_cover_or
+CallNative player_ped_id 0 1
+CallNative is_ped_jumping 1 1
+Or
+
+:Label_catch_load_cover_or
+JumpFalse @Label_catch_load_cover
+CallNative player_ped_id 0 1
+CallNative clear_ped_tasks_immediately 1 0
+
+:Label_catch_load_cover
 iPush_1
 Call @menu_set_open_state
 iPush_0
@@ -4236,6 +4251,46 @@ iPush_3
 StaticGet1 7
 JumpNE @Label_action_end
 
+iPush_3
+StaticGet1 9
+CmpEq
+dup
+JumpFalse @Label_action_3_and_1
+iPush_1
+iPush_0
+pstatic2 61
+ArrayGet1 1
+CmpEq
+And
+
+:Label_action_3_and_1
+dup
+JumpFalse @Label_action_3_and
+iPush_0
+iPush_1
+pstatic2 61
+ArrayGet1 1
+CmpEq
+And
+
+:Label_action_3_and
+JumpFalse @Label_action_keyboard_string
+StaticGet2 378
+CallNative does_entity_exist 1 1
+JumpFalse @Label_action_3_goto_end
+
+StaticGet2 378
+iPush_0
+iPush_1
+CallNative set_entity_as_mission_entity 3 0
+
+pstatic2 378
+CallNative delete_vehicle 1 0
+
+:Label_action_3_goto_end
+Jump @Label_action_end
+
+:Label_action_keyboard_string
 iPush_6
 StaticGet1 4
 pstatic1 123
@@ -4735,81 +4790,307 @@ Switch [0 @Label_trainer_player_weapon_action_level_2_last_selected_0]:[1 @Label
 Jump @Label_trainer_player_weapon_action_level_2_end
 
 :Label_trainer_player_weapon_action_level_2_last_selected_0
+
 CallNative player_ped_id 0 1
-Push GetHash("WEAPON_KNIFE")
+Push -1569615261
 iPush_-1
 iPush_0
-CallNative give_delayed_weapon_to_ped 4 0
+iPush_0
+CallNative give_weapon_to_ped 5 0
 CallNative player_ped_id 0 1
-Push GetHash("WEAPON_STUNGUN")
+Push -100946242
+iPush_-1
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 148160082
+iPush_-1
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -1716189206
+iPush_-1
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 1737195953
+iPush_-1
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 1317494643
+iPush_-1
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -1786099057
+iPush_-1
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 1141786504
+iPush_-1
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -2067956739
+iPush_-1
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 453432689
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 1593441988
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 584646201
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -1716589765
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 324215364
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 736523883
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -270015777
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -1074790547
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -2084633992
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -1357824103
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -1660422300
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 2144741730
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 487013001
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 2017895192
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -494615257
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -1654528753
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 911657153
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 100416529
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 205991906
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 856002082
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -1568386805
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 1305664598
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -1312131151
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 375527679
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 324506233
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 1752584910
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 1119849093
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -1813897027
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 741814745
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -37975472
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -1600701090
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 615608432
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 101631238
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 883325847
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -38085395
 iPush_1
 iPush_0
-CallNative give_delayed_weapon_to_ped 4 0
+iPush_0
+CallNative give_weapon_to_ped 5 0
 CallNative player_ped_id 0 1
-Push GetHash("GADGET_PARACHUTE")
+Push -1491061156
 iPush_1
 iPush_0
-CallNative give_delayed_weapon_to_ped 4 0
-CallNative player_ped_id 0 1
-Push GetHash("WEAPON_PISTOL")
-PushS 900
 iPush_0
-CallNative give_delayed_weapon_to_ped 4 0
+CallNative give_weapon_to_ped 5 0
 CallNative player_ped_id 0 1
-Push GetHash("WEAPON_COMBATPISTOL")
-PushS 900
-iPush_0
-CallNative give_delayed_weapon_to_ped 4 0
-CallNative player_ped_id 0 1
-Push GetHash("WEAPON_APPISTOL")
-PushS 900
-iPush_0
-CallNative give_delayed_weapon_to_ped 4 0
-CallNative player_ped_id 0 1
-Push GetHash("WEAPON_SMG")
-PushS 900
-iPush_0
-CallNative give_delayed_weapon_to_ped 4 0
-CallNative player_ped_id 0 1
-Push GetHash("WEAPON_ADVANCEDRIFLE")
-PushS 900
+Push -72657034
 iPush_1
-CallNative give_delayed_weapon_to_ped 4 0
-CallNative player_ped_id 0 1
-Push GetHash("WEAPON_GUSENBERG")
-PushS 900
 iPush_0
-CallNative give_delayed_weapon_to_ped 4 0
-CallNative player_ped_id 0 1
-Push GetHash("WEAPON_PUMPSHOTGUN")
-PushS 900
 iPush_0
-CallNative give_delayed_weapon_to_ped 4 0
+CallNative give_weapon_to_ped 5 0
 CallNative player_ped_id 0 1
-Push GetHash("WEAPON_SNIPERRIFLE")
-PushS 900
+Push -2000187721
+iPush_1
 iPush_0
-CallNative give_delayed_weapon_to_ped 4 0
+iPush_0
+CallNative give_weapon_to_ped 5 0
 CallNative player_ped_id 0 1
-Push GetHash("WEAPON_GRENADE")
-Push1 20
+Push 28811031
+iPush_1
 iPush_0
-CallNative give_delayed_weapon_to_ped 4 0
+iPush_0
+CallNative give_weapon_to_ped 5 0
 CallNative player_ped_id 0 1
-Push GetHash("WEAPON_STICKYBOMB")
-Push1 20
+Push 600439132
+PushS 500
 iPush_0
-CallNative give_delayed_weapon_to_ped 4 0
+iPush_0
+CallNative give_weapon_to_ped 5 0
 CallNative player_ped_id 0 1
-Push GetHash("WEAPON_RPG")
-Push1 20
+Push 1233104067
+PushS 500
 iPush_0
-CallNative give_delayed_weapon_to_ped 4 0
-CallNative player_ped_id 0 1
-Push GetHash("WEAPON_MINIGUN")
-PushS 900
 iPush_0
-CallNative give_delayed_weapon_to_ped 4 0
+CallNative give_weapon_to_ped 5 0
 
 :Label_trainer_player_weapon_action_level_2_last_selected_0_end
 Return 0 0
@@ -6475,6 +6756,9 @@ Return 0 0
 :menu_draw_frontend_hook
 Function 1 0 4
 
+StaticGet1 46
+setF 3
+
 iPush_6
 StaticGet1 4
 pstatic1 123
@@ -6493,6 +6777,11 @@ Or
 :Label_menu_draw_frontend_hook_or
 JumpFalse @Label_menu_draw_frontend_hook_end
 
+getF 3
+Add1 1
+setF 3
+
+getF 3
 Push1 32
 PushString "Edit With Keyboard"
 Call @menu_add_frontend
@@ -6912,30 +7201,29 @@ ArraySet1 1
 Return 2 0
 
 :menu_add_frontend
-Function 1 2 4
+Function 1 3 5
 
 StaticGet1 12
 PushString "SET_DATA_SLOT"
 CallNative unk_0x215ABBE8 2 1
 drop
-StaticGet1 46
-Add1 1
-CallNative unk_0x716777CB 1 0
 getF 0
 CallNative unk_0x716777CB 1 0
-
 getF 1
+CallNative unk_0x716777CB 1 0
+
+getF 2
 CallNative does_text_label_exist 1 1
 JumpFalse @Label_menu_add_frontend_string
 
-getF 1
+getF 2
 CallNative clear_player_has_2_characters_enable 1 0
 Jump @Label_menu_add_frontend_gxt
 
 :Label_menu_add_frontend_string
 PushString "STRING"
 CallNative clear_player_has_2_characters_enable 1 0
-getF 1
+getF 2
 CallNative unk_0x27A244D8 1 0
 
 :Label_menu_add_frontend_gxt
@@ -6944,7 +7232,7 @@ CallNative unk_0xFE272A57 1 0
 CallNative unk_0x386CE0B8 0 0
 CallNative unk_0x02DBF2D7 0 0
 
-Return 2 0
+Return 3 0
 
 :menu_setup
 Function 1 0 2
@@ -6954,14 +7242,7 @@ iPush_0
 StaticSet1 4
 iPush_-1
 StaticSet1 5
-CallNative network_is_game_in_progress 0 1
-JumpFalse @Label_menu_setup_not_network
 iPush_0
-Call @menu_set_open_state
-Jump @Label_menu_setup_continue
-
-:Label_menu_setup_not_network
-iPush_1
 Call @menu_set_open_state
 
 :Label_menu_setup_continue
@@ -7013,6 +7294,11 @@ Return 0 0
 
 :menu_modify_game_state
 Function 1 0 2
+
+CallNative player_id 0 1
+iPush_0
+PushS 900
+CallNative set_player_control 3 0
 
 pglobal2 13241
 GetImmediate2 6183
@@ -7482,6 +7768,10 @@ Return 1 1
 
 :menu_reverse_game_state
 Function 1 0 2
+CallNative player_id 0 1
+iPush_1
+iPush_0
+CallNative set_player_control 3 0
 iPush_1
 CallNative set_cinematic_button_active 1 0
 Return 0 0
@@ -9360,6 +9650,9 @@ JumpNE @Label_trainer_vehicle_spawn_level_3_1
 PushString "Vehicle - Spawn"
 StaticSet1 10
 
+Push1 30
+PushString "Delete Last Spawned"
+Call @menu_addItem_frontend
 Push1 36
 PushString "Alternative Spawn (Hold)"
 Call @menu_addItem_frontend
