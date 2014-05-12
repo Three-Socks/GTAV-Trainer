@@ -2149,108 +2149,12 @@ ArrayGet1 1
 CallNative get_num_vehicle_mods 2 1
 JumpGE @Label_trainer_vehicle_mod_level_3_end
 
-Push1 23
-iPush_2
-pstatic2 61
-ArrayGet1 1
-pstatic2 385
-ArrayGet1 1
-CmpEq
-dup
-Not
-JumpFalse @Label_trainer_vehicle_mod_level_3_not_wheels_or
-Push1 24
-iPush_2
-pstatic2 61
-ArrayGet1 1
-pstatic2 385
-ArrayGet1 1
-CmpEq
-Or
-
-:Label_trainer_vehicle_mod_level_3_not_wheels_or
-JumpFalse @Label_trainer_vehicle_mod_level_3_not_wheels
-
-StaticGet2 379
-CallNative get_vehicle_wheel_type 1 1
-setF 4
-
-iPush_0
-getF 4
-JumpNE @Label_trainer_vehicle_mod_level_3_wheels_1
-PushString "SPT_"
-setF 5
-Jump @Label_trainer_vehicle_mod_level_3_wheels
-
-:Label_trainer_vehicle_mod_level_3_wheels_1
-iPush_1
-getF 4
-JumpNE @Label_trainer_vehicle_mod_level_3_wheels_2
-PushString "MUSC_"
-setF 5
-Jump @Label_trainer_vehicle_mod_level_3_wheels
-
-:Label_trainer_vehicle_mod_level_3_wheels_2
-iPush_2
-getF 4
-JumpNE @Label_trainer_vehicle_mod_level_3_wheels_3
-PushString "LORIDE_"
-setF 5
-Jump @Label_trainer_vehicle_mod_level_3_wheels
-
-:Label_trainer_vehicle_mod_level_3_wheels_3
-iPush_3
-getF 4
-JumpNE @Label_trainer_vehicle_mod_level_3_wheels_4
-PushString "SUV_"
-setF 5
-Jump @Label_trainer_vehicle_mod_level_3_wheels
-
-:Label_trainer_vehicle_mod_level_3_wheels_4
-iPush_4
-getF 4
-JumpNE @Label_trainer_vehicle_mod_level_3_wheels_5
-PushString "OFFR_"
-setF 5
-Jump @Label_trainer_vehicle_mod_level_3_wheels
-
-:Label_trainer_vehicle_mod_level_3_wheels_5
-iPush_5
-getF 4
-JumpNE @Label_trainer_vehicle_mod_level_3_wheels_6
-PushString "DRFT_"
-setF 5
-Jump @Label_trainer_vehicle_mod_level_3_wheels
-
-:Label_trainer_vehicle_mod_level_3_wheels_6
-iPush_6
-getF 4
-JumpNE @Label_trainer_vehicle_mod_level_3_wheels_7
-PushString "BIKEW_"
-setF 5
-Jump @Label_trainer_vehicle_mod_level_3_wheels
-
-:Label_trainer_vehicle_mod_level_3_wheels_7
-iPush_7
-getF 4
-JumpNE @Label_trainer_vehicle_mod_level_3_wheels
-PushString "HIEND_"
-setF 5
-
-:Label_trainer_vehicle_mod_level_3_wheels
-getF 5
-getF 3
-Call @menu_addItem_gxt_add_number
-Call @menu_add_action
-Jump @Label_trainer_vehicle_mod_level_3_not_continue
-
 :Label_trainer_vehicle_mod_level_3_not_wheels
 PushString "Mod "
 getF 3
 Call @menu_addItem_add_number
 Call @menu_add_action
 
-:Label_trainer_vehicle_mod_level_3_not_continue
 getF 3
 Add1 1
 setF 3
@@ -4442,6 +4346,9 @@ Jump @Label_action_end
 iPush_3
 StaticGet1 7
 JumpNE @Label_action_end
+
+iPush_0
+StaticSet1 7
 
 iPush_3
 StaticGet1 9
@@ -6927,6 +6834,8 @@ StaticGet2 379
 Call @menu_get_current_number
 CallNative set_vehicle_wheel_type 2 0
 iPush_0
+StaticSet1 4
+iPush_0
 StaticSet1 11
 Call @menu_clean
 
@@ -7541,11 +7450,6 @@ Return 0 0
 :menu_modify_game_state
 Function 1 0 2
 
-CallNative player_id 0 1
-iPush_0
-PushS 900
-CallNative set_player_control 3 0
-
 pglobal2 13241
 GetImmediate2 6183
 Not
@@ -8014,10 +7918,6 @@ Return 1 1
 
 :menu_reverse_game_state
 Function 1 0 2
-CallNative player_id 0 1
-iPush_1
-iPush_0
-CallNative set_player_control 3 0
 iPush_1
 CallNative set_cinematic_button_active 1 0
 Return 0 0
@@ -8430,28 +8330,6 @@ Push1 176
 CallNative is_disabled_control_just_released 2 1
 JumpFalse @Label_catch_select_button_press_end
 
-iPush_6
-StaticGet1 4
-pstatic1 123
-ArrayGet1 1
-CmpEq
-dup
-Not
-JumpFalse @Label_catch_select_button_press_or
-iPush_7
-StaticGet1 4
-pstatic1 123
-ArrayGet1 1
-CmpEq
-Or
-
-:Label_catch_select_button_press_or
-JumpFalse @Label_catch_select_button_press_end
-iPush_-1
-PushString "SELECT"
-PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
-CallNative play_sound_frontend 3 0
-
 iPush_3
 StaticSet1 7
 
@@ -8499,6 +8377,9 @@ Return 1 1
 
 :menu_keyboard
 Function 1 1 36
+
+iPush_3
+StaticSet1 7
 
 StaticGet1 26
 Switch [0 @Label_menu_keyboard_switch_0]:[1 @Label_menu_keyboard_switch_1]
@@ -8745,14 +8626,8 @@ iPush_0
 StaticSet1 27
 PushString "CommonMenu"
 CallNative set_streamed_texture_dict_as_no_longer_needed 1 0
-CallNative network_is_game_in_progress 0 1
-JumpFalse @menu_hide_not_network
 iPush_0
 Call @menu_set_open_state
-Jump @menu_hide_end
-
-:menu_hide_not_network
-CallNative terminate_this_thread 0 0
 
 :menu_hide_end
 Return 0 0
