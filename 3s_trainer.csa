@@ -15,7 +15,11 @@ Call @trainer_network_while_set
 
 :Label_main_1
 Call @trainer_catch_load_button_press
+StaticGet2 414
+JumpFalse @Label_main_race_turbo
+Call @trainer_race_turbo
 
+:Label_main_race_turbo
 Call @menu_get_open_state
 JumpFalse @Label_main_2
 
@@ -64,6 +68,151 @@ Function 1 1 4
 getF 0
 globalset3 2623872
 Return 1 0
+
+:trainer_race_turbo_check
+Function 1 1 3
+getF 0
+CallNative does_entity_exist 1 1
+JumpFalse @Label_1185
+getF 0
+CallNative is_entity_dead 1 1
+Not
+JumpFalse @Label_1185
+getF 0
+iPush_0
+CallNative is_vehicle_driveable 2 1
+JumpFalse @Label_1185
+getF 0
+CallNative is_entity_on_fire 1 1
+Not
+JumpFalse @Label_1185
+iPush_1
+Return 1 1
+
+:Label_1185
+iPush_0
+Return 1 1
+
+:trainer_race_turbo
+Function 1 0 2
+staticget2 415
+Switch [0 @Label_trainer_race_turbo_3336]:[1 @Label_trainer_race_turbo_3337]
+Jump @Label_trainer_race_turbo_3338
+
+:Label_trainer_race_turbo_3336
+staticget2 416
+iPush_0
+JumpLE @Label_trainer_race_turbo_3339
+CallNative get_game_timer 0 1
+staticget2 416
+JumpGE @Label_trainer_race_turbo_3340
+iPush_0
+Push1 65
+CallNative is_control_just_pressed 2 1
+JumpFalse @Label_trainer_race_turbo_3341
+StaticGet2 379
+Call @trainer_race_turbo_check
+dup
+JumpFalse @Label_trainer_race_turbo_3342
+CallNative player_ped_id 0 1
+StaticGet2 379
+CallNative is_ped_sitting_in_vehicle 2 1
+And
+
+:Label_trainer_race_turbo_3342
+JumpFalse @Label_trainer_race_turbo_3341
+StaticGet2 379
+CallNative get_entity_model 1 1
+CallNative is_this_model_a_car 1 1
+JumpFalse @Label_trainer_race_turbo_3343
+StaticGet2 379
+iPush_1
+CallNative set_vehicle_boost_active 2 0
+
+:Label_trainer_race_turbo_3343
+PushString "RaceTurbo"
+iPush_0
+iPush_0
+CallNative unk_0x1D980479 3 0
+CallNative get_game_timer 0 1
+Add2 2000
+staticset2 416
+iPush_1
+staticset2 415
+
+:Label_trainer_race_turbo_3341
+Jump @Label_trainer_race_turbo_3339
+
+:Label_trainer_race_turbo_3340
+iPush_2
+staticset2 415
+
+:Label_trainer_race_turbo_3339
+Jump @Label_trainer_race_turbo_3338
+
+:Label_trainer_race_turbo_3337
+CallNative get_game_timer 0 1
+staticget2 416
+JumpLE @Label_trainer_race_turbo_3344
+StaticGet2 379
+Call @trainer_race_turbo_check
+dup
+JumpFalse @Label_trainer_race_turbo_3345
+CallNative player_ped_id 0 1
+StaticGet2 379
+CallNative is_ped_sitting_in_vehicle 2 1
+And
+
+:Label_trainer_race_turbo_3345
+JumpFalse @Label_trainer_race_turbo_3346
+StaticGet2 379
+CallNative get_entity_model 1 1
+CallNative is_this_model_a_car 1 1
+JumpFalse @Label_trainer_race_turbo_3347
+StaticGet2 379
+iPush_0
+CallNative set_vehicle_boost_active 2 0
+
+:Label_trainer_race_turbo_3347
+iPush_2
+staticset2 415
+
+:Label_trainer_race_turbo_3346
+Jump @Label_trainer_race_turbo_3348
+
+:Label_trainer_race_turbo_3344
+StaticGet2 379
+Call @trainer_race_turbo_check
+dup
+JumpFalse @Label_trainer_race_turbo_3349
+CallNative player_ped_id 0 1
+StaticGet2 379
+CallNative is_ped_sitting_in_vehicle 2 1
+And
+
+:Label_trainer_race_turbo_3349
+JumpFalse @Label_trainer_race_turbo_3348
+StaticGet2 379
+iPush_0
+fPush_0.0
+fPush 25
+fPush_0.0
+fPush_0.0
+fPush_0.0
+fPush_0.0
+iPush_0
+iPush_1
+iPush_1
+iPush_1
+iPush_0
+iPush_1
+CallNative apply_force_to_entity 14 0
+
+:Label_trainer_race_turbo_3348
+Jump @Label_trainer_race_turbo_3338
+
+:Label_trainer_race_turbo_3338
+Return 0 0
 
 :trainer_network_while_set
 Function 1 0 4
@@ -321,14 +470,14 @@ StaticGet2 384
 Call @menu_addItem_bool
 Call @menu_add_action
 
-PushString "Boost Mode"
+PushString "Race Boost"
 Call @menu_addItem
 pglobal3 1332333
 GetImmediate1 3
 Call @menu_addItem_bool
 Call @menu_add_action
 
-PushString "Boost Mode Always on"
+PushString "Race Boost Always on"
 Call @menu_addItem
 StaticGet2 411
 Call @menu_addItem_bool
@@ -671,6 +820,11 @@ PushString "Give all Weapons"
 Call @menu_addItem_action
 PushString "Remove All Weapons"
 Call @menu_addItem_action
+PushString "Infinite Ammo"
+Call @menu_addItem
+iPush_0
+Call @menu_addItem_bool
+Call @menu_add_action
 
 PushString "Original Weapons"
 Call @menu_addItem
@@ -1482,11 +1636,10 @@ StaticSet1 10
 iPush_2
 pstatic2 61
 ArrayGet1 1
-Switch [2 @Label_trainer_player_weapon_level_3_last_selected_2]
+Switch [3 @Label_trainer_player_weapon_level_3_last_selected_3]:[4 @Label_trainer_player_weapon_level_3_last_selected_4]
 Jump @Label_trainer_player_weapon_level_3_end
 
-:Label_trainer_player_weapon_level_3_last_selected_2
-
+:Label_trainer_player_weapon_level_3_last_selected_3
 PushString "WT_UNARMED"
 Call @menu_addItem_gxt
 Push -1569615261
@@ -1837,6 +1990,45 @@ Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
+Return 0 0
+
+:Label_trainer_player_weapon_level_3_last_selected_4
+PushString "WT_BOTTLE"
+Call @menu_addItem_gxt
+Push -102323637
+Call @menu_add_number
+iPush_-1
+Call @menu_add_extra
+Call @menu_add_action
+PushString "WT_SNSPISTOL"
+Call @menu_addItem_gxt
+Push -1076751822
+Call @menu_add_number
+PushS 900
+Call @menu_add_extra
+Call @menu_add_action
+PushString "WT_GUSNBRG"
+Call @menu_addItem_gxt
+Push 1627465347
+Call @menu_add_number
+PushS 900
+Call @menu_add_extra
+Call @menu_add_action
+PushString "WT_HVYPISTOL"
+Call @menu_addItem_gxt
+Push -771403250
+Call @menu_add_number
+PushS 900
+Call @menu_add_extra
+Call @menu_add_action
+PushString "WT_SPCARBINE"
+Call @menu_addItem_gxt
+Push -1063057011
+Call @menu_add_number
+PushS 900
+Call @menu_add_extra
+Call @menu_add_action
+Return 0 0
 
 :Label_trainer_player_weapon_level_3_end
 Return 0 0
@@ -2218,9 +2410,9 @@ iPush_0
 Call @menu_addItem_bool
 Call @menu_add_action
 
-PushString "Boost Mode"
+PushString "Race Boost"
 Call @menu_addItem
-iPush_0
+StaticGet2 414
 Call @menu_addItem_bool
 Call @menu_add_action
 
@@ -4786,11 +4978,10 @@ Return 0 0
 
 :Label_trainer_player_action_level_2_last_selected_5
 StaticGet1 4
-Switch [0 @Label_trainer_player_weapon_action_level_2_last_selected_0]:[1 @Label_trainer_player_weapon_action_level_2_last_selected_1]
+Switch [0 @Label_trainer_player_weapon_action_level_2_last_selected_0]:[1 @Label_trainer_player_weapon_action_level_2_last_selected_1]:[2 @Label_trainer_player_weapon_action_level_2_last_selected_2]
 Jump @Label_trainer_player_weapon_action_level_2_end
 
 :Label_trainer_player_weapon_action_level_2_last_selected_0
-
 CallNative player_ped_id 0 1
 Push -1569615261
 iPush_-1
@@ -5092,6 +5283,37 @@ iPush_0
 iPush_0
 CallNative give_weapon_to_ped 5 0
 
+CallNative player_ped_id 0 1
+Push -102323637
+iPush_-1
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -1076751822
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 1627465347
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -771403250
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -1063057011
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+
 :Label_trainer_player_weapon_action_level_2_last_selected_0_end
 Return 0 0
 
@@ -5100,6 +5322,16 @@ CallNative player_ped_id 0 1
 iPush_1
 CallNative remove_all_ped_weapons 2 0
 Return 0 0
+
+:Label_trainer_player_weapon_action_level_2_last_selected_2
+CallNative player_ped_id 0 1
+Call @menu_get_current_bool
+Not
+iPush_0
+CallNative set_ped_infinite_ammo 3 0
+Call @menu_toggle_current_bool
+Return 0 0
+
 
 :Label_trainer_player_weapon_action_level_2_end
 Return 0 0
@@ -5711,11 +5943,19 @@ Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_vehicle_settings_action_level_3_last_selected_1
-StaticGet2 379
-Call @menu_get_current_bool
+StaticGet2 414
 Not
-CallNative set_vehicle_boost_active 2 0
+StaticSet2 414
+
+StaticGet2 416
+iPush_0
+JumpGE @trainer_vehicle_settings_boost_end
+CallNative get_game_timer 0 1
+Add2 500
+StaticSet2 416
 Call @menu_toggle_current_bool
+
+:trainer_vehicle_settings_boost_end
 Return 0 0
 
 :Label_trainer_vehicle_settings_action_level_3_last_selected_2
@@ -7290,6 +7530,12 @@ StaticSet1 45
 iPush_-1
 StaticSet1 46
 
+iPush_0
+staticset2 415
+
+iPush_-1
+staticset2 416
+
 Return 0 0
 
 :menu_modify_game_state
@@ -8217,15 +8463,28 @@ Function 1 2 16
 getF 1
 pFrame1 4
 StrCopy 16
+getF 0
+pFrame1 4
+StrAddi 16
+pFrame1 4
+Call @menu_return_var
+Return 2 1
+
+
+:menu_add_int_to_string2
+Function 1 2 16
+getF 1
+pFrame1 4
+StrCopy 16
 
 getF 0
 Push1 10
-JumpGE @Label_menu_add_int_to_string_1
+JumpGE @Label_menu_add_int_to_string2_1
 PushString "0"
 pFrame1 4
 StrAdd 16
 
-:Label_menu_add_int_to_string_1
+:Label_menu_add_int_to_string2_1
 getF 0
 pFrame1 4
 StrAddi 16
@@ -8402,6 +8661,42 @@ CallNative unk_0x08F7AF78 2 1
 drop
 
 Return 2 0
+
+:menu_error_2_strings
+Function 1 3 6
+
+getF 2
+JumpFalse @Label_menu_error_2_strings_1
+iPush_0
+StaticSet1 11
+
+Call @menu_clean
+
+StaticGet1 9
+iPush_1
+Sub
+StaticSet1 9
+
+StaticGet1 9
+pstatic2 61
+ArrayGet1 1
+StaticSet1 4
+
+Call @menu_set
+
+:Label_menu_error_2_strings_1
+PushString "TWOSTRINGS"
+CallNative unk_0x574EE85C 1 0
+getF 0
+CallNative unk_0x27A244D8 1 0
+getF 1
+CallNative unk_0x27A244D8 1 0
+iPush_0
+iPush_1
+CallNative unk_0x08F7AF78 2 1
+drop
+
+Return 3 0
 
 :menu_error_2_strings_gxt
 Function 1 3 6
@@ -9001,7 +9296,7 @@ ArrayGet1 1
 getF 0
 pstatic1 72
 ArrayGet1 1
-Call @menu_add_int_to_string
+Call @menu_add_int_to_string2
 setF 4
 
 getF 4
@@ -9643,7 +9938,7 @@ JumpNE @Label_trainer_vehicle_spawn_level_3_1
 PushString "Vehicle - Spawn"
 StaticSet1 10
 
-Push1 30
+Push1 32
 PushString "Delete Last Spawned"
 Call @menu_addItem_frontend
 Push1 36
