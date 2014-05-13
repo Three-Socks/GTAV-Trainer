@@ -1941,8 +1941,8 @@ Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
-PushString "WT_DIGI"
-Call @menu_addItem_gxt
+PushString "Digiscanner"
+Call @menu_addItem
 Push -38085395
 Call @menu_add_number
 iPush_1
@@ -2024,6 +2024,13 @@ Call @menu_add_action
 PushString "WT_SPCARBINE"
 Call @menu_addItem_gxt
 Push -1063057011
+Call @menu_add_number
+PushS 900
+Call @menu_add_extra
+Call @menu_add_action
+PushString "WT_BULLRIFLE"
+Call @menu_addItem_gxt
+Push 2132975508
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
@@ -5216,6 +5223,12 @@ iPush_0
 CallNative give_weapon_to_ped 5 0
 CallNative player_ped_id 0 1
 Push -1063057011
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 2132975508
 PushS 500
 iPush_0
 iPush_0
@@ -9840,6 +9853,7 @@ getF 3
 Switch [0 @Label_trainer_vehicle_spawn_level_3_last_selected_boats]:[1 @Label_trainer_vehicle_spawn_level_3_last_selected_commercial]:[2 @Label_trainer_vehicle_spawn_level_3_last_selected_compacts]:[3 @Label_trainer_vehicle_spawn_level_3_last_selected_coupes]:[4 @Label_trainer_vehicle_spawn_level_3_last_selected_cycles]:[5 @Label_trainer_vehicle_spawn_level_3_last_selected_emergency]:[6 @Label_trainer_vehicle_spawn_level_3_last_selected_helicopters]:[7 @Label_trainer_vehicle_spawn_level_3_last_selected_industrial]:[8 @Label_trainer_vehicle_spawn_level_3_last_selected_military]:[9 @Label_trainer_vehicle_spawn_level_3_last_selected_motorcycles]:[10 @Label_trainer_vehicle_spawn_level_3_last_selected_muscle]:[11 @Label_trainer_vehicle_spawn_level_3_last_selected_off_road]:[12 @Label_trainer_vehicle_spawn_level_3_last_selected_planes]:[13 @Label_trainer_vehicle_spawn_level_3_last_selected_sedans]:[14 @Label_trainer_vehicle_spawn_level_3_last_selected_service]:[15 @Label_trainer_vehicle_spawn_level_3_last_selected_sports]:[16 @Label_trainer_vehicle_spawn_level_3_last_selected_sports_classics]:[17 @Label_trainer_vehicle_spawn_level_3_last_selected_super]:[18 @Label_trainer_vehicle_spawn_level_3_last_selected_suvs]:[19 @Label_trainer_vehicle_spawn_level_3_last_selected_trailers]:[20 @Label_trainer_vehicle_spawn_level_3_last_selected_trains]:[21 @Label_trainer_vehicle_spawn_level_3_last_selected_utility]:[22 @Label_trainer_vehicle_spawn_level_3_last_selected_vans]
 Jump @Label_trainer_vehicle_spawn_level_3_end
 
+
 :Label_trainer_vehicle_spawn_level_3_last_selected_boats
 Push 1033245328
 Call @menu_addItem_gxt_veh_hash
@@ -10387,6 +10401,15 @@ Call @menu_addItem_gxt_veh_hash
 PushString "SANCHEZ2"
 Call @menu_add_number
 Call @menu_add_action
+Push 1836027715
+CallNative is_model_in_cdimage 1 1
+JumpFalse @Label_trainer_vehicle_spawn_level_3_check_thrust
+Push 1836027715
+Call @menu_addItem_gxt_veh_hash
+PushString "THRUST"
+Call @menu_add_number
+Call @menu_add_action
+:Label_trainer_vehicle_spawn_level_3_check_thrust
 Push -140902153
 Call @menu_addItem_gxt_veh_hash
 PushString "VADER"
@@ -10845,6 +10868,15 @@ PushString "JESTER"
 Call @menu_add_number
 Call @menu_add_action
 :Label_trainer_vehicle_spawn_level_3_check_jester
+Push -1403128555
+CallNative is_model_in_cdimage 1 1
+JumpFalse @Label_trainer_vehicle_spawn_level_3_check_zentorno
+Push -1403128555
+Call @menu_addItem_gxt_veh_hash
+PushString "ZENTORNO"
+Call @menu_add_number
+Call @menu_add_action
+:Label_trainer_vehicle_spawn_level_3_check_zentorno
 Push 544021352
 Call @menu_addItem_gxt_veh_hash
 PushString "KHAMELION"
@@ -10994,6 +11026,15 @@ Call @menu_addItem_gxt_veh_hash
 PushString "VOLTIC"
 Call @menu_add_number
 Call @menu_add_action
+Push -142942670
+CallNative is_model_in_cdimage 1 1
+JumpFalse @Label_trainer_vehicle_spawn_level_3_check_massacro
+Push -142942670
+Call @menu_addItem_gxt_veh_hash
+PushString "MASSACRO"
+Call @menu_add_number
+Call @menu_add_action
+:Label_trainer_vehicle_spawn_level_3_check_massacro
 Return 0 0
 
 :Label_trainer_vehicle_spawn_level_3_last_selected_suvs
@@ -11052,6 +11093,15 @@ Call @menu_addItem_gxt_veh_hash
 PushString "HABANERO"
 Call @menu_add_number
 Call @menu_add_action
+Push 486987393
+CallNative is_model_in_cdimage 1 1
+JumpFalse @Label_trainer_vehicle_spawn_level_3_check_huntley
+Push 486987393
+Call @menu_addItem_gxt_veh_hash
+PushString "HUNTLEY"
+Call @menu_add_number
+Call @menu_add_action
+:Label_trainer_vehicle_spawn_level_3_check_huntley
 Push 1269098716
 Call @menu_addItem_gxt_veh_hash
 PushString "LANDSTALKER"
