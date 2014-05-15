@@ -41,6 +41,10 @@ Call @menu_set
 iPush_0
 StaticGet1 7
 JumpNE @Label_main_draw
+iPush_2
+Push1 175
+CallNative is_disabled_control_just_released 2 1
+JumpFalse @Label_main_draw
 Call @menu_set_last_selected
 
 :Label_main_draw
@@ -59,14 +63,14 @@ Return 0 0
 :menu_get_open_state
 Function 1 0 4
 
-globalget3 2623872
+StaticGet1 6
 Return 0 1
 
 :menu_set_open_state
 Function 1 1 4
 
 getF 0
-globalset3 2623872
+StaticSet1 6
 Return 1 0
 
 :trainer_race_turbo_check
@@ -306,22 +310,22 @@ PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
 CallNative play_sound_frontend 3 0
 
 :Label_catch_load_4
-Call @trainer_network_load_pressed
+Call @trainer_load_pressed
 Return 0 0
 
-:trainer_network_load_pressed
+:trainer_load_pressed
 Function 1 0 2
 CallNative is_pause_menu_active 0 1
 Not
-JumpFalse @Label_network_load_pressed_3
+JumpFalse @Label_load_pressed_3
 iPush_2
 Push1 179
 CallNative is_control_pressed 2 1
-JumpFalse @Label_network_load_pressed_3
+JumpFalse @Label_load_pressed_3
 iPush_2
 Push1 176
 CallNative is_control_pressed 2 1
-JumpFalse @Label_network_load_pressed_3
+JumpFalse @Label_load_pressed_3
 
 iPush_0
 Push1 22
@@ -331,33 +335,33 @@ Push1 42
 CallNative disable_control_action 2 0
 
 Call @menu_get_open_state
-JumpFalse @Label_network_load_pressed_4
+JumpFalse @Label_load_pressed_4
 
 iPush_0
 StaticGet1 8
-JumpNE @Label_network_load_pressed_goto_3
+JumpNE @Label_load_pressed_goto_3
 StaticGet1 19
 Add1 1
 StaticSet1 19
 Return 0 0
 
-:Label_network_load_pressed_goto_3
+:Label_load_pressed_goto_3
 Return 0 0
-Jump @Label_network_load_pressed_3
+Jump @Label_load_pressed_3
 
-:Label_network_load_pressed_4
+:Label_load_pressed_4
 iPush_0
 StaticGet1 19
-JumpNE @Label_network_load_pressed_5
+JumpNE @Label_load_pressed_5
 StaticGet1 8
 Add1 1
 StaticSet1 8
 Return 0 0
 
-:Label_network_load_pressed_5
+:Label_load_pressed_5
 Return 0 0
 
-:Label_network_load_pressed_3
+:Label_load_pressed_3
 iPush_0
 StaticSet1 19
 iPush_0
@@ -561,9 +565,48 @@ Call @menu_add_action
 
 PushString "set_ped_infinite_ammo 0"
 Call @menu_addItem_action
+iPush_0
+Call @menu_addItem_bool
 
 PushString "set_ped_infinite_ammo 1"
 Call @menu_addItem_action
+iPush_0
+Call @menu_addItem_bool
+
+PushString "set_player_control 0"
+Call @menu_addItem_action
+iPush_0
+Call @menu_addItem_bool
+
+PushString "set_player_control 900"
+Call @menu_addItem_action
+iPush_0
+Call @menu_addItem_bool
+
+PushString "set_player_control 4"
+Call @menu_addItem_action
+iPush_0
+Call @menu_addItem_bool
+
+PushString "set_player_control 512"
+Call @menu_addItem_action
+iPush_0
+Call @menu_addItem_bool
+
+PushString "set_player_control 256"
+Call @menu_addItem_action
+iPush_0
+Call @menu_addItem_bool
+
+PushString "set_player_control 2048"
+Call @menu_addItem_action
+iPush_0
+Call @menu_addItem_bool
+
+PushString "set_player_control 2560"
+Call @menu_addItem_action
+iPush_0
+Call @menu_addItem_bool
 
 Return 0 0
 
@@ -2156,12 +2199,108 @@ ArrayGet1 1
 CallNative get_num_vehicle_mods 2 1
 JumpGE @Label_trainer_vehicle_mod_level_3_end
 
+Push1 23
+iPush_2
+pstatic2 61
+ArrayGet1 1
+pstatic2 385
+ArrayGet1 1
+CmpEq
+dup
+Not
+JumpFalse @Label_trainer_vehicle_mod_level_3_not_wheels_or
+Push1 24
+iPush_2
+pstatic2 61
+ArrayGet1 1
+pstatic2 385
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_trainer_vehicle_mod_level_3_not_wheels_or
+JumpFalse @Label_trainer_vehicle_mod_level_3_not_wheels
+
+StaticGet2 379
+CallNative get_vehicle_wheel_type 1 1
+setF 4
+
+iPush_0
+getF 4
+JumpNE @Label_trainer_vehicle_mod_level_3_wheels_1
+PushString "SPT_"
+setF 5
+Jump @Label_trainer_vehicle_mod_level_3_wheels
+
+:Label_trainer_vehicle_mod_level_3_wheels_1
+iPush_1
+getF 4
+JumpNE @Label_trainer_vehicle_mod_level_3_wheels_2
+PushString "MUSC_"
+setF 5
+Jump @Label_trainer_vehicle_mod_level_3_wheels
+
+:Label_trainer_vehicle_mod_level_3_wheels_2
+iPush_2
+getF 4
+JumpNE @Label_trainer_vehicle_mod_level_3_wheels_3
+PushString "LORIDE_"
+setF 5
+Jump @Label_trainer_vehicle_mod_level_3_wheels
+
+:Label_trainer_vehicle_mod_level_3_wheels_3
+iPush_3
+getF 4
+JumpNE @Label_trainer_vehicle_mod_level_3_wheels_4
+PushString "SUV_"
+setF 5
+Jump @Label_trainer_vehicle_mod_level_3_wheels
+
+:Label_trainer_vehicle_mod_level_3_wheels_4
+iPush_4
+getF 4
+JumpNE @Label_trainer_vehicle_mod_level_3_wheels_5
+PushString "OFFR_"
+setF 5
+Jump @Label_trainer_vehicle_mod_level_3_wheels
+
+:Label_trainer_vehicle_mod_level_3_wheels_5
+iPush_5
+getF 4
+JumpNE @Label_trainer_vehicle_mod_level_3_wheels_6
+PushString "DRFT_"
+setF 5
+Jump @Label_trainer_vehicle_mod_level_3_wheels
+
+:Label_trainer_vehicle_mod_level_3_wheels_6
+iPush_6
+getF 4
+JumpNE @Label_trainer_vehicle_mod_level_3_wheels_7
+PushString "BIKEW_"
+setF 5
+Jump @Label_trainer_vehicle_mod_level_3_wheels
+
+:Label_trainer_vehicle_mod_level_3_wheels_7
+iPush_7
+getF 4
+JumpNE @Label_trainer_vehicle_mod_level_3_wheels
+PushString "HIEND_"
+setF 5
+
+:Label_trainer_vehicle_mod_level_3_wheels
+getF 5
+getF 3
+Call @menu_addItem_gxt_add_number
+Call @menu_add_action
+Jump @Label_trainer_vehicle_mod_level_3_not_continue
+
 :Label_trainer_vehicle_mod_level_3_not_wheels
 PushString "Mod "
 getF 3
 Call @menu_addItem_add_number
 Call @menu_add_action
 
+:Label_trainer_vehicle_mod_level_3_not_continue
 getF 3
 Add1 1
 setF 3
@@ -4392,6 +4531,8 @@ CallNative set_entity_as_mission_entity 3 0
 
 pstatic2 378
 CallNative delete_vehicle 1 0
+PushString "Debug: Vehicle Deleted."
+Call @menu_msg
 
 :Label_action_3_goto_end
 Jump @Label_action_end
@@ -4566,7 +4707,7 @@ Call @trainer_get_vehicle
 drop
 
 StaticGet1 4
-Switch [0 @Label_trainer_debug_action_level_1_last_selected_0]:[1 @Label_trainer_debug_action_level_1_last_selected_1]:[3 @Label_trainer_debug_action_level_1_last_selected_3]:[4 @Label_trainer_debug_action_level_1_last_selected_4]:[5 @Label_trainer_debug_action_level_1_last_selected_5]:[6 @Label_trainer_debug_action_level_1_last_selected_6]:[7 @Label_trainer_debug_action_level_1_last_selected_7]:[8 @Label_trainer_debug_action_level_1_last_selected_8]:[9 @Label_trainer_debug_action_level_1_last_selected_9]:[10 @Label_trainer_debug_action_level_1_last_selected_10]:[11 @Label_trainer_debug_action_level_1_last_selected_11]:[12 @Label_trainer_debug_action_level_1_last_selected_12]
+Switch [0 @Label_trainer_debug_action_level_1_last_selected_0]:[1 @Label_trainer_debug_action_level_1_last_selected_1]:[3 @Label_trainer_debug_action_level_1_last_selected_3]:[4 @Label_trainer_debug_action_level_1_last_selected_4]:[5 @Label_trainer_debug_action_level_1_last_selected_5]:[6 @Label_trainer_debug_action_level_1_last_selected_6]:[7 @Label_trainer_debug_action_level_1_last_selected_7]:[8 @Label_trainer_debug_action_level_1_last_selected_8]:[9 @Label_trainer_debug_action_level_1_last_selected_9]:[10 @Label_trainer_debug_action_level_1_last_selected_10]:[11 @Label_trainer_debug_action_level_1_last_selected_11]:[12 @Label_trainer_debug_action_level_1_last_selected_12]:[13 @Label_trainer_debug_action_level_1_last_selected_13]:[14 @Label_trainer_debug_action_level_1_last_selected_14]:[15 @Label_trainer_debug_action_level_1_last_selected_15]:[16 @Label_trainer_debug_action_level_1_last_selected_16]:[17 @Label_trainer_debug_action_level_1_last_selected_17]:[18 @Label_trainer_debug_action_level_1_last_selected_18]:[19 @Label_trainer_debug_action_level_1_last_selected_19]
 Jump @Label_trainer_debug_action_level_1_end
 
 :Label_trainer_debug_action_level_1_last_selected_0
@@ -4657,6 +4798,174 @@ CallNative player_ped_id 0 1
 iPush_1
 iPush_0
 CallNative set_ped_infinite_ammo 3 0
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_13
+Call @menu_get_current_bool
+Not
+JumpFalse @Label_trainer_debug_action_bool_1
+CallNative player_id 0 1
+iPush_0
+iPush_0
+CallNative set_player_control 3 0
+PushString "set_player_control 0 set to 0"
+Call @menu_msg
+Jump @Label_trainer_debug_action_level_1_last_selected_13_end
+
+:Label_trainer_debug_action_bool_1
+CallNative player_id 0 1
+iPush_1
+iPush_0
+CallNative set_player_control 3 0
+PushString "set_player_control 0 set to 1"
+Call @menu_msg
+
+:Label_trainer_debug_action_level_1_last_selected_13_end
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_14
+Call @menu_get_current_bool
+Not
+JumpFalse @Label_trainer_debug_action_bool_2
+CallNative player_id 0 1
+iPush_0
+PushS 900
+CallNative set_player_control 3 0
+PushString "set_player_control 900 set to 0"
+Call @menu_msg
+Jump @Label_trainer_debug_action_level_1_last_selected_14_end
+
+:Label_trainer_debug_action_bool_2
+CallNative player_id 0 1
+iPush_1
+PushS 900
+CallNative set_player_control 3 0
+PushString "set_player_control 900 set to 1"
+Call @menu_msg
+
+:Label_trainer_debug_action_level_1_last_selected_14_end
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_15
+Call @menu_get_current_bool
+Not
+JumpFalse @Label_trainer_debug_action_bool_3
+CallNative player_id 0 1
+iPush_0
+iPush_4
+CallNative set_player_control 3 0
+PushString "set_player_control 4 set to 0"
+Call @menu_msg
+Jump @Label_trainer_debug_action_level_1_last_selected_15_end
+
+:Label_trainer_debug_action_bool_3
+CallNative player_id 0 1
+iPush_1
+iPush_4
+CallNative set_player_control 3 0
+PushString "set_player_control 4 set to 1"
+Call @menu_msg
+
+:Label_trainer_debug_action_level_1_last_selected_15_end
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_16
+Call @menu_get_current_bool
+Not
+JumpFalse @Label_trainer_debug_action_bool_4
+CallNative player_id 0 1
+iPush_0
+PushS 512
+CallNative set_player_control 3 0
+PushString "set_player_control 512 set to 0"
+Call @menu_msg
+Jump @Label_trainer_debug_action_level_1_last_selected_16_end
+
+:Label_trainer_debug_action_bool_4
+CallNative player_id 0 1
+iPush_1
+PushS 512
+CallNative set_player_control 3 0
+PushString "set_player_control 512 set to 1"
+Call @menu_msg
+
+:Label_trainer_debug_action_level_1_last_selected_16_end
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_17
+Call @menu_get_current_bool
+Not
+JumpFalse @Label_trainer_debug_action_bool_5
+CallNative player_id 0 1
+iPush_0
+PushS 256
+CallNative set_player_control 3 0
+PushString "set_player_control 256 set to 0"
+Call @menu_msg
+Jump @Label_trainer_debug_action_level_1_last_selected_17_end
+
+:Label_trainer_debug_action_bool_5
+CallNative player_id 0 1
+iPush_1
+PushS 256
+CallNative set_player_control 3 0
+PushString "set_player_control 256 set to 1"
+Call @menu_msg
+
+:Label_trainer_debug_action_level_1_last_selected_17_end
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_18
+Call @menu_get_current_bool
+Not
+JumpFalse @Label_trainer_debug_action_bool_6
+CallNative player_id 0 1
+iPush_0
+PushS 2048
+CallNative set_player_control 3 0
+PushString "set_player_control 2048 set to 0"
+Call @menu_msg
+Jump @Label_trainer_debug_action_level_1_last_selected_18_end
+
+:Label_trainer_debug_action_bool_6
+CallNative player_id 0 1
+iPush_1
+PushS 2048
+CallNative set_player_control 3 0
+PushString "set_player_control 2048 set to 1"
+Call @menu_msg
+
+:Label_trainer_debug_action_level_1_last_selected_18_end
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_19
+Call @menu_get_current_bool
+Not
+JumpFalse @Label_trainer_debug_action_bool_7
+CallNative player_id 0 1
+iPush_0
+PushS 2560
+CallNative set_player_control 3 0
+PushString "set_player_control 2560 set to 0"
+Call @menu_msg
+Jump @Label_trainer_debug_action_level_1_last_selected_19_end
+
+:Label_trainer_debug_action_bool_7
+CallNative player_id 0 1
+iPush_1
+PushS 2560
+CallNative set_player_control 3 0
+PushString "set_player_control 2560 set to 1"
+Call @menu_msg
+
+:Label_trainer_debug_action_level_1_last_selected_19_end
+Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_debug_action_level_1_end
@@ -6846,11 +7155,13 @@ JumpFalse @Label_trainer_catch_button_wheel_goto_end
 StaticGet2 379
 Call @menu_get_current_number
 CallNative set_vehicle_wheel_type 2 0
-iPush_0
-StaticSet1 4
-iPush_0
-StaticSet1 11
 Call @menu_clean
+Call @menu_set
+StaticGet1 4
+StaticGet1 9
+pstatic2 61
+ArraySet1 1
+Call @menu_set_last_selected
 
 :Label_trainer_catch_button_wheel_goto_end
 Jump @Label_trainer_catch_button_press_end
@@ -7514,6 +7825,9 @@ Push1 174
 CallNative disable_control_action 2 0
 iPush_2
 Push1 175
+CallNative disable_control_action 2 0
+iPush_2
+Push1 176
 CallNative disable_control_action 2 0
 iPush_2
 Push1 163
@@ -8186,11 +8500,6 @@ Return 0 0
 
 :menu_set_last_selected
 Function 1 0 3
-
-iPush_2
-Push1 175
-CallNative is_disabled_control_just_released 2 1
-JumpFalse @Label_menu_set_last_selected_end
 
 StaticGet1 9
 pstatic2 61
@@ -9181,6 +9490,7 @@ Function 1 2 10
 getF 0
 pstatic2 276
 ArrayGet1 1
+Add1 1
 getF 0
 pstatic1 72
 ArrayGet1 1
@@ -9852,7 +10162,6 @@ setF 3
 getF 3
 Switch [0 @Label_trainer_vehicle_spawn_level_3_last_selected_boats]:[1 @Label_trainer_vehicle_spawn_level_3_last_selected_commercial]:[2 @Label_trainer_vehicle_spawn_level_3_last_selected_compacts]:[3 @Label_trainer_vehicle_spawn_level_3_last_selected_coupes]:[4 @Label_trainer_vehicle_spawn_level_3_last_selected_cycles]:[5 @Label_trainer_vehicle_spawn_level_3_last_selected_emergency]:[6 @Label_trainer_vehicle_spawn_level_3_last_selected_helicopters]:[7 @Label_trainer_vehicle_spawn_level_3_last_selected_industrial]:[8 @Label_trainer_vehicle_spawn_level_3_last_selected_military]:[9 @Label_trainer_vehicle_spawn_level_3_last_selected_motorcycles]:[10 @Label_trainer_vehicle_spawn_level_3_last_selected_muscle]:[11 @Label_trainer_vehicle_spawn_level_3_last_selected_off_road]:[12 @Label_trainer_vehicle_spawn_level_3_last_selected_planes]:[13 @Label_trainer_vehicle_spawn_level_3_last_selected_sedans]:[14 @Label_trainer_vehicle_spawn_level_3_last_selected_service]:[15 @Label_trainer_vehicle_spawn_level_3_last_selected_sports]:[16 @Label_trainer_vehicle_spawn_level_3_last_selected_sports_classics]:[17 @Label_trainer_vehicle_spawn_level_3_last_selected_super]:[18 @Label_trainer_vehicle_spawn_level_3_last_selected_suvs]:[19 @Label_trainer_vehicle_spawn_level_3_last_selected_trailers]:[20 @Label_trainer_vehicle_spawn_level_3_last_selected_trains]:[21 @Label_trainer_vehicle_spawn_level_3_last_selected_utility]:[22 @Label_trainer_vehicle_spawn_level_3_last_selected_vans]
 Jump @Label_trainer_vehicle_spawn_level_3_end
-
 
 :Label_trainer_vehicle_spawn_level_3_last_selected_boats
 Push 1033245328
@@ -10868,15 +11177,15 @@ PushString "JESTER"
 Call @menu_add_number
 Call @menu_add_action
 :Label_trainer_vehicle_spawn_level_3_check_jester
-Push -1403128555
+Push -142942670
 CallNative is_model_in_cdimage 1 1
-JumpFalse @Label_trainer_vehicle_spawn_level_3_check_zentorno
-Push -1403128555
+JumpFalse @Label_trainer_vehicle_spawn_level_3_check_massacro
+Push -142942670
 Call @menu_addItem_gxt_veh_hash
-PushString "ZENTORNO"
+PushString "MASSACRO"
 Call @menu_add_number
 Call @menu_add_action
-:Label_trainer_vehicle_spawn_level_3_check_zentorno
+:Label_trainer_vehicle_spawn_level_3_check_massacro
 Push 544021352
 Call @menu_addItem_gxt_veh_hash
 PushString "KHAMELION"
@@ -11026,15 +11335,15 @@ Call @menu_addItem_gxt_veh_hash
 PushString "VOLTIC"
 Call @menu_add_number
 Call @menu_add_action
-Push -142942670
+Push -1403128555
 CallNative is_model_in_cdimage 1 1
-JumpFalse @Label_trainer_vehicle_spawn_level_3_check_massacro
-Push -142942670
+JumpFalse @Label_trainer_vehicle_spawn_level_3_check_zentorno
+Push -1403128555
 Call @menu_addItem_gxt_veh_hash
-PushString "MASSACRO"
+PushString "ZENTORNO"
 Call @menu_add_number
 Call @menu_add_action
-:Label_trainer_vehicle_spawn_level_3_check_massacro
+:Label_trainer_vehicle_spawn_level_3_check_zentorno
 Return 0 0
 
 :Label_trainer_vehicle_spawn_level_3_last_selected_suvs
