@@ -226,21 +226,10 @@ JumpFalse @Label_trainer_network_while_set_3
 StaticGet2 383 
 pglobal3 2390986
 GetImmediate2 2697
-JumpEq @Label_trainer_network_while_set_1.5
+JumpEq @Label_trainer_network_while_set_2
 StaticGet2 383
 pglobal3 2390986
 SetImmediate2 2697
-
-:Label_trainer_network_while_set_1.5
-StaticGet2 383 
-pglobal3 2394984
-GetImmediateP2 1643
-GetImmediate1 42
-JumpEq @Label_trainer_network_while_set_2
-StaticGet2 383 
-pglobal3 2394984
-GetImmediateP2 1643
-SetImmediate1 42
 
 :Label_trainer_network_while_set_2
 StaticGet2 383
