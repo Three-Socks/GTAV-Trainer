@@ -223,13 +223,23 @@ Function 1 0 4
 
 StaticGet2 382
 JumpFalse @Label_trainer_network_while_set_3
+StaticGet2 383 
+pglobal3 2390986
+GetImmediate2 2697
+JumpEq @Label_trainer_network_while_set_1.5
 StaticGet2 383
-pglobal3 2390805
-GetImmediate2 2695
+pglobal3 2390986
+SetImmediate2 2697
+
+:Label_trainer_network_while_set_1.5
+StaticGet2 383 
+pglobal3 2394984
+GetImmediateP2 1643
+GetImmediate1 42
 JumpEq @Label_trainer_network_while_set_2
-StaticGet2 383
-pglobal3 2390805
-SetImmediate2 2695
+pglobal3 2394984
+GetImmediateP2 1643
+GetImmediate1 42
 
 :Label_trainer_network_while_set_2
 StaticGet2 383
@@ -244,7 +254,7 @@ SetImmediate2 675
 StaticGet2 384
 JumpFalse @Label_trainer_network_while_set_4
 CallNative get_network_time 0 1
-pglobal3 2390805
+pglobal3 2390986
 SetImmediate1 55
 
 
@@ -4679,6 +4689,11 @@ StaticGet2 384
 Not
 StaticSet2 384
 Call @menu_toggle_current_bool
+StaticGet2 384
+CallNative player_id 0 1
+pglobal3 2387077
+ArrayGetP1 217
+SetImmediate1 170
 Return 0 0
 
 :Label_trainer_network_action_level_1_last_selected_1
