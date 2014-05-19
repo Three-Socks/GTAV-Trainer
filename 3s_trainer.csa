@@ -3,6 +3,8 @@ Call @menu_setup
 CallNative network_is_game_in_progress 0 1
 JumpFalse @while
 CallNative network_set_script_is_safe_for_network_game 0 0
+iPush_0
+CallNative set_this_script_can_be_paused 1 0
 
 :while
 iPush_1
@@ -104,16 +106,10 @@ Switch [0 @Label_trainer_race_turbo_3336]:[1 @Label_trainer_race_turbo_3337]
 Jump @Label_trainer_race_turbo_3338
 
 :Label_trainer_race_turbo_3336
-staticget2 416
-iPush_0
-JumpLE @Label_trainer_race_turbo_3339
-CallNative get_game_timer 0 1
-staticget2 416
-JumpGE @Label_trainer_race_turbo_3340
 iPush_0
 Push1 65
 CallNative is_control_just_pressed 2 1
-JumpFalse @Label_trainer_race_turbo_3341
+JumpFalse @Label_trainer_race_turbo_3339
 StaticGet2 379
 Call @trainer_race_turbo_check
 dup
@@ -124,7 +120,7 @@ CallNative is_ped_sitting_in_vehicle 2 1
 And
 
 :Label_trainer_race_turbo_3342
-JumpFalse @Label_trainer_race_turbo_3341
+JumpFalse @Label_trainer_race_turbo_3339
 StaticGet2 379
 CallNative get_entity_model 1 1
 CallNative is_this_model_a_car 1 1
@@ -142,13 +138,6 @@ CallNative get_game_timer 0 1
 Add2 2000
 staticset2 416
 iPush_1
-staticset2 415
-
-:Label_trainer_race_turbo_3341
-Jump @Label_trainer_race_turbo_3339
-
-:Label_trainer_race_turbo_3340
-iPush_2
 staticset2 415
 
 :Label_trainer_race_turbo_3339
@@ -178,7 +167,7 @@ iPush_0
 CallNative set_vehicle_boost_active 2 0
 
 :Label_trainer_race_turbo_3347
-iPush_2
+iPush_0
 staticset2 415
 
 :Label_trainer_race_turbo_3346
@@ -466,8 +455,18 @@ Call @menu_addItem_action
 Return 0 0
 
 :Label_last_selected_2
+CallNative network_is_game_in_progress 0 1
+Not
+JumpFalse @Label_last_selected_2_1
+iPush_1
+Call @trainer_error_network
+Return 0 0
+
+:Label_last_selected_2_1
 PushString "Network"
 StaticSet1 10
+PushString "Garage"
+Call @menu_addItem
 PushString "Pause Off Radar Timer"
 Call @menu_addItem
 StaticGet2 384
@@ -484,6 +483,12 @@ Call @menu_add_action
 PushString "Race Boost Always on"
 Call @menu_addItem
 StaticGet2 411
+Call @menu_addItem_bool
+Call @menu_add_action
+
+PushString "Garage Test"
+Call @menu_addItem
+globalget3 1572901
 Call @menu_addItem_bool
 Call @menu_add_action
 Return 0 0
@@ -619,7 +624,7 @@ Function 1 0 4
 iPush_0
 pstatic2 61
 ArrayGet1 1
-Switch [0 @Label_level_2_last_selected_0]:[1 @Label_level_2_last_selected_1]
+Switch [0 @Label_level_2_last_selected_0]:[1 @Label_level_2_last_selected_1]:[2 @Label_level_2_last_selected_2]
 Jump @Label_level_2_end
 
 :Label_level_2_last_selected_0
@@ -628,6 +633,10 @@ Return 0 0
 
 :Label_level_2_last_selected_1
 Call @trainer_vehicle_level_2
+Return 0 0
+
+:Label_level_2_last_selected_2
+Call @trainer_network_level_2
 Return 0 0
 
 :Label_level_2_end
@@ -1498,13 +1507,122 @@ Return 0 0
 :Label_trainer_vehicle_level_2_end
 Return 0 0
 
+:trainer_network_get_property
+Function 1 1 3
+getF 0
+iPush_0
+JumpNE @Label_trainer_network_get_property_1
+iPush_-1
+Call @trainer_network_get_property_2
+pglobal3 1374092
+ArrayGet1 1
+Return 1 1
+Jump @Label_trainer_network_get_property_3
+
+:Label_trainer_network_get_property_1
+getF 0
+iPush_1
+JumpNE @Label_trainer_network_get_property_3
+iPush_-1
+Call @trainer_network_get_property_2
+pglobal3 2418843
+ArrayGet1 1
+Return 1 1
+
+:Label_trainer_network_get_property_3
+iPush_0
+Return 1 1
+
+:trainer_network_get_property_2
+Function 105 1 5
+getF 0
+setF 3
+getF 3
+iPush_-1
+JumpNE @trainer_network_get_property_2_2
+globalget3 1338478
+setF 4
+getF 4
+iPush_-1
+JumpLE @trainer_network_get_property_2_1
+iPush_0
+globalset3 2404826
+getF 4
+setF 3
+Jump @trainer_network_get_property_2_2
+
+:trainer_network_get_property_2_1
+iPush_0
+setF 3
+iPush_1
+globalset3 2404826
+
+:trainer_network_get_property_2_2
+getF 3
+Return 1 1
+
+:trainer_network_level_2
+Function 1 0 4
+
+CallNative network_is_game_in_progress 0 1
+Not
+JumpFalse @Label_trainer_network_level_2_1
+iPush_1
+Call @trainer_error_network
+Return 0 0
+
+:Label_trainer_network_level_2_1
+iPush_1
+pstatic2 61
+ArrayGet1 1
+Switch [0 @Label_trainer_network_level_2_last_selected_0]
+Jump @Label_trainer_network_level_2_end
+
+:Label_trainer_network_level_2_last_selected_0
+PushString "Network - Garage"
+StaticSet1 10
+
+iPush_0
+Call @trainer_network_get_property
+setF 3
+
+getF 3
+iPush_0
+JumpLE @Label_trainer_network_level_2_2
+
+getF 3
+pglobal3 1048879
+ArrayGetP2 1324
+GetImmediateP1 16
+Call @menu_addItem
+
+:Label_trainer_network_level_2_2
+iPush_1
+Call @trainer_network_get_property
+setF 3
+
+getF 3
+iPush_0
+JumpLE @Label_trainer_network_level_2_3
+getF 3
+pglobal3 1048879
+ArrayGetP2 1324
+GetImmediateP1 16
+Call @menu_addItem
+
+:Label_trainer_network_level_2_3
+Return 0 0
+
+:Label_trainer_network_level_2_end
+Return 0 0
+
 :trainer_level_3
 Function 1 0 4
 
 iPush_0
 pstatic2 61
 ArrayGet1 1
-Switch [0 @Label_level_3_last_selected_0]:[1 @Label_level_3_last_selected_1]
+Switch [0 @Label_level_3_last_selected_0]:[1 @Label_level_3_last_selected_1]:[2 @Label_level_3_last_selected_2]
 Jump @Label_level_3_end
 
 :Label_level_3_last_selected_0
@@ -1513,6 +1631,10 @@ Return 0 0
 
 :Label_level_3_last_selected_1
 Call @trainer_vehicle_level_3
+Return 0 0
+
+:Label_level_3_last_selected_2
+Call @trainer_network_level_3
 Return 0 0
 
 :Label_level_3_end
@@ -2494,17 +2616,52 @@ Return 0 0
 :Label_trainer_vehicle_modify_level_3_end
 Return 0 0
 
+:trainer_network_level_3
+Function 1 0 4
+
+CallNative network_is_game_in_progress 0 1
+Not
+JumpFalse @Label_trainer_network_level_3_1
+iPush_1
+Call @trainer_error_network
+Return 0 0
+
+:Label_trainer_network_level_3_1
+iPush_1
+pstatic2 61
+ArrayGet1 1
+Switch [0 @Label_network_level_3_last_selected_0]
+Jump @Label_network_level_3_end
+
+:Label_network_level_3_last_selected_0
+PushString "Network - Garage"
+StaticSet1 10
+
+PushString "Vehicle 0"
+Call @menu_addItem
+PushString "Vehicle 1"
+Call @menu_addItem
+
+Return 0 0
+
+:Label_network_level_3_end
+Return 0 0
+
 :trainer_level_4
 Function 1 0 4
 
 iPush_0
 pstatic2 61
 ArrayGet1 1
-Switch [1 @Label_level_4_last_selected_1]
+Switch [1 @Label_level_4_last_selected_1]:[2 @Label_level_4_last_selected_2]
 Jump @Label_level_4_end
 
 :Label_level_4_last_selected_1
 Call @trainer_vehicle_level_4
+Return 0 0
+
+:Label_level_4_last_selected_2
+Call @trainer_network_level_4
 Return 0 0
 
 :Label_level_4_end
@@ -4422,6 +4579,37 @@ Call @menu_add_action
 :Label_trainer_vehicle_colour_7_end
 Return 0 0
 
+:trainer_network_level_4
+Function 1 0 4
+
+CallNative network_is_game_in_progress 0 1
+Not
+JumpFalse @Label_trainer_network_level_4_1
+iPush_1
+Call @trainer_error_network
+Return 0 0
+
+:Label_trainer_network_level_4_1
+iPush_1
+pstatic2 61
+ArrayGet1 1
+Switch [0 @Label_trainer_network_level_4_last_selected_0]
+Jump @Label_trainer_network_level_4_end
+
+:Label_trainer_network_level_4_last_selected_0
+PushString "Network - Garage"
+StaticSet1 10
+
+PushString "Option 1"
+Call @menu_addItem_action
+
+PushString "Option 2"
+Call @menu_addItem_action
+Return 0 0
+
+:Label_trainer_network_level_4_end
+Return 0 0
+
 :trainer_get_vehicle
 Function 1 0 5
 
@@ -4443,6 +4631,13 @@ Return 0 1
 :trainer_error_vehicle
 Function 1 1 4
 PushString "Not in a vehicle."
+getF 0
+Call @menu_error
+Return 1 0
+
+:trainer_error_network
+Function 1 1 4
+PushString "Not online."
 getF 0
 Call @menu_error
 Return 1 0
@@ -4671,10 +4866,10 @@ Return 0 0
 Function 1 0 7
 
 StaticGet1 4
-Switch [0 @Label_trainer_network_action_level_1_last_selected_0]:[1 @Label_trainer_network_action_level_1_last_selected_1]:[2 @Label_trainer_network_action_level_1_last_selected_2]
+Switch [1 @Label_trainer_network_action_level_1_last_selected_1]:[2 @Label_trainer_network_action_level_1_last_selected_2]:[3 @Label_trainer_network_action_level_1_last_selected_3]:[4 @Label_trainer_network_action_level_1_last_selected_4]
 Jump @Label_trainer_network_action_level_1_end
 
-:Label_trainer_network_action_level_1_last_selected_0
+:Label_trainer_network_action_level_1_last_selected_1
 StaticGet2 384
 Not
 StaticSet2 384
@@ -4686,7 +4881,7 @@ ArrayGetP1 217
 SetImmediate1 170
 Return 0 0
 
-:Label_trainer_network_action_level_1_last_selected_1
+:Label_trainer_network_action_level_1_last_selected_2
 pglobal3 1332333
 GetImmediate1 3
 Not
@@ -4695,10 +4890,17 @@ SetImmediate1 3
 Call @menu_toggle_current_bool
 Return 0 0
 
-:Label_trainer_network_action_level_1_last_selected_2
+:Label_trainer_network_action_level_1_last_selected_3
 StaticGet2 411
 Not
 StaticSet2 411
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_network_action_level_1_last_selected_4
+globalget3 1572901
+Not
+globalset3 1572901
 Call @menu_toggle_current_bool
 Return 0 0
 
@@ -6180,13 +6382,8 @@ Return 0 0
 StaticGet2 414
 Not
 StaticSet2 414
-
-StaticGet2 416
 iPush_0
-JumpGE @trainer_vehicle_settings_boost_end
-CallNative get_game_timer 0 1
-Add2 500
-StaticSet2 416
+StaticSet2 415
 Call @menu_toggle_current_bool
 
 :trainer_vehicle_settings_boost_end
@@ -7830,9 +8027,6 @@ Push1 174
 CallNative disable_control_action 2 0
 iPush_2
 Push1 175
-CallNative disable_control_action 2 0
-iPush_2
-Push1 176
 CallNative disable_control_action 2 0
 iPush_2
 Push1 163
