@@ -91,31 +91,31 @@ Static_45
 Static_46
 
 // (char) frontend_items_button (6)
-Static[47]
+Static_47[* 6]
 
 // (char) frontend_items_name (6)
-Static[54]
+Static_54[* 6]
 
 // (uint) last_selected (10)
-Static[61]
+Static_61[* 10]
 
 // (char) menu_items_name (50)
-Static[72]
+Static_72[* 50]
 
 // (uint) menu_items_type (1 = number, 2 = float, 3 = bool, 4 = GXT, 5 = vehicle hash, 6 = keyboard string, 7 = keyboard number, 8 = add number, 9 = gxt add number) (50)
-Static[123]
+Static_123[* 50]
 
 // (int) menu_items_extra_val (50)
-Static[174]
+Static_174[* 50]
 
 // (bool) menu_items_action (50)
-Static[225]
+Static_225[* 50]
 
 // (int) menu_items_num_val (50)
-Static[276]
+Static_276[* 50]
 
 // (float) menu_items_float_val (50)
-Static[327]
+Static_327[* 50]
 
 // Trainer
 
@@ -140,8 +140,8 @@ Static_383
 // network_pause_off_radar
 Static_384
 
-// trainer_stored_selected (25)
-Static[385]
+// trainer_stored_selected (30)
+Static_385[* 30]
 
 // (bool) network_boost_mode_always_on
 Static_411
