@@ -8964,7 +8964,7 @@ StaticSet1 14
 Return 0 0
 
 :menu_set_last_selected
-Function 1 0 3
+Function 1 0 4
 
 StaticGet1 9
 pstatic2 61
@@ -8995,20 +8995,20 @@ StaticGet1 25
 JumpLE @Label_menu_set_last_selected_end
 StaticGet1 25
 Add1 1
-setF 3
+setF 2
 
 StaticGet1 5
 StaticGet1 25
 Sub
-setF 4
+setF 3
 
 :Label_menu_set_last_selected_loop
 getF 3
 StaticGet1 4
 JumpGT @Label_menu_set_last_selected_end
 
+getF 2
 getF 3
-getF 4
 Add1 1
 JumpGE @Label_menu_set_last_selected_end
 
@@ -9021,9 +9021,9 @@ StaticGet1 23
 Add1 1
 StaticSet1 23
 
-getF 3
+getF 2
 Add1 1
-setF 3
+setF 2
 Jump @Label_menu_set_last_selected_loop
 
 :Label_menu_set_last_selected_end
