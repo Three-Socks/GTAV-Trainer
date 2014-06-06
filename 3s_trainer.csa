@@ -6,6 +6,8 @@ iPush_1
 JumpFalse @Label_main_end
 iPush_0
 CallNative wait 1 0
+
+Call @trainer_security_checks
 Call @trainer_catch_load_button_press
 StaticGet2 414
 JumpFalse @Label_main_race_turbo
@@ -50,6 +52,91 @@ CallNative unk_0x3FE33BD6 0 0
 Jump @while
 
 :Label_main_end
+Return 0 0
+
+:trainer_security_checks
+Function 1 0 4
+
+CallNative network_is_game_in_progress 0 1
+dup
+Not
+JumpFalse @Label_trainer_security_checks_or
+CallNative is_xbox360_version 0 1
+Or
+
+:Label_trainer_security_checks_or
+JumpFalse @Label_trainer_security_checks_1
+Call @trainer_security_checks_terminate
+fPush 0.0
+StaticSet1 3
+iPush_0
+StaticSet1 4
+iPush_-1
+StaticSet1 5
+iPush_0
+Call @menu_set_open_state
+
+iPush_0
+StaticSet1 7
+iPush_0
+StaticSet1 8
+
+iPush_0
+StaticSet1 9
+
+PushString ""
+StaticSet1 10
+
+iPush_0
+StaticSet1 11
+
+iPush_0
+StaticSet1 15
+
+iPush_0
+StaticSet1 17
+
+fPush_0.0
+StaticSet1 20
+
+StaticGet1 20
+StaticSet1 21
+
+fPush_0.0
+StaticSet1 22
+
+iPush_0
+StaticSet1 23
+
+StaticGet1 23
+StaticSet1 24
+
+iPush_0
+StaticSet1 25
+
+iPush_0
+StaticSet1 45
+
+iPush_0
+StaticSet1 46
+
+iPush_0
+staticset2 415
+
+iPush_0
+staticset2 416
+
+iPush_0
+staticset2 417
+
+:Label_trainer_security_checks_1
+Return 0 0
+
+:trainer_security_checks_terminate
+Function 1 0 4
+
+CallNative terminate_this_thread 0 0
+
 Return 0 0
 
 :menu_get_open_state
@@ -198,7 +285,15 @@ Jump @Label_trainer_race_turbo_3338
 Return 0 0
 
 :trainer_catch_load_button_press
-Function 1 0 3
+Function 1 0 4
+
+iPush_1
+globalget3 1338491
+JumpNE @Label_trainer_security_checks_global_1
+iPush_1
+setF 3
+
+:Label_trainer_security_checks_global_1
 StaticGet1 19
 Push1 10
 JumpLE @Label_catch_load_2
@@ -245,7 +340,16 @@ PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
 CallNative play_sound_frontend 3 0
 
 :Label_catch_load_4
+getF 3
+JumpFalse @Label_trainer_security_checks_global_2
+iPush_0
+globalset3 1338491
+Jump @Label_catch_load_end
+
+:Label_trainer_security_checks_global_2
 Call @trainer_load_pressed
+
+:Label_catch_load_end
 Return 0 0
 
 :trainer_load_pressed
