@@ -1,21 +1,11 @@
 Function 0 0 2
 Call @menu_setup
-CallNative network_is_game_in_progress 0 1
-JumpFalse @while
-CallNative network_set_script_is_safe_for_network_game 0 0
-iPush_0
-CallNative set_this_script_can_be_paused 1 0
 
 :while
 iPush_1
 JumpFalse @Label_main_end
 iPush_0
 CallNative wait 1 0
-CallNative network_is_game_in_progress 0 1
-JumpFalse @Label_main_1
-Call @trainer_network_while_set
-
-:Label_main_1
 Call @trainer_catch_load_button_press
 StaticGet2 414
 JumpFalse @Label_main_race_turbo
@@ -207,58 +197,6 @@ Jump @Label_trainer_race_turbo_3338
 :Label_trainer_race_turbo_3338
 Return 0 0
 
-:trainer_network_while_set
-Function 1 0 4
-
-StaticGet2 382
-JumpFalse @Label_trainer_network_while_set_3
-StaticGet2 383 
-pglobal3 2390986
-GetImmediate2 2697
-JumpEq @Label_trainer_network_while_set_2
-StaticGet2 383
-pglobal3 2390986
-SetImmediate2 2697
-
-:Label_trainer_network_while_set_2
-StaticGet2 383
-pglobal3 2399655
-GetImmediate2 675
-JumpEq @Label_trainer_network_while_set_3
-StaticGet2 383
-pglobal3 2399655
-SetImmediate2 675
-
-:Label_trainer_network_while_set_3
-StaticGet2 384
-JumpFalse @Label_trainer_network_while_set_4
-CallNative get_network_time 0 1
-pglobal3 2390986
-SetImmediate1 55
-
-:Label_trainer_network_while_set_4
-StaticGet2 411
-JumpFalse @Label_trainer_network_while_set_5
-iPush_1
-pglobal3 1332333
-GetImmediate1 3
-JumpEq @Label_trainer_network_while_set_5
-iPush_1
-pglobal3 1332333
-SetImmediate1 3
-
-:Label_trainer_network_while_set_5
-StaticGet2 417
-JumpFalse @Label_trainer_network_while_set_end
-CallNative get_game_timer 0 1
-PushS 1000
-Add
-pglobal2 13241
-SetImmediate2 4621
-
-:Label_trainer_network_while_set_end
-Return 0 0
-
 :trainer_catch_load_button_press
 Function 1 0 3
 StaticGet1 19
@@ -393,9 +331,6 @@ Call @menu_addItem
 PushString "Vehicle"
 Call @menu_addItem
 
-PushString "Network"
-Call @menu_addItem
-
 PushString "Debug"
 Call @menu_addItem
 Return 0 0
@@ -467,42 +402,6 @@ Call @menu_addItem_action
 Return 0 0
 
 :Label_last_selected_2
-CallNative network_is_game_in_progress 0 1
-Not
-JumpFalse @Label_last_selected_2_1
-iPush_1
-Call @trainer_error_network
-Return 0 0
-
-:Label_last_selected_2_1
-PushString "Network"
-StaticSet1 10
-PushString "Garage"
-Call @menu_addItem
-PushString "Pause Off Radar Timer"
-Call @menu_addItem
-StaticGet2 384
-Call @menu_addItem_bool
-Call @menu_add_action
-
-PushString "Race Boost"
-Call @menu_addItem
-pglobal3 1332333
-GetImmediate1 3
-Call @menu_addItem_bool
-Call @menu_add_action
-
-PushString "Race Boost Always on"
-Call @menu_addItem
-StaticGet2 411
-Call @menu_addItem_bool
-Call @menu_add_action
-
-PushString "Garage Test"
-Call @menu_addItem
-globalget3 1572901
-Call @menu_addItem_bool
-Call @menu_add_action
 Return 0 0
 
 :Label_last_selected_3
@@ -648,7 +547,6 @@ Call @trainer_vehicle_level_2
 Return 0 0
 
 :Label_level_2_last_selected_2
-Call @trainer_network_level_2
 Return 0 0
 
 :Label_level_2_end
@@ -1519,115 +1417,6 @@ Return 0 0
 :Label_trainer_vehicle_level_2_end
 Return 0 0
 
-:trainer_network_get_property
-Function 1 1 3
-getF 0
-iPush_0
-JumpNE @Label_trainer_network_get_property_1
-iPush_-1
-Call @trainer_network_get_property_2
-pglobal3 1374092
-ArrayGet1 1
-Return 1 1
-Jump @Label_trainer_network_get_property_3
-
-:Label_trainer_network_get_property_1
-getF 0
-iPush_1
-JumpNE @Label_trainer_network_get_property_3
-iPush_-1
-Call @trainer_network_get_property_2
-pglobal3 2418843
-ArrayGet1 1
-Return 1 1
-
-:Label_trainer_network_get_property_3
-iPush_0
-Return 1 1
-
-:trainer_network_get_property_2
-Function 105 1 5
-getF 0
-setF 3
-getF 3
-iPush_-1
-JumpNE @trainer_network_get_property_2_2
-globalget3 1338478
-setF 4
-getF 4
-iPush_-1
-JumpLE @trainer_network_get_property_2_1
-iPush_0
-globalset3 2404826
-getF 4
-setF 3
-Jump @trainer_network_get_property_2_2
-
-:trainer_network_get_property_2_1
-iPush_0
-setF 3
-iPush_1
-globalset3 2404826
-
-:trainer_network_get_property_2_2
-getF 3
-Return 1 1
-
-:trainer_network_level_2
-Function 1 0 4
-
-CallNative network_is_game_in_progress 0 1
-Not
-JumpFalse @Label_trainer_network_level_2_1
-iPush_1
-Call @trainer_error_network
-Return 0 0
-
-:Label_trainer_network_level_2_1
-iPush_1
-pstatic2 61
-ArrayGet1 1
-Switch [0 @Label_trainer_network_level_2_last_selected_0]
-Jump @Label_trainer_network_level_2_end
-
-:Label_trainer_network_level_2_last_selected_0
-PushString "Network - Garage"
-StaticSet1 10
-
-iPush_0
-Call @trainer_network_get_property
-setF 3
-
-getF 3
-iPush_0
-JumpLE @Label_trainer_network_level_2_2
-
-getF 3
-pglobal3 1048879
-ArrayGetP2 1324
-GetImmediateP1 16
-Call @menu_addItem_gxt
-
-:Label_trainer_network_level_2_2
-iPush_1
-Call @trainer_network_get_property
-setF 3
-
-getF 3
-iPush_0
-JumpLE @Label_trainer_network_level_2_3
-getF 3
-pglobal3 1048879
-ArrayGetP2 1324
-GetImmediateP1 16
-Call @menu_addItem_gxt
-
-:Label_trainer_network_level_2_3
-Return 0 0
-
-:Label_trainer_network_level_2_end
-Return 0 0
-
 :trainer_level_3
 Function 1 0 4
 
@@ -1646,7 +1435,6 @@ Call @trainer_vehicle_level_3
 Return 0 0
 
 :Label_level_3_last_selected_2
-Call @trainer_network_level_3
 Return 0 0
 
 :Label_level_3_end
@@ -2880,132 +2668,6 @@ Return 0 0
 :Label_trainer_vehicle_modify_level_3_end
 Return 0 0
 
-:trainer_network_level_3
-Function 1 0 4
-
-CallNative network_is_game_in_progress 0 1
-Not
-JumpFalse @Label_trainer_network_level_3_1
-iPush_1
-Call @trainer_error_network
-Return 0 0
-
-:Label_trainer_network_level_3_1
-iPush_1
-pstatic2 61
-ArrayGet1 1
-Switch [0 @Label_network_level_3_last_selected_0]
-Jump @Label_network_level_3_end
-
-:Label_network_level_3_last_selected_0
-PushString "Network - Garage"
-StaticSet1 10
-
-iPush_0
-iPush_2
-pstatic2 61
-ArrayGet1 1
-JumpNE @Label_trainer_network_level_3_garage_1
-iPush_0
-setF 3
-
-:Label_trainer_network_level_3_while
-getF 3
-Push1 12
-JumpGT @Label_trainer_network_level_3_garage_1
-
-getF 3
-iPush_0
-pglobal3 2097152
-ArrayGetP2 3214
-ArrayGetP1 81
-GetImmediate1 42
-CallNative is_model_a_vehicle 1 1
-JumpFalse @Label_network_level_3_continue
-
-getF 3
-iPush_0
-pglobal3 2097152
-ArrayGetP2 3214
-ArrayGetP1 81
-GetImmediate1 42
-CallNative get_display_name_from_vehicle_model 1 1
-Call @menu_addItem_gxt
-
-getF 3
-StaticGet1 5
-pstatic2 385
-ArraySet1 1
-
-:Label_network_level_3_continue
-getF 3
-Add1 1
-setF 3
-Jump @Label_trainer_network_level_3_while
-
-:Label_trainer_network_level_3_garage_1
-iPush_1
-iPush_2
-pstatic2 61
-ArrayGet1 1
-JumpNE @Label_network_level_3_last_selected_0_end
-iPush_0
-setF 3
-
-:Label_trainer_network_level_3_while_2
-getF 3
-Push1 25
-JumpGT @Label_network_level_3_last_selected_0_end
-
-getF 3
-Push1 13
-JumpLE @Label_network_level_3_continue_2
-
-getF 3
-iPush_0
-pglobal3 2097152
-ArrayGetP2 3214
-ArrayGetP1 81
-GetImmediate1 42
-CallNative is_model_a_vehicle 1 1
-JumpFalse @Label_network_level_3_continue_2
-
-getF 3
-iPush_0
-pglobal3 2097152
-ArrayGetP2 3214
-ArrayGetP1 81
-GetImmediate1 42
-CallNative get_display_name_from_vehicle_model 1 1
-Call @menu_addItem_gxt
-
-getF 3
-StaticGet1 5
-pstatic2 385
-ArraySet1 1
-
-:Label_network_level_3_continue_2
-getF 3
-Add1 1
-setF 3
-Jump @Label_trainer_network_level_3_while_2
-
-:Label_network_level_3_last_selected_0_end
-PushString "Add Vehicle"
-Call @menu_addItem
-iPush_-1
-StaticGet1 5
-pstatic2 385
-ArraySet1 1
-PushString "Add Current Vehicle"
-Call @menu_addItem
-Call @menu_add_action
-
-Return 0 0
-
-:Label_network_level_3_end
-Return 0 0
-
 :trainer_level_4
 Function 1 0 4
 
@@ -3020,7 +2682,6 @@ Call @trainer_vehicle_level_4
 Return 0 0
 
 :Label_level_4_last_selected_2
-Call @trainer_network_level_4
 Return 0 0
 
 :Label_level_4_end
@@ -4938,117 +4599,6 @@ Call @menu_add_action
 :Label_trainer_vehicle_colour_7_end
 Return 0 0
 
-:trainer_network_level_4
-Function 1 0 4
-
-CallNative network_is_game_in_progress 0 1
-Not
-JumpFalse @Label_trainer_network_level_4_1
-iPush_1
-Call @trainer_error_network
-Return 0 0
-
-:Label_trainer_network_level_4_1
-iPush_1
-pstatic2 61
-ArrayGet1 1
-Switch [0 @Label_trainer_network_level_4_last_selected_0]
-Jump @Label_trainer_network_level_4_end
-
-:Label_trainer_network_level_4_last_selected_0
-PushString "Network - Garage"
-StaticSet1 10
-
-iPush_-1
-iPush_3
-pstatic2 61
-ArrayGet1 1
-pstatic2 385
-ArrayGet1 1
-JumpNE @Label_trainer_network_level_4_options
-PushString "VEH_CLASS_14"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_20"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_0"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_3"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_13"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_18"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_15"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_10"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_19"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_8"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_4"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_9"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_16"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_1"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_17"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_6"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_5"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_7"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_2"
-Call @menu_addItem_gxt
-
-PushString "Trailers"
-Call @menu_addItem
-
-PushString "VEH_CLASS_21"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_11"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_12"
-Call @menu_addItem_gxt
-Jump @Label_trainer_network_level_4_last_selected_0_end
-
-:Label_trainer_network_level_4_options
-PushString "Option 1"
-Call @menu_addItem_action
-
-PushString "Option 2"
-Call @menu_addItem_action
-
-:Label_trainer_network_level_4_last_selected_0_end
-Return 0 0
-
-:Label_trainer_network_level_4_end
-Return 0 0
-
 :trainer_level_5
 Function 1 0 4
 
@@ -5059,34 +4609,9 @@ Switch [2 @Label_level_5_last_selected_2]
 Jump @Label_level_5_end
 
 :Label_level_5_last_selected_2
-Call @trainer_network_level_5
 Return 0 0
 
 :Label_level_5_end
-Return 0 0
-
-:trainer_network_level_5
-Function 1 0 4
-
-CallNative network_is_game_in_progress 0 1
-Not
-JumpFalse @Label_trainer_network_level_5_1
-iPush_1
-Call @trainer_error_network
-Return 0 0
-
-:Label_trainer_network_level_5_1
-iPush_1
-pstatic2 61
-ArrayGet1 1
-Switch [0 @Label_trainer_network_level_5_last_selected_0]
-Jump @Label_trainer_network_level_5_end
-
-:Label_trainer_network_level_5_last_selected_0
-Call @trainer_vehicle_spawn_level_3
-Return 0 0
-
-:Label_trainer_network_level_5_end
 Return 0 0
 
 :trainer_get_vehicle
@@ -5110,13 +4635,6 @@ Return 0 1
 :trainer_error_vehicle
 Function 1 1 4
 PushString "Not in a vehicle."
-getF 0
-Call @menu_error
-Return 1 0
-
-:trainer_error_network
-Function 1 1 4
-PushString "Not online."
 getF 0
 Call @menu_error
 Return 1 0
@@ -5295,7 +4813,6 @@ Call @trainer_vehicle_action_level_1
 Return 0 0
 
 :Label_action_level_1_last_selected_2
-Call @trainer_network_action_level_1
 Return 0 0
 
 :Label_action_level_1_last_selected_3
@@ -5343,57 +4860,6 @@ Call @trainer_error_vehicle
 Return 0 0
 
 :Label_trainer_vehicle_action_level_1_end
-Return 0 0
-
-:trainer_network_action_level_1
-Function 1 0 7
-
-StaticGet1 4
-Switch [1 @Label_trainer_network_action_level_1_last_selected_1]:[2 @Label_trainer_network_action_level_1_last_selected_2]:[3 @Label_trainer_network_action_level_1_last_selected_3]:[4 @Label_trainer_network_action_level_1_last_selected_4]
-Jump @Label_trainer_network_action_level_1_end
-
-:Label_trainer_network_action_level_1_last_selected_1
-StaticGet2 384
-Not
-StaticSet2 384
-Call @menu_toggle_current_bool
-StaticGet2 384
-CallNative player_id 0 1
-pglobal3 2387077
-ArrayGetP1 217
-SetImmediate1 170
-CallNative get_network_time 0 1
-pglobal3 2390986
-SetImmediate1 55
-Return 0 0
-
-:Label_trainer_network_action_level_1_last_selected_2
-pglobal3 1332333
-GetImmediate1 3
-Not
-pglobal3 1332333
-SetImmediate1 3
-Call @menu_toggle_current_bool
-Return 0 0
-
-:Label_trainer_network_action_level_1_last_selected_3
-StaticGet2 411
-Not
-StaticSet2 411
-Call @menu_toggle_current_bool
-Return 0 0
-
-:Label_trainer_network_action_level_1_last_selected_4
-globalget3 1572901
-Not
-globalset3 1572901
-StaticGet2 417
-Not
-StaticSet2 417
-Call @menu_toggle_current_bool
-Return 0 0
-
-:Label_trainer_network_action_level_1_end
 Return 0 0
 
 :trainer_debug_action_level_1
@@ -6491,7 +5957,6 @@ Call @trainer_vehicle_action_level_3
 Return 0 0
 
 :Label_action_level_3_last_selected_2
-Call @trainer_network_action_level_3
 Return 0 0
 
 :Label_action_level_3_end
@@ -6660,13 +6125,6 @@ Switch [0 @Label_trainer_vehicle_action_level_3_last_selected_0]:[1 @Label_train
 Jump @Label_trainer_vehicle_action_level_3_end
 
 :Label_trainer_vehicle_action_level_3_last_selected_0
-CallNative network_is_game_in_progress 0 1
-JumpFalse @Label_trainer_vehicle_action_level_3_last_selected_0_not_network
-Call @menu_get_current_extra
-Call @trainer_network_set_spawn_veh
-Jump @Label_trainer_vehicle_action_level_3_last_selected_0_end
-
-:Label_trainer_vehicle_action_level_3_last_selected_0_not_network
 Call @menu_get_current_extra
 Call @trainer_spawn_veh_action
 
@@ -6918,48 +6376,6 @@ CallNative unk_0x33B0B007 2 0
 Return 0 0
 
 :Label_trainer_vehicle_settings_action_level_3_end
-Return 0 0
-
-:trainer_network_action_level_3
-Function 1 0 4
-
-CallNative network_is_game_in_progress 0 1
-Not
-JumpFalse @Label_trainer_network_action_level_3_1
-iPush_1
-Call @trainer_error_network
-Return 0 0
-
-:Label_trainer_network_action_level_3_1
-Call @trainer_get_vehicle
-Not
-JumpFalse @Label_trainer_vehicle_action_level_3_2
-iPush_0
-Call @trainer_error_vehicle
-Return 0 0
-
-:Label_trainer_vehicle_action_level_3_2
-iPush_1
-pstatic2 61
-ArrayGet1 1
-Switch [0 @Label_trainer_network_action_level_3_last_selected_0]
-Jump @Label_trainer_network_action_level_3_end
-
-:Label_trainer_network_action_level_3_last_selected_0
-StaticGet2 379
-Call @Label_network_garage_0
-iPush_0
-Call @Label_network_garage_1
-Call @menu_clean
-Call @menu_set
-StaticGet1 4
-StaticGet1 9
-pstatic2 61
-ArraySet1 1
-Call @menu_set_last_selected
-Return 0 0
-
-:Label_trainer_network_action_level_3_end
 Return 0 0
 
 :trainer_action_level_4
@@ -7828,18 +7244,6 @@ iPush_0
 CallNative get_entity_coords 2 3
 Return 1 3
 
-:trainer_network_set_spawn_veh
-Function 1 1 12
-
-iPush_1
-StaticSet2 382
-
-getF 0
-StaticSet2 383
-
-:Label_network_set_spawn_veh_end
-Return 1 0
-
 :trainer_action_level_5
 Function 1 0 4
 
@@ -7850,743 +7254,10 @@ Switch [2 @Label_action_level_5_last_selected_2]
 Jump @Label_action_level_5_end
 
 :Label_action_level_5_last_selected_2
-Call @trainer_network_action_level_5
 Return 0 0
 
 :Label_action_level_5_end
 Return 0 0
-
-:trainer_network_action_level_5
-Function 1 0 4
-
-CallNative network_is_game_in_progress 0 1
-Not
-JumpFalse @Label_trainer_network_action_level_5_1
-iPush_1
-Call @trainer_error_network
-Return 0 0
-
-:Label_trainer_network_action_level_5_1
-iPush_1
-pstatic2 61
-ArrayGet1 1
-Switch [0 @Label_trainer_network_action_level_5_last_selected_0]
-Jump @Label_trainer_network_action_level_5_end
-
-:Label_trainer_network_action_level_5_last_selected_0
-Call @Label_network_garage_0
-iPush_-1
-JumpNe @Label_network_garage_Space_avail_2
-PushString "Garage is Full, cant be stored"
-iPush_0
-Call @menu_error
-Return 0 0
-
-:Label_network_garage_Space_avail_2
-Call @menu_get_current_extra
-Call @Label_network_garage_2
-Not
-JumpFalse @Label_network_garage_3_2
-PushString "Vehicle is blacklisted and cant be stored"
-iPush_0
-Call @menu_error
-Return 0 0
-
-:Label_network_garage_3_2
-Call @Label_network_garage_0
-Call @Label_network_garage_4
-
-
-Call @menu_get_current_extra
-Call @Label_network_garage_0
-Call @trainer_network_add_vehicle
-PushString "Garage Updated"
-Call @menu_msg
-Return 0 0
-
-:Label_trainer_network_action_level_5_end
-Return 0 0
-
-:trainer_network_add_vehicle
-Function 1 2 6
-
-getF 0
-getF 1
-SetImmediate1 42
-
-Return 2 0
-
-:Label_network_garage_1
-Function 1 3 6
-getF 1
-iPush_-1
-JumpNe @Label_network_garage_Space_avail
-PushString "Garage is Full, cant be stored"
-iPush_0
-Call @menu_error
-Return 3 0
-
-:Label_network_garage_Space_avail
-getF 0
-CallNative get_entity_model 1 1
-Call @Label_network_garage_2
-Not
-JumpFalse @Label_network_garage_3
-PushString "Vehicle is blacklisted and cant be stored"
-iPush_0
-Call @menu_error
-Return 3 0
-
-:Label_network_garage_3
-getF 1
-Call @Label_network_garage_4
-getF 2
-JumpFalse @Label_network_garage_5
-iPush_0
-getF 1
-SetImmediate1 51
-iPush_0
-getF 1
-SetImmediate1 53
-PushString ""
-getF 1
-GetImmediateP1 54
-StrCopy 32
-PushString ""
-getF 1
-GetImmediateP1 62
-StrCopy 64
-iPush_0
-getF 1
-SetImmediate1 80
-iPush_-1
-getF 1
-SetImmediate1 78
-iPush_-1
-getF 1
-SetImmediate1 79
-
-:Label_network_garage_5
-getF 0
-iPush_0
-Call @Label_network_garage_6
-JumpFalse @Label_network_garage_7
-getF 1
-GetImmediateP1 51
-iPush_3
-CallNative set_bit 2 0
-
-:Label_network_garage_7
-getF 0
-getF 1
-Call @Label_network_garage_8
-PushString "MPBitset"
-iPush_3
-CallNative unk_0x7CF0971D 2 1
-JumpFalse @Label_network_garage_9
-getF 0
-PushString "MPBitset"
-CallNative unk_0x74EF9C40 2 1
-JumpFalse @Label_network_garage_9
-getF 0
-PushString "MPBitset"
-CallNative unk_0xDDDE59B5 2 1
-setF 5
-getF 5
-iPush_3
-CallNative is_bit_set 2 1
-JumpFalse @Label_network_garage_9
-getF 1
-GetImmediateP1 51
-iPush_2
-CallNative set_bit 2 0
-
-:Label_network_garage_9
-getF 0
-CallNative unk_0x6D58F73B 1 1
-JumpFalse @Label_network_garage_10
-getF 1
-GetImmediateP1 51
-Push1 8
-CallNative set_bit 2 0
-getF 1
-GetImmediateP1 51
-Push1 9
-CallNative set_bit 2 0
-Jump @Label_network_garage_11
-
-:Label_network_garage_10
-getF 1
-GetImmediateP1 51
-Push1 8
-CallNative clear_bit 2 0
-
-:Label_network_garage_11
-GetF 1
-GetImmediateP1 51
-push1 15
-CallNative set_bit 2 0
-push 2000000
-GetF 1
-SetImmediate1 80
-PushString "Garage Updated"
-Call @menu_msg
-Return 3 0
-
-:Label_network_garage_6
-Function 2 2 4
-CallNative network_is_game_in_progress 0 1
-JumpFalse @Label_network_garage_12
-getF 0
-iPush_0
-CallNative is_vehicle_driveable 2 1
-JumpFalse @Label_network_garage_12
-getF 1
-iPush_0
-JumpNE @Label_network_garage_13
-PushString "bombdec1"
-iPush_3
-CallNative unk_0x7CF0971D 2 1
-JumpFalse @Label_network_garage_14
-getF 0
-PushString "bombdec1"
-CallNative unk_0x74EF9C40 2 1
-JumpFalse @Label_network_garage_14
-iPush_1
-Return 2 1
-
-:Label_network_garage_14
-Jump @Label_network_garage_12
-
-:Label_network_garage_13
-getF 1
-iPush_1
-JumpNE @Label_network_garage_12
-PushString "bombdec"
-iPush_3
-CallNative unk_0x7CF0971D 2 1
-JumpFalse @Label_network_garage_12
-getF 0
-PushString "bombdec"
-CallNative unk_0x74EF9C40 2 1
-JumpFalse @Label_network_garage_12
-iPush_1
-Return 2 1
-
-:Label_network_garage_12
-iPush_0
-Return 2 1
-
-:Label_network_garage_8
-Function 3 2 56
-getF 0
-iPush_0
-CallNative is_vehicle_driveable 2 1
-JumpFalse @Label_network_garage_15
-pFrame1 4
-dup
-GetImmediateP1 9
-Push1 25
-pPeekSet
-drop
-dup
-GetImmediateP1 35
-iPush_2
-pPeekSet
-drop
-drop
-Push1 51
-pFrame1 4
-ToStack
-Push1 51
-getF 1
-FromStack
-getF 0
-CallNative get_entity_model 1 1
-getF 1
-SetImmediate1 42
-getF 0
-CallNative get_vehicle_number_plate_text 1 1
-getF 1
-GetImmediateP1 1
-StrCopy 16
-getF 0
-CallNative unk_0x499747B6 1 1
-getF 1
-pSet
-getF 0
-getF 1
-GetImmediateP1 5
-getF 1
-GetImmediateP1 6
-CallNative get_vehicle_colours 3 0
-getF 0
-getF 1
-GetImmediateP1 7
-getF 1
-GetImmediateP1 8
-CallNative get_vehicle_extra_colours 3 0
-getF 0
-getF 1
-GetImmediateP1 38
-getF 1
-GetImmediateP1 39
-getF 1
-GetImmediateP1 40
-CallNative get_vehicle_tyre_smoke_color 4 0
-getF 0
-CallNative get_vehicle_window_tint 1 1
-getF 1
-SetImmediate1 41
-getF 0
-CallNative get_vehicle_livery 1 1
-getF 1
-SetImmediate1 43
-getF 0
-CallNative get_vehicle_wheel_type 1 1
-getF 1
-SetImmediate1 45
-getF 0
-CallNative get_vehicle_door_lock_status 1 1
-getF 1
-SetImmediate1 46
-getF 0
-getF 1
-GetImmediateP1 47
-getF 1
-GetImmediateP1 48
-getF 1
-GetImmediateP1 49
-CallNative get_vehicle_custom_secondary_colour 4 0
-getF 1
-GetImmediate1 41
-iPush_-1
-JumpNE @Label_network_garage_16
-iPush_0
-getF 1
-SetImmediate1 41
-
-:Label_network_garage_16
-getF 0
-iPush_0
-CallNative is_vehicle_a_convertible 2 1
-JumpFalse @Label_network_garage_17
-getF 0
-CallNative get_convertible_roof_state 1 1
-getF 1
-SetImmediate1 44
-
-:Label_network_garage_17
-getF 0
-CallNative get_vehicle_tyres_can_burst 1 1
-Not
-JumpFalse @Label_network_garage_18
-getF 1
-GetImmediateP1 50
-Push1 9
-CallNative set_bit 2 0
-
-:Label_network_garage_18
-getF 0
-CallNative is_vehicle_stolen 1 1
-JumpFalse @Label_network_garage_19
-getF 1
-GetImmediateP1 50
-Push1 10
-CallNative set_bit 2 0
-
-:Label_network_garage_19
-getF 0
-CallNative unk_0xD7EC8760 1 1
-JumpFalse @Label_network_garage_20
-getF 1
-GetImmediateP1 50
-Push1 13
-CallNative set_bit 2 0
-getF 0
-getF 1
-GetImmediateP1 47
-getF 1
-GetImmediateP1 48
-getF 1
-GetImmediateP1 49
-CallNative get_vehicle_custom_primary_colour 4 0
-Jump @Label_network_garage_20
-
-:Label_network_garage_20
-getF 0
-CallNative unk_0x288AD228 1 1
-JumpFalse @Label_network_garage_21
-getF 1
-GetImmediateP1 50
-Push1 12
-CallNative set_bit 2 0
-
-:Label_network_garage_21
-pFrame1 0
-getF 1
-GetImmediateP1 9
-getF 1
-GetImmediateP1 35
-Call @Label_network_garage_22
-drop
-iPush_0
-setF 55
-
-:Label_network_garage_25
-getF 55
-Push1 8
-JumpGT @Label_network_garage_23
-getF 0
-getF 55
-Add1 1
-CallNative is_vehicle_extra_turned_on 2 1
-JumpFalse @Label_network_garage_24
-getF 1
-GetImmediateP1 50
-iPush_0
-getF 55
-Add
-CallNative set_bit 2 0
-
-:Label_network_garage_24
-getF 55
-Add1 1
-setF 55
-Jump @Label_network_garage_25
-
-:Label_network_garage_23
-getF 0
-CallNative unk_0x6D58F73B 1 1
-JumpFalse @Label_network_garage_26
-getF 1
-GetImmediateP1 50
-Push1 11
-CallNative set_bit 2 0
-Jump @Label_network_garage_15
-
-:Label_network_garage_26
-getF 1
-GetImmediateP1 50
-Push1 11
-CallNative clear_bit 2 0
-
-:Label_network_garage_15
-Return 2 0
-
-:Label_network_garage_22
-Function 4 3 7
-getF 0
-pGet
-iPush_0
-CallNative is_vehicle_driveable 2 1
-Not
-JumpFalse @Label_network_garage_27
-iPush_0
-Return 3 1
-
-:Label_network_garage_27
-getF 0
-pGet
-CallNative get_num_mod_kits 1 1
-iPush_0
-JumpNE @Label_network_garage_28
-iPush_0
-Return 3 1
-
-:Label_network_garage_28
-iPush_0
-setF 5
-
-:Label_network_garage_39
-getF 5
-getF 1
-pGet
-JumpGE @Label_network_garage_29
-getF 5
-setF 6
-getF 6
-Push1 17
-CmpEq
-dup
-Not
-JumpFalse @Label_network_garage_30
-getF 6
-Push1 18
-CmpEq
-Or
-
-:Label_network_garage_30
-dup
-Not
-JumpFalse @Label_network_garage_31
-getF 6
-Push1 19
-CmpEq
-Or
-
-:Label_network_garage_31
-dup
-Not
-JumpFalse @Label_network_garage_32
-getF 6
-Push1 20
-CmpEq
-Or
-
-:Label_network_garage_32
-dup
-Not
-JumpFalse @Label_network_garage_33
-getF 6
-Push1 21
-CmpEq
-Or
-
-:Label_network_garage_33
-dup
-Not
-JumpFalse @Label_network_garage_34
-getF 6
-Push1 22
-CmpEq
-Or
-
-:Label_network_garage_34
-JumpFalse @Label_network_garage_35
-iPush_0
-getF 5
-getF 1
-ArraySet1 1
-getF 0
-pGet
-getF 6
-CallNative is_toggle_mod_on 2 1
-JumpFalse @Label_network_garage_36
-iPush_1
-getF 5
-getF 1
-ArraySet1 1
-
-:Label_network_garage_36
-Jump @Label_network_garage_37
-
-:Label_network_garage_35
-getF 0
-pGet
-getF 5
-CallNative get_vehicle_mod 2 1
-Add1 1
-getF 5
-getF 1
-ArraySet1 1
-getF 5
-Push1 23
-JumpNE @Label_network_garage_38
-getF 0
-pGet
-getF 5
-CallNative get_vehicle_mod_variation 2 1
-iPush_0
-getF 2
-ArraySet1 1
-Jump @Label_network_garage_37
-
-:Label_network_garage_38
-getF 5
-Push1 24
-JumpNE @Label_network_garage_37
-getF 0
-pGet
-getF 5
-CallNative get_vehicle_mod_variation 2 1
-iPush_1
-getF 2
-ArraySet1 1
-
-:Label_network_garage_37
-getF 5
-Add1 1
-setF 5
-Jump @Label_network_garage_39
-
-:Label_network_garage_29
-iPush_1
-Return 3 1
-
-:Label_network_garage_4
-Function 5 1 4
-iPush_0
-getF 0
-SetImmediate1 42
-iPush_0
-getF 0
-SetImmediate1 50
-iPush_0
-getF 0
-SetImmediate1 41
-iPush_0
-getF 0
-SetImmediate1 38
-iPush_0
-getF 0
-SetImmediate1 39
-iPush_0
-getF 0
-SetImmediate1 40
-iPush_0
-getF 0
-pSet
-PushString ""
-getF 0
-GetImmediateP1 1
-StrCopy 16
-iPush_0
-getF 0
-SetImmediate1 5
-iPush_0
-getF 0
-SetImmediate1 6
-iPush_0
-getF 0
-SetImmediate1 7
-iPush_0
-getF 0
-SetImmediate1 8
-iPush_0
-setF 3
-
-:Label_network_garage_41
-getF 3
-Push1 25
-JumpGE @Label_network_garage_40
-iPush_0
-getF 3
-getF 0
-GetImmediateP1 9
-ArraySet1 1
-getF 3
-Add1 1
-setF 3
-Jump @Label_network_garage_41
-
-:Label_network_garage_40
-iPush_0
-setF 3
-
-:Label_network_garage_43
-getF 3
-iPush_2
-JumpGE @Label_network_garage_42
-iPush_0
-getF 3
-getF 0
-GetImmediateP1 35
-ArraySet1 1
-getF 3
-Add1 1
-setF 3
-Jump @Label_network_garage_43
-
-:Label_network_garage_42
-Return 1 0
-
-:Label_network_garage_2
-Function 6 1 3
-getF 0
-Switch [GetHash("police") @Label_network_garage_44]:[GetHash("policeold1") @Label_network_garage_44]:[GetHash("policeold2") @Label_network_garage_44]:[GetHash("police2") @Label_network_garage_44]:[GetHash("police3") @Label_network_garage_44]:[GetHash("police4") @Label_network_garage_44]:[GetHash("fbi") @Label_network_garage_44]:[GetHash("fbi2") @Label_network_garage_44]:[GetHash("polmav") @Label_network_garage_44]:[GetHash("policeb") @Label_network_garage_44]:[GetHash("policet") @Label_network_garage_44]:[GetHash("riot") @Label_network_garage_44]:[GetHash("sheriff") @Label_network_garage_44]:[GetHash("pranger") @Label_network_garage_44]:[GetHash("sheriff2") @Label_network_garage_44]:[GetHash("rhino") @Label_network_garage_44]:[GetHash("ambulance") @Label_network_garage_44]:[GetHash("firetruk") @Label_network_garage_44]:[GetHash("taxi") @Label_network_garage_44]:[GetHash("lguard") @Label_network_garage_44]:[GetHash("ripley") @Label_network_garage_44]:[GetHash("dilettante2") @Label_network_garage_44]:[GetHash("airbus") @Label_network_garage_44]:[GetHash("airtug") @Label_network_garage_44]:[GetHash("towtruck") @Label_network_garage_44]:[GetHash("towtruck2") @Label_network_garage_44]:[GetHash("forklift") @Label_network_garage_44]:[GetHash("annihilator") @Label_network_garage_44]:[GetHash("armytanker") @Label_network_garage_44]:[GetHash("armytrailer") @Label_network_garage_44]:[GetHash("asea2") @Label_network_garage_44]:[GetHash("baletrailer") @Label_network_garage_44]:[GetHash("barracks") @Label_network_garage_44]:[GetHash("barracks2") @Label_network_garage_44]:[GetHash("benson") @Label_network_garage_44]:[GetHash("biff") @Label_network_garage_44]:[GetHash("bison2") @Label_network_garage_44]:[GetHash("bison3") @Label_network_garage_44]:[GetHash("blimp") @Label_network_garage_44]:[524108981 @Label_network_garage_44]:[GetHash("boxville") @Label_network_garage_44]:[GetHash("boxville2") @Label_network_garage_44]:[GetHash("boxville3") @Label_network_garage_44]:[GetHash("bulldozer") @Label_network_garage_44]:[GetHash("burrito") @Label_network_garage_44]:[GetHash("burrito2") @Label_network_garage_44]:[GetHash("burrito4") @Label_network_garage_44]:[GetHash("burrito5") @Label_network_garage_44]:[GetHash("bus") @Label_network_garage_44]:[GetHash("buzzard") @Label_network_garage_44]:[GetHash("buzzard2") @Label_network_garage_44]:[GetHash("caddy") @Label_network_garage_44]:[GetHash("caddy2") @Label_network_garage_44]:[GetHash("camper") @Label_network_garage_44]:[GetHash("cargobob") @Label_network_garage_44]:[GetHash("cargobob2") @Label_network_garage_44]:[GetHash("cargobob3") @Label_network_garage_44]:[GetHash("cargoplane") @Label_network_garage_44]:[GetHash("coach") @Label_network_garage_44]:[GetHash("crusader") @Label_network_garage_44]:[GetHash("cuban800") @Label_network_garage_44]:[GetHash("cutter") @Label_network_garage_44]:[GetHash("dinghy") @Label_network_garage_44]:[GetHash("dinghy2") @Label_network_garage_44]:[GetHash("docktrailer") @Label_network_garage_44]:[GetHash("docktug") @Label_network_garage_44]:[GetHash("dump") @Label_network_garage_44]:[GetHash("dune2") @Label_network_garage_44]:[GetHash("duster") @Label_network_garage_44]:[GetHash("fixter") @Label_network_garage_44]:[GetHash("flatbed") @Label_network_garage_44]:[GetHash("freight") @Label_network_garage_44]:[GetHash("freightcar") @Label_network_garage_44]:[GetHash("freightcont1") @Label_network_garage_44]:[GetHash("freightcont2") @Label_network_garage_44]:[GetHash("freightgrain") @Label_network_garage_44]:[GetHash("frogger") @Label_network_garage_44]:[GetHash("frogger2") @Label_network_garage_44]:[GetHash("gburrito") @Label_network_garage_44]:[GetHash("graintrailer") @Label_network_garage_44]:[GetHash("handler") @Label_network_garage_44]:[GetHash("hauler") @Label_network_garage_44]:[GetHash("jet") @Label_network_garage_44]:[GetHash("jetmax") @Label_network_garage_44]:[GetHash("journey") @Label_network_garage_44]:[GetHash("lazer") @Label_network_garage_44]:[GetHash("luxor") @Label_network_garage_44]:[GetHash("mammatus") @Label_network_garage_44]:[GetHash("marquis") @Label_network_garage_44]:[GetHash("maverick") @Label_network_garage_44]:[GetHash("mesa2") @Label_network_garage_44]:[GetHash("metrotrain") @Label_network_garage_44]:[GetHash("mixer") @Label_network_garage_44]:[GetHash("mixer2") @Label_network_garage_44]:[GetHash("mower") @Label_network_garage_44]:[GetHash("mule") @Label_network_garage_44]:[GetHash("mule2") @Label_network_garage_44]:[GetHash("packer") @Label_network_garage_44]:[GetHash("pbus") @Label_network_garage_44]:[GetHash("phantom") @Label_network_garage_44]:[GetHash("pony") @Label_network_garage_44]:[GetHash("pony2") @Label_network_garage_44]:[GetHash("pounder") @Label_network_garage_44]:[GetHash("predator") @Label_network_garage_44]:[GetHash("proptrailer") @Label_network_garage_44]:[390902130 @Label_network_garage_44]:[GetHash("rancherxl2") @Label_network_garage_44]:[GetHash("rentalbus") @Label_network_garage_44]:[GetHash("rubble") @Label_network_garage_44]:[GetHash("sadler2") @Label_network_garage_44]:[GetHash("scrap") @Label_network_garage_44]:[GetHash("seashark") @Label_network_garage_44]:[GetHash("seashark2") @Label_network_garage_44]:[GetHash("shamal") @Label_network_garage_44]:[GetHash("skylift") @Label_network_garage_44]:[GetHash("speedo2") @Label_network_garage_44]:[GetHash("squalo") @Label_network_garage_44]:[GetHash("stockade") @Label_network_garage_44]:[GetHash("stockade3") @Label_network_garage_44]:[GetHash("stretch") @Label_network_garage_44]:[GetHash("stunt") @Label_network_garage_44]:[GetHash("submersible") @Label_network_garage_44]:[GetHash("suntrap") @Label_network_garage_44]:[GetHash("taco") @Label_network_garage_44]:[GetHash("tanker") @Label_network_garage_44]:[GetHash("tankercar") @Label_network_garage_44]:[GetHash("tiptruck") @Label_network_garage_44]:[GetHash("tiptruck2") @Label_network_garage_44]:[GetHash("titan") @Label_network_garage_44]:[GetHash("tourbus") @Label_network_garage_44]:[GetHash("tr2") @Label_network_garage_44]:[GetHash("tr3") @Label_network_garage_44]:[GetHash("tr4") @Label_network_garage_44]:[GetHash("tractor") @Label_network_garage_44]:[GetHash("tractor2") @Label_network_garage_44]:[GetHash("tractor3") @Label_network_garage_44]:[GetHash("trailerlogs") @Label_network_garage_44]:[GetHash("trailers") @Label_network_garage_44]:[GetHash("trailers2") @Label_network_garage_44]:[GetHash("trailers3") @Label_network_garage_44]:[GetHash("trailersmall") @Label_network_garage_44]:[GetHash("trash") @Label_network_garage_44]:[GetHash("trflat") @Label_network_garage_44]:[GetHash("tropic") @Label_network_garage_44]:[GetHash("tvtrailer") @Label_network_garage_44]:[GetHash("utillitruck") @Label_network_garage_44]:[GetHash("utillitruck2") @Label_network_garage_44]:[GetHash("utillitruck3") @Label_network_garage_44]:[GetHash("velum") @Label_network_garage_44]
-Jump @Label_network_garage_45
-
-:Label_network_garage_44
-iPush_0
-Return 1 1
-Jump @Label_network_garage_45
-
-:Label_network_garage_45
-getF 0
-CallNative is_this_model_a_car 1 1
-Not
-dup
-JumpFalse @Label_network_garage_46
-getF 0
-CallNative is_this_model_a_bike 1 1
-Not
-And
-
-:Label_network_garage_46
-dup
-JumpFalse @Label_network_garage_47
-getF 0
-CallNative unk_0xC1625277 1 1
-Not
-And
-
-:Label_network_garage_47
-dup
-JumpFalse @Label_network_garage_48
-getF 0
-CallNative is_this_model_a_bicycle 1 1
-Not
-And
-
-:Label_network_garage_48
-JumpFalse @Label_network_garage_49
-iPush_0
-Return 1 1
-
-:Label_network_garage_49
-iPush_1
-Return 1 1
-
-:Label_network_garage_50
-Function 7 1 2
-getF 0
-iPush_0
-pglobal3 2097152
-ArrayGetP2 4187
-ArrayGetP1 81
-Return 1 1
-
-:Label_network_garage_52
-Function 8 1 2
-getF 0
-Call @Label_network_garage_50
-GetImmediate1 42
-CallNative is_model_valid 1 1
-Return 1 1
-
-:Label_network_garage_0
-Function 9 0 3
-iPush_0
-setF 2
-
-:Label_network_garage_54
-getF 2
-Push1 26
-JumpGE @Label_network_garage_51
-getF 2
-push1 13
-mod
-push1 10
-jumpge @Label_network_garage_53
-getF 2
-Call @Label_network_garage_52
-Not
-JumpFalse @Label_network_garage_53
-getF 2
-Call @Label_network_garage_50
-Return 0 1
-
-:Label_network_garage_53
-getF 2
-iPush_1
-Add
-setF 2
-Jump @Label_network_garage_54
-
-:Label_network_garage_51
-iPush_-1
-Return 0 1
 
 :trainer_catch_button_press
 Function 1 0 5
@@ -11672,21 +10343,6 @@ Return 5 0
 :trainer_vehicle_spawn_level_3
 Function 1 0 4
 
-iPush_2
-iPush_0
-pstatic2 61
-ArrayGet1 1
-JumpNE @Label_trainer_vehicle_spawn_level_3_1
-PushString "Network - Garage"
-StaticSet1 10
-
-iPush_4
-pstatic2 61
-ArrayGet1 1
-setF 3
-Jump @Label_trainer_vehicle_spawn_level_3_3
-
-:Label_trainer_vehicle_spawn_level_3_1
 iPush_0
 iPush_1
 pstatic2 61
