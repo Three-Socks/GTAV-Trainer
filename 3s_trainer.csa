@@ -5478,18 +5478,6 @@ iPush_0
 iPush_0
 CallNative give_weapon_to_ped 5 0
 CallNative player_ped_id 0 1
-Push -100946242
-iPush_-1
-iPush_0
-iPush_0
-CallNative give_weapon_to_ped 5 0
-CallNative player_ped_id 0 1
-Push 148160082
-iPush_-1
-iPush_0
-iPush_0
-CallNative give_weapon_to_ped 5 0
-CallNative player_ped_id 0 1
 Push -1716189206
 iPush_-1
 iPush_0
@@ -5640,43 +5628,13 @@ iPush_0
 iPush_0
 CallNative give_weapon_to_ped 5 0
 CallNative player_ped_id 0 1
-Push 856002082
-PushS 500
-iPush_0
-iPush_0
-CallNative give_weapon_to_ped 5 0
-CallNative player_ped_id 0 1
 Push -1568386805
 PushS 500
 iPush_0
 iPush_0
 CallNative give_weapon_to_ped 5 0
 CallNative player_ped_id 0 1
-Push 1305664598
-PushS 500
-iPush_0
-iPush_0
-CallNative give_weapon_to_ped 5 0
-CallNative player_ped_id 0 1
 Push -1312131151
-PushS 500
-iPush_0
-iPush_0
-CallNative give_weapon_to_ped 5 0
-CallNative player_ped_id 0 1
-Push 375527679
-PushS 500
-iPush_0
-iPush_0
-CallNative give_weapon_to_ped 5 0
-CallNative player_ped_id 0 1
-Push 324506233
-PushS 500
-iPush_0
-iPush_0
-CallNative give_weapon_to_ped 5 0
-CallNative player_ped_id 0 1
-Push 1752584910
 PushS 500
 iPush_0
 iPush_0
@@ -5730,31 +5688,7 @@ iPush_0
 iPush_0
 CallNative give_weapon_to_ped 5 0
 CallNative player_ped_id 0 1
-Push -38085395
-iPush_1
-iPush_0
-iPush_0
-CallNative give_weapon_to_ped 5 0
-CallNative player_ped_id 0 1
-Push -1491061156
-iPush_1
-iPush_0
-iPush_0
-CallNative give_weapon_to_ped 5 0
-CallNative player_ped_id 0 1
 Push -72657034
-iPush_1
-iPush_0
-iPush_0
-CallNative give_weapon_to_ped 5 0
-CallNative player_ped_id 0 1
-Push -2000187721
-iPush_1
-iPush_0
-iPush_0
-CallNative give_weapon_to_ped 5 0
-CallNative player_ped_id 0 1
-Push 28811031
 iPush_1
 iPush_0
 iPush_0
@@ -5767,43 +5701,6 @@ iPush_0
 CallNative give_weapon_to_ped 5 0
 CallNative player_ped_id 0 1
 Push 1233104067
-PushS 500
-iPush_0
-iPush_0
-CallNative give_weapon_to_ped 5 0
-
-CallNative player_ped_id 0 1
-Push -102323637
-iPush_-1
-iPush_0
-iPush_0
-CallNative give_weapon_to_ped 5 0
-CallNative player_ped_id 0 1
-Push -1076751822
-PushS 500
-iPush_0
-iPush_0
-CallNative give_weapon_to_ped 5 0
-CallNative player_ped_id 0 1
-Push 1627465347
-PushS 500
-iPush_0
-iPush_0
-CallNative give_weapon_to_ped 5 0
-CallNative player_ped_id 0 1
-Push -771403250
-PushS 500
-iPush_0
-iPush_0
-CallNative give_weapon_to_ped 5 0
-CallNative player_ped_id 0 1
-Push -1063057011
-PushS 500
-iPush_0
-iPush_0
-CallNative give_weapon_to_ped 5 0
-CallNative player_ped_id 0 1
-Push 2132975508
 PushS 500
 iPush_0
 iPush_0
