@@ -102,7 +102,7 @@ Static_61[* 10]
 // (char) menu_items_name (50)
 Static_72[* 50]
 
-// (uint) menu_items_type (1 = number, 2 = float, 3 = bool, 4 = GXT, 5 = vehicle hash, 6 = keyboard string, 7 = keyboard number, 8 = add number, 9 = gxt add number) (50)
+// (uint) menu_items_type (1 = number, 2 = float, 3 = bool, 4 = GXT, 5 = vehicle hash, 6 = keyboard string, 7 = keyboard number, 8 = add number, 9 = gxt add number, 10 = gxt add number2, 11 = gxt number) (50)
 Static_123[* 50]
 
 // (int) menu_items_extra_val (50)
@@ -160,3 +160,24 @@ Static_415
 
 // trainer_race_turbo_time
 Static_416
+
+// trainer_debug_load_hold_pressed
+Static_417
+
+// trainer_debug
+Static_418
+
+// trainer_debug_item_index
+Static_419
+
+// trainer_sec_var
+Static_420
+
+// trainer_sec_var_string1
+Static_421
+
+// trainer_sec_var_string2
+Static_422
+
+// trainer_sec_var_string3
+Static_423
