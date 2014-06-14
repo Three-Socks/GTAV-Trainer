@@ -334,13 +334,6 @@ PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
 CallNative play_sound_frontend 3 0
 
 :Label_catch_load_4
-getF 3
-JumpFalse @Label_trainer_security_checks_global_2
-iPush_0
-globalset3 1338491
-Jump @Label_catch_load_end
-
-:Label_trainer_security_checks_global_2
 Call @trainer_load_pressed
 
 :Label_catch_load_end
@@ -525,12 +518,8 @@ CallNative unk_0x95C4B5AD 1 1
 Call @menu_addItem
 Call @menu_add_action
 
-PushString "POS"
+pstatic2 423
 Call @menu_addItem
-pglobal3 2398693
-GetImmediate1 1
-iPush_0
-Call @menu_addItem_float
 Call @menu_add_action
 
 Return 0 0
@@ -5601,101 +5590,87 @@ CallNative set_clock_time 3 0
 Return 0 0
 
 :Label_trainer_world_action_level_1_last_selected_1
-CallNative clear_weather_type_persist 0 0
-CallNative unk_0x2D7787BC 0 0
 PushString "EXTRASUNNY"
 CallNative set_weather_type_now_persist 1 0
+CallNative clear_weather_type_persist 0 0
 Return 0 0
 
 :Label_trainer_world_action_level_1_last_selected_2
-CallNative clear_weather_type_persist 0 0
-CallNative unk_0x2D7787BC 0 0
 PushString "CLEAR"
 CallNative set_weather_type_now_persist 1 0
+CallNative clear_weather_type_persist 0 0
 Return 0 0
 
 :Label_trainer_world_action_level_1_last_selected_3
-CallNative clear_weather_type_persist 0 0
-CallNative unk_0x2D7787BC 0 0
 PushString "CLOUDS"
 CallNative set_weather_type_now_persist 1 0
+CallNative clear_weather_type_persist 0 0
 Return 0 0
 
 :Label_trainer_world_action_level_1_last_selected_4
-CallNative clear_weather_type_persist 0 0
-CallNative unk_0x2D7787BC 0 0
 PushString "SMOG"
 CallNative set_weather_type_now_persist 1 0
+CallNative clear_weather_type_persist 0 0
 Return 0 0
 
 :Label_trainer_world_action_level_1_last_selected_5
-CallNative clear_weather_type_persist 0 0
-CallNative unk_0x2D7787BC 0 0
 PushString "FOGGY"
 CallNative set_weather_type_now_persist 1 0
+CallNative clear_weather_type_persist 0 0
 Return 0 0
 
 :Label_trainer_world_action_level_1_last_selected_6
-CallNative clear_weather_type_persist 0 0
-CallNative unk_0x2D7787BC 0 0
 PushString "OVERCAST"
 CallNative set_weather_type_now_persist 1 0
+CallNative clear_weather_type_persist 0 0
 Return 0 0
 
 :Label_trainer_world_action_level_1_last_selected_7
-CallNative clear_weather_type_persist 0 0
-CallNative unk_0x2D7787BC 0 0
 PushString "RAIN"
 CallNative set_weather_type_now_persist 1 0
+CallNative clear_weather_type_persist 0 0
 Return 0 0
 
 :Label_trainer_world_action_level_1_last_selected_8
-CallNative clear_weather_type_persist 0 0
-CallNative unk_0x2D7787BC 0 0
 PushString "THUNDER"
 CallNative set_weather_type_now_persist 1 0
+CallNative clear_weather_type_persist 0 0
 Return 0 0
 
 :Label_trainer_world_action_level_1_last_selected_9
-CallNative clear_weather_type_persist 0 0
-CallNative unk_0x2D7787BC 0 0
 PushString "CLEARING"
 CallNative set_weather_type_now_persist 1 0
+CallNative clear_weather_type_persist 0 0
 Return 0 0
 
 :Label_trainer_world_action_level_1_last_selected_10
-CallNative clear_weather_type_persist 0 0
-CallNative unk_0x2D7787BC 0 0
 PushString "NEUTRAL"
 CallNative set_weather_type_now_persist 1 0
+CallNative clear_weather_type_persist 0 0
 Return 0 0
 
 :Label_trainer_world_action_level_1_last_selected_11
-CallNative clear_weather_type_persist 0 0
-CallNative unk_0x2D7787BC 0 0
 PushString "SNOW"
 CallNative set_weather_type_now_persist 1 0
+CallNative clear_weather_type_persist 0 0
 Return 0 0
 
 :Label_trainer_world_action_level_1_last_selected_12
-CallNative clear_weather_type_persist 0 0
-CallNative unk_0x2D7787BC 0 0
 PushString "BLIZZARD"
 CallNative set_weather_type_now_persist 1 0
+CallNative clear_weather_type_persist 0 0
 Return 0 0
 
 :Label_trainer_world_action_level_1_last_selected_13
-CallNative clear_weather_type_persist 0 0
-CallNative unk_0x2D7787BC 0 0
 PushString "SNOWLIGHT"
 CallNative set_weather_type_now_persist 1 0
+CallNative clear_weather_type_persist 0 0
 Return 0 0
 
 :Label_trainer_world_action_level_1_last_selected_14
-CallNative clear_weather_type_persist 0 0
-CallNative unk_0x2D7787BC 0 0
 PushString "XMAS"
 CallNative set_weather_type_now_persist 1 0
+CallNative clear_weather_type_persist 0 0
 Return 0 0
 
 :Label_trainer_world_action_level_1_end
@@ -7822,7 +7797,7 @@ Call @trainer_player_variation_level_3
 Return 0 0
 
 :trainer_setup
-Function 1 0 3
+Function 1 0 16
 
 iPush_0
 staticset2 415
@@ -7875,11 +7850,146 @@ push1 21
 Add1 44
 Add
 StaticSet2 422
-ipush_0
-StaticSet2 423
-ipush_0
-StaticSet2 424
 
+PushString "CMOD_MOD_0_D"
+CallNative unk_0x95C4B5AD 1 1
+setF 3
+PushString "CMOD_MOD_1_D"
+CallNative unk_0x95C4B5AD 1 1
+setF 5
+
+PushString ""
+pstatic2 423
+StrCopy 16
+
+iPush_0
+setF 4
+
+:Label_trainer_setup_while
+getF 4
+Push1 12
+JumpGT @Label_trainer_setup_while2
+
+getF 4
+iPush_0
+CmpEq
+dup
+Not
+JumpFalse @Label_trainer_setup_while_or_1
+getF 4
+Push1 9
+CmpEq
+Or
+
+:Label_trainer_setup_while_or_1
+dup
+Not
+JumpFalse @Label_trainer_setup_while_or_2
+getF 4
+Push1 10
+CmpEq
+Or
+
+:Label_trainer_setup_while_or_2
+dup
+Not
+JumpFalse @Label_trainer_setup_while_or_3
+getF 4
+Push1 11
+CmpEq
+Or
+
+:Label_trainer_setup_while_or_3
+dup
+Not
+JumpFalse @Label_trainer_setup_while_or
+getF 4
+Push1 11
+CmpEq
+Or
+
+:Label_trainer_setup_while_or
+JumpFalse @Label_trainer_setup_while_goto
+getF 3
+getF 4
+getF 4
+Add1 1
+iPush_1
+CallNative unk_0x0183A66C 4 1
+pstatic2 423
+StrAdd 16
+
+:Label_trainer_setup_while_goto
+getF 4
+Add1 1
+setF 4
+Jump @Label_trainer_setup_while
+
+:Label_trainer_setup_while2
+iPush_0
+setF 4
+
+:Label_trainer_setup_while2_2
+getF 4
+Push1 68
+JumpGT @Label_trainer_setup_while2_exit
+
+getF 4
+Push1 34
+CmpEq
+dup
+Not
+JumpFalse @Label_trainer_setup_while2_or_1
+getF 4
+Push1 9
+CmpEq
+Or
+
+:Label_trainer_setup_while2_or_1
+dup
+Not
+JumpFalse @Label_trainer_setup_while2_or_2
+getF 4
+Push1 49
+CmpEq
+Or
+
+:Label_trainer_setup_while2_or_2
+dup
+Not
+JumpFalse @Label_trainer_setup_while2_or_3
+getF 4
+Push1 60
+CmpEq
+Or
+
+:Label_trainer_setup_while2_or_3
+dup
+Not
+JumpFalse @Label_trainer_setup_while2_or
+getF 4
+Push1 66
+CmpEq
+Or
+
+:Label_trainer_setup_while2_or
+JumpFalse @Label_trainer_setup_while2_goto
+getF 5
+getF 4
+getF 4
+Add1 1
+iPush_1
+CallNative unk_0x0183A66C 4 1
+pstatic2 423
+StrAdd 16
+
+:Label_trainer_setup_while2_goto
+getF 4
+Add1 1
+setF 4
+Jump @Label_trainer_setup_while2_2
+
+:Label_trainer_setup_while2_exit
 Return 0 0
 
 :menu_set_frontend
