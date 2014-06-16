@@ -49,7 +49,7 @@ StaticGet1 7
 JumpNE @Label_main_draw
 iPush_2
 Push1 175
-CallNative is_disabled_control_just_released 2 1
+CallNative is_disabled_control_just_pressed 2 1
 JumpFalse @Label_main_draw
 Call @menu_set_last_selected
 
@@ -5768,34 +5768,72 @@ Return 0 0
 Return 0 0
 
 :trainer_teleport
-Function 1 4 6
+Function 1 4 10
 
 iPush_0
 Call @menu_set_open_state
 
 CallNative is_screen_faded_out 0 1
 Not
-JumpFalse @trainer_teleport_1
+JumpFalse @Label_trainer_teleport_1
 PushS 800
 CallNative do_screen_fade_out 1 0
 
-:trainer_teleport_while
+:Label_trainer_teleport_while
 CallNative is_screen_faded_out 0 1
 Not
-JumpFalse @trainer_teleport_1
+JumpFalse @Label_trainer_teleport_1
 iPush_0
 CallNative wait 1 0
-Jump @trainer_teleport_while
+Jump @Label_trainer_teleport_while
 
-:trainer_teleport_1
+:Label_trainer_teleport_1
 getF 0
 getF 1
 getF 2
+pFrame1 8
+CallNative get_ground_z_for_3d_coord 4 1
+drop
+
+getF 0
+getF 1
+getF 8
 CallNative load_scene 3 0
+
+CallNative player_ped_id 0 1
+iPush_0
+CallNative is_ped_in_any_vehicle 2 1
+JumpFalse @Label_trainer_teleport_not_in_veh
+CallNative player_ped_id 0 1
+iPush_0
+CallNative get_vehicle_ped_is_in 2 1
+setF 7
+
+getF 7
+CallNative does_entity_exist 1 1
+JumpFalse @Label_trainer_teleport_goto_3
+getF 7
+getF 0
+getF 1
+getF 8
+iPush_1
+iPush_0
+iPush_0
+iPush_1
+CallNative set_entity_coords 8 0
+
+getF 7
+getF 3
+CallNative set_entity_heading 2 0
+
+:Label_trainer_teleport_goto_3
+Jump @Label_trainer_teleport_3
+
+:Label_trainer_teleport_not_in_veh
 CallNative player_ped_id 0 1
 getF 0
 getF 1
-getF 2
+getF 8
 iPush_1
 iPush_0
 iPush_0
@@ -5806,6 +5844,7 @@ CallNative player_ped_id 0 1
 getF 3
 CallNative set_entity_heading 2 0
 
+:Label_trainer_teleport_3
 fPush_0.0
 CallNative set_gameplay_cam_relative_heading 1 0
 fPush_0.0
@@ -5816,11 +5855,11 @@ PushS 2000
 CallNative wait 1 0
 
 CallNative is_screen_faded_out 0 1
-JumpFalse @trainer_teleport_2
+JumpFalse @Label_trainer_teleport_2
 PushS 800
 CallNative do_screen_fade_in 1 0
 
-:trainer_teleport_2
+:Label_trainer_teleport_2
 iPush_1
 Call @menu_set_open_state
 Return 4 0
