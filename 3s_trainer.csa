@@ -5803,65 +5803,6 @@ CallNative load_scene 3 0
 PushS 2000
 CallNative wait 1 0
 
-CallNative player_ped_id 0 1
-iPush_0
-CallNative is_ped_in_any_vehicle 2 1
-JumpFalse @Label_trainer_teleport_not_in_veh
-CallNative player_ped_id 0 1
-iPush_0
-CallNative get_vehicle_ped_is_in 2 1
-setF 7
-
-getF 7
-getF 0
-getF 1
-getF 8
-iPush_0
-iPush_1
-iPush_1
-iPush_1
-CallNative set_entity_coords 8 0
-
-getF 7
-getF 3
-CallNative set_entity_heading 2 0
-Jump @Label_trainer_teleport_3
-
-:Label_trainer_teleport_not_in_veh
-CallNative player_ped_id 0 1
-getF 0
-getF 1
-getF 8
-iPush_0
-iPush_0
-iPush_0
-iPush_1
-CallNative set_entity_coords 8 0
-
-CallNative player_ped_id 0 1
-getF 3
-CallNative set_entity_heading 2 0
-
-:Label_trainer_teleport_3
-fPush_0.0
-Push 1065353216
-CallNative set_gameplay_cam_relative_pitch 2 0
-fPush_0.0
-CallNative set_gameplay_cam_relative_heading 1 0
-
-CallNative player_ped_id 0 1
-CallNative is_entity_dead 1 1
-Not
-JumpFalse @Label_trainer_teleport_4
-CallNative player_ped_id 0 1
-CallNative clear_ped_wetness 1 0
-
-:Label_trainer_teleport_4
-CallNative is_player_teleport_active 0 1
-JumpFalse @Label_trainer_teleport_5
-CallNative stop_player_teleport 0 0
-
-:Label_trainer_teleport_5
 CallNative unk_0x34D91E7A 0 0
 CallNative player_id 0 1
 getF 0
