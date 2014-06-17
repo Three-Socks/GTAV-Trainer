@@ -2295,6 +2295,20 @@ Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
+PushString "WT_VPISTOL"
+Call @menu_addItem_gxt
+Push 137902532
+Call @menu_add_number
+PushS 900
+Call @menu_add_extra
+Call @menu_add_action
+PushString "WT_DAGGER"
+Call @menu_addItem_gxt
+Push -1834847097
+Call @menu_add_number
+iPush_-1
+Call @menu_add_extra
+Call @menu_add_action
 Return 0 0
 
 :Label_trainer_player_weapon_level_3_end
@@ -2704,7 +2718,7 @@ ArrayGet1 1
 JumpNE @Label_trainer_vehicle_mod_level_3_lights
 
 getF 3
-Switch [0 @Label_trainer_vehicle_mod_horn_stock]:[1 @Label_trainer_vehicle_mod_horn_0]:[2 @Label_trainer_vehicle_mod_horn_1]:[3 @Label_trainer_vehicle_mod_horn_2]:[4 @Label_trainer_vehicle_mod_horn_3]:[5 @Label_trainer_vehicle_mod_horn_4]:[6 @Label_trainer_vehicle_mod_horn_5]:[7 @Label_trainer_vehicle_mod_horn_6]:[8 @Label_trainer_vehicle_mod_horn_7]:[9 @Label_trainer_vehicle_mod_horn_8]:[10 @Label_trainer_vehicle_mod_horn_9]:[11 @Label_trainer_vehicle_mod_horn_90]:[12 @Label_trainer_vehicle_mod_horn_91]:[13 @Label_trainer_vehicle_mod_horn_92]:[14 @Label_trainer_vehicle_mod_horn_93]:[15 @Label_trainer_vehicle_mod_horn_94]:[16 @Label_trainer_vehicle_mod_horn_95]:[17 @Label_trainer_vehicle_mod_horn_96]:[18 @Label_trainer_vehicle_mod_horn_97]:[19 @Label_trainer_vehicle_mod_horn_98]:[20 @Label_trainer_vehicle_mod_horn_99]:[21 @Label_trainer_vehicle_mod_horn_000]:[22 @Label_trainer_vehicle_mod_horn_001]:[23 @Label_trainer_vehicle_mod_horn_002]
+Switch [0 @Label_trainer_vehicle_mod_horn_stock]:[1 @Label_trainer_vehicle_mod_horn_0]:[2 @Label_trainer_vehicle_mod_horn_1]:[3 @Label_trainer_vehicle_mod_horn_2]:[4 @Label_trainer_vehicle_mod_horn_3]:[5 @Label_trainer_vehicle_mod_horn_4]:[6 @Label_trainer_vehicle_mod_horn_5]:[7 @Label_trainer_vehicle_mod_horn_6]:[8 @Label_trainer_vehicle_mod_horn_7]:[9 @Label_trainer_vehicle_mod_horn_8]:[10 @Label_trainer_vehicle_mod_horn_9]:[11 @Label_trainer_vehicle_mod_horn_90]:[12 @Label_trainer_vehicle_mod_horn_91]:[13 @Label_trainer_vehicle_mod_horn_92]:[14 @Label_trainer_vehicle_mod_horn_93]:[15 @Label_trainer_vehicle_mod_horn_94]:[16 @Label_trainer_vehicle_mod_horn_95]:[17 @Label_trainer_vehicle_mod_horn_96]:[18 @Label_trainer_vehicle_mod_horn_97]:[19 @Label_trainer_vehicle_mod_horn_98]:[20 @Label_trainer_vehicle_mod_horn_99]:[21 @Label_trainer_vehicle_mod_horn_000]:[22 @Label_trainer_vehicle_mod_horn_001]:[23 @Label_trainer_vehicle_mod_horn_002]:[24 @Label_trainer_vehicle_mod_horn_dlc_hip_1]:[25 @Label_trainer_vehicle_mod_horn_dlc_hip_2]:[26 @Label_trainer_vehicle_mod_horn_dlc_hip_3]:[27 @Label_trainer_vehicle_mod_horn_dlc_hip_4]
 Jump @Label_trainer_vehicle_mod_horn_003
 
 :Label_trainer_vehicle_mod_horn_stock
@@ -2870,6 +2884,34 @@ Jump @Label_trainer_vehicle_mod_horn_003
 
 :Label_trainer_vehicle_mod_horn_002
 PushString "HORN_CNOTE_C1"
+setF 8
+iPush_3
+setF 7
+Jump @Label_trainer_vehicle_mod_horn_003
+
+:Label_trainer_vehicle_mod_horn_dlc_hip_1
+PushString "HORN_HIPS1"
+setF 8
+iPush_3
+setF 7
+Jump @Label_trainer_vehicle_mod_horn_003
+
+:Label_trainer_vehicle_mod_horn_dlc_hip_2
+PushString "HORN_HIPS2"
+setF 8
+iPush_3
+setF 7
+Jump @Label_trainer_vehicle_mod_horn_003
+
+:Label_trainer_vehicle_mod_horn_dlc_hip_3
+PushString "HORN_HIPS3"
+setF 8
+iPush_3
+setF 7
+Jump @Label_trainer_vehicle_mod_horn_003
+
+:Label_trainer_vehicle_mod_horn_dlc_hip_4
+PushString "HORN_HIPS4"
 setF 8
 iPush_3
 setF 7
@@ -4835,6 +4877,22 @@ iPush_5
 Call @menu_add_extra
 Call @menu_add_action
 
+PushString "GOLD_P"
+Call @menu_addItem_gxt
+Push1 158
+Call @menu_add_number
+Push1 160
+Call @menu_add_extra
+Call @menu_add_action
+
+PushString "GOLD_S"
+Call @menu_addItem_gxt
+Push1 159
+Call @menu_add_number
+Push1 160
+Call @menu_add_extra
+Call @menu_add_action
+
 :Label_trainer_vehicle_colour_5_end
 Return 0 0
 
@@ -6262,6 +6320,12 @@ iPush_0
 iPush_0
 CallNative give_weapon_to_ped 5 0
 CallNative player_ped_id 0 1
+Push 1752584910
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
 Push 1119849093
 PushS 500
 iPush_0
@@ -6324,6 +6388,54 @@ CallNative give_weapon_to_ped 5 0
 CallNative player_ped_id 0 1
 Push 1233104067
 PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -102323637
+iPush_-1
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -1076751822
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 1627465347
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -771403250
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -1063057011
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 2132975508
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 137902532
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push -1834847097
+iPush_-1
 iPush_0
 iPush_0
 CallNative give_weapon_to_ped 5 0
@@ -11605,11 +11717,29 @@ Call @menu_addItem_gxt_veh_hash
 PushString "ISSI2"
 Call @menu_add_number
 Call @menu_add_action
+Push -431692672
+CallNative is_model_in_cdimage 1 1
+JumpFalse @Label_trainer_vehicle_spawn_level_3_check_panto
+Push -431692672
+Call @menu_addItem_gxt_veh_hash
+PushString "PANTO"
+Call @menu_add_number
+Call @menu_add_action
+:Label_trainer_vehicle_spawn_level_3_check_panto
 Push -1450650718
 Call @menu_addItem_gxt_veh_hash
 PushString "PRAIRIE"
 Call @menu_add_number
 Call @menu_add_action
+Push 841808271
+CallNative is_model_in_cdimage 1 1
+JumpFalse @Label_trainer_vehicle_spawn_level_3_check_rhapsody
+Push 841808271
+Call @menu_addItem_gxt_veh_hash
+PushString "RHAPSODY"
+Call @menu_add_number
+Call @menu_add_action
+:Label_trainer_vehicle_spawn_level_3_check_rhapsody
 Return 0 0
 
 :Label_trainer_vehicle_spawn_level_3_last_selected_coupes
@@ -12028,6 +12158,15 @@ Call @menu_add_action
 Return 0 0
 
 :Label_trainer_vehicle_spawn_level_3_last_selected_muscle
+Push -1205801634
+CallNative is_model_in_cdimage 1 1
+JumpFalse @Label_trainer_vehicle_spawn_level_3_check_blade
+Push -1205801634
+Call @menu_addItem_gxt_veh_hash
+PushString "BLADE"
+Call @menu_add_number
+Call @menu_add_action
+:Label_trainer_vehicle_spawn_level_3_check_blade
 Push -682211828
 Call @menu_addItem_gxt_veh_hash
 PushString "BUCCANEER"
@@ -12115,6 +12254,15 @@ Call @menu_addItem_gxt_veh_hash
 PushString "BODHI2"
 Call @menu_add_number
 Call @menu_add_action
+Push -1237253773
+CallNative is_model_in_cdimage 1 1
+JumpFalse @Label_trainer_vehicle_spawn_level_3_check_dubsta3
+Push -1237253773
+Call @menu_addItem_gxt_veh_hash
+PushString "DUBSTA3"
+Call @menu_add_number
+Call @menu_add_action
+:Label_trainer_vehicle_spawn_level_3_check_dubsta3
 Push -1661854193
 Call @menu_addItem_gxt_veh_hash
 PushString "DUNE"
@@ -12289,6 +12437,15 @@ Call @menu_addItem_gxt_veh_hash
 PushString "FUGITIVE"
 Call @menu_add_number
 Call @menu_add_action
+Push 75131841
+CallNative is_model_in_cdimage 1 1
+JumpFalse @Label_trainer_vehicle_spawn_level_3_check_glendale
+Push 75131841
+Call @menu_addItem_gxt_veh_hash
+PushString "GLENDALE"
+Call @menu_add_number
+Call @menu_add_action
+:Label_trainer_vehicle_spawn_level_3_check_glendale
 Push -1289722222
 Call @menu_addItem_gxt_veh_hash
 PushString "INGOT"
@@ -12354,6 +12511,15 @@ Call @menu_addItem_gxt_veh_hash
 PushString "TAILGATER"
 Call @menu_add_number
 Call @menu_add_action
+Push 1373123368
+CallNative is_model_in_cdimage 1 1
+JumpFalse @Label_trainer_vehicle_spawn_level_3_check_warrener
+Push 1373123368
+Call @menu_addItem_gxt_veh_hash
+PushString "WARRENER"
+Call @menu_add_number
+Call @menu_add_action
+:Label_trainer_vehicle_spawn_level_3_check_warrener
 Push 1777363799
 Call @menu_addItem_gxt_veh_hash
 PushString "WASHINGTON"
@@ -12545,6 +12711,15 @@ Call @menu_addItem_gxt_veh_hash
 PushString "PEYOTE"
 Call @menu_add_number
 Call @menu_add_action
+Push 1078682497
+CallNative is_model_in_cdimage 1 1
+JumpFalse @Label_trainer_vehicle_spawn_level_3_check_pigalle
+Push 1078682497
+Call @menu_addItem_gxt_veh_hash
+PushString "PIGALLE"
+Call @menu_add_number
+Call @menu_add_action
+:Label_trainer_vehicle_spawn_level_3_check_pigalle
 Push 117401876
 CallNative is_model_in_cdimage 1 1
 JumpFalse @Label_trainer_vehicle_spawn_level_3_check_btype
