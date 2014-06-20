@@ -110,8 +110,8 @@ Switch [0 @Label_trainer_race_turbo_3336]:[1 @Label_trainer_race_turbo_3337]
 Jump @Label_trainer_race_turbo_3338
 
 :Label_trainer_race_turbo_3336
-iPush_0
-Push1 65
+iPush_2
+Push1 197
 CallNative is_control_just_pressed 2 1
 JumpFalse @Label_trainer_race_turbo_3339
 StaticGet2 379
@@ -138,6 +138,9 @@ PushString "RaceTurbo"
 iPush_0
 iPush_0
 CallNative unk_0x1D980479 3 0
+iPush_0
+Push1 77
+CallNative disable_control_action 2 0
 CallNative get_game_timer 0 1
 Add2 2000
 staticset2 416
@@ -515,6 +518,95 @@ Call @menu_add_action
 
 pstatic2 423
 Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 424
+Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 425
+Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 426
+Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 427
+Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 428
+Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 429
+Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 430
+Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 431
+Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 432
+Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 433
+Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 434
+Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 435
+Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 436
+Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 437
+Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 438
+Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 439
+Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 440
+Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 441
+Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 442
+Call @menu_addItem
+Call @menu_add_action
+
+pstatic2 443
+Call @menu_addItem
+Call @menu_add_action
+
+PushString "freemode hash"
+Call @menu_addItem
+pstatic2 423
+CallNative get_hash_key 1 1
+iPush_0
+iPush_0
+Call @menu_addItem_number
 Call @menu_add_action
 
 Return 0 0
@@ -1702,6 +1794,9 @@ fPush_0.0
 Push1 10
 Call @menu_addItem_float_keyboard
 Call @menu_add_action
+
+PushString "Teleport"
+Call @menu_addItem_action
 
 Return 0 0
 
@@ -5825,8 +5920,172 @@ Return 0 0
 :Label_trainer_world_action_level_1_end
 Return 0 0
 
+:trainer_get_safe_teleport_coord
+Function 1 4 28
+fPush 100
+fPush 10
+fSub
+getF 11
+fMult
+fPush 10
+fAdd
+setF 12
+iPush_0
+setF 13
+
+:Label_9982
+getF 13
+iPush_5
+JumpGE @Label_9975
+iPush_3
+getF 0
+ToStack
+getF 12
+fPush_0.0
+Call @trainer_9976
+iPush_3
+pFrame1 14
+FromStack
+iPush_3
+pFrame1 14
+ToStack
+iPush_3
+pFrame1 17
+FromStack
+iPush_3
+pFrame1 14
+ToStack
+iPush_0
+pFrame1 17
+Push1 16
+CallNative get_safe_coord_for_ped 6 1
+JumpFalse @Label_9981
+iPush_3
+pFrame1 17
+ToStack
+fPush_3.0
+CallNative is_sphere_visible 4 1
+Not
+JumpFalse @Label_9981
+fPush_0.0
+setF 20
+iPush_3
+pFrame1 17
+ToStack
+pFrame1 20
+CallNative get_ground_z_for_3d_coord 4 1
+JumpFalse @Label_9981
+getF 20
+pFrame1 17
+SetImmediate1 2
+iPush_3
+getF 0
+ToStack
+iPush_3
+pFrame1 17
+ToStack
+vSub
+iPush_3
+pFrame1 21
+FromStack
+iPush_3
+pFrame1 17
+ToStack
+iPush_3
+getF 0
+FromStack
+Push1 99
+setF 13
+
+:Label_9981
+getF 13
+Add1 1
+setF 13
+Jump @Label_9982
+
+:Label_9975
+Return 4 0
+
+:trainer_9976
+Function 346 5 11
+fPush_-1.0
+fPush_1.0
+CallNative get_random_float_in_range 2 1
+fPush_-1.0
+fPush_1.0
+CallNative get_random_float_in_range 2 1
+fPush_0.0
+iPush_3
+pFrame1 7
+FromStack
+getF 4
+fPush_2.0
+fDiv
+setF 10
+iPush_3
+pFrame1 7
+ToStack
+fPush_0.0
+getF 3
+CallNative get_random_float_in_range 2 1
+Call @trainer_9983
+iPush_3
+pFrame1 7
+FromStack
+getF 10
+fNeg
+getF 10
+CallNative get_random_float_in_range 2 1
+pFrame1 7
+SetImmediate1 2
+iPush_3
+pFrame1 0
+ToStack
+iPush_3
+pFrame1 7
+ToStack
+vAdd
+Return 5 3
+
+:trainer_9983
+Function 347 4 7
+getF 3
+fPush_0.0
+fCmpEq
+JumpFalse @Label_9984
+fPush_0.0
+fPush_0.0
+fPush_0.0
+Return 4 3
+
+:Label_9984
+iPush_3
+pFrame1 0
+ToStack
+CallNative vmag 3 1
+setF 6
+getF 6
+fPush_0.0
+fCmpNe
+JumpFalse @Label_9985
+iPush_3
+pFrame1 0
+ToStack
+getF 3
+getF 6
+fDiv
+FtoV
+vMult
+Return 4 3
+
+:Label_9985
+fPush_0.0
+fPush_0.0
+fPush_0.0
+Return 4 3
+
 :trainer_teleport
-Function 1 4 10
+Function 1 4 11
 
 iPush_0
 Call @menu_set_open_state
@@ -5846,32 +6105,96 @@ CallNative wait 1 0
 Jump @Label_trainer_teleport_while
 
 :Label_trainer_teleport_1
-getF 0
-getF 1
-getF 2
-pFrame1 8
-CallNative get_ground_z_for_3d_coord 4 1
-drop
+iPush_3
+pFrame1 0
+ToStack
+fPush_0.0
+Call @trainer_get_safe_teleport_coord
+CallNative player_ped_id 0 1
+iPush_0
+CallNative is_ped_in_any_vehicle 2 1
+JumpFalse @Label_trainer_teleport_not_in_veh
+CallNative player_ped_id 0 1
+iPush_0
+CallNative get_vehicle_ped_is_in 2 1
+setF 7
 
-getF 0
-getF 1
-getF 8
-CallNative load_scene 3 0
-
-PushS 2000
-CallNative wait 1 0
-
-CallNative unk_0x34D91E7A 0 0
-CallNative player_id 0 1
-getF 0
-getF 1
-getF 8
-getF 3
+getF 7
+iPush_3
+pFrame1 0
+ToStack
 iPush_0
 iPush_1
 iPush_1
-CallNative start_player_teleport 8 0
+iPush_1
+CallNative set_entity_coords 8 0
 
+getF 7
+fPush_0.0
+CallNative set_entity_heading 2 0
+Jump @Label_trainer_teleport_3
+
+:Label_trainer_teleport_not_in_veh
+CallNative player_ped_id 0 1
+iPush_3
+pFrame1 0
+ToStack
+iPush_0
+iPush_0
+iPush_0
+iPush_1
+CallNative set_entity_coords 8 0
+
+CallNative player_ped_id 0 1
+fPush_0.0
+CallNative set_entity_heading 2 0
+
+:Label_trainer_teleport_3
+CallNative player_ped_id 0 1
+iPush_1
+CallNative freeze_entity_position 2 0
+
+iPush_3
+pFrame1 0
+ToStack
+fPush 150
+iPush_1
+CallNative unk_0xFA037FEB 5 1
+drop
+iPush_0
+setF 9
+
+:Label_trainer_teleport_5
+CallNative is_new_load_scene_loaded 0 1
+Not
+dup
+JumpFalse @Label_trainer_teleport_4
+getF 9
+PushS 350
+CmpLt
+And
+
+:Label_trainer_teleport_4
+JumpFalse @Label_trainer_teleport_6
+getF 9
+Add1 1
+setF 9
+iPush_0
+CallNative wait 1 0
+Jump @Label_trainer_teleport_5
+
+:Label_trainer_teleport_6
+CallNative unk_0x7C05B1F6 0 0
+
+fPush_0.0
+Push 1065353216
+CallNative set_gameplay_cam_relative_pitch 2 0
+fPush_0.0
+CallNative set_gameplay_cam_relative_heading 1 0
+
+CallNative player_ped_id 0 1
+iPush_0
+CallNative freeze_entity_position 2 0
 CallNative is_screen_faded_out 0 1
 JumpFalse @Label_trainer_teleport_2
 PushS 800
@@ -5923,7 +6246,7 @@ Function 1 0 4
 iPush_0
 pstatic2 61
 ArrayGet1 1
-Switch [0 @Label_action_level_2_last_selected_0]:[1 @Label_action_level_2_last_selected_1]
+Switch [0 @Label_action_level_2_last_selected_0]:[1 @Label_action_level_2_last_selected_1]:[3 @Label_action_level_2_last_selected_3]
 Jump @Label_action_level_2_end
 
 :Label_action_level_2_last_selected_0
@@ -5934,8 +6257,10 @@ Return 0 0
 
 :Label_action_level_2_last_selected_1
 Call @trainer_vehicle_action_level_2
+Return 0 0
 
-:Label_action_level_2_last_selected_1_end
+:Label_action_level_2_last_selected_3
+Call @trainer_teleport_action_level_2
 Return 0 0
 
 :Label_action_level_2_end
@@ -6672,6 +6997,28 @@ CallNative set_vehicle_livery 2 0
 Return 0 0
 
 :Label_trainer_vehicle_colour_action_level_2_end
+Return 0 0
+
+:trainer_teleport_action_level_2
+Function 1 0 4
+
+StaticGet1 4
+Switch [4 @Label_trainer_teleport_action_level_2_last_selected_4]
+Jump @Label_trainer_teleport_action_level_2_end
+
+:Label_trainer_teleport_action_level_2_last_selected_4
+iPush_0
+Call @menu_get_number
+iPush_1
+Call @menu_get_number
+iPush_2
+Call @menu_get_number
+iPush_3
+Call @menu_get_number
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_end
 Return 0 0
 
 :trainer_action_level_3
@@ -8110,37 +8457,41 @@ StaticSet2 421
 iPush_0
 StaticSet2 422
 
-PushString "CMOD_MOD_0_D"
-CallNative unk_0x95C4B5AD 1 1
-setF 3
-PushString "CMOD_MOD_1_D"
-CallNative unk_0x95C4B5AD 1 1
-setF 5
-
 PushString ""
 pstatic2 423
 StrCopy 16
+
+Call @trainer_setup_sec_var_1
+Call @trainer_setup_sec_var_2
+
+PushString ""
+pstatic2 425
+StrCopy 16
+
+Call @trainer_setup_sec_var_3
+Call @trainer_setup_sec_var_dash
+Call @trainer_setup_sec_var_4
+
+Return 0 0
+
+:trainer_setup_sec_var_1
+Function 1 0 16
+
+PushString "CMOD_MOD_0_D"
+CallNative unk_0x95C4B5AD 1 1
+setF 3
 
 iPush_0
 setF 4
 
 :Label_trainer_setup_while
 getF 4
-Push1 12
-JumpGT @Label_trainer_setup_while2
+Push1 23
+JumpGT @Label_trainer_setup_sec_var_1_end
 
 getF 4
 iPush_0
 CmpEq
-dup
-Not
-JumpFalse @Label_trainer_setup_while_or_1
-getF 4
-Push1 9
-CmpEq
-Or
-
-:Label_trainer_setup_while_or_1
 dup
 Not
 JumpFalse @Label_trainer_setup_while_or_2
@@ -8163,7 +8514,7 @@ dup
 Not
 JumpFalse @Label_trainer_setup_while_or
 getF 4
-Push1 11
+Push1 21
 CmpEq
 Or
 
@@ -8184,14 +8535,23 @@ Add1 1
 setF 4
 Jump @Label_trainer_setup_while
 
-:Label_trainer_setup_while2
+:Label_trainer_setup_sec_var_1_end
+Return 0 0
+
+:trainer_setup_sec_var_2
+Function 1 0 16
+
+PushString "CMOD_MOD_1_D"
+CallNative unk_0x95C4B5AD 1 1
+setF 3
+
 iPush_0
 setF 4
 
 :Label_trainer_setup_while2_2
 getF 4
 Push1 68
-JumpGT @Label_trainer_setup_while2_exit
+JumpGT @Label_trainer_setup_sec_var_2_end
 
 getF 4
 Push1 34
@@ -8200,20 +8560,11 @@ dup
 Not
 JumpFalse @Label_trainer_setup_while2_or_1
 getF 4
-Push1 9
-CmpEq
-Or
-
-:Label_trainer_setup_while2_or_1
-dup
-Not
-JumpFalse @Label_trainer_setup_while2_or_2
-getF 4
 Push1 49
 CmpEq
 Or
 
-:Label_trainer_setup_while2_or_2
+:Label_trainer_setup_while2_or_1
 dup
 Not
 JumpFalse @Label_trainer_setup_while2_or_3
@@ -8233,7 +8584,7 @@ Or
 
 :Label_trainer_setup_while2_or
 JumpFalse @Label_trainer_setup_while2_goto
-getF 5
+getF 3
 getF 4
 getF 4
 Add1 1
@@ -8248,7 +8599,171 @@ Add1 1
 setF 4
 Jump @Label_trainer_setup_while2_2
 
-:Label_trainer_setup_while2_exit
+:Label_trainer_setup_sec_var_2_end
+Return 0 0
+
+:trainer_setup_sec_var_3
+Function 1 0 16
+
+PushString "CMOD_MOD_33_D1"
+CallNative unk_0x95C4B5AD 1 1
+setF 3
+
+iPush_0
+setF 4
+
+:Label_trainer_setup_while3_3
+getF 4
+Push1 124
+JumpGT @Label_trainer_setup_sec_var_3_end
+
+getF 4
+iPush_6
+CmpEq
+dup
+Not
+JumpFalse @Label_trainer_setup_while3_or_1
+getF 4
+Push1 24
+CmpEq
+Or
+
+:Label_trainer_setup_while3_or_1
+dup
+Not
+JumpFalse @Label_trainer_setup_while3_or_3
+getF 4
+Push1 109
+CmpEq
+Or
+
+:Label_trainer_setup_while3_or_3
+dup
+Not
+JumpFalse @Label_trainer_setup_while3_or_4
+getF 4
+Push1 113
+CmpEq
+Or
+
+:Label_trainer_setup_while3_or_4
+dup
+Not
+JumpFalse @Label_trainer_setup_while3_or
+getF 4
+Push1 122
+CmpEq
+Or
+
+:Label_trainer_setup_while3_or
+JumpFalse @Label_trainer_setup_while3_goto
+getF 3
+getF 4
+getF 4
+Add1 1
+iPush_1
+CallNative unk_0x0183A66C 4 1
+pstatic2 425
+StrAdd 16
+
+:Label_trainer_setup_while3_goto
+getF 4
+Add1 1
+setF 4
+Jump @Label_trainer_setup_while3_3
+
+:Label_trainer_setup_sec_var_3_end
+Return 0 0
+
+:trainer_setup_sec_var_dash
+Function 1 0 16
+
+PushString "OUTFIT_P2_41"
+CallNative unk_0x95C4B5AD 1 1
+setF 3
+
+getF 3
+iPush_6
+iPush_6
+Add1 1
+iPush_1
+CallNative unk_0x0183A66C 4 1
+pstatic2 425
+StrAdd 16
+
+Return 0 0
+
+:trainer_setup_sec_var_4
+Function 1 0 16
+
+PushString "CMOD_SKI_0"
+CallNative unk_0x95C4B5AD 1 1
+setF 3
+
+iPush_0
+setF 4
+
+:Label_trainer_setup_while4_4
+getF 4
+Push1 12
+JumpGT @Label_trainer_setup_sec_var_4_end
+
+getF 4
+iPush_0
+CmpEq
+dup
+Not
+JumpFalse @Label_trainer_setup_while4_or_1
+getF 4
+iPush_2
+CmpEq
+Or
+
+:Label_trainer_setup_while4_or_1
+dup
+Not
+JumpFalse @Label_trainer_setup_while4_or_3
+getF 4
+iPush_3
+CmpEq
+Or
+
+:Label_trainer_setup_while4_or_3
+dup
+Not
+JumpFalse @Label_trainer_setup_while4_or_4
+getF 4
+iPush_4
+CmpEq
+Or
+
+:Label_trainer_setup_while4_or_4
+dup
+Not
+JumpFalse @Label_trainer_setup_while4_or
+getF 4
+Push1 11
+CmpEq
+Or
+
+:Label_trainer_setup_while4_or
+JumpFalse @Label_trainer_setup_while4_goto
+getF 3
+getF 4
+getF 4
+Add1 1
+iPush_1
+CallNative unk_0x0183A66C 4 1
+pstatic2 425
+StrAdd 16
+
+:Label_trainer_setup_while4_goto
+getF 4
+Add1 1
+setF 4
+Jump @Label_trainer_setup_while4_4
+
+:Label_trainer_setup_sec_var_4_end
 Return 0 0
 
 :menu_set_frontend
