@@ -49,7 +49,7 @@ StaticGet1 7
 JumpNE @Label_main_draw
 iPush_2
 Push1 175
-CallNative is_disabled_control_just_pressed 2 1
+CallNative is_disabled_control_just_released 2 1
 JumpFalse @Label_main_draw
 Call @menu_set_last_selected
 
@@ -10363,7 +10363,7 @@ Jump @Label_catch_select_button_press_end
 :Label_741
 iPush_2
 Push1 175
-CallNative is_disabled_control_just_pressed 2 1
+CallNative is_disabled_control_just_released 2 1
 JumpFalse @Label_catch_select_button_press_square
 
 iPush_0
