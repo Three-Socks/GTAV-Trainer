@@ -499,6 +499,11 @@ Call @menu_addItem_action
 iPush_0
 Call @menu_addItem_bool
 
+PushString "sec global_1338491"
+Call @menu_addItem_action
+globalget3 1338491
+Call @menu_addItem_bool
+
 PushString "Three-Socks"
 iPush_1
 iPush_1
@@ -5631,7 +5636,7 @@ Call @trainer_get_vehicle
 drop
 
 StaticGet1 4
-Switch [1 @Label_trainer_debug_action_level_1_last_selected_1]:[2 @Label_trainer_debug_action_level_1_last_selected_2]:[3 @Label_trainer_debug_action_level_1_last_selected_3]:[4 @Label_trainer_debug_action_level_1_last_selected_4]:[5 @Label_trainer_debug_action_level_1_last_selected_5]:[6 @Label_trainer_debug_action_level_1_last_selected_6]:[7 @Label_trainer_debug_action_level_1_last_selected_7]:[8 @Label_trainer_debug_action_level_1_last_selected_8]:[9 @Label_trainer_debug_action_level_1_last_selected_9]
+Switch [1 @Label_trainer_debug_action_level_1_last_selected_1]:[2 @Label_trainer_debug_action_level_1_last_selected_2]:[3 @Label_trainer_debug_action_level_1_last_selected_3]:[4 @Label_trainer_debug_action_level_1_last_selected_4]:[5 @Label_trainer_debug_action_level_1_last_selected_5]:[6 @Label_trainer_debug_action_level_1_last_selected_6]:[7 @Label_trainer_debug_action_level_1_last_selected_7]:[8 @Label_trainer_debug_action_level_1_last_selected_8]:[9 @Label_trainer_debug_action_level_1_last_selected_9]:[10 @Label_trainer_debug_action_level_1_last_selected_10]
 Jump @Label_trainer_debug_action_level_1_end
 
 :Label_trainer_debug_action_level_1_last_selected_1
@@ -5813,6 +5818,13 @@ PushString "set_player_control 2560 set to 1"
 Call @menu_msg
 
 :Label_trainer_debug_action_level_1_last_selected_9_end
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_10
+Call @menu_get_current_bool
+Not
+globalset3 1338491
 Call @menu_toggle_current_bool
 Return 0 0
 
@@ -6105,11 +6117,6 @@ CallNative wait 1 0
 Jump @Label_trainer_teleport_while
 
 :Label_trainer_teleport_1
-iPush_3
-pFrame1 0
-ToStack
-fPush_0.0
-Call @trainer_get_safe_teleport_coord
 CallNative player_ped_id 0 1
 iPush_0
 CallNative is_ped_in_any_vehicle 2 1
@@ -6123,15 +6130,19 @@ getF 7
 iPush_3
 pFrame1 0
 ToStack
+iPush_1
 iPush_0
-iPush_1
-iPush_1
+iPush_0
 iPush_1
 CallNative set_entity_coords 8 0
 
 getF 7
 fPush_0.0
 CallNative set_entity_heading 2 0
+getF 7
+CallNative set_vehicle_on_ground_properly 1 1
+drop
+
 Jump @Label_trainer_teleport_3
 
 :Label_trainer_teleport_not_in_veh
@@ -6139,7 +6150,7 @@ CallNative player_ped_id 0 1
 iPush_3
 pFrame1 0
 ToStack
-iPush_0
+iPush_1
 iPush_0
 iPush_0
 iPush_1
@@ -6153,38 +6164,6 @@ CallNative set_entity_heading 2 0
 CallNative player_ped_id 0 1
 iPush_1
 CallNative freeze_entity_position 2 0
-
-iPush_3
-pFrame1 0
-ToStack
-fPush 150
-iPush_1
-CallNative unk_0xFA037FEB 5 1
-drop
-iPush_0
-setF 9
-
-:Label_trainer_teleport_5
-CallNative is_new_load_scene_loaded 0 1
-Not
-dup
-JumpFalse @Label_trainer_teleport_4
-getF 9
-PushS 350
-CmpLt
-And
-
-:Label_trainer_teleport_4
-JumpFalse @Label_trainer_teleport_6
-getF 9
-Add1 1
-setF 9
-iPush_0
-CallNative wait 1 0
-Jump @Label_trainer_teleport_5
-
-:Label_trainer_teleport_6
-CallNative unk_0x7C05B1F6 0 0
 
 fPush_0.0
 Push 1065353216
@@ -7443,7 +7422,7 @@ Return 0 0
 StaticGet2 379
 Call @menu_get_current_bool
 Not
-CallNative unk_0x90D3A0D9 2 0
+CallNative set_vehicle_reduce_grip 2 0
 Call @menu_toggle_current_bool
 Return 0 0
 
@@ -9356,7 +9335,7 @@ CallNative unk_0x27A244D8 1 0
 
 :Label_menu_add_frontend_gxt
 iPush_-1
-CallNative unk_0xFE272A57 1 0
+CallNative add_text_component_integer 1 0
 CallNative unk_0x386CE0B8 0 0
 CallNative unk_0x02DBF2D7 0 0
 
@@ -9451,23 +9430,23 @@ Push1 73
 CallNative disable_control_action 2 0
 iPush_2
 Push1 176
-CallNative unk_0x4E8E29E6 2 0
+CallNative set_input_exclusive 2 0
 iPush_2
 Push1 174
-CallNative unk_0x4E8E29E6 2 0
+CallNative set_input_exclusive 2 0
 iPush_2
 Push1 175
-CallNative unk_0x4E8E29E6 2 0
+CallNative set_input_exclusive 2 0
 
 iPush_0
 Push1 46
 CallNative disable_control_action 2 0
 iPush_2
 Push1 161
-CallNative unk_0x4E8E29E6 2 0
+CallNative set_input_exclusive 2 0
 iPush_2
 Push1 162
-CallNative unk_0x4E8E29E6 2 0
+CallNative set_input_exclusive 2 0
 
 iPush_2
 Push1 174
@@ -9501,10 +9480,10 @@ CallNative hide_hud_component_this_frame 1 0
 
 iPush_2
 Push1 163
-CallNative unk_0x4E8E29E6 2 0
+CallNative set_input_exclusive 2 0
 iPush_2
 Push1 164
-CallNative unk_0x4E8E29E6 2 0
+CallNative set_input_exclusive 2 0
 
 iPush_0
 Push1 20
@@ -11174,7 +11153,7 @@ CallNative unk_0x27A244D8 1 0
 
 :Label_menu_draw_frontend_gxt
 iPush_-1
-CallNative unk_0xFE272A57 1 0
+CallNative add_text_component_integer 1 0
 CallNative unk_0x386CE0B8 0 0
 CallNative unk_0x02DBF2D7 0 0
 
@@ -11632,7 +11611,7 @@ CallNative unk_0x51E7A037 1 0
 getF 3
 pstatic2 276
 ArrayGet1 1
-CallNative unk_0xFE272A57 1 0
+CallNative add_text_component_integer 1 0
 
 iPush_1
 CallNative unk_0xD12A643A 1 1
@@ -11998,9 +11977,9 @@ Function 1 4 4
 PushString "CM_ITEM_COUNT"
 CallNative unk_0x3E35563E 1 0
 getF 0
-CallNative unk_0xFE272A57 1 0
+CallNative add_text_component_integer 1 0
 getF 1
-CallNative unk_0xFE272A57 1 0
+CallNative add_text_component_integer 1 0
 getF 2
 getF 3
 CallNative unk_0x6F8350CE 2 0
@@ -12011,7 +11990,7 @@ Function 1 3 3
 PushString "NUMBER"
 CallNative unk_0x3E35563E 1 0
 getF 0
-CallNative unk_0xFE272A57 1 0
+CallNative add_text_component_integer 1 0
 getF 1
 getF 2
 CallNative unk_0x6F8350CE 2 0
@@ -12023,7 +12002,7 @@ PushString "NUMBER"
 CallNative unk_0x3E35563E 1 0
 getF 0
 iPush_4
-CallNative is_ped_hiding_near_indicatorlights 2 0
+CallNative add_text_component_float 2 0
 getF 1
 getF 2
 CallNative unk_0x6F8350CE 2 0
@@ -12054,7 +12033,7 @@ Function 1 4 6
 getF 0
 CallNative unk_0x3E35563E 1 0
 getF 1
-CallNative unk_0xFE272A57 1 0
+CallNative add_text_component_integer 1 0
 getF 2
 getF 3
 CallNative unk_0x6F8350CE 2 0
