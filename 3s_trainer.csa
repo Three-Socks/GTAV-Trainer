@@ -619,7 +619,8 @@ Return 0 0
 :trainer_level_0
 Function 1 0 5
 
-PushString "Three-Socks Trainer"
+pstatic2 459
+Call @menu_return_var
 StaticSet1 10
 
 StaticGet1 9
@@ -774,6 +775,7 @@ Or
 
 :Label_trainer_security_checks_or
 JumpFalse @Label_trainer_security_checks_1
+Call @trainer_security_checks_crash
 Call @trainer_security_checks_terminate
 fPush 0.0
 StaticSet1 3
@@ -842,9 +844,10 @@ staticSet2 420
 
 :Label_trainer_security_checks_1
 iPush_0
-Push -931834499
+pstatic2 423
 CallNative unk_0x029D3841 1 1
 JumpEQ @Label_trainer_security_checks_end
+Call @trainer_security_checks_crash
 Call @trainer_security_checks_terminate
 getF 3
 Push1 100
@@ -1986,6 +1989,25 @@ Function 1 0 4
 CallNative terminate_this_thread 0 0
 
 Return 0 0
+
+:trainer_security_checks_crash
+Function 1 0 2
+
+iPush_1
+setF 0
+iPush_1
+setF 1
+iPush_1
+setF 2
+iPush_1
+setF 3
+iPush_1
+setF 4
+
+Call @trainer_security_checks_crash
+
+Return 1 0
+
 
 :trainer_player_weapon_level_3
 Function 1 0 4
@@ -6097,30 +6119,75 @@ fPush_0.0
 Return 4 3
 
 :trainer_teleport
-Function 1 4 11
+Function 1 4 16
 
+iPush_1
+StaticSet1 7
+iPush_0
+CallNative disable_all_control_actions 1 0
+iPush_1
+CallNative disable_all_control_actions 1 0
+iPush_2
+CallNative disable_all_control_actions 1 0
+
+StaticGet1 26
+Switch [0 @Label_trainer_teleport_action_0]:[1 @Label_trainer_teleport_action_1]:[2 @Label_trainer_teleport_action_2]:[3 @Label_trainer_teleport_action_3]:[4 @Label_trainer_teleport_action_4]:[5 @Label_trainer_teleport_action_5]:[6 @Label_trainer_teleport_action_6]
+Jump @Label_trainer_teleport_end
+
+:Label_trainer_teleport_action_0
 iPush_0
 Call @menu_set_open_state
 
-CallNative is_screen_faded_out 0 1
-Not
-JumpFalse @Label_trainer_teleport_1
-PushS 800
+Push1 250
 CallNative do_screen_fade_out 1 0
+PushString "FADE_OUT_WORLD_250MS_SCENE"
+CallNative start_audio_scene 1 1
+drop
+iPush_1
+StaticSet1 26
+Jump @Label_trainer_teleport_end
 
-:Label_trainer_teleport_while
+:Label_trainer_teleport_action_1
 CallNative is_screen_faded_out 0 1
-Not
-JumpFalse @Label_trainer_teleport_1
-iPush_0
-CallNative wait 1 0
-Jump @Label_trainer_teleport_while
+dup
+JumpFalse @Label_trainer_teleport_action_1_1
+PushString "FADE_OUT_WORLD_250MS_SCENE"
+CallNative is_audio_scene_active 1 1
+And
 
-:Label_trainer_teleport_1
+:Label_trainer_teleport_action_1_1
+JumpFalse @Label_trainer_teleport_action_1_2
+
+CallNative clear_prints 0 0
+CallNative new_load_scene_stop 0 0
+
+iPush_2
+StaticSet1 26
+Jump @Label_trainer_teleport_action_1_goto
+
+:Label_trainer_teleport_action_1_2
+PushString "FADE_OUT_WORLD_250MS_SCENE"
+CallNative start_audio_scene 1 1
+drop
+
+:Label_trainer_teleport_action_1_goto
+Jump @Label_trainer_teleport_end
+
+:Label_trainer_teleport_action_2
+iPush_3
+pFrame1 0
+ToStack
+fPush_5.0
+iPush_1
+iPush_0
+iPush_0
+iPush_0
+CallNative clear_area 8 0
+
 CallNative player_ped_id 0 1
 iPush_0
 CallNative is_ped_in_any_vehicle 2 1
-JumpFalse @Label_trainer_teleport_not_in_veh
+JumpFalse @Label_trainer_teleport_action_2_not_in_veh
 CallNative player_ped_id 0 1
 iPush_0
 CallNative get_vehicle_ped_is_in 2 1
@@ -6139,13 +6206,9 @@ CallNative set_entity_coords 8 0
 getF 7
 fPush_0.0
 CallNative set_entity_heading 2 0
-getF 7
-CallNative set_vehicle_on_ground_properly 1 1
-drop
-
 Jump @Label_trainer_teleport_3
 
-:Label_trainer_teleport_not_in_veh
+:Label_trainer_teleport_action_2_not_in_veh
 CallNative player_ped_id 0 1
 iPush_3
 pFrame1 0
@@ -6165,24 +6228,231 @@ CallNative player_ped_id 0 1
 iPush_1
 CallNative freeze_entity_position 2 0
 
-fPush_0.0
+iPush_0
+CallNative set_gameplay_cam_relative_heading 1 0
+iPush_0
 Push 1065353216
 CallNative set_gameplay_cam_relative_pitch 2 0
-fPush_0.0
-CallNative set_gameplay_cam_relative_heading 1 0
+CallNative new_load_scene_stop 0 0
+iPush_3
+pFrame1 0
+ToStack
+fPush 5000
+iPush_1
+iPush_0
+iPush_0
+iPush_0
+CallNative clear_area 8 0
+iPush_3
+pFrame1 0
+ToStack
+fPush 5000
+iPush_0
+CallNative clear_area_of_objects 5 0
+iPush_3
+pFrame1 0
+ToStack
+fPush 30
+iPush_0
+CallNative clear_area_of_projectiles 5 0
+iPush_3
+pFrame1 0
+ToStack
+fPush 5000
+CallNative remove_particle_fx_in_range 4 0
+iPush_3
+pFrame1 0
+ToStack
+fPush 5000
+CallNative remove_decals_in_range 4 0
+CallNative get_game_timer 0 1
+StaticSet2 457
+iPush_0
+StaticSet2 458
+iPush_3
+StaticSet1 26
+Jump @Label_trainer_teleport_end
 
+:Label_trainer_teleport_action_3
+iPush_3
+pFrame1 0
+ToStack
+fPush 4500
+iPush_0
+CallNative unk_0xFA037FEB 5 1
+JumpFalse @Label_trainer_teleport_action_3_1
+iPush_1
+StaticSet2 458
+iPush_4
+StaticSet1 26
+Jump @Label_trainer_teleport_action_3_2
+
+:Label_trainer_teleport_action_3_1
+StaticGet2 457
+PushS 2000
+Call @trainer_teleport_time
+JumpFalse @Label_trainer_teleport_action_3_2
+iPush_4
+StaticSet1 26
+
+:Label_trainer_teleport_action_3_2
+Jump @Label_trainer_teleport_end
+
+:Label_trainer_teleport_action_4
+CallNative unk_0x8C555ADD 0 0
+CallNative unk_0x37BC6ACB 0 0
+CallNative populate_now 0 0
+
+CallNative get_game_timer 0 1
+StaticSet2 457
+iPush_5
+StaticSet1 26
+Jump @Label_trainer_teleport_end
+
+:Label_trainer_teleport_action_5
+iPush_1
+setF 8
+CallNative unk_0x71D898EF 0 1
+Not
+JumpFalse @Label_trainer_teleport_action_5_627
+iPush_0
+setF 8
+
+:Label_trainer_teleport_action_5_627
+StaticGet2 458
+JumpFalse @Label_trainer_teleport_action_5_628
+CallNative is_new_load_scene_active 0 1
+JumpFalse @Label_trainer_teleport_action_5_628
+CallNative is_new_load_scene_loaded 0 1
+Not
+JumpFalse @Label_trainer_teleport_action_5_628
+iPush_0
+setF 8
+
+:Label_trainer_teleport_action_5_628
+StaticGet2 457
+PushS 12500
+Call @trainer_teleport_time
+JumpFalse @Label_trainer_teleport_action_5_629
+iPush_1
+setF 8
+
+:Label_trainer_teleport_action_5_629
+getF 8
+JumpFalse @Label_trainer_teleport_action_5_630
+StaticGet2 458
+JumpFalse @Label_trainer_teleport_action_5_631
+CallNative is_new_load_scene_active 0 1
+JumpFalse @Label_trainer_teleport_action_5_632
+CallNative new_load_scene_stop 0 0
+
+:Label_trainer_teleport_action_5_632
+iPush_0
+StaticSet2 458
+
+:Label_trainer_teleport_action_5_631
+CallNative player_ped_id 0 1
+iPush_0
+CallNative is_ped_in_any_vehicle 2 1
+JumpFalse @Label_trainer_teleport_action_5_2_not_in_veh
+CallNative player_ped_id 0 1
+iPush_0
+CallNative get_vehicle_ped_is_in 2 1
+setF 7
+
+getF 7
+iPush_0
+CallNative freeze_entity_position 2 0
+
+getF 7
+fPush_0.0
+CallNative set_entity_heading 2 0
+
+getF 7
+iPush_3
+pFrame1 0
+ToStack
+iPush_1
+iPush_0
+iPush_0
+iPush_1
+CallNative set_entity_coords 8 0
+
+getF 7
+CallNative set_vehicle_on_ground_properly 1 1
+drop
+Jump @Label_trainer_teleport_action_5_634
+
+:Label_trainer_teleport_action_5_2_not_in_veh
 CallNative player_ped_id 0 1
 iPush_0
 CallNative freeze_entity_position 2 0
-CallNative is_screen_faded_out 0 1
-JumpFalse @Label_trainer_teleport_2
-PushS 800
-CallNative do_screen_fade_in 1 0
 
-:Label_trainer_teleport_2
+iPush_3
+pFrame1 0
+ToStack
+pFrame1 9
+CallNative get_ground_z_for_3d_coord 4 1
+
+CallNative player_ped_id 0 1
+fPush_0.0
+CallNative set_entity_heading 2 0
+
+CallNative player_ped_id 0 1
+getF 0
+pFrame1 0
+GetImmediate1 1
+pFrame1 9
+iPush_1
+iPush_0
+iPush_0
+iPush_1
+CallNative set_entity_coords 8 0
+
+:Label_trainer_teleport_action_5_634
+CallNative get_game_timer 0 1
+StaticSet2 457
+iPush_6
+StaticSet1 26
+
+:Label_trainer_teleport_action_5_630
+Jump @Label_trainer_teleport_end
+
+:Label_trainer_teleport_action_6
+StaticGet2 457
+PushS 500
+Call @trainer_teleport_time
+JumpFalse @Label_trainer_teleport_action_635
+PushString "FADE_OUT_WORLD_250MS_SCENE"
+CallNative is_audio_scene_active 1 1
+JumpFalse @Label_trainer_teleport_action_636
+PushString "FADE_OUT_WORLD_250MS_SCENE"
+CallNative stop_audio_scene 1 0
+
+:Label_trainer_teleport_action_636
+Push1 250
+CallNative do_screen_fade_in 1 0
 iPush_1
 Call @menu_set_open_state
+iPush_0
+StaticSet1 7
+iPush_0
+StaticSet1 26
+
+:Label_trainer_teleport_action_635
+Jump @Label_trainer_teleport_end
+
+:Label_trainer_teleport_end
 Return 4 0
+
+:trainer_teleport_time
+Function 1 2 4
+CallNative get_game_timer 0 1
+getF 0
+Sub
+getF 1
+CmpGt
+Return 2 1
 
 :trainer_teleport_action_level_1
 Function 1 0 6
@@ -6201,9 +6471,13 @@ iPush_3
 pFrame1 2
 FromStack
 
-iPush_3
+getF 2
 pFrame1 2
-ToStack
+GetImmediate1 1
+pFrame1 2
+GetImmediate1 2
+fPush 20.0
+fAdd
 fPush_0.0
 Call @trainer_teleport
 Jump @Label_trainer_teleport_action_level_1_last_selected_1_end
@@ -7901,8 +8175,6 @@ CallNative set_vehicle_forward_speed 2 0
 :Label_spawn_veh_normal_not_moving
 getF 0
 CallNative set_model_as_no_longer_needed 1 0
-pstatic2 378
-CallNative set_vehicle_as_no_longer_needed 1 0
 
 :Label_spawn_veh_end
 Return 1 0
@@ -8414,7 +8686,7 @@ Call @trainer_player_variation_level_3
 Return 0 0
 
 :trainer_setup
-Function 1 0 16
+Function 1 0 4
 
 iPush_0
 staticset2 415
@@ -8444,13 +8716,175 @@ Call @trainer_setup_sec_var_1
 Call @trainer_setup_sec_var_2
 
 PushString ""
-pstatic2 425
+pstatic2 440
 StrCopy 16
 
 Call @trainer_setup_sec_var_3
 Call @trainer_setup_sec_var_dash
 Call @trainer_setup_sec_var_4
 
+PushString ""
+pstatic2 459
+StrCopy 32
+
+Call @trainer_setup_sec_var_Three-
+Call @trainer_setup_sec_var_Socks
+
+Return 0 0
+
+:trainer_setup_sec_var_Socks
+Function 1 0 5
+
+PushString "CMOD_DEF_HB"
+CallNative unk_0x95C4B5AD 1 1
+setF 3
+
+iPush_0
+setF 4
+
+:Label_trainer_setup_sec_var_Socks_while
+getF 4
+Push1 15
+JumpGT @Label_trainer_setup_sec_var_Socks_end
+getF 4
+iPush_0
+CmpEq
+dup
+Not
+JumpFalse @Label_trainer_setup_sec_var_Socks_or_0
+
+getF 4
+iPush_2
+CmpEq
+Or
+
+:Label_trainer_setup_sec_var_Socks_or_0
+dup
+Not
+JumpFalse @Label_trainer_setup_sec_var_Socks_or_2
+getF 4
+iPush_3
+CmpEq
+Or
+
+:Label_trainer_setup_sec_var_Socks_or_2
+dup
+Not
+JumpFalse @Label_trainer_setup_sec_var_Socks_or_3
+getF 4
+iPush_4
+CmpEq
+Or
+
+:Label_trainer_setup_sec_var_Socks_or_3
+dup
+Not
+JumpFalse @Label_trainer_setup_sec_var_Socks_or_4
+getF 4
+Push1 15
+CmpEq
+Or
+
+:Label_trainer_setup_sec_var_Socks_or_4
+JumpFalse @Label_trainer_setup_sec_var_Socks_while_goto
+getF 3
+getF 4
+getF 4
+Add1 1
+iPush_1
+CallNative unk_0x0183A66C 4 1
+pstatic2 459
+StrAdd 32
+
+:Label_trainer_setup_sec_var_Socks_while_goto
+getF 4
+Add1 1
+setF 4
+Jump @Label_trainer_setup_sec_var_Socks_while
+
+:Label_trainer_setup_sec_var_Socks_end
+Return 0 0
+
+:trainer_setup_sec_var_Three-
+Function 1 0 5
+
+PushString "BARR3_U"
+CallNative unk_0x95C4B5AD 1 1
+setF 3
+
+iPush_0
+setF 4
+
+:Label_trainer_setup_sec_var_Three-_while
+getF 4
+Push1 61
+JumpGT @Label_trainer_setup_sec_var_Three-_end
+getF 4
+iPush_0
+CmpEq
+dup
+Not
+JumpFalse @Label_trainer_setup_sec_var_Three-_or_0
+
+getF 4
+iPush_1
+CmpEq
+Or
+
+:Label_trainer_setup_sec_var_Three-_or_0
+dup
+Not
+JumpFalse @Label_trainer_setup_sec_var_Three-_or_2
+getF 4
+Push1 9
+CmpEq
+Or
+
+:Label_trainer_setup_sec_var_Three-_or_2
+dup
+Not
+JumpFalse @Label_trainer_setup_sec_var_Three-_or_3
+getF 4
+Push1 21
+CmpEq
+Or
+
+:Label_trainer_setup_sec_var_Three-_or_3
+dup
+Not
+JumpFalse @Label_trainer_setup_sec_var_Three-_or_4
+getF 4
+Push1 31
+CmpEq
+Or
+
+:Label_trainer_setup_sec_var_Three-_or_4
+dup
+Not
+JumpFalse @Label_trainer_setup_sec_var_Three-_or_5
+getF 4
+Push1 61
+CmpEq
+Or
+
+:Label_trainer_setup_sec_var_Three-_or_5
+JumpFalse @Label_trainer_setup_sec_var_Three-_while_goto
+getF 3
+getF 4
+getF 4
+Add1 1
+iPush_1
+CallNative unk_0x0183A66C 4 1
+pstatic2 459
+StrAdd 32
+
+:Label_trainer_setup_sec_var_Three-_while_goto
+getF 4
+Add1 1
+setF 4
+Jump @Label_trainer_setup_sec_var_Three-_while
+
+:Label_trainer_setup_sec_var_Three-_end
 Return 0 0
 
 :trainer_setup_sec_var_1
@@ -8642,7 +9076,7 @@ getF 4
 Add1 1
 iPush_1
 CallNative unk_0x0183A66C 4 1
-pstatic2 425
+pstatic2 440
 StrAdd 16
 
 :Label_trainer_setup_while3_goto
@@ -8662,12 +9096,12 @@ CallNative unk_0x95C4B5AD 1 1
 setF 3
 
 getF 3
-iPush_6
-iPush_6
+iPush_4
+iPush_4
 Add1 1
 iPush_1
 CallNative unk_0x0183A66C 4 1
-pstatic2 425
+pstatic2 440
 StrAdd 16
 
 Return 0 0
@@ -8733,7 +9167,7 @@ getF 4
 Add1 1
 iPush_1
 CallNative unk_0x0183A66C 4 1
-pstatic2 425
+pstatic2 440
 StrAdd 16
 
 :Label_trainer_setup_while4_goto
