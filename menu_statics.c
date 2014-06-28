@@ -152,32 +152,47 @@ Static_412
 // (uint) debug_mod_variation
 Static_413
 
-// trainer_race_turbo_active
+// (bool) trainer_race_turbo_active
 Static_414
 
-// trainer_race_turbo_action_mode
+// (uint) trainer_race_turbo_action_mode
 Static_415
 
-// trainer_race_turbo_time
+// (int) trainer_race_turbo_time
 Static_416
 
-// trainer_debug_load_hold_pressed
+// (uint) trainer_debug_load_hold_pressed
 Static_417
 
-// trainer_debug
+// (bool) trainer_debug
 Static_418
 
-// trainer_debug_item_index
+// (uint) trainer_debug_item_index
 Static_419
 
-// trainer_sec_var
+// (bool) trainer_sec_var
 Static_420
 
-// trainer_sec_var_string1
+// (char) trainer_sec_var_string1 ()
 Static_421
 
-// trainer_sec_var_string2
+// (char) trainer_sec_var_string2 ()
 Static_422
 
-// trainer_sec_var_string3
+// (char) trainer_sec_var_string3 (freemode)
 Static_423
+
+// (char) trainer_sec_var_string3 (Three-Socks)
+Static_440
+
+// (int) trainer_teleport_time
+Static_457
+
+// (bool) trainer_teleport_streamed
+Static_458
+
+// trainer_sec_var_string4 (Three-Socks Trainer)
+Static_459
+
+// (Vector3) trainer_teleport_coords
+Static_524
