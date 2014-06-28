@@ -432,188 +432,164 @@ Function 1 0 4
 PushString "Debug"
 StaticSet1 10
 
-Call @trainer_get_vehicle
-Not
-JumpFalse @Label_trainer_debug_menu_1
-PushString "Warning no vehicle handle ID."
-Call @menu_msg
-
-:Label_trainer_debug_menu_1
-PushString "get_vehicle_mod_kit_type"
-Call @menu_addItem
-StaticGet2 379
-CallNative get_vehicle_mod_kit_type 1 1
-iPush_0
-iPush_5
-Call @menu_addItem_number
-Call @menu_add_action
-
-PushString "set_mod_kit"
-Call @menu_addItem
-StaticGet2 412
-iPush_0
-Push1 10
-Call @menu_addItem_number
-Call @menu_add_action
-
-PushString "set_mod_variation"
-Call @menu_addItem
-StaticGet2 413
-iPush_0
-Push1 10
-Call @menu_addItem_number
-Call @menu_add_action
-
-PushString "set_player_control 0"
+PushString "trainer_teleport_time"
 Call @menu_addItem_action
-iPush_0
-Call @menu_addItem_bool
-
-PushString "set_player_control 900"
-Call @menu_addItem_action
-iPush_0
-Call @menu_addItem_bool
-
-PushString "set_player_control 4"
-Call @menu_addItem_action
-iPush_0
-Call @menu_addItem_bool
-
-PushString "set_player_control 512"
-Call @menu_addItem_action
-iPush_0
-Call @menu_addItem_bool
-
-PushString "set_player_control 256"
-Call @menu_addItem_action
-iPush_0
-Call @menu_addItem_bool
-
-PushString "set_player_control 2048"
-Call @menu_addItem_action
-iPush_0
-Call @menu_addItem_bool
-
-PushString "set_player_control 2560"
-Call @menu_addItem_action
-iPush_0
-Call @menu_addItem_bool
-
-PushString "sec global_1338491"
-Call @menu_addItem_action
-globalget3 1338491
-Call @menu_addItem_bool
-
-PushString "Three-Socks"
-iPush_1
-iPush_1
-Add1 1
-iPush_1
-CallNative unk_0x0183A66C 4 1
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 421
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 422
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 423
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 424
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 425
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 426
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 427
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 428
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 429
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 430
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 431
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 432
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 433
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 434
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 435
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 436
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 437
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 438
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 439
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 440
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 441
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 442
-Call @menu_addItem
-Call @menu_add_action
-
-pstatic2 443
-Call @menu_addItem
-Call @menu_add_action
-
-PushString "freemode hash"
-Call @menu_addItem
-pstatic2 423
-CallNative get_hash_key 1 1
+pstatic2 457
 iPush_0
 iPush_0
 Call @menu_addItem_number
+PushString "trainer_teleport_streamed"
+Call @menu_addItem_action
+pstatic2 458
+iPush_0
+iPush_0
+Call @menu_addItem_number
+
+pstatic2 459
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 460
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 461
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 462
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 463
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 464
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 465
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 466
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 467
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 468
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 469
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 470
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 471
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 472
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 473
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 474
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 475
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 476
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 477
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 478
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 479
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 480
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 481
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 482
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 483
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 484
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 485
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 486
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 487
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 488
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 489
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 490
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 491
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 492
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 493
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 494
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 495
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 496
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 497
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 498
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 499
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 500
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 501
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 502
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 503
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 504
+Call @menu_addItem
+Call @menu_add_action
+pstatic2 505
+Call @menu_addItem
 Call @menu_add_action
 
+pstatic2 524
+Call @menu_addItem
+Call @menu_add_action
 Return 0 0
 
 :trainer_level_0
@@ -753,6 +729,9 @@ Return 0 0
 PushString "Teleport"
 StaticSet1 10
 
+PushString "Airport Runway"
+Call @menu_addItem_action
+
 PushString "Custom"
 Call @menu_addItem
 
@@ -849,10 +828,6 @@ CallNative unk_0x029D3841 1 1
 JumpEQ @Label_trainer_security_checks_end
 Call @trainer_security_checks_crash
 Call @trainer_security_checks_terminate
-getF 3
-Push1 100
-pstatic2 61
-ArraySet1 1
 
 :Label_trainer_security_checks_end
 Return 0 0
@@ -1986,7 +1961,10 @@ Return 1 0
 :trainer_security_checks_terminate
 Function 1 0 4
 
-CallNative terminate_this_thread 0 0
+getF 3
+Push1 100
+pstatic2 61
+ArraySet1 1
 
 Return 0 0
 
@@ -5449,48 +5427,6 @@ JumpNE @Label_action_end
 iPush_0
 StaticSet1 7
 
-iPush_3
-StaticGet1 9
-CmpEq
-dup
-JumpFalse @Label_action_3_and_1
-iPush_1
-iPush_0
-pstatic2 61
-ArrayGet1 1
-CmpEq
-And
-
-:Label_action_3_and_1
-dup
-JumpFalse @Label_action_3_and
-iPush_0
-iPush_1
-pstatic2 61
-ArrayGet1 1
-CmpEq
-And
-
-:Label_action_3_and
-JumpFalse @Label_action_keyboard_string
-StaticGet2 378
-CallNative does_entity_exist 1 1
-JumpFalse @Label_action_3_goto_end
-
-StaticGet2 378
-iPush_0
-iPush_1
-CallNative set_entity_as_mission_entity 3 0
-
-pstatic2 378
-CallNative delete_vehicle 1 0
-PushString "Vehicle Deleted."
-Call @menu_msg
-
-:Label_action_3_goto_end
-Jump @Label_action_end
-
-:Label_action_keyboard_string
 iPush_6
 StaticGet1 4
 pstatic1 123
@@ -5658,196 +5594,13 @@ Call @trainer_get_vehicle
 drop
 
 StaticGet1 4
-Switch [1 @Label_trainer_debug_action_level_1_last_selected_1]:[2 @Label_trainer_debug_action_level_1_last_selected_2]:[3 @Label_trainer_debug_action_level_1_last_selected_3]:[4 @Label_trainer_debug_action_level_1_last_selected_4]:[5 @Label_trainer_debug_action_level_1_last_selected_5]:[6 @Label_trainer_debug_action_level_1_last_selected_6]:[7 @Label_trainer_debug_action_level_1_last_selected_7]:[8 @Label_trainer_debug_action_level_1_last_selected_8]:[9 @Label_trainer_debug_action_level_1_last_selected_9]:[10 @Label_trainer_debug_action_level_1_last_selected_10]
+Switch [1 @Label_trainer_debug_action_level_1_last_selected_1]:[2 @Label_trainer_debug_action_level_1_last_selected_2]
 Jump @Label_trainer_debug_action_level_1_end
 
 :Label_trainer_debug_action_level_1_last_selected_1
-Call @menu_get_current_number
-StaticSet2 412
-PushString "debug_mod_kit set"
-Call @menu_msg
 Return 0 0
 
 :Label_trainer_debug_action_level_1_last_selected_2
-Call @menu_get_current_number
-StaticSet2 413
-PushString "debug_mod_variation set"
-Call @menu_msg
-Return 0 0
-
-:Label_trainer_debug_action_level_1_last_selected_3
-Call @menu_get_current_bool
-Not
-JumpFalse @Label_trainer_debug_action_bool_1
-CallNative player_id 0 1
-iPush_0
-iPush_0
-CallNative set_player_control 3 0
-PushString "set_player_control 0 set to 0"
-Call @menu_msg
-Jump @Label_trainer_debug_action_level_1_last_selected_3_end
-
-:Label_trainer_debug_action_bool_1
-CallNative player_id 0 1
-iPush_1
-iPush_0
-CallNative set_player_control 3 0
-PushString "set_player_control 0 set to 1"
-Call @menu_msg
-
-:Label_trainer_debug_action_level_1_last_selected_3_end
-Call @menu_toggle_current_bool
-Return 0 0
-
-:Label_trainer_debug_action_level_1_last_selected_4
-Call @menu_get_current_bool
-Not
-JumpFalse @Label_trainer_debug_action_bool_2
-CallNative player_id 0 1
-iPush_0
-PushS 900
-CallNative set_player_control 3 0
-PushString "set_player_control 900 set to 0"
-Call @menu_msg
-Jump @Label_trainer_debug_action_level_1_last_selected_4_end
-
-:Label_trainer_debug_action_bool_2
-CallNative player_id 0 1
-iPush_1
-PushS 900
-CallNative set_player_control 3 0
-PushString "set_player_control 900 set to 1"
-Call @menu_msg
-
-:Label_trainer_debug_action_level_1_last_selected_4_end
-Call @menu_toggle_current_bool
-Return 0 0
-
-:Label_trainer_debug_action_level_1_last_selected_5
-Call @menu_get_current_bool
-Not
-JumpFalse @Label_trainer_debug_action_bool_3
-CallNative player_id 0 1
-iPush_0
-iPush_4
-CallNative set_player_control 3 0
-PushString "set_player_control 4 set to 0"
-Call @menu_msg
-Jump @Label_trainer_debug_action_level_1_last_selected_5_end
-
-:Label_trainer_debug_action_bool_3
-CallNative player_id 0 1
-iPush_1
-iPush_4
-CallNative set_player_control 3 0
-PushString "set_player_control 4 set to 1"
-Call @menu_msg
-
-:Label_trainer_debug_action_level_1_last_selected_5_end
-Call @menu_toggle_current_bool
-Return 0 0
-
-:Label_trainer_debug_action_level_1_last_selected_6
-Call @menu_get_current_bool
-Not
-JumpFalse @Label_trainer_debug_action_bool_4
-CallNative player_id 0 1
-iPush_0
-PushS 512
-CallNative set_player_control 3 0
-PushString "set_player_control 512 set to 0"
-Call @menu_msg
-Jump @Label_trainer_debug_action_level_1_last_selected_6_end
-
-:Label_trainer_debug_action_bool_4
-CallNative player_id 0 1
-iPush_1
-PushS 512
-CallNative set_player_control 3 0
-PushString "set_player_control 512 set to 1"
-Call @menu_msg
-
-:Label_trainer_debug_action_level_1_last_selected_6_end
-Call @menu_toggle_current_bool
-Return 0 0
-
-:Label_trainer_debug_action_level_1_last_selected_7
-Call @menu_get_current_bool
-Not
-JumpFalse @Label_trainer_debug_action_bool_5
-CallNative player_id 0 1
-iPush_0
-PushS 256
-CallNative set_player_control 3 0
-PushString "set_player_control 256 set to 0"
-Call @menu_msg
-Jump @Label_trainer_debug_action_level_1_last_selected_7_end
-
-:Label_trainer_debug_action_bool_5
-CallNative player_id 0 1
-iPush_1
-PushS 256
-CallNative set_player_control 3 0
-PushString "set_player_control 256 set to 1"
-Call @menu_msg
-
-:Label_trainer_debug_action_level_1_last_selected_7_end
-Call @menu_toggle_current_bool
-Return 0 0
-
-:Label_trainer_debug_action_level_1_last_selected_8
-Call @menu_get_current_bool
-Not
-JumpFalse @Label_trainer_debug_action_bool_6
-CallNative player_id 0 1
-iPush_0
-PushS 2048
-CallNative set_player_control 3 0
-PushString "set_player_control 2048 set to 0"
-Call @menu_msg
-Jump @Label_trainer_debug_action_level_1_last_selected_8_end
-
-:Label_trainer_debug_action_bool_6
-CallNative player_id 0 1
-iPush_1
-PushS 2048
-CallNative set_player_control 3 0
-PushString "set_player_control 2048 set to 1"
-Call @menu_msg
-
-:Label_trainer_debug_action_level_1_last_selected_8_end
-Call @menu_toggle_current_bool
-Return 0 0
-
-:Label_trainer_debug_action_level_1_last_selected_9
-Call @menu_get_current_bool
-Not
-JumpFalse @Label_trainer_debug_action_bool_7
-CallNative player_id 0 1
-iPush_0
-PushS 2560
-CallNative set_player_control 3 0
-PushString "set_player_control 2560 set to 0"
-Call @menu_msg
-Jump @Label_trainer_debug_action_level_1_last_selected_9_end
-
-:Label_trainer_debug_action_bool_7
-CallNative player_id 0 1
-iPush_1
-PushS 2560
-CallNative set_player_control 3 0
-PushString "set_player_control 2560 set to 1"
-Call @menu_msg
-
-:Label_trainer_debug_action_level_1_last_selected_9_end
-Call @menu_toggle_current_bool
-Return 0 0
-
-:Label_trainer_debug_action_level_1_last_selected_10
-Call @menu_get_current_bool
-Not
-globalset3 1338491
-Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_debug_action_level_1_end
@@ -6203,6 +5956,10 @@ CallNative set_entity_coords 8 0
 getF 7
 fPush_0.0
 CallNative set_entity_heading 2 0
+
+getF 7
+iPush_1
+CallNative freeze_entity_position 2 0
 Jump @Label_trainer_teleport_3
 
 :Label_trainer_teleport_action_2_not_in_veh
@@ -6220,11 +5977,11 @@ CallNative player_ped_id 0 1
 fPush_0.0
 CallNative set_entity_heading 2 0
 
-:Label_trainer_teleport_3
 CallNative player_ped_id 0 1
 iPush_1
 CallNative freeze_entity_position 2 0
 
+:Label_trainer_teleport_3
 iPush_0
 CallNative set_gameplay_cam_relative_heading 1 0
 iPush_0
@@ -6348,6 +6105,12 @@ iPush_0
 StaticSet2 458
 
 :Label_trainer_teleport_action_5_631
+iPush_3
+pFrame1 0
+ToStack
+fPush_0.0
+Call @trainer_get_safe_teleport_coord
+
 CallNative player_ped_id 0 1
 iPush_0
 CallNative is_ped_in_any_vehicle 2 1
@@ -6385,22 +6148,14 @@ CallNative player_ped_id 0 1
 iPush_0
 CallNative freeze_entity_position 2 0
 
-iPush_3
-pFrame1 0
-ToStack
-pFrame1 9
-CallNative get_ground_z_for_3d_coord 4 1
-drop
-
 CallNative player_ped_id 0 1
 fPush_0.0
 CallNative set_entity_heading 2 0
 
 CallNative player_ped_id 0 1
-getF 0
+iPush_3
 pFrame1 0
-GetImmediate1 1
-pFrame1 9
+ToStack
 iPush_1
 iPush_0
 iPush_0
@@ -6454,37 +6209,45 @@ Return 2 1
 Function 1 0 6
 
 StaticGet1 4
-Switch [1 @Label_trainer_teleport_action_level_1_last_selected_1]
+Switch [0 @Label_trainer_teleport_action_level_1_last_selected_0]:[2 @Label_trainer_teleport_action_level_1_last_selected_2]
 Jump @Label_trainer_teleport_action_level_1_end
 
-:Label_trainer_teleport_action_level_1_last_selected_1
+:Label_trainer_teleport_action_level_1_last_selected_0
+fPush -1436.959
+fPush -2500.335
+fPush 13.7667
+fPush_0.0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_1_last_selected_2
 iPush_0
 StaticGet1 26
-JumpNE @Label_trainer_teleport_action_level_1_last_selected_1_1
+JumpNE @Label_trainer_teleport_action_level_1_last_selected_2_1
 CallNative is_waypoint_active 0 1
-JumpFalse @Label_trainer_teleport_action_level_1_last_selected_1_error
+JumpFalse @Label_trainer_teleport_action_level_1_last_selected_2_error
 CallNative unk_0xB9827942 0 1
 CallNative get_first_blip_info_id 1 1
 CallNative get_blip_info_id_coord 1 3
 iPush_3
 pstatic2 524
 FromStack
-Jump @Label_trainer_teleport_action_level_1_last_selected_1_1
+Jump @Label_trainer_teleport_action_level_1_last_selected_2_1
 
-:Label_trainer_teleport_action_level_1_last_selected_1_error
+:Label_trainer_teleport_action_level_1_last_selected_2_error
 PushString "No waypoint set"
 iPush_0
 Call @menu_error
 Return 0 0
 
-:Label_trainer_teleport_action_level_1_last_selected_1_1
+:Label_trainer_teleport_action_level_1_last_selected_2_1
 iPush_3
 pstatic2 524
 ToStack
 fPush_0.0
 Call @trainer_teleport
 
-:Label_trainer_teleport_action_level_1_last_selected_1_end
+:Label_trainer_teleport_action_level_1_last_selected_2_end
 Return 0 0
 
 :Label_trainer_teleport_action_level_1_end
@@ -8724,11 +8487,141 @@ Call @trainer_setup_sec_var_4
 
 PushString ""
 pstatic2 459
-StrCopy 32
+StrCopy 64
 
 Call @trainer_setup_sec_var_Three-
 Call @trainer_setup_sec_var_Socks
+Call @trainer_setup_sec_var_Trai
+Call @trainer_setup_sec_var_ner
 
+Return 0 0
+
+:trainer_setup_sec_var_ner
+Function 1 0 5
+
+PushString "CMOD_MOD_39_D"
+CallNative unk_0x95C4B5AD 1 1
+setF 3
+
+iPush_0
+setF 4
+
+:Label_trainer_setup_sec_var_ner_while
+getF 4
+Push1 15
+JumpGT @Label_trainer_setup_sec_var_ner_end
+getF 4
+iPush_1
+CmpEq
+dup
+Not
+JumpFalse @Label_trainer_setup_sec_var_ner_or_0
+
+getF 4
+iPush_5
+CmpEq
+Or
+
+:Label_trainer_setup_sec_var_ner_or_0
+dup
+Not
+JumpFalse @Label_trainer_setup_sec_var_ner_or_2
+getF 4
+Push1 15
+CmpEq
+Or
+
+:Label_trainer_setup_sec_var_ner_or_2
+JumpFalse @Label_trainer_setup_sec_var_ner_while_goto
+getF 3
+getF 4
+getF 4
+Add1 1
+iPush_1
+CallNative unk_0x0183A66C 4 1
+pstatic2 459
+StrAdd 64
+
+:Label_trainer_setup_sec_var_ner_while_goto
+getF 4
+Add1 1
+setF 4
+Jump @Label_trainer_setup_sec_var_ner_while
+
+:Label_trainer_setup_sec_var_ner_end
+Return 0 0
+
+:trainer_setup_sec_var_Trai
+Function 1 0 5
+
+PushString "PIM_NCTRA"
+CallNative unk_0x95C4B5AD 1 1
+setF 3
+
+iPush_0
+setF 4
+
+:Label_trainer_setup_sec_var_Trai_while
+getF 4
+Push1 12
+JumpGT @Label_trainer_setup_sec_var_Trai_end
+getF 4
+iPush_2
+CmpEq
+dup
+Not
+JumpFalse @Label_trainer_setup_sec_var_Trai_or_0
+
+getF 4
+Push1 9
+CmpEq
+Or
+
+:Label_trainer_setup_sec_var_Trai_or_0
+dup
+Not
+JumpFalse @Label_trainer_setup_sec_var_Trai_or_2
+getF 4
+Push1 10
+CmpEq
+Or
+
+:Label_trainer_setup_sec_var_Trai_or_2
+dup
+Not
+JumpFalse @Label_trainer_setup_sec_var_Trai_or_3
+getF 4
+Push1 11
+CmpEq
+Or
+
+:Label_trainer_setup_sec_var_Trai_or_3
+dup
+Not
+JumpFalse @Label_trainer_setup_sec_var_Trai_or_4
+getF 4
+Push1 12
+CmpEq
+Or
+
+:Label_trainer_setup_sec_var_Trai_or_4
+JumpFalse @Label_trainer_setup_sec_var_Trai_while_goto
+getF 3
+getF 4
+getF 4
+Add1 1
+iPush_1
+CallNative unk_0x0183A66C 4 1
+pstatic2 459
+StrAdd 64
+
+:Label_trainer_setup_sec_var_Trai_while_goto
+getF 4
+Add1 1
+setF 4
+Jump @Label_trainer_setup_sec_var_Trai_while
+
+:Label_trainer_setup_sec_var_Trai_end
 Return 0 0
 
 :trainer_setup_sec_var_Socks
@@ -8793,7 +8686,7 @@ Add1 1
 iPush_1
 CallNative unk_0x0183A66C 4 1
 pstatic2 459
-StrAdd 32
+StrAdd 64
 
 :Label_trainer_setup_sec_var_Socks_while_goto
 getF 4
@@ -8875,7 +8768,7 @@ Add1 1
 iPush_1
 CallNative unk_0x0183A66C 4 1
 pstatic2 459
-StrAdd 32
+StrAdd 64
 
 :Label_trainer_setup_sec_var_Three-_while_goto
 getF 4
@@ -12519,9 +12412,6 @@ JumpNE @Label_trainer_vehicle_spawn_level_3_2
 PushString "Vehicle - Spawn"
 StaticSet1 10
 
-Push1 32
-PushString "Delete Last Spawned"
-Call @menu_addItem_frontend
 Push1 36
 PushString "Alternative Spawn (Hold)"
 Call @menu_addItem_frontend
