@@ -6820,8 +6820,55 @@ Return 0 0
 
 :Label_trainer_player_variation_action_last_selected_1
 CallNative player_ped_id 0 1
+CallNative get_entity_model 1 1
+setF 3
+
+PushString "player_zero"
+getF 3
+CmpNe
+dup
+Not
+JumpFalse @Label_trainer_player_variation_action_last_selected_1_1
+
+PushString "player_one"
+getF 3
+CmpNe
+Or
+
+:Label_trainer_player_variation_action_last_selected_1_1
+dup
+Not
+JumpFalse @Label_trainer_player_variation_action_last_selected_1_2
+PushString "player_two"
+getF 3
+CmpNe
+Or
+
+:Label_trainer_player_variation_action_last_selected_1_2
+dup
+Not
+JumpFalse @Label_trainer_player_variation_action_last_selected_1_3
+PushString "mp_f_freemode_01"
+getF 3
+CmpNe
+Or
+
+:Label_trainer_player_variation_action_last_selected_1_3
+dup
+Not
+JumpFalse @Label_trainer_player_variation_action_last_selected_1_4
+PushString "mp_m_freemode_01"
+getF 3
+CmpNe
+Or
+
+:Label_trainer_player_variation_action_last_selected_1_4
+JumpFalse @Label_trainer_player_variation_action_last_selected_1_end
+CallNative player_ped_id 0 1
 iPush_0
 CallNative set_ped_random_component_variation 2 0
+
+:Label_trainer_player_variation_action_last_selected_1_end
 Return 0 0
 
 :Label_trainer_player_variation_action_end
