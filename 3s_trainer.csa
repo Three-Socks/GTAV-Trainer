@@ -587,16 +587,18 @@ pstatic2 505
 Call @menu_addItem
 Call @menu_add_action
 
+PushString "trainer_teleport_time"
+Call @menu_addItem_action
 pstatic2 524
-Call @menu_addItem
-Call @menu_add_action
+iPush_0
+iPush_0
+Call @menu_addItem_number
 Return 0 0
 
 :trainer_level_0
 Function 1 0 5
 
-pstatic2 459
-Call @menu_return_var
+PushString "Trainer"
 StaticSet1 10
 
 StaticGet1 9
@@ -1982,10 +1984,7 @@ setF 3
 iPush_1
 setF 4
 
-Call @trainer_security_checks_crash
-
 Return 1 0
-
 
 :trainer_player_weapon_level_3
 Function 1 0 4
@@ -6084,6 +6083,17 @@ iPush_0
 setF 8
 
 :Label_trainer_teleport_action_5_628
+iPush_3
+pFrame1 0
+ToStack
+pFrame1 9
+CallNative get_ground_z_for_3d_coord 4 1
+Not
+JumpFalse @Label_trainer_teleport_action_5_628_2
+iPush_0
+setF 8
+
+:Label_trainer_teleport_action_5_628_2
 StaticGet2 457
 PushS 12500
 Call @trainer_teleport_time
@@ -6105,12 +6115,6 @@ iPush_0
 StaticSet2 458
 
 :Label_trainer_teleport_action_5_631
-iPush_3
-pFrame1 0
-ToStack
-fPush_0.0
-Call @trainer_get_safe_teleport_coord
-
 CallNative player_ped_id 0 1
 iPush_0
 CallNative is_ped_in_any_vehicle 2 1
@@ -6129,9 +6133,10 @@ fPush_0.0
 CallNative set_entity_heading 2 0
 
 getF 7
-iPush_3
+getF 0
 pFrame1 0
-ToStack
+GetImmediate1 1
+pFrame1 9
 iPush_1
 iPush_0
 iPush_0
@@ -6153,9 +6158,10 @@ fPush_0.0
 CallNative set_entity_heading 2 0
 
 CallNative player_ped_id 0 1
-iPush_3
+getF 0
 pFrame1 0
-ToStack
+GetImmediate1 1
+pFrame1 9
 iPush_1
 iPush_0
 iPush_0
@@ -6823,14 +6829,14 @@ CallNative player_ped_id 0 1
 CallNative get_entity_model 1 1
 setF 3
 
-PushString "player_zero"
+Push GetHash("player_zero")
 getF 3
 CmpNe
 dup
 Not
 JumpFalse @Label_trainer_player_variation_action_last_selected_1_1
 
-PushString "player_one"
+Push GetHash("player_one")
 getF 3
 CmpNe
 Or
@@ -6839,7 +6845,7 @@ Or
 dup
 Not
 JumpFalse @Label_trainer_player_variation_action_last_selected_1_2
-PushString "player_two"
+Push GetHash("player_two")
 getF 3
 CmpNe
 Or
@@ -6848,7 +6854,7 @@ Or
 dup
 Not
 JumpFalse @Label_trainer_player_variation_action_last_selected_1_3
-PushString "mp_f_freemode_01"
+Push GetHash("mp_f_freemode_01")
 getF 3
 CmpNe
 Or
@@ -6857,7 +6863,7 @@ Or
 dup
 Not
 JumpFalse @Label_trainer_player_variation_action_last_selected_1_4
-PushString "mp_m_freemode_01"
+Push GetHash("mp_m_freemode_01")
 getF 3
 CmpNe
 Or
@@ -8523,24 +8529,6 @@ StrCopy 16
 
 Call @trainer_setup_sec_var_1
 Call @trainer_setup_sec_var_2
-
-PushString ""
-pstatic2 440
-StrCopy 16
-
-Call @trainer_setup_sec_var_3
-Call @trainer_setup_sec_var_dash
-Call @trainer_setup_sec_var_4
-
-PushString ""
-pstatic2 459
-StrCopy 64
-
-Call @trainer_setup_sec_var_Three-
-Call @trainer_setup_sec_var_Socks
-Call @trainer_setup_sec_var_Trai
-Call @trainer_setup_sec_var_ner
-
 Return 0 0
 
 :trainer_setup_sec_var_ner
