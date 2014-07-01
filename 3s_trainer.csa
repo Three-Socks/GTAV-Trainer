@@ -2408,6 +2408,20 @@ Call @menu_add_number
 iPush_-1
 Call @menu_add_extra
 Call @menu_add_action
+PushString "WT_FIREWRK"
+Call @menu_addItem_gxt
+Push 2138347493
+Call @menu_add_number
+PushS 900
+Call @menu_add_extra
+Call @menu_add_action
+PushString "WT_MUSKET"
+Call @menu_addItem_gxt
+Push -1466123874
+Call @menu_add_number
+PushS 900
+Call @menu_add_extra
+Call @menu_add_action
 Return 0 0
 
 :Label_trainer_player_weapon_level_3_end
@@ -2817,7 +2831,7 @@ ArrayGet1 1
 JumpNE @Label_trainer_vehicle_mod_level_3_lights
 
 getF 3
-Switch [0 @Label_trainer_vehicle_mod_horn_stock]:[1 @Label_trainer_vehicle_mod_horn_0]:[2 @Label_trainer_vehicle_mod_horn_1]:[3 @Label_trainer_vehicle_mod_horn_2]:[4 @Label_trainer_vehicle_mod_horn_3]:[5 @Label_trainer_vehicle_mod_horn_4]:[6 @Label_trainer_vehicle_mod_horn_5]:[7 @Label_trainer_vehicle_mod_horn_6]:[8 @Label_trainer_vehicle_mod_horn_7]:[9 @Label_trainer_vehicle_mod_horn_8]:[10 @Label_trainer_vehicle_mod_horn_9]:[11 @Label_trainer_vehicle_mod_horn_90]:[12 @Label_trainer_vehicle_mod_horn_91]:[13 @Label_trainer_vehicle_mod_horn_92]:[14 @Label_trainer_vehicle_mod_horn_93]:[15 @Label_trainer_vehicle_mod_horn_94]:[16 @Label_trainer_vehicle_mod_horn_95]:[17 @Label_trainer_vehicle_mod_horn_96]:[18 @Label_trainer_vehicle_mod_horn_97]:[19 @Label_trainer_vehicle_mod_horn_98]:[20 @Label_trainer_vehicle_mod_horn_99]:[21 @Label_trainer_vehicle_mod_horn_000]:[22 @Label_trainer_vehicle_mod_horn_001]:[23 @Label_trainer_vehicle_mod_horn_002]:[24 @Label_trainer_vehicle_mod_horn_dlc_hip_1]:[25 @Label_trainer_vehicle_mod_horn_dlc_hip_2]:[26 @Label_trainer_vehicle_mod_horn_dlc_hip_3]:[27 @Label_trainer_vehicle_mod_horn_dlc_hip_4]
+Switch [0 @Label_trainer_vehicle_mod_horn_stock]:[1 @Label_trainer_vehicle_mod_horn_0]:[2 @Label_trainer_vehicle_mod_horn_1]:[3 @Label_trainer_vehicle_mod_horn_2]:[4 @Label_trainer_vehicle_mod_horn_3]:[5 @Label_trainer_vehicle_mod_horn_4]:[6 @Label_trainer_vehicle_mod_horn_5]:[7 @Label_trainer_vehicle_mod_horn_6]:[8 @Label_trainer_vehicle_mod_horn_7]:[9 @Label_trainer_vehicle_mod_horn_8]:[10 @Label_trainer_vehicle_mod_horn_9]:[11 @Label_trainer_vehicle_mod_horn_90]:[12 @Label_trainer_vehicle_mod_horn_91]:[13 @Label_trainer_vehicle_mod_horn_92]:[14 @Label_trainer_vehicle_mod_horn_93]:[15 @Label_trainer_vehicle_mod_horn_94]:[16 @Label_trainer_vehicle_mod_horn_95]:[17 @Label_trainer_vehicle_mod_horn_96]:[18 @Label_trainer_vehicle_mod_horn_97]:[19 @Label_trainer_vehicle_mod_horn_98]:[20 @Label_trainer_vehicle_mod_horn_99]:[21 @Label_trainer_vehicle_mod_horn_000]:[22 @Label_trainer_vehicle_mod_horn_001]:[23 @Label_trainer_vehicle_mod_horn_002]:[24 @Label_trainer_vehicle_mod_horn_dlc_hip_1]:[25 @Label_trainer_vehicle_mod_horn_dlc_hip_2]:[26 @Label_trainer_vehicle_mod_horn_dlc_hip_3]:[27 @Label_trainer_vehicle_mod_horn_dlc_hip_4]:[28 @Label_trainer_vehicle_mod_horn_dlc_indi_1]:[29 @Label_trainer_vehicle_mod_horn_dlc_indi_2]:[30 @Label_trainer_vehicle_mod_horn_dlc_indi_3]:[31 @Label_trainer_vehicle_mod_horn_dlc_indi_4]
 Jump @Label_trainer_vehicle_mod_horn_003
 
 :Label_trainer_vehicle_mod_horn_stock
@@ -3011,6 +3025,34 @@ Jump @Label_trainer_vehicle_mod_horn_003
 
 :Label_trainer_vehicle_mod_horn_dlc_hip_4
 PushString "HORN_HIPS4"
+setF 8
+iPush_3
+setF 7
+Jump @Label_trainer_vehicle_mod_horn_003
+
+:Label_trainer_vehicle_mod_horn_dlc_indi_1
+PushString "HORN_INDI_1"
+setF 8
+iPush_3
+setF 7
+Jump @Label_trainer_vehicle_mod_horn_003
+
+:Label_trainer_vehicle_mod_horn_dlc_indi_2
+PushString "HORN_INDI_2"
+setF 8
+iPush_3
+setF 7
+Jump @Label_trainer_vehicle_mod_horn_003
+
+:Label_trainer_vehicle_mod_horn_dlc_indi_3
+PushString "HORN_INDI_3"
+setF 8
+iPush_3
+setF 7
+Jump @Label_trainer_vehicle_mod_horn_003
+
+:Label_trainer_vehicle_mod_horn_dlc_indi_4
+PushString "HORN_INDI_4"
 setF 8
 iPush_3
 setF 7
@@ -6780,6 +6822,18 @@ CallNative give_weapon_to_ped 5 0
 CallNative player_ped_id 0 1
 Push -1834847097
 iPush_-1
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 600439132
+PushS 500
+iPush_0
+iPush_0
+CallNative give_weapon_to_ped 5 0
+CallNative player_ped_id 0 1
+Push 1233104067
+PushS 500
 iPush_0
 iPush_0
 CallNative give_weapon_to_ped 5 0
@@ -13036,6 +13090,15 @@ Call @menu_addItem_gxt_veh_hash
 PushString "SANCHEZ2"
 Call @menu_add_number
 Call @menu_add_action
+Push 743478836
+CallNative is_model_in_cdimage 1 1
+JumpFalse @Label_trainer_vehicle_spawn_level_3_check_sovereign
+Push 743478836
+Call @menu_addItem_gxt_veh_hash
+PushString "SOVEREIGN"
+Call @menu_add_number
+Call @menu_add_action
+:Label_trainer_vehicle_spawn_level_3_check_sovereign
 Push 1836027715
 CallNative is_model_in_cdimage 1 1
 JumpFalse @Label_trainer_vehicle_spawn_level_3_check_thrust
@@ -13222,6 +13285,15 @@ Call @menu_addItem_gxt_veh_hash
 PushString "DUNE2"
 Call @menu_add_number
 Call @menu_add_action
+Push -845961253
+CallNative is_model_in_cdimage 1 1
+JumpFalse @Label_trainer_vehicle_spawn_level_3_check_monster
+Push -845961253
+Call @menu_addItem_gxt_veh_hash
+PushString "MONSTER"
+Call @menu_add_number
+Call @menu_add_action
+:Label_trainer_vehicle_spawn_level_3_check_monster
 Return 0 0
 
 :Label_trainer_vehicle_spawn_level_3_last_selected_planes
