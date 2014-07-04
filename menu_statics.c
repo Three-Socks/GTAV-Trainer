@@ -179,10 +179,10 @@ Static_421
 // (char) trainer_sec_var_string2 ()
 Static_422
 
-// (char) trainer_sec_var_string3 (freemode)
+// (char) trainer_sec_var_string3 (Three-Socks Trainer)
 Static_423
 
-// (char) trainer_sec_var_string3 (Three-Socks)
+// (char) trainer_sec_var_string3
 Static_440
 
 // (int) trainer_teleport_time
@@ -191,7 +191,7 @@ Static_457
 // (bool) trainer_teleport_streamed
 Static_458
 
-// trainer_sec_var_string4 (Three-Socks Trainer)
+// trainer_sec_var_string4
 Static_459
 
 // (Vector3) trainer_teleport_coords
