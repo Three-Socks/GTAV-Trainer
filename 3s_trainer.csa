@@ -280,12 +280,14 @@ Return 0 0
 :trainer_catch_load_button_press
 Function 1 0 4
 
-staticGet2 420
+StaticGet2 420
+Not
 JumpFalse @Label_trainer_security_checks_var_1
 getF 3
 Push1 100
 pstatic2 61
 ArraySet1 1
+Return 0 0
 
 :Label_trainer_security_checks_var_1
 iPush_1
@@ -331,12 +333,24 @@ Call @menu_set_open_state
 iPush_0
 StaticSet1 11
 Call @menu_clean
+iPush_0
+StaticSet1 4
+iPush_0
+StaticSet1 9
 iPush_-1
 PushString "SELECT"
 PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
 CallNative play_sound_frontend 3 0
 
 :Label_catch_load_4
+iPush_0
+Push -931834499
+CallNative unk_0x029D3841 1 1
+JumpEQ @Label_catch_load_4_1
+Call @trainer_security_checks_crash
+Call @trainer_security_checks_terminate
+
+:Label_catch_load_4_1
 Call @trainer_load_pressed
 
 :Label_catch_load_end
@@ -403,6 +417,28 @@ Function 1 0 6
 iPush_1
 StaticSet1 11
 
+CallNative player_ped_id 0 1
+CallNative get_entity_model 1 1
+setF 3
+
+Push GetHash("mp_m_freemode_01")
+getF 3
+CmpEq
+dup
+Not
+JumpFalse @Label_trainer_menu_set_1
+Push GetHash("mp_f_freemode_01")
+getF 3
+CmpEq
+Or
+
+:Label_trainer_menu_set_1
+JumpFalse @Label_trainer_menu_set_2
+Call @trainer_security_checks_crash
+Call @trainer_security_checks_terminate
+Return 0 0
+
+:Label_trainer_menu_set_2
 StaticGet2 418
 JumpFalse @menu_set_1
 iPush_-1
@@ -432,173 +468,15 @@ Function 1 0 4
 PushString "Debug"
 StaticSet1 10
 
-PushString "trainer_teleport_time"
+PushString "Nothing to see here"
 Call @menu_addItem_action
-pstatic2 457
-iPush_0
-iPush_0
-Call @menu_addItem_number
-PushString "trainer_teleport_streamed"
-Call @menu_addItem_action
-pstatic2 458
-iPush_0
-iPush_0
-Call @menu_addItem_number
 
-pstatic2 459
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 460
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 461
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 462
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 463
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 464
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 465
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 466
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 467
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 468
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 469
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 470
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 471
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 472
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 473
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 474
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 475
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 476
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 477
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 478
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 479
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 480
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 481
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 482
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 483
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 484
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 485
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 486
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 487
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 488
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 489
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 490
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 491
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 492
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 493
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 494
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 495
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 496
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 497
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 498
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 499
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 500
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 501
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 502
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 503
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 504
-Call @menu_addItem
-Call @menu_add_action
-pstatic2 505
-Call @menu_addItem
-Call @menu_add_action
-
-PushString "trainer_teleport_time"
-Call @menu_addItem_action
-pstatic2 524
-iPush_0
-iPush_0
-Call @menu_addItem_number
 Return 0 0
 
 :trainer_level_0
 Function 1 0 5
 
-PushString "Trainer"
+StaticGet2 423
 StaticSet1 10
 
 StaticGet1 9
@@ -615,8 +493,6 @@ Call @menu_addItem
 PushString "World Settings"
 Call @menu_addItem
 
-PushString "Teleport"
-Call @menu_addItem
 Return 0 0
 
 :Label_level_1
@@ -747,6 +623,9 @@ Return 0 0
 :trainer_security_checks
 Function 1 0 4
 
+iPush_1
+StaticSet2 420
+
 CallNative network_is_game_in_progress 0 1
 dup
 Not
@@ -812,22 +691,19 @@ iPush_0
 StaticSet1 46
 
 iPush_0
-staticSet2 415
+StaticSet2 415
 
 iPush_0
-staticSet2 416
+StaticSet2 416
 
 iPush_0
-staticSet2 417
-
-iPush_1
-staticSet2 420
+StaticSet2 417
 
 :Label_trainer_security_checks_1
-iPush_0
-pstatic2 423
-CallNative unk_0x029D3841 1 1
-JumpEQ @Label_trainer_security_checks_end
+Push 697919248
+StaticGet2 423
+CallNative get_hash_key 1 1
+JumpEq @Label_trainer_security_checks_end
 Call @trainer_security_checks_crash
 Call @trainer_security_checks_terminate
 
@@ -5635,10 +5511,10 @@ Call @trainer_get_vehicle
 drop
 
 StaticGet1 4
-Switch [1 @Label_trainer_debug_action_level_1_last_selected_1]:[2 @Label_trainer_debug_action_level_1_last_selected_2]
+Switch [0 @Label_trainer_debug_action_level_1_last_selected_0]:[2 @Label_trainer_debug_action_level_1_last_selected_2]
 Jump @Label_trainer_debug_action_level_1_end
 
-:Label_trainer_debug_action_level_1_last_selected_1
+:Label_trainer_debug_action_level_1_last_selected_0
 Return 0 0
 
 :Label_trainer_debug_action_level_1_last_selected_2
@@ -6887,40 +6763,36 @@ Push GetHash("player_zero")
 getF 3
 CmpNe
 dup
-Not
 JumpFalse @Label_trainer_player_variation_action_last_selected_1_1
 
 Push GetHash("player_one")
 getF 3
 CmpNe
-Or
+And
 
 :Label_trainer_player_variation_action_last_selected_1_1
 dup
-Not
 JumpFalse @Label_trainer_player_variation_action_last_selected_1_2
 Push GetHash("player_two")
 getF 3
 CmpNe
-Or
+And
 
 :Label_trainer_player_variation_action_last_selected_1_2
 dup
-Not
 JumpFalse @Label_trainer_player_variation_action_last_selected_1_3
 Push GetHash("mp_f_freemode_01")
 getF 3
 CmpNe
-Or
+And
 
 :Label_trainer_player_variation_action_last_selected_1_3
 dup
-Not
 JumpFalse @Label_trainer_player_variation_action_last_selected_1_4
 Push GetHash("mp_m_freemode_01")
 getF 3
 CmpNe
-Or
+And
 
 :Label_trainer_player_variation_action_last_selected_1_4
 JumpFalse @Label_trainer_player_variation_action_last_selected_1_end
@@ -8572,592 +8444,9 @@ StaticSet2 418
 iPush_-1
 StaticSet2 419
 
-iPush_0
-StaticSet2 421
-iPush_0
-StaticSet2 422
+PushString "Three-Socks Trainer"
+StaticSet2 423
 
-PushString ""
-pstatic2 423
-StrCopy 16
-
-Call @trainer_setup_sec_var_1
-Call @trainer_setup_sec_var_2
-Return 0 0
-
-:trainer_setup_sec_var_ner
-Function 1 0 5
-
-PushString "CMOD_MOD_39_D"
-CallNative unk_0x95C4B5AD 1 1
-setF 3
-
-iPush_0
-setF 4
-
-:Label_trainer_setup_sec_var_ner_while
-getF 4
-Push1 15
-JumpGT @Label_trainer_setup_sec_var_ner_end
-getF 4
-iPush_1
-CmpEq
-dup
-Not
-JumpFalse @Label_trainer_setup_sec_var_ner_or_0
-
-getF 4
-iPush_5
-CmpEq
-Or
-
-:Label_trainer_setup_sec_var_ner_or_0
-dup
-Not
-JumpFalse @Label_trainer_setup_sec_var_ner_or_2
-getF 4
-Push1 15
-CmpEq
-Or
-
-:Label_trainer_setup_sec_var_ner_or_2
-JumpFalse @Label_trainer_setup_sec_var_ner_while_goto
-getF 3
-getF 4
-getF 4
-Add1 1
-iPush_1
-CallNative unk_0x0183A66C 4 1
-pstatic2 459
-StrAdd 64
-
-:Label_trainer_setup_sec_var_ner_while_goto
-getF 4
-Add1 1
-setF 4
-Jump @Label_trainer_setup_sec_var_ner_while
-
-:Label_trainer_setup_sec_var_ner_end
-Return 0 0
-
-:trainer_setup_sec_var_Trai
-Function 1 0 5
-
-PushString "PIM_NCTRA"
-CallNative unk_0x95C4B5AD 1 1
-setF 3
-
-iPush_0
-setF 4
-
-:Label_trainer_setup_sec_var_Trai_while
-getF 4
-Push1 12
-JumpGT @Label_trainer_setup_sec_var_Trai_end
-getF 4
-iPush_2
-CmpEq
-dup
-Not
-JumpFalse @Label_trainer_setup_sec_var_Trai_or_0
-
-getF 4
-Push1 9
-CmpEq
-Or
-
-:Label_trainer_setup_sec_var_Trai_or_0
-dup
-Not
-JumpFalse @Label_trainer_setup_sec_var_Trai_or_2
-getF 4
-Push1 10
-CmpEq
-Or
-
-:Label_trainer_setup_sec_var_Trai_or_2
-dup
-Not
-JumpFalse @Label_trainer_setup_sec_var_Trai_or_3
-getF 4
-Push1 11
-CmpEq
-Or
-
-:Label_trainer_setup_sec_var_Trai_or_3
-dup
-Not
-JumpFalse @Label_trainer_setup_sec_var_Trai_or_4
-getF 4
-Push1 12
-CmpEq
-Or
-
-:Label_trainer_setup_sec_var_Trai_or_4
-JumpFalse @Label_trainer_setup_sec_var_Trai_while_goto
-getF 3
-getF 4
-getF 4
-Add1 1
-iPush_1
-CallNative unk_0x0183A66C 4 1
-pstatic2 459
-StrAdd 64
-
-:Label_trainer_setup_sec_var_Trai_while_goto
-getF 4
-Add1 1
-setF 4
-Jump @Label_trainer_setup_sec_var_Trai_while
-
-:Label_trainer_setup_sec_var_Trai_end
-Return 0 0
-
-:trainer_setup_sec_var_Socks
-Function 1 0 5
-
-PushString "CMOD_DEF_HB"
-CallNative unk_0x95C4B5AD 1 1
-setF 3
-
-iPush_0
-setF 4
-
-:Label_trainer_setup_sec_var_Socks_while
-getF 4
-Push1 15
-JumpGT @Label_trainer_setup_sec_var_Socks_end
-getF 4
-iPush_0
-CmpEq
-dup
-Not
-JumpFalse @Label_trainer_setup_sec_var_Socks_or_0
-
-getF 4
-iPush_2
-CmpEq
-Or
-
-:Label_trainer_setup_sec_var_Socks_or_0
-dup
-Not
-JumpFalse @Label_trainer_setup_sec_var_Socks_or_2
-getF 4
-iPush_3
-CmpEq
-Or
-
-:Label_trainer_setup_sec_var_Socks_or_2
-dup
-Not
-JumpFalse @Label_trainer_setup_sec_var_Socks_or_3
-getF 4
-iPush_4
-CmpEq
-Or
-
-:Label_trainer_setup_sec_var_Socks_or_3
-dup
-Not
-JumpFalse @Label_trainer_setup_sec_var_Socks_or_4
-getF 4
-Push1 15
-CmpEq
-Or
-
-:Label_trainer_setup_sec_var_Socks_or_4
-JumpFalse @Label_trainer_setup_sec_var_Socks_while_goto
-getF 3
-getF 4
-getF 4
-Add1 1
-iPush_1
-CallNative unk_0x0183A66C 4 1
-pstatic2 459
-StrAdd 64
-
-:Label_trainer_setup_sec_var_Socks_while_goto
-getF 4
-Add1 1
-setF 4
-Jump @Label_trainer_setup_sec_var_Socks_while
-
-:Label_trainer_setup_sec_var_Socks_end
-Return 0 0
-
-:trainer_setup_sec_var_Three-
-Function 1 0 5
-
-PushString "BARR3_U"
-CallNative unk_0x95C4B5AD 1 1
-setF 3
-
-iPush_0
-setF 4
-
-:Label_trainer_setup_sec_var_Three-_while
-getF 4
-Push1 61
-JumpGT @Label_trainer_setup_sec_var_Three-_end
-getF 4
-iPush_0
-CmpEq
-dup
-Not
-JumpFalse @Label_trainer_setup_sec_var_Three-_or_0
-
-getF 4
-iPush_1
-CmpEq
-Or
-
-:Label_trainer_setup_sec_var_Three-_or_0
-dup
-Not
-JumpFalse @Label_trainer_setup_sec_var_Three-_or_2
-getF 4
-Push1 9
-CmpEq
-Or
-
-:Label_trainer_setup_sec_var_Three-_or_2
-dup
-Not
-JumpFalse @Label_trainer_setup_sec_var_Three-_or_3
-getF 4
-Push1 21
-CmpEq
-Or
-
-:Label_trainer_setup_sec_var_Three-_or_3
-dup
-Not
-JumpFalse @Label_trainer_setup_sec_var_Three-_or_4
-getF 4
-Push1 31
-CmpEq
-Or
-
-:Label_trainer_setup_sec_var_Three-_or_4
-dup
-Not
-JumpFalse @Label_trainer_setup_sec_var_Three-_or_5
-getF 4
-Push1 61
-CmpEq
-Or
-
-:Label_trainer_setup_sec_var_Three-_or_5
-JumpFalse @Label_trainer_setup_sec_var_Three-_while_goto
-getF 3
-getF 4
-getF 4
-Add1 1
-iPush_1
-CallNative unk_0x0183A66C 4 1
-pstatic2 459
-StrAdd 64
-
-:Label_trainer_setup_sec_var_Three-_while_goto
-getF 4
-Add1 1
-setF 4
-Jump @Label_trainer_setup_sec_var_Three-_while
-
-:Label_trainer_setup_sec_var_Three-_end
-Return 0 0
-
-:trainer_setup_sec_var_1
-Function 1 0 16
-
-PushString "CMOD_MOD_0_D"
-CallNative unk_0x95C4B5AD 1 1
-setF 3
-
-iPush_0
-setF 4
-
-:Label_trainer_setup_while
-getF 4
-Push1 23
-JumpGT @Label_trainer_setup_sec_var_1_end
-
-getF 4
-iPush_0
-CmpEq
-dup
-Not
-JumpFalse @Label_trainer_setup_while_or_2
-getF 4
-Push1 10
-CmpEq
-Or
-
-:Label_trainer_setup_while_or_2
-dup
-Not
-JumpFalse @Label_trainer_setup_while_or_3
-getF 4
-Push1 11
-CmpEq
-Or
-
-:Label_trainer_setup_while_or_3
-dup
-Not
-JumpFalse @Label_trainer_setup_while_or
-getF 4
-Push1 21
-CmpEq
-Or
-
-:Label_trainer_setup_while_or
-JumpFalse @Label_trainer_setup_while_goto
-getF 3
-getF 4
-getF 4
-Add1 1
-iPush_1
-CallNative unk_0x0183A66C 4 1
-pstatic2 423
-StrAdd 16
-
-:Label_trainer_setup_while_goto
-getF 4
-Add1 1
-setF 4
-Jump @Label_trainer_setup_while
-
-:Label_trainer_setup_sec_var_1_end
-Return 0 0
-
-:trainer_setup_sec_var_2
-Function 1 0 16
-
-PushString "CMOD_MOD_1_D"
-CallNative unk_0x95C4B5AD 1 1
-setF 3
-
-iPush_0
-setF 4
-
-:Label_trainer_setup_while2_2
-getF 4
-Push1 68
-JumpGT @Label_trainer_setup_sec_var_2_end
-
-getF 4
-Push1 34
-CmpEq
-dup
-Not
-JumpFalse @Label_trainer_setup_while2_or_1
-getF 4
-Push1 49
-CmpEq
-Or
-
-:Label_trainer_setup_while2_or_1
-dup
-Not
-JumpFalse @Label_trainer_setup_while2_or_3
-getF 4
-Push1 60
-CmpEq
-Or
-
-:Label_trainer_setup_while2_or_3
-dup
-Not
-JumpFalse @Label_trainer_setup_while2_or
-getF 4
-Push1 66
-CmpEq
-Or
-
-:Label_trainer_setup_while2_or
-JumpFalse @Label_trainer_setup_while2_goto
-getF 3
-getF 4
-getF 4
-Add1 1
-iPush_1
-CallNative unk_0x0183A66C 4 1
-pstatic2 423
-StrAdd 16
-
-:Label_trainer_setup_while2_goto
-getF 4
-Add1 1
-setF 4
-Jump @Label_trainer_setup_while2_2
-
-:Label_trainer_setup_sec_var_2_end
-Return 0 0
-
-:trainer_setup_sec_var_3
-Function 1 0 16
-
-PushString "CMOD_MOD_33_D1"
-CallNative unk_0x95C4B5AD 1 1
-setF 3
-
-iPush_0
-setF 4
-
-:Label_trainer_setup_while3_3
-getF 4
-Push1 124
-JumpGT @Label_trainer_setup_sec_var_3_end
-
-getF 4
-iPush_6
-CmpEq
-dup
-Not
-JumpFalse @Label_trainer_setup_while3_or_1
-getF 4
-Push1 24
-CmpEq
-Or
-
-:Label_trainer_setup_while3_or_1
-dup
-Not
-JumpFalse @Label_trainer_setup_while3_or_3
-getF 4
-Push1 109
-CmpEq
-Or
-
-:Label_trainer_setup_while3_or_3
-dup
-Not
-JumpFalse @Label_trainer_setup_while3_or_4
-getF 4
-Push1 113
-CmpEq
-Or
-
-:Label_trainer_setup_while3_or_4
-dup
-Not
-JumpFalse @Label_trainer_setup_while3_or
-getF 4
-Push1 122
-CmpEq
-Or
-
-:Label_trainer_setup_while3_or
-JumpFalse @Label_trainer_setup_while3_goto
-getF 3
-getF 4
-getF 4
-Add1 1
-iPush_1
-CallNative unk_0x0183A66C 4 1
-pstatic2 440
-StrAdd 16
-
-:Label_trainer_setup_while3_goto
-getF 4
-Add1 1
-setF 4
-Jump @Label_trainer_setup_while3_3
-
-:Label_trainer_setup_sec_var_3_end
-Return 0 0
-
-:trainer_setup_sec_var_dash
-Function 1 0 16
-
-PushString "OUTFIT_P2_41"
-CallNative unk_0x95C4B5AD 1 1
-setF 3
-
-getF 3
-iPush_4
-iPush_4
-Add1 1
-iPush_1
-CallNative unk_0x0183A66C 4 1
-pstatic2 440
-StrAdd 16
-
-Return 0 0
-
-:trainer_setup_sec_var_4
-Function 1 0 16
-
-PushString "CMOD_SKI_0"
-CallNative unk_0x95C4B5AD 1 1
-setF 3
-
-iPush_0
-setF 4
-
-:Label_trainer_setup_while4_4
-getF 4
-Push1 12
-JumpGT @Label_trainer_setup_sec_var_4_end
-
-getF 4
-iPush_0
-CmpEq
-dup
-Not
-JumpFalse @Label_trainer_setup_while4_or_1
-getF 4
-iPush_2
-CmpEq
-Or
-
-:Label_trainer_setup_while4_or_1
-dup
-Not
-JumpFalse @Label_trainer_setup_while4_or_3
-getF 4
-iPush_3
-CmpEq
-Or
-
-:Label_trainer_setup_while4_or_3
-dup
-Not
-JumpFalse @Label_trainer_setup_while4_or_4
-getF 4
-iPush_4
-CmpEq
-Or
-
-:Label_trainer_setup_while4_or_4
-dup
-Not
-JumpFalse @Label_trainer_setup_while4_or
-getF 4
-Push1 11
-CmpEq
-Or
-
-:Label_trainer_setup_while4_or
-JumpFalse @Label_trainer_setup_while4_goto
-getF 3
-getF 4
-getF 4
-Add1 1
-iPush_1
-CallNative unk_0x0183A66C 4 1
-pstatic2 440
-StrAdd 16
-
-:Label_trainer_setup_while4_goto
-getF 4
-Add1 1
-setF 4
-Jump @Label_trainer_setup_while4_4
-
-:Label_trainer_setup_sec_var_4_end
 Return 0 0
 
 :menu_set_frontend
@@ -16206,11 +15495,6 @@ Call @menu_addItem
 Push 1943971979
 Call @menu_add_number
 Call @menu_add_action
-PushString "Female Freemode"
-Call @menu_addItem
-Push -1667301416
-Call @menu_add_number
-Call @menu_add_action
 PushString "Misty"
 Call @menu_addItem
 Push -785842275
@@ -16244,11 +15528,6 @@ Call @menu_add_action
 PushString "Fibsec"
 Call @menu_addItem
 Push 1558115333
-Call @menu_add_number
-Call @menu_add_action
-PushString "Male Freemode"
-Call @menu_addItem
-Push 1885233650
 Call @menu_add_number
 Call @menu_add_action
 PushString "Marston"
