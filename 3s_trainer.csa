@@ -1505,7 +1505,7 @@ Jump @Label_trainer_vehicle_modify_extra_level_3_while
 StaticGet1 5
 iPush_0
 JumpGE @Label_trainer_vehicle_modify_extra_level_3_end_2
-PushString "Vehicle has no extra's."
+PushString "Vehicle has no extras."
 iPush_1
 Call @menu_error
 
@@ -8719,16 +8719,22 @@ ArraySet1 1
 :Label_menu_addItem_float_end
 Return 2 0
 
-:menu_add_float
+:menu_add_data_2
 Function 1 1 4
 
 getF 0
 StaticGet1 5
-pstatic2 276
+pstatic2 327
 ArraySet1 1
-
-:Label_menu_add_float_end
 Return 1 0
+
+:menu_get_current_data_2
+Function 1 0 4
+
+StaticGet1 4
+pstatic2 327
+ArrayGet1 1
+Return 0 1
 
 :menu_addItem_bool
 Function 1 1 4
