@@ -9,6 +9,7 @@ iPush_0
 CallNative wait 1 0
 
 Call @trainer_security_checks
+Call @trainer_animal_check
 Call @trainer_catch_load_button_press
 StaticGet2 414
 JumpFalse @Label_main_race_turbo
