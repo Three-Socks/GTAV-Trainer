@@ -6751,13 +6751,13 @@ iPush_0
 iPush_0
 CallNative give_weapon_to_ped 5 0
 CallNative player_ped_id 0 1
-Push 600439132
+Push 2138347493
 PushS 500
 iPush_0
 iPush_0
 CallNative give_weapon_to_ped 5 0
 CallNative player_ped_id 0 1
-Push 1233104067
+Push -1466123874
 PushS 500
 iPush_0
 iPush_0
