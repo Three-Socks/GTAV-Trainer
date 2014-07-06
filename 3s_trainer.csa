@@ -47,10 +47,22 @@ StaticSet2 419
 iPush_0
 StaticGet1 7
 JumpNE @Label_main_draw
+
 iPush_2
 Push1 175
 CallNative is_disabled_control_just_released 2 1
+dup
+Not
+JumpFalse @Label_main_set_last_or
+iPush_1
+StaticGet2 527
+CmpEq
+Or
+
+:Label_main_set_last_or
 JumpFalse @Label_main_draw
+iPush_0
+StaticSet2 527
 Call @menu_set_last_selected
 
 :Label_main_draw
@@ -333,10 +345,8 @@ Call @menu_set_open_state
 iPush_0
 StaticSet1 11
 Call @menu_clean
-iPush_0
-StaticSet1 4
-iPush_0
-StaticSet1 9
+iPush_1
+StaticSet2 527
 iPush_-1
 PushString "SELECT"
 PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
