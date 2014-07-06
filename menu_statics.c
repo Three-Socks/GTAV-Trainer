@@ -196,3 +196,12 @@ Static_459
 
 // (Vector3) trainer_teleport_coords
 Static_524
+
+// trainer_network_vehicle_spawn
+Static_525
+
+// trainer_network_vehicle_spawn_hash
+Static_526
+
+// trainer_menu_just_opened
+Static_527
