@@ -517,8 +517,134 @@ Function 1 0 4
 PushString "Debug"
 StaticSet1 10
 
-PushString "Nothing to see here"
+PushString "Run Speed Multiplier"
+Call @menu_addItem
+fPush 1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "Swim Speed Multiplier"
+Call @menu_addItem
+fPush 1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "native 0x72429998"
+Call @menu_addItem
+iPush_0
+iPush_0
+Push1 100
+Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "special_ability_fill_meter"
 Call @menu_addItem_action
+
+PushString "unknown modifier 1"
+Call @menu_addItem
+fPush 1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "weapon damage modifier"
+Call @menu_addItem
+fPush 1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "unknown modifier 2"
+Call @menu_addItem
+fPush 1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "unknown modifier 3"
+Call @menu_addItem
+fPush 1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "vehicle damage modifier"
+Call @menu_addItem
+fPush 1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "unknown modifier 4"
+Call @menu_addItem
+fPush 1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "unknown modifier 5"
+Call @menu_addItem
+fPush 1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "unknown modifier 6"
+Call @menu_addItem
+fPush 1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "unknown modifier 7"
+Call @menu_addItem
+fPush 1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "noise modifier"
+Call @menu_addItem
+fPush 1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "unknown modifier 8"
+Call @menu_addItem
+fPush 1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "unknown modifier 9"
+Call @menu_addItem
+fPush 1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "action mode"
+Call @menu_addItem
+iPush_0
+Call @menu_addItem_bool
+Call @menu_add_action
 
 Return 0 0
 
@@ -1205,7 +1331,7 @@ PushString "Armor"
 Push1 16
 pFrame1 5
 ArraySet1 1
-PushString "Unkown 1"
+PushString "Unknown 1"
 Push1 17
 pFrame1 5
 ArraySet1 1
@@ -1213,15 +1339,15 @@ PushString "Turbo"
 Push1 18
 pFrame1 5
 ArraySet1 1
-PushString "Unkown 2"
+PushString "Unknown 2"
 Push1 19
 pFrame1 5
 ArraySet1 1
-PushString "Unkown 3"
+PushString "Unknown 3"
 Push1 20
 pFrame1 5
 ArraySet1 1
-PushString "Unkown 4"
+PushString "Unknown 4"
 Push1 21
 pFrame1 5
 ArraySet1 1
@@ -5560,13 +5686,114 @@ Call @trainer_get_vehicle
 drop
 
 StaticGet1 4
-Switch [0 @Label_trainer_debug_action_level_1_last_selected_0]:[2 @Label_trainer_debug_action_level_1_last_selected_2]
+Switch [0 @Label_trainer_debug_action_level_1_last_selected_0]:[2 @Label_trainer_debug_action_level_1_last_selected_2]:[3 @Label_trainer_debug_action_level_1_last_selected_3]:[4 @Label_trainer_debug_action_level_1_last_selected_4]:[5 @Label_trainer_debug_action_level_1_last_selected_5]:[6 @Label_trainer_debug_action_level_1_last_selected_6]:[7 @Label_trainer_debug_action_level_1_last_selected_7]:[8 @Label_trainer_debug_action_level_1_last_selected_8]:[9 @Label_trainer_debug_action_level_1_last_selected_9]:[10 @Label_trainer_debug_action_level_1_last_selected_10]:[11 @Label_trainer_debug_action_level_1_last_selected_11]:[12 @Label_trainer_debug_action_level_1_last_selected_12]:[13 @Label_trainer_debug_action_level_1_last_selected_13]:[14 @Label_trainer_debug_action_level_1_last_selected_14]:[15 @Label_trainer_debug_action_level_1_last_selected_15]:[16 @Label_trainer_debug_action_level_1_last_selected_16]:[17 @Label_trainer_debug_action_level_1_last_selected_17]
 Jump @Label_trainer_debug_action_level_1_end
 
 :Label_trainer_debug_action_level_1_last_selected_0
+CallNative player_id 0 1
+Call @menu_get_current_number
+CallNative unk_0x825423C2 2 0
 Return 0 0
 
 :Label_trainer_debug_action_level_1_last_selected_2
+CallNative player_id 0 1
+Call @menu_get_current_number
+CallNative unk_0xB986FF47 2 0
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_3
+CallNative player_id 0 1
+Call @menu_get_current_number
+iPush_1
+CallNative unk_0x72429998 3 0
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_4
+CallNative player_id 0 1
+iPush_1
+CallNative special_ability_fill_meter 2 0
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_5
+CallNative player_id 0 1
+Call @menu_get_current_number
+CallNative unk_0x45514731 2 0
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_6
+CallNative player_id 0 1
+Call @menu_get_current_number
+CallNative set_player_weapon_damage_modifier 2 0
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_7
+CallNative player_id 0 1
+Call @menu_get_current_number
+CallNative unk_0x362E69AD 2 0
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_8
+CallNative player_id 0 1
+Call @menu_get_current_number
+CallNative unk_0x9F3D577F 2 0
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_9
+CallNative player_id 0 1
+Call @menu_get_current_number
+CallNative set_player_vehicle_damage_modifier 2 0
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_10
+CallNative player_id 0 1
+Call @menu_get_current_number
+CallNative unk_0xA16626C7 2 0
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_11
+CallNative player_id 0 1
+Call @menu_get_current_number
+CallNative unk_0xAE446344 2 0
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_12
+CallNative player_id 0 1
+Call @menu_get_current_number
+CallNative unk_0xD79D5D1B 2 0
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_13
+CallNative player_id 0 1
+Call @menu_get_current_number
+CallNative unk_0x832DEB7A 2 0
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_14
+CallNative player_id 0 1
+Call @menu_get_current_number
+CallNative set_player_noise_multiplier 2 0
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_15
+CallNative player_id 0 1
+Call @menu_get_current_number
+CallNative unk_0x8D2D89C4 2 0
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_16
+CallNative player_id 0 1
+Call @menu_get_current_number
+CallNative unk_0x3D26105F 2 0
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_17
+CallNative player_ped_id 0 1
+Call @menu_get_current_bool
+Not
+iPush_-1
+iPush_0
+CallNative set_ped_using_action_mode 4 0
+Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_debug_action_level_1_end

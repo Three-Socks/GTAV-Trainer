@@ -205,3 +205,12 @@ Static_526
 
 // trainer_menu_just_opened
 Static_527
+
+// trainer_animal_check
+Static_528
+
+// trainer_animal_check_change_model
+Static_529
+
+// trainer_animal_check_last_model
+Static_530
