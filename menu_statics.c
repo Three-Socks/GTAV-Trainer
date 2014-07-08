@@ -214,3 +214,15 @@ Static_529
 
 // trainer_animal_check_last_model
 Static_530
+
+// trainer_never_wanted
+Static_531
+
+// trainer_explosive_ammo
+Static_532
+
+// trainer_fire_ammo
+Static_533
+
+// trainer_explosive_melee
+Static_534
