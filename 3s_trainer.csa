@@ -679,10 +679,10 @@ Jump @Label_level_end
 
 :Label_level_0
 PushString "BLIP_PLAYER"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VED_BLIPN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 iPush_0
 CallNative get_current_language 0 1
@@ -693,7 +693,7 @@ Jump @Label_level_0_end
 
 :Label_level_0_lang
 PushString "CELL_16"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 :Label_level_0_end
 Return 0 0
@@ -737,17 +737,17 @@ StaticSet1 10
 PushString "Change Model"
 Call @menu_addItem
 PushString "FACE_APP"
-Call @menu_addItem_gxt
+Call @menu_addItem
 PushString "PIM_TACCE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 PushString "LOB_CAT_9"
-Call @menu_addItem_gxt
+Call @menu_addItem
 PushString "WT_HEALTH"
-Call @menu_addItem_gxt
+Call @menu_addItem
 PushString "PM_WEAPONS"
-Call @menu_addItem_gxt
+Call @menu_addItem
 PushString "PS_SPEC_AB"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Return 0 0
 
 :Label_last_selected_1
@@ -761,7 +761,7 @@ Call @menu_addItem
 PushString "Extras"
 Call @menu_addItem
 PushString "CMOD_MOD_COL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 PushString "Modify"
 Call @menu_addItem
 
@@ -774,7 +774,7 @@ Jump @Label_last_selected_1_lang_end
 
 :Label_last_selected_1_lang
 PushString "CMOD_MOD_MNT"
-Call @menu_addItem_gxt_action
+Call @menu_addItem_action
 
 :Label_last_selected_1_lang_end
 Return 0 0
@@ -794,7 +794,7 @@ StaticSet1 10
 
 :Label_last_selected_2_lang_end
 PushString "LOB_CAT_22"
-Call @menu_addItem_gxt
+Call @menu_addItem
 CallNative get_clock_hours 0 1
 iPush_0
 Push1 23
@@ -802,27 +802,27 @@ Call @menu_addItem_number
 Call @menu_add_action
 
 PushString "CHEAT_ADVANCE_WEATHER_EXTRA_SUNNY"
-Call @menu_addItem_gxt_action
+Call @menu_addItem_action
 PushString "CHEAT_ADVANCE_WEATHER_CLEAR"
-Call @menu_addItem_gxt_action
+Call @menu_addItem_action
 PushString "CHEAT_ADVANCE_WEATHER_CLOUDY"
-Call @menu_addItem_gxt_action
+Call @menu_addItem_action
 PushString "CHEAT_ADVANCE_WEATHER_SMOGGY"
-Call @menu_addItem_gxt_action
+Call @menu_addItem_action
 PushString "Foggy Weather"
 Call @menu_addItem_action
 PushString "CHEAT_ADVANCE_WEATHER_OVERCAST"
-Call @menu_addItem_gxt_action
+Call @menu_addItem_action
 PushString "CHEAT_ADVANCE_WEATHER_RAIN"
-Call @menu_addItem_gxt_action
+Call @menu_addItem_action
 PushString "CHEAT_ADVANCE_WEATHER_THUNDER"
-Call @menu_addItem_gxt_action
+Call @menu_addItem_action
 PushString "CHEAT_ADVANCE_WEATHER_CLEARING"
-Call @menu_addItem_gxt_action
+Call @menu_addItem_action
 PushString "Neutral Weather"
 Call @menu_addItem_action
 PushString "CHEAT_ADVANCE_WEATHER_SNOW"
-Call @menu_addItem_gxt_action
+Call @menu_addItem_action
 PushString "Blizzard"
 Call @menu_addItem_action
 PushString "Light Snow Weather"
@@ -1044,15 +1044,15 @@ PushString "FACE_APP"
 CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 PushString "FMMC_COL_DEF"
-Call @menu_addItem_gxt_action
+Call @menu_addItem_action
 PushString "PM_SPAWN_R"
-Call @menu_addItem_gxt_action
+Call @menu_addItem_action
 PushString "Head"
 Call @menu_addItem
 PushString "FACE_BRD"
-Call @menu_addItem_gxt
+Call @menu_addItem
 PushString "FACE_HAIR"
-Call @menu_addItem_gxt
+Call @menu_addItem
 PushString "Torso"
 Call @menu_addItem
 PushString "Legs"
@@ -1064,7 +1064,7 @@ Call @menu_addItem
 PushString "Teeth"
 Call @menu_addItem
 PushString "PIM_TACCE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 PushString "Task"
 Call @menu_addItem
 PushString "Decl"
@@ -1165,7 +1165,7 @@ PushString "LOB_CAT_9"
 CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 PushString "GC_MENU26"
-Call @menu_addItem_gxt_action
+Call @menu_addItem_action
 PushString "Max Wanted Level"
 Call @menu_addItem
 CallNative get_max_wanted_level 0 1
@@ -1174,7 +1174,7 @@ iPush_5
 Call @menu_addItem_number
 Call @menu_add_action
 PushString "GC_MENU24"
-Call @menu_addItem_gxt
+Call @menu_addItem
 CallNative player_id 0 1
 CallNative get_player_wanted_level 1 1
 iPush_0
@@ -1188,7 +1188,7 @@ PushString "WT_HEALTH"
 CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 PushString "HLTH_REGEN2"
-Call @menu_addItem_gxt_action
+Call @menu_addItem_action
 
 iPush_0
 CallNative get_current_language 0 1
@@ -1236,7 +1236,7 @@ CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
 PushString "PS_SPEC_AB"
-Call @menu_addItem_gxt
+Call @menu_addItem
 CallNative player_id 0 1
 CallNative is_special_ability_enabled 1 1
 Call @menu_addItem_bool
@@ -1519,7 +1519,7 @@ JumpFalse @Label_trainer_vehicle_mod_level_2_goto_mod_count
 getF 3
 pFrame1 5
 ArrayGet1 1
-Call @menu_addItem_gxt
+Call @menu_addItem
 StaticGet2 379
 getF 3
 CallNative is_toggle_mod_on 2 1
@@ -1543,7 +1543,7 @@ JumpNE @Label_trainer_vehicle_mod_level_2_mod_custom
 getF 3
 pFrame1 5
 ArrayGet1 1
-Call @menu_addItem_gxt
+Call @menu_addItem
 StaticGet2 379
 CallNative get_vehicle_tyres_can_burst 1 1
 Not
@@ -1564,7 +1564,7 @@ JumpNE @Label_trainer_vehicle_mod_level_2_mod_tinted
 getF 3
 pFrame1 5
 ArrayGet1 1
-Call @menu_addItem_gxt
+Call @menu_addItem
 StaticGet2 379
 Push1 23
 CallNative get_vehicle_mod_variation 2 1
@@ -1584,7 +1584,7 @@ JumpNE @Label_trainer_vehicle_mod_level_2_mod_normal
 getF 3
 pFrame1 5
 ArrayGet1 1
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 iPush_-1
 StaticGet2 379
@@ -1624,7 +1624,7 @@ JumpLE @Label_trainer_vehicle_mod_level_2_mod_count
 getF 3
 pFrame1 5
 ArrayGet1 1
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 Push1 23
 getF 3
@@ -1757,16 +1757,16 @@ CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
 PushString "CMOD_COL0_0"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "CMOD_COL0_1"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "CMOD_COL1_6"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "CMOD_MOD_WCL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 StaticGet2 379
 CallNative get_entity_model 1 1
@@ -1777,7 +1777,7 @@ CallNative get_number_of_vehicle_model_colours 1 1
 setF 34
 
 PushString "CELL_840"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 iPush_-1
 StaticGet2 379
@@ -1812,7 +1812,7 @@ iPush_0
 JumpLE @Label_trainer_vehicle_level_2_last_selected_3_end
 
 PushString "CMOD_COL0_4"
-Call @menu_addItem_gxt
+Call @menu_addItem
 StaticGet2 379
 CallNative get_vehicle_livery 1 1
 Add1 1
@@ -1830,13 +1830,13 @@ StaticSet1 10
 PushString "Doors"
 Call @menu_addItem
 PushString "CMOD_MOD_LGT"
-Call @menu_addItem_gxt
+Call @menu_addItem
 PushString "CMOD_MOD_PLA"
-Call @menu_addItem_gxt
+Call @menu_addItem
 PushString "Engine Sound"
 Call @menu_addItem
 PushString "CELL_16"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Return 0 0
 
 :Label_trainer_vehicle_level_2_end
@@ -2119,7 +2119,7 @@ Jump @Label_trainer_player_weapon_level_3_end
 
 :Label_trainer_player_weapon_level_3_last_selected_3
 PushString "WT_UNARMED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -1569615261
 Call @menu_add_number
 iPush_-1
@@ -2140,203 +2140,203 @@ iPush_-1
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_KNIFE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -1716189206
 Call @menu_add_number
 iPush_-1
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_NGTSTK"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 1737195953
 Call @menu_add_number
 iPush_-1
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_HAMMER"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 1317494643
 Call @menu_add_number
 iPush_-1
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_BAT"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -1786099057
 Call @menu_add_number
 iPush_-1
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_GOLFCLUB"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 1141786504
 Call @menu_add_number
 iPush_-1
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_CROWBAR"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -2067956739
 Call @menu_add_number
 iPush_-1
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_PIST"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 453432689
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_PIST_CBT"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 1593441988
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_PIST_AP"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 584646201
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_PIST_50"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -1716589765
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_SMG_MCR"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 324215364
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_SMG"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 736523883
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_SMG_ASL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -270015777
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_RIFLE_ASL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -1074790547
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_RIFLE_CBN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -2084633992
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_RIFLE_ADV"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -1357824103
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_MG"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -1660422300
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_MG_CBT"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 2144741730
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_SG_PMP"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 487013001
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_SG_SOF"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 2017895192
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_SG_ASL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -494615257
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_SG_BLP"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -1654528753
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_STUN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 911657153
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_SNIP_RIF"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 100416529
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_SNIP_HVY"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 205991906
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_SNIP_RMT"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 856002082
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_GL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -1568386805
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_GL_SMOKE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 1305664598
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_RPG"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -1312131151
 Call @menu_add_number
 PushS 900
@@ -2357,63 +2357,63 @@ PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_RPG"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 1752584910
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_MINIGUN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 1119849093
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_GNADE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -1813897027
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_GNADE_STK"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 741814745
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_GNADE_SMK"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -37975472
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_BZGAS"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -1600701090
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_MOLOTOV"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 615608432
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_FIRE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 101631238
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_PETROL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 883325847
 Call @menu_add_number
 PushS 900
@@ -2427,14 +2427,14 @@ iPush_1
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_NV"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -1491061156
 Call @menu_add_number
 iPush_1
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_PARA"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -72657034
 Call @menu_add_number
 iPush_1
@@ -2455,14 +2455,14 @@ iPush_1
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_BALL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 600439132
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_FLARE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 1233104067
 Call @menu_add_number
 PushS 900
@@ -2472,70 +2472,70 @@ Return 0 0
 
 :Label_trainer_player_weapon_level_3_last_selected_4
 PushString "WT_BOTTLE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -102323637
 Call @menu_add_number
 iPush_-1
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_SNSPISTOL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -1076751822
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_GUSNBRG"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 1627465347
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_HVYPISTOL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -771403250
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_SPCARBINE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -1063057011
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_BULLRIFLE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 2132975508
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_VPISTOL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 137902532
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_DAGGER"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -1834847097
 Call @menu_add_number
 iPush_-1
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_FIREWRK"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push 2138347493
 Call @menu_add_number
 PushS 900
 Call @menu_add_extra
 Call @menu_add_action
 PushString "WT_MUSKET"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push -1466123874
 Call @menu_add_number
 PushS 900
@@ -2582,10 +2582,10 @@ CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
 PushString "CMOD_COL1_0"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "CMOD_COL1_1"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "CMOD_COL1_1"
 CallNative unk_0x95C4B5AD 1 1
@@ -2601,10 +2601,10 @@ Call @menu_return_var
 Call @menu_addItem
 
 PushString "CMOD_COL1_5"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "CMOD_COL1_3"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString ""
 pFrame1 2
@@ -2624,18 +2624,18 @@ Call @menu_return_var
 Call @menu_addItem
 
 PushString "CMOD_COL1_4"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 iPush_0
 CallNative get_current_language 0 1
 JumpNE @Label_vehicle_level_3_last_selected_3_lang
 PushString "CELL_3007"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Jump @Label_vehicle_level_3_last_selected_3_lang_end
 
 :Label_vehicle_level_3_last_selected_3_lang
 PushString "CMOD_MOD_GLD2"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 :Label_vehicle_level_3_last_selected_3_lang_end
 iPush_0
@@ -2657,7 +2657,7 @@ Or
 JumpFalse @Label_trainer_vehicle_colour_level_3_end
 
 PushString "FMMC_VEH_CUST"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 :Label_trainer_vehicle_colour_level_3_end
 Return 0 0
@@ -3356,7 +3356,7 @@ iPush_3
 getF 7
 JumpNE @Label_trainer_vehicle_mod_level_3_additem4
 getF 8
-Call @menu_addItem_gxt
+Call @menu_addItem
 getF 3
 Call @menu_add_number
 Call @menu_add_action
@@ -3655,7 +3655,7 @@ CallNative get_vehicle_custom_secondary_colour 4 0
 
 :Label_trainer_vehicle_colour_custom_1
 PushString "RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 getF 3
 iPush_0
 Push1 255
@@ -3664,7 +3664,7 @@ Call @menu_addItem_number_keyboard
 Call @menu_add_action
 
 PushString "GREEN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 getF 4
 iPush_0
 Push1 255
@@ -3673,7 +3673,7 @@ Call @menu_addItem_number_keyboard
 Call @menu_add_action
 
 PushString "BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 getF 5
 iPush_0
 Push1 255
@@ -3682,7 +3682,7 @@ Call @menu_addItem_number_keyboard
 Call @menu_add_action
 
 PushString "CMOD_MOD_COL"
-Call @menu_addItem_gxt_action
+Call @menu_addItem_action
 
 :Label_trainer_vehicle_colour_custom_end
 Return 0 0
@@ -3691,7 +3691,7 @@ Return 0 0
 Function 1 0 4
 
 PushString "BLACK_GRAPHITE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 147
 Call @menu_add_number
 iPush_4
@@ -3699,7 +3699,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "PURPLE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 71
 Call @menu_add_number
 Push1 145
@@ -3707,7 +3707,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "HOT PINK"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 135
 Call @menu_add_number
 Push1 135
@@ -3715,7 +3715,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "FORMULA_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 29
 Call @menu_add_number
 Push1 28
@@ -3723,7 +3723,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 64
 Call @menu_add_number
 Push1 68
@@ -3731,7 +3731,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "GOLD"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 37
 Call @menu_add_number
 Push1 106
@@ -3739,7 +3739,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SILVER"
-Call @menu_addItem_gxt
+Call @menu_addItem
 iPush_4
 Call @menu_add_number
 Push1 111
@@ -3747,7 +3747,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BLACK"
-Call @menu_addItem_gxt
+Call @menu_addItem
 iPush_0
 Call @menu_add_number
 Push1 10
@@ -3755,7 +3755,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "GRAPHITE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 iPush_1
 Call @menu_add_number
 iPush_5
@@ -3763,7 +3763,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "ANTHR_BLACK"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 11
 Call @menu_add_number
 iPush_2
@@ -3771,7 +3771,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BLACK_STEEL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 iPush_2
 Call @menu_add_number
 iPush_5
@@ -3779,7 +3779,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "DARK_SILVER"
-Call @menu_addItem_gxt
+Call @menu_addItem
 iPush_3
 Call @menu_add_number
 iPush_6
@@ -3787,7 +3787,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BLUE_SILVER"
-Call @menu_addItem_gxt
+Call @menu_addItem
 iPush_5
 Call @menu_add_number
 Push1 111
@@ -3795,7 +3795,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "ROLLED_STEEL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 iPush_6
 Call @menu_add_number
 iPush_4
@@ -3803,7 +3803,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SHADOW_SILVER"
-Call @menu_addItem_gxt
+Call @menu_addItem
 iPush_7
 Call @menu_add_number
 iPush_5
@@ -3811,7 +3811,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "STONE_SILVER"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 8
 Call @menu_add_number
 iPush_5
@@ -3819,7 +3819,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "MIDNIGHT_SILVER"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 9
 Call @menu_add_number
 iPush_7
@@ -3827,7 +3827,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "CAST_IRON_SIL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 10
 Call @menu_add_number
 iPush_7
@@ -3835,7 +3835,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 27
 Call @menu_add_number
 Push1 36
@@ -3843,7 +3843,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "TORINO_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 28
 Call @menu_add_number
 Push1 28
@@ -3851,7 +3851,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "LAVA_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 150
 Call @menu_add_number
 Push1 42
@@ -3859,7 +3859,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BLAZE_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 30
 Call @menu_add_number
 Push1 36
@@ -3867,7 +3867,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "GRACE_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 31
 Call @menu_add_number
 Push1 27
@@ -3875,7 +3875,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "GARNET_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 32
 Call @menu_add_number
 Push1 25
@@ -3883,7 +3883,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SUNSET_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 33
 Call @menu_add_number
 Push1 47
@@ -3891,7 +3891,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "CABERNET_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 34
 Call @menu_add_number
 Push1 47
@@ -3899,7 +3899,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "WINE_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 143
 Call @menu_add_number
 Push1 31
@@ -3907,7 +3907,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "CANDY_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 35
 Call @menu_add_number
 Push1 25
@@ -3915,7 +3915,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "PINK"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 137
 Call @menu_add_number
 iPush_3
@@ -3923,7 +3923,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SALMON_PINK"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 136
 Call @menu_add_number
 iPush_5
@@ -3931,7 +3931,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SUNRISE_ORANGE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 36
 Call @menu_add_number
 Push1 26
@@ -3939,7 +3939,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "ORANGE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 38
 Call @menu_add_number
 Push1 37
@@ -3947,7 +3947,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BRIGHT_ORANGE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 138
 Call @menu_add_number
 Push1 89
@@ -3955,7 +3955,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BRONZE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 90
 Call @menu_add_number
 Push1 102
@@ -3963,7 +3963,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "YELLOW"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 88
 Call @menu_add_number
 Push1 88
@@ -3971,7 +3971,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "RACE_YELLOW"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 89
 Call @menu_add_number
 Push1 88
@@ -3979,7 +3979,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "FLUR_YELLOW"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 91
 Call @menu_add_number
 Push1 91
@@ -3987,7 +3987,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "DARK_GREEN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 49
 Call @menu_add_number
 Push1 52
@@ -3995,7 +3995,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "RACING_GREEN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 50
 Call @menu_add_number
 Push1 53
@@ -4003,7 +4003,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SEA_GREEN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 51
 Call @menu_add_number
 Push1 66
@@ -4011,7 +4011,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "OLIVE_GREEN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 52
 Call @menu_add_number
 Push1 59
@@ -4019,7 +4019,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BRIGHT_GREEN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 53
 Call @menu_add_number
 Push1 59
@@ -4027,7 +4027,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "PETROL_GREEN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 54
 Call @menu_add_number
 Push1 60
@@ -4035,7 +4035,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "LIME_GREEN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 92
 Call @menu_add_number
 Push1 92
@@ -4043,7 +4043,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "MIDNIGHT_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 141
 Call @menu_add_number
 Push1 73
@@ -4051,7 +4051,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "GALAXY_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 61
 Call @menu_add_number
 Push1 63
@@ -4059,7 +4059,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "DARK_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 62
 Call @menu_add_number
 Push1 68
@@ -4067,7 +4067,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SAXON_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 63
 Call @menu_add_number
 Push1 87
@@ -4075,7 +4075,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "MARINER_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 65
 Call @menu_add_number
 Push1 87
@@ -4083,7 +4083,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "HARBOR_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 66
 Call @menu_add_number
 Push1 60
@@ -4097,7 +4097,7 @@ Return 0 0
 Function 1 0 4
 
 PushString "DIAMOND_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 67
 Call @menu_add_number
 Push1 67
@@ -4105,7 +4105,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SURF_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 68
 Call @menu_add_number
 Push1 68
@@ -4113,7 +4113,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "NAUTICAL_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 69
 Call @menu_add_number
 Push1 74
@@ -4121,7 +4121,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "RACING_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 73
 Call @menu_add_number
 Push1 73
@@ -4129,7 +4129,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "ULTRA_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 70
 Call @menu_add_number
 Push1 70
@@ -4137,7 +4137,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "LIGHT_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 74
 Call @menu_add_number
 Push1 74
@@ -4145,7 +4145,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "CHOCOLATE_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 96
 Call @menu_add_number
 Push1 95
@@ -4153,7 +4153,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BISON_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 101
 Call @menu_add_number
 Push1 95
@@ -4161,7 +4161,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "CREEK_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 95
 Call @menu_add_number
 Push1 97
@@ -4169,7 +4169,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "UMBER_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 94
 Call @menu_add_number
 Push1 104
@@ -4177,7 +4177,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "MAPLE_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 97
 Call @menu_add_number
 Push1 98
@@ -4185,7 +4185,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BEECHWOOD_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 103
 Call @menu_add_number
 Push1 104
@@ -4193,7 +4193,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SIENNA_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 104
 Call @menu_add_number
 Push1 104
@@ -4201,7 +4201,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SADDLE_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 98
 Call @menu_add_number
 Push1 95
@@ -4209,7 +4209,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "MOSS_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 100
 Call @menu_add_number
 Push1 100
@@ -4217,7 +4217,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "WOODBEECH_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 102
 Call @menu_add_number
 Push1 105
@@ -4225,7 +4225,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "STRAW_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 99
 Call @menu_add_number
 Push1 106
@@ -4233,7 +4233,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SANDY_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 105
 Call @menu_add_number
 Push1 105
@@ -4241,7 +4241,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BLEECHED_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 106
 Call @menu_add_number
 Push1 106
@@ -4249,7 +4249,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SPIN_PURPLE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 72
 Call @menu_add_number
 Push1 64
@@ -4257,7 +4257,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "MIGHT_PURPLE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 146
 Call @menu_add_number
 Push1 145
@@ -4265,7 +4265,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BRIGHT_PURPLE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 145
 Call @menu_add_number
 Push1 74
@@ -4273,7 +4273,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "CREAM"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 107
 Call @menu_add_number
 Push1 107
@@ -4281,7 +4281,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "WHITE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 111
 Call @menu_add_number
 iPush_0
@@ -4289,7 +4289,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "FROST_WHITE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 112
 Call @menu_add_number
 iPush_0
@@ -4303,7 +4303,7 @@ Return 0 0
 Function 1 0 4
 
 PushString "CHOCOLATE_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 96
 Call @menu_add_number
 iPush_0
@@ -4311,7 +4311,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "ULTRA_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 70
 Call @menu_add_number
 iPush_0
@@ -4319,7 +4319,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "RACING_GREEN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 50
 Call @menu_add_number
 iPush_0
@@ -4327,7 +4327,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "RACE_YELLOW"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 89
 Call @menu_add_number
 iPush_0
@@ -4335,7 +4335,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "ORANGE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 38
 Call @menu_add_number
 iPush_0
@@ -4343,7 +4343,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "WHITE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 111
 Call @menu_add_number
 iPush_0
@@ -4351,7 +4351,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BLACK"
-Call @menu_addItem_gxt
+Call @menu_addItem
 iPush_0
 Call @menu_add_number
 iPush_0
@@ -4359,7 +4359,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BLACK_GRAPHITE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 147
 Call @menu_add_number
 iPush_0
@@ -4367,7 +4367,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "GRAPHITE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 iPush_1
 Call @menu_add_number
 iPush_0
@@ -4375,7 +4375,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "ANTHR_BLACK"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 11
 Call @menu_add_number
 iPush_0
@@ -4383,7 +4383,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BLACK_STEEL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 iPush_2
 Call @menu_add_number
 iPush_0
@@ -4391,7 +4391,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "DARK_SILVER"
-Call @menu_addItem_gxt
+Call @menu_addItem
 iPush_3
 Call @menu_add_number
 iPush_2
@@ -4399,7 +4399,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SILVER"
-Call @menu_addItem_gxt
+Call @menu_addItem
 iPush_4
 Call @menu_add_number
 iPush_4
@@ -4407,7 +4407,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BLUE_SILVER"
-Call @menu_addItem_gxt
+Call @menu_addItem
 iPush_5
 Call @menu_add_number
 iPush_5
@@ -4415,7 +4415,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "ROLLED_STEEL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 iPush_6
 Call @menu_add_number
 iPush_0
@@ -4423,7 +4423,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SHADOW_SILVER"
-Call @menu_addItem_gxt
+Call @menu_addItem
 iPush_7
 Call @menu_add_number
 iPush_0
@@ -4431,7 +4431,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "STONE_SILVER"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 8
 Call @menu_add_number
 iPush_0
@@ -4439,7 +4439,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "MIDNIGHT_SILVER"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 9
 Call @menu_add_number
 iPush_0
@@ -4447,7 +4447,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "CAST_IRON_SIL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 10
 Call @menu_add_number
 iPush_0
@@ -4455,7 +4455,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 27
 Call @menu_add_number
 iPush_0
@@ -4463,7 +4463,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "TORINO_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 28
 Call @menu_add_number
 iPush_0
@@ -4471,7 +4471,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "FORMULA_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 29
 Call @menu_add_number
 iPush_0
@@ -4479,7 +4479,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "LAVA_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 150
 Call @menu_add_number
 iPush_0
@@ -4487,7 +4487,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BLAZE_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 30
 Call @menu_add_number
 iPush_0
@@ -4495,7 +4495,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "GRACE_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 31
 Call @menu_add_number
 iPush_0
@@ -4503,7 +4503,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "GARNET_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 32
 Call @menu_add_number
 iPush_0
@@ -4511,7 +4511,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SUNSET_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 33
 Call @menu_add_number
 iPush_0
@@ -4519,7 +4519,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "CABERNET_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 34
 Call @menu_add_number
 iPush_0
@@ -4527,7 +4527,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "WINE_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 143
 Call @menu_add_number
 iPush_0
@@ -4535,7 +4535,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "CANDY_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 35
 Call @menu_add_number
 iPush_0
@@ -4543,7 +4543,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "HOT PINK"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 135
 Call @menu_add_number
 iPush_0
@@ -4551,7 +4551,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "PINK"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 137
 Call @menu_add_number
 iPush_0
@@ -4559,7 +4559,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SALMON_PINK"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 136
 Call @menu_add_number
 iPush_0
@@ -4567,7 +4567,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SUNRISE_ORANGE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 36
 Call @menu_add_number
 iPush_0
@@ -4575,7 +4575,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BRIGHT_ORANGE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 138
 Call @menu_add_number
 iPush_0
@@ -4583,7 +4583,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "GOLD"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 99
 Call @menu_add_number
 Push1 99
@@ -4591,7 +4591,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BRONZE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 90
 Call @menu_add_number
 Push1 102
@@ -4599,7 +4599,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "YELLOW"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 88
 Call @menu_add_number
 iPush_0
@@ -4607,7 +4607,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "FLUR_YELLOW"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 91
 Call @menu_add_number
 iPush_0
@@ -4615,7 +4615,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "DARK_GREEN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 49
 Call @menu_add_number
 iPush_0
@@ -4623,7 +4623,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SEA_GREEN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 51
 Call @menu_add_number
 iPush_0
@@ -4631,7 +4631,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "OLIVE_GREEN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 52
 Call @menu_add_number
 iPush_0
@@ -4639,7 +4639,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BRIGHT_GREEN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 53
 Call @menu_add_number
 iPush_0
@@ -4647,7 +4647,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "PETROL_GREEN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 54
 Call @menu_add_number
 iPush_0
@@ -4655,7 +4655,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "LIME_GREEN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 92
 Call @menu_add_number
 iPush_0
@@ -4663,7 +4663,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "MIDNIGHT_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 141
 Call @menu_add_number
 iPush_0
@@ -4671,7 +4671,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "GALAXY_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 61
 Call @menu_add_number
 iPush_0
@@ -4679,7 +4679,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "DARK_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 62
 Call @menu_add_number
 iPush_0
@@ -4687,7 +4687,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SAXON_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 63
 Call @menu_add_number
 iPush_0
@@ -4695,7 +4695,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 64
 Call @menu_add_number
 iPush_0
@@ -4709,7 +4709,7 @@ Return 0 0
 Function 1 0 4
 
 PushString "MARINER_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 65
 Call @menu_add_number
 iPush_0
@@ -4717,7 +4717,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "HARBOR_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 66
 Call @menu_add_number
 iPush_0
@@ -4725,7 +4725,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "DIAMOND_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 67
 Call @menu_add_number
 iPush_0
@@ -4733,7 +4733,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SURF_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 68
 Call @menu_add_number
 iPush_0
@@ -4741,7 +4741,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "NAUTICAL_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 69
 Call @menu_add_number
 iPush_0
@@ -4749,7 +4749,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "RACING_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 73
 Call @menu_add_number
 iPush_0
@@ -4757,7 +4757,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "LIGHT_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 74
 Call @menu_add_number
 iPush_0
@@ -4765,7 +4765,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BISON_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 101
 Call @menu_add_number
 iPush_0
@@ -4773,7 +4773,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "CREEK_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 95
 Call @menu_add_number
 iPush_0
@@ -4781,7 +4781,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "UMBER_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 94
 Call @menu_add_number
 iPush_0
@@ -4789,7 +4789,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "MAPLE_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 97
 Call @menu_add_number
 iPush_0
@@ -4797,7 +4797,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BEECHWOOD_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 103
 Call @menu_add_number
 iPush_0
@@ -4805,7 +4805,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SIENNA_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 104
 Call @menu_add_number
 iPush_0
@@ -4813,7 +4813,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SADDLE_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 98
 Call @menu_add_number
 iPush_0
@@ -4821,7 +4821,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "MOSS_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 100
 Call @menu_add_number
 iPush_0
@@ -4829,7 +4829,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "WOODBEECH_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 102
 Call @menu_add_number
 iPush_0
@@ -4837,7 +4837,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "STRAW_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 99
 Call @menu_add_number
 iPush_0
@@ -4845,7 +4845,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SANDY_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 105
 Call @menu_add_number
 iPush_0
@@ -4853,7 +4853,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BLEECHED_BROWN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 106
 Call @menu_add_number
 iPush_0
@@ -4861,7 +4861,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "PURPLE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 71
 Call @menu_add_number
 iPush_0
@@ -4869,7 +4869,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "SPIN_PURPLE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 72
 Call @menu_add_number
 iPush_0
@@ -4877,7 +4877,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "MIGHT_PURPLE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 142
 Call @menu_add_number
 iPush_0
@@ -4885,7 +4885,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BRIGHT_PURPLE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 145
 Call @menu_add_number
 iPush_0
@@ -4893,7 +4893,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "CREAM"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 107
 Call @menu_add_number
 iPush_0
@@ -4901,7 +4901,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "FROST_WHITE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 112
 Call @menu_add_number
 iPush_0
@@ -4915,7 +4915,7 @@ Return 0 0
 Function 1 0 4
 
 PushString "LIME_GREEN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 55
 Call @menu_add_number
 iPush_0
@@ -4923,7 +4923,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BLACK"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 12
 Call @menu_add_number
 iPush_0
@@ -4931,7 +4931,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "GREY"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 13
 Call @menu_add_number
 iPush_0
@@ -4939,7 +4939,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "LIGHT_GREY"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 14
 Call @menu_add_number
 iPush_0
@@ -4947,7 +4947,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "WHITE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 131
 Call @menu_add_number
 iPush_0
@@ -4955,7 +4955,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 83
 Call @menu_add_number
 iPush_0
@@ -4963,7 +4963,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "DARK_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 82
 Call @menu_add_number
 iPush_0
@@ -4971,7 +4971,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "MIDNIGHT_BLUE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 84
 Call @menu_add_number
 iPush_0
@@ -4979,7 +4979,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "MIGHT_PURPLE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 149
 Call @menu_add_number
 iPush_0
@@ -4987,7 +4987,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "Purple"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 148
 Call @menu_add_number
 iPush_0
@@ -4995,7 +4995,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 39
 Call @menu_add_number
 iPush_0
@@ -5003,7 +5003,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "DARK_RED"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 40
 Call @menu_add_number
 iPush_0
@@ -5011,7 +5011,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "ORANGE"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 41
 Call @menu_add_number
 iPush_0
@@ -5019,7 +5019,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "YELLOW"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 42
 Call @menu_add_number
 iPush_0
@@ -5027,7 +5027,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "GREEN"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 128
 Call @menu_add_number
 iPush_0
@@ -5035,7 +5035,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "MATTE_FOR"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 151
 Call @menu_add_number
 iPush_0
@@ -5043,7 +5043,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "MATTE_FOIL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 155
 Call @menu_add_number
 iPush_0
@@ -5051,7 +5051,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "MATTE_OD"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 152
 Call @menu_add_number
 iPush_0
@@ -5059,7 +5059,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "MATTE_DIRT"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 153
 Call @menu_add_number
 iPush_0
@@ -5067,7 +5067,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "MATTE_DESERT"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 154
 Call @menu_add_number
 iPush_0
@@ -5081,7 +5081,7 @@ Return 0 0
 Function 1 0 4
 
 PushString "BR BLACK_STEEL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 118
 Call @menu_add_number
 iPush_3
@@ -5089,7 +5089,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BR_STEEL"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 117
 Call @menu_add_number
 Push1 18
@@ -5097,7 +5097,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "BR_ALUMINIUM"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 119
 Call @menu_add_number
 iPush_5
@@ -5105,7 +5105,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "GOLD_P"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 158
 Call @menu_add_number
 Push1 160
@@ -5113,7 +5113,7 @@ Call @menu_add_extra
 Call @menu_add_action
 
 PushString "GOLD_S"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 159
 Call @menu_add_number
 Push1 160
@@ -5127,7 +5127,7 @@ Return 0 0
 Function 1 0 4
 
 PushString "CHROME"
-Call @menu_addItem_gxt
+Call @menu_addItem
 Push1 120
 Call @menu_add_number
 iPush_0
@@ -9412,51 +9412,6 @@ pstatic1 174
 ArrayGet1 1
 Return 1 1
 
-:menu_addItem_gxt
-Function 1 1 4
-
-StaticGet1 5
-Add1 1
-StaticSet1 5
-
-getF 0
-StaticGet1 5
-pstatic1 72
-ArraySet1 1
-
-iPush_4
-StaticGet1 5
-pstatic1 123
-ArraySet1 1
-
-:Label_menu_addItem_gxt_end
-Return 1 0
-
-:menu_addItem_gxt_action
-Function 1 1 4
-
-StaticGet1 5
-Add1 1
-StaticSet1 5
-
-getF 0
-StaticGet1 5
-pstatic1 72
-ArraySet1 1
-
-iPush_4
-StaticGet1 5
-pstatic1 123
-ArraySet1 1
-
-iPush_1
-StaticGet1 5
-pstatic2 225
-ArraySet1 1
-
-:Label_menu_addItem_gxt_action_end
-Return 1 0
-
 :menu_addItem_gxt_veh_hash
 Function 1 1 4
 
@@ -11755,26 +11710,6 @@ getF 17
 setF 20
 
 :Label_draw_menu_2
-iPush_4
-getF 3
-pstatic1 123
-ArrayGet1 1
-JumpNE @Label_draw_menu_gxt_end
-getF 18
-getF 19
-getF 20
-fPush_1.0
-iPush_0
-Call @set_up_draw
-getF 3
-pstatic1 72
-ArrayGet1 1
-StaticGet1 3
-getF 5
-Call @draw_string_gxt
-Jump @Label_draw_menu_bool
-
-:Label_draw_menu_gxt_end
 iPush_5
 getF 3
 pstatic1 123
@@ -12435,73 +12370,73 @@ Return 5 0
 Function 1 0 4
 
 PushString "VEH_CLASS_14"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_20"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_0"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_3"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_13"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_18"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_15"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_10"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_19"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_8"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_4"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_9"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_16"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_1"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_17"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_6"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_5"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_7"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_2"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "TRAILER"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_21"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_11"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 PushString "VEH_CLASS_12"
-Call @menu_addItem_gxt
+Call @menu_addItem
 
 Return 0 0
 
