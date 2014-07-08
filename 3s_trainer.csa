@@ -299,6 +299,9 @@ Function 1 0 4
 StaticGet2 417
 Push1 100
 JumpLE @Label_trainer_debug_1
+iPush_0
+StaticGet1 9
+JumpEQ @Label_trainer_debug_1
 StaticGet2 418
 Not
 JumpFalse @Label_trainer_debug_1
@@ -1677,8 +1680,8 @@ iPush_0
 JumpLE @Label_trainer_vehicle_mod_level_2_mod_count
 
 getF 3
-pFrame1 5
-ArrayGet1 1
+StaticGet2 379
+CallNative unk_0x5E113483 2 1
 Call @menu_addItem
 
 Push1 23
@@ -1821,6 +1824,9 @@ PushString "CMOD_COL1_6"
 Call @menu_addItem
 
 PushString "CMOD_MOD_WCL"
+Call @menu_addItem
+
+PushString "Tire Smoke"
 Call @menu_addItem
 
 StaticGet2 379
@@ -2636,6 +2642,20 @@ PushString "CMOD_MOD_COL"
 CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
+iPush_4
+iPush_2
+pstatic2 61
+ArrayGet1 1
+JumpNE @Label_vehicle_level_3_last_selected_3_1
+PushString "Tire Smoke Colour 1"
+Call @menu_addItem
+PushString "Tire Smoke Colour 2"
+Call @menu_addItem
+PushString "Tire Smoke Colour 3"
+Call @menu_addItem
+Jump @Label_vehicle_level_3_last_selected_3_2
+
+:Label_vehicle_level_3_last_selected_3_1
 PushString "CMOD_COL1_0"
 Call @menu_addItem
 
@@ -2682,6 +2702,7 @@ Call @menu_addItem
 PushString "CELL_3007"
 Call @menu_addItem
 
+:Label_vehicle_level_3_last_selected_3_2
 iPush_0
 iPush_2
 pstatic2 61
@@ -2689,8 +2710,19 @@ ArrayGet1 1
 CmpEq
 dup
 Not
-JumpFalse @Label_trainer_vehicle_colour_level_3_or
+JumpFalse @Label_trainer_vehicle_colour_level_3_or_1
 iPush_1
+iPush_2
+pstatic2 61
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_trainer_vehicle_colour_level_3_or_1
+dup
+Not
+JumpFalse @Label_trainer_vehicle_colour_level_3_or
+iPush_4
 iPush_2
 pstatic2 61
 ArrayGet1 1
@@ -3582,7 +3614,18 @@ Switch [3 @Label_vehicle_level_4_last_selected_3]:[4 @Label_vehicle_level_4_last
 Jump @Label_vehicle_level_4_end
 
 :Label_vehicle_level_4_last_selected_3
+iPush_4
+iPush_2
+pstatic2 61
+ArrayGet1 1
+JumpNE @Label_vehicle_level_4_last_selected_3_1
+Call @trainer_vehicle_colour_custom
+Jump @Label_vehicle_level_4_last_selected_3_end
+
+:Label_vehicle_level_4_last_selected_3_1
 Call @trainer_vehicle_colour_level_4
+
+:Label_vehicle_level_4_last_selected_3_end
 Return 0 0
 
 :Label_vehicle_level_4_last_selected_4
@@ -7405,10 +7448,10 @@ Return 0 0
 Function 1 0 4
 
 StaticGet1 4
-Switch [4 @Label_trainer_vehicle_colour_action_last_selected_4]:[5 @Label_trainer_vehicle_colour_action_last_selected_5]
+Switch [5 @Label_trainer_vehicle_colour_action_last_selected_5]:[6 @Label_trainer_vehicle_colour_action_last_selected_6]
 Jump @Label_trainer_vehicle_colour_action_level_2_end
 
-:Label_trainer_vehicle_colour_action_last_selected_4
+:Label_trainer_vehicle_colour_action_last_selected_5
 StaticGet2 379
 CallNative clear_vehicle_custom_primary_colour 1 0
 StaticGet2 379
@@ -7421,7 +7464,7 @@ Sub
 CallNative set_vehicle_colour_combination 2 0
 Return 0 0
 
-:Label_trainer_vehicle_colour_action_last_selected_5
+:Label_trainer_vehicle_colour_action_last_selected_6
 StaticGet2 379
 Call @menu_get_current_number
 iPush_1
