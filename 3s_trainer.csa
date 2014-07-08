@@ -9,7 +9,7 @@ iPush_0
 CallNative wait 1 0
 
 Call @trainer_security_checks
-Call @trainer_animal_check
+Call @trainer_loop_checks
 Call @trainer_catch_load_button_press
 StaticGet2 414
 JumpFalse @Label_main_race_turbo
@@ -94,7 +94,7 @@ getF 0
 StaticSet1 6
 Return 1 0
 
-:trainer_animal_check
+:trainer_loop_checks
 Function 1 0 2
 
 StaticGet2 528
@@ -130,6 +130,30 @@ iPush_0
 StaticSet2 529
 
 :Label_trainer_animal_check_end
+StaticGet2 531
+JumpFalse @Label_trainer_wanted_check_end
+iPush_0
+CallNative set_max_wanted_level 1 0
+
+:Label_trainer_wanted_check_end
+StaticGet2 532
+JumpFalse @Label_trainer_explosive_ammo_check_end
+CallNative player_id 0 1
+CallNative set_explosive_ammo_this_frame 1 0
+
+:Label_trainer_explosive_ammo_check_end
+StaticGet2 533
+JumpFalse @Label_trainer_fire_ammo_check_end
+CallNative player_id 0 1
+CallNative set_fire_ammo_this_frame 1 0
+
+:Label_trainer_fire_ammo_check_end
+StaticGet2 534
+JumpFalse @Label_trainer_explosive_melee_check_end
+CallNative player_id 0 1
+CallNative set_explosive_melee_this_frame 1 0
+
+:Label_trainer_explosive_melee_check_end
 Return 0 0
 
 :trainer_race_turbo_check
@@ -158,6 +182,11 @@ Return 1 1
 
 :trainer_race_turbo
 Function 1 0 2
+
+iPush_0
+Push1 77
+CallNative disable_control_action 2 0
+
 staticget2 415
 Switch [0 @Label_trainer_race_turbo_3336]:[1 @Label_trainer_race_turbo_3337]
 Jump @Label_trainer_race_turbo_3338
@@ -191,9 +220,6 @@ PushString "RaceTurbo"
 iPush_0
 iPush_0
 CallNative unk_0x1D980479 3 0
-iPush_0
-Push1 77
-CallNative disable_control_action 2 0
 CallNative get_game_timer 0 1
 Add2 2000
 staticset2 416
@@ -1187,6 +1213,11 @@ iPush_0
 iPush_5
 Call @menu_addItem_number
 Call @menu_add_action
+PushString "Never Wanted"
+Call @menu_addItem
+StaticGet2 531
+Call @menu_addItem_bool
+Call @menu_add_action
 Return 0 0
 
 :Label_trainer_player_level_2_last_selected_4
@@ -1227,6 +1258,24 @@ Call @menu_addItem_action
 PushString "Infinite Ammo"
 Call @menu_addItem
 iPush_0
+Call @menu_addItem_bool
+Call @menu_add_action
+
+PushString "Explosive Ammo"
+Call @menu_addItem
+StaticGet2 532
+Call @menu_addItem_bool
+Call @menu_add_action
+
+PushString "Fire Ammo"
+Call @menu_addItem
+StaticGet2 533
+Call @menu_addItem_bool
+Call @menu_add_action
+
+PushString "Explosive Melee"
+Call @menu_addItem
+StaticGet2 534
 Call @menu_addItem_bool
 Call @menu_add_action
 
@@ -2120,10 +2169,10 @@ StaticSet1 10
 iPush_2
 pstatic2 61
 ArrayGet1 1
-Switch [3 @Label_trainer_player_weapon_level_3_last_selected_3]:[4 @Label_trainer_player_weapon_level_3_last_selected_4]
+Switch [6 @Label_trainer_player_weapon_level_3_last_selected_6]:[7 @Label_trainer_player_weapon_level_3_last_selected_7]
 Jump @Label_trainer_player_weapon_level_3_end
 
-:Label_trainer_player_weapon_level_3_last_selected_3
+:Label_trainer_player_weapon_level_3_last_selected_6
 PushString "WT_UNARMED"
 Call @menu_addItem
 Push -1569615261
@@ -2476,7 +2525,7 @@ Call @menu_add_extra
 Call @menu_add_action
 Return 0 0
 
-:Label_trainer_player_weapon_level_3_last_selected_4
+:Label_trainer_player_weapon_level_3_last_selected_7
 PushString "WT_BOTTLE"
 Call @menu_addItem
 Push -102323637
@@ -6625,7 +6674,7 @@ Return 0 0
 
 :Label_trainer_player_action_level_2_last_selected_3
 StaticGet1 4
-Switch [0 @Label_trainer_player_wanted_action_level_2_last_selected_0]:[1 @Label_trainer_player_wanted_action_level_2_last_selected_1]:[2 @Label_trainer_player_wanted_action_level_2_last_selected_2]
+Switch [0 @Label_trainer_player_wanted_action_level_2_last_selected_0]:[1 @Label_trainer_player_wanted_action_level_2_last_selected_1]:[2 @Label_trainer_player_wanted_action_level_2_last_selected_2]:[3 @Label_trainer_player_wanted_action_level_2_last_selected_3]
 Jump @Label_trainer_player_wanted_action_level_2_end
 
 :Label_trainer_player_wanted_action_level_2_last_selected_0
@@ -6650,6 +6699,13 @@ CallNative set_player_wanted_level 3 0
 CallNative player_id 0 1
 iPush_0
 CallNative set_player_wanted_level_now 2 0
+Return 0 0
+
+:Label_trainer_player_wanted_action_level_2_last_selected_3
+StaticGet2 531
+Not
+StaticSet2 531
+Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_player_wanted_action_level_2_end
@@ -6733,7 +6789,7 @@ Return 0 0
 
 :Label_trainer_player_action_level_2_last_selected_5
 StaticGet1 4
-Switch [0 @Label_trainer_player_weapon_action_level_2_last_selected_0]:[1 @Label_trainer_player_weapon_action_level_2_last_selected_1]:[2 @Label_trainer_player_weapon_action_level_2_last_selected_2]
+Switch [0 @Label_trainer_player_weapon_action_level_2_last_selected_0]:[1 @Label_trainer_player_weapon_action_level_2_last_selected_1]:[2 @Label_trainer_player_weapon_action_level_2_last_selected_2]:[3 @Label_trainer_player_weapon_action_level_2_last_selected_3]:[4 @Label_trainer_player_weapon_action_level_2_last_selected_4]:[5 @Label_trainer_player_weapon_action_level_2_last_selected_5]
 Jump @Label_trainer_player_weapon_action_level_2_end
 
 :Label_trainer_player_weapon_action_level_2_last_selected_0
@@ -7053,6 +7109,27 @@ Call @menu_get_current_bool
 Not
 iPush_0
 CallNative set_ped_infinite_ammo 3 0
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_player_weapon_action_level_2_last_selected_3
+StaticGet2 532
+Not
+StaticSet2 532
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_player_weapon_action_level_2_last_selected_4
+StaticGet2 533
+Not
+StaticSet2 533
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_player_weapon_action_level_2_last_selected_5
+StaticGet2 534
+Not
+StaticSet2 534
 Call @menu_toggle_current_bool
 Return 0 0
 
@@ -9049,6 +9126,30 @@ StaticSet2 419
 
 PushString "Three-Socks Trainer"
 StaticSet2 423
+
+iPush_0
+StaticSet2 457
+iPush_0
+StaticSet2 458
+
+iPush_0
+StaticSet2 525
+iPush_0
+StaticSet2 526
+
+iPush_0
+StaticSet2 527
+
+iPush_0
+StaticSet2 528
+iPush_0
+StaticSet2 529
+iPush_0
+StaticSet2 530
+
+iPush_0
+StaticSet2 531
+
 
 Return 0 0
 
