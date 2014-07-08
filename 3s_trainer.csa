@@ -38,6 +38,8 @@ JumpFalse @Label_main_draw
 Call @menu_set
 StaticGet2 418
 JumpFalse @Label_trainer_debug_set
+Call @trainer_stop_debug_sound
+
 iPush_0
 StaticSet2 418
 
@@ -275,6 +277,11 @@ StaticGet2 418
 Not
 JumpFalse @Label_trainer_debug_1
 
+PushString "MUSIC"
+Call @trainer_debug_sound
+CallNative load_stream 2 1
+JumpFalse @Label_trainer_debug_sound
+
 PushString "Debug"
 Call @menu_addItem
 iPush_1
@@ -282,6 +289,8 @@ StaticSet2 418
 
 StaticGet1 5
 StaticSet2 419
+
+:Label_trainer_debug_sound
 Return 0 0
 
 :Label_trainer_debug_1
@@ -514,6 +523,8 @@ Return 0 0
 :trainer_debug_menu
 Function 1 0 4
 
+Call @trainer_start_debug_sound
+
 PushString "Debug"
 StaticSet1 10
 
@@ -667,15 +678,24 @@ Switch [0 @Label_level_0]:[1 @Label_level_1]:[2 @Label_level_2]:[3 @Label_level_
 Jump @Label_level_end
 
 :Label_level_0
-PushString "Player"
-Call @menu_addItem
+PushString "BLIP_PLAYER"
+Call @menu_addItem_gxt
 
-PushString "Vehicle"
-Call @menu_addItem
+PushString "VED_BLIPN"
+Call @menu_addItem_gxt
 
+iPush_0
+CallNative get_current_language 0 1
+JumpNE @Label_level_0_lang
 PushString "World Settings"
 Call @menu_addItem
+Jump @Label_level_0_end
 
+:Label_level_0_lang
+PushString "CELL_16"
+Call @menu_addItem_gxt
+
+:Label_level_0_end
 Return 0 0
 
 :Label_level_1
@@ -711,78 +731,101 @@ Switch [0 @Label_last_selected_0]:[1 @Label_last_selected_1]:[2 @Label_last_sele
 Jump @Label_level_1_end
 
 :Label_last_selected_0
-PushString "Player"
+PushString "BLIP_PLAYER"
+CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 PushString "Change Model"
 Call @menu_addItem
-PushString "Appearance"
-Call @menu_addItem
-PushString "Accessories"
-Call @menu_addItem
-PushString "Wanted"
-Call @menu_addItem
-PushString "Health"
-Call @menu_addItem
-PushString "Weapons"
-Call @menu_addItem
-PushString "Special Ability"
-Call @menu_addItem
+PushString "FACE_APP"
+Call @menu_addItem_gxt
+PushString "PIM_TACCE"
+Call @menu_addItem_gxt
+PushString "LOB_CAT_9"
+Call @menu_addItem_gxt
+PushString "WT_HEALTH"
+Call @menu_addItem_gxt
+PushString "PM_WEAPONS"
+Call @menu_addItem_gxt
+PushString "PS_SPEC_AB"
+Call @menu_addItem_gxt
 Return 0 0
 
 :Label_last_selected_1
-PushString "Vehicle"
+PushString "VED_BLIPN"
+CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 PushString "Spawn"
 Call @menu_addItem
-PushString "Mod"
+PushString "Customize"
 Call @menu_addItem
 PushString "Extras"
 Call @menu_addItem
-PushString "Respray"
-Call @menu_addItem
+PushString "CMOD_MOD_COL"
+Call @menu_addItem_gxt
 PushString "Modify"
 Call @menu_addItem
+
+iPush_0
+CallNative get_current_language 0 1
+JumpNE @Label_last_selected_1_lang
 PushString "Repair"
 Call @menu_addItem_action
+Jump @Label_last_selected_1_lang_end
+
+:Label_last_selected_1_lang
+PushString "CMOD_MOD_MNT"
+Call @menu_addItem_gxt_action
+
+:Label_last_selected_1_lang_end
 Return 0 0
 
 :Label_last_selected_2
+iPush_0
+CallNative get_current_language 0 1
+JumpNE @Label_last_selected_2_lang
 PushString "World Settings"
 StaticSet1 10
+Jump @Label_last_selected_2_lang_end
 
-PushString "Time"
-Call @menu_addItem
+:Label_last_selected_2_lang
+PushString "CELL_16"
+CallNative unk_0x95C4B5AD 1 1
+StaticSet1 10
+
+:Label_last_selected_2_lang_end
+PushString "LOB_CAT_22"
+Call @menu_addItem_gxt
 CallNative get_clock_hours 0 1
 iPush_0
 Push1 23
 Call @menu_addItem_number
 Call @menu_add_action
 
-PushString "Extra Sunny"
+PushString "CHEAT_ADVANCE_WEATHER_EXTRA_SUNNY"
+Call @menu_addItem_gxt_action
+PushString "CHEAT_ADVANCE_WEATHER_CLEAR"
+Call @menu_addItem_gxt_action
+PushString "CHEAT_ADVANCE_WEATHER_CLOUDY"
+Call @menu_addItem_gxt_action
+PushString "CHEAT_ADVANCE_WEATHER_SMOGGY"
+Call @menu_addItem_gxt_action
+PushString "Foggy Weather"
 Call @menu_addItem_action
-PushString "Clear"
+PushString "CHEAT_ADVANCE_WEATHER_OVERCAST"
+Call @menu_addItem_gxt_action
+PushString "CHEAT_ADVANCE_WEATHER_RAIN"
+Call @menu_addItem_gxt_action
+PushString "CHEAT_ADVANCE_WEATHER_THUNDER"
+Call @menu_addItem_gxt_action
+PushString "CHEAT_ADVANCE_WEATHER_CLEARING"
+Call @menu_addItem_gxt_action
+PushString "Neutral Weather"
 Call @menu_addItem_action
-PushString "Clouds"
-Call @menu_addItem_action
-PushString "Smog"
-Call @menu_addItem_action
-PushString "Foggy"
-Call @menu_addItem_action
-PushString "Overcast"
-Call @menu_addItem_action
-PushString "Rain"
-Call @menu_addItem_action
-PushString "Thunder"
-Call @menu_addItem_action
-PushString "Clearing"
-Call @menu_addItem_action
-PushString "Neutral"
-Call @menu_addItem_action
-PushString "Snow"
-Call @menu_addItem_action
+PushString "CHEAT_ADVANCE_WEATHER_SNOW"
+Call @menu_addItem_gxt_action
 PushString "Blizzard"
 Call @menu_addItem_action
-PushString "Snowlight"
+PushString "Light Snow Weather"
 Call @menu_addItem_action
 PushString "Xmas"
 Call @menu_addItem_action
@@ -932,9 +975,8 @@ Switch [0 @Label_trainer_player_level_2_last_selected_0]:[1 @Label_trainer_playe
 Jump @Label_trainer_player_level_2_end
 
 :Label_trainer_player_level_2_last_selected_0
-PushString "Player - Change Model"
+PushString "Change Model"
 StaticSet1 10
-
 
 PushString "Ambient Female"
 Call @menu_addItem
@@ -998,18 +1040,19 @@ Call @menu_addItem
 Return 0 0
 
 :Label_trainer_player_level_2_last_selected_1
-PushString "Player - Appearance"
+PushString "FACE_APP"
+CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
-PushString "Default"
-Call @menu_addItem_action
-PushString "Random"
-Call @menu_addItem_action
+PushString "FMMC_COL_DEF"
+Call @menu_addItem_gxt_action
+PushString "PM_SPAWN_R"
+Call @menu_addItem_gxt_action
 PushString "Head"
 Call @menu_addItem
-PushString "Beard"
-Call @menu_addItem
-PushString "Hair"
-Call @menu_addItem
+PushString "FACE_BRD"
+Call @menu_addItem_gxt
+PushString "FACE_HAIR"
+Call @menu_addItem_gxt
 PushString "Torso"
 Call @menu_addItem
 PushString "Legs"
@@ -1020,8 +1063,8 @@ PushString "Feet"
 Call @menu_addItem
 PushString "Teeth"
 Call @menu_addItem
-PushString "Accessories"
-Call @menu_addItem
+PushString "PIM_TACCE"
+Call @menu_addItem_gxt
 PushString "Task"
 Call @menu_addItem
 PushString "Decl"
@@ -1031,7 +1074,8 @@ Call @menu_addItem
 Return 0 0
 
 :Label_trainer_player_level_2_last_selected_2
-PushString "Player - Accessories"
+PushString "PIM_TACCE"
+CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
 PushString "Head"
@@ -1117,10 +1161,11 @@ Call @menu_add_action
 Return 0 0
 
 :Label_trainer_player_level_2_last_selected_3
-PushString "Player - Wanted"
+PushString "LOB_CAT_9"
+CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
-PushString "Clear wanted"
-Call @menu_addItem_action
+PushString "GC_MENU26"
+Call @menu_addItem_gxt_action
 PushString "Max Wanted Level"
 Call @menu_addItem
 CallNative get_max_wanted_level 0 1
@@ -1128,8 +1173,8 @@ iPush_0
 iPush_5
 Call @menu_addItem_number
 Call @menu_add_action
-PushString "Wanted Level"
-Call @menu_addItem
+PushString "GC_MENU24"
+Call @menu_addItem_gxt
 CallNative player_id 0 1
 CallNative get_player_wanted_level 1 1
 iPush_0
@@ -1139,12 +1184,24 @@ Call @menu_add_action
 Return 0 0
 
 :Label_trainer_player_level_2_last_selected_4
-PushString "Player - Health"
+PushString "WT_HEALTH"
+CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
-PushString "Full Health"
+PushString "HLTH_REGEN2"
+Call @menu_addItem_gxt_action
+
+iPush_0
+CallNative get_current_language 0 1
+JumpNE @Label_trainer_player_level_2_last_selected_4_lang
+PushString "Full Body Armor"
 Call @menu_addItem_action
-PushString "Full Armour"
+Jump @Label_trainer_player_level_2_last_selected_4_lang_end
+
+:Label_trainer_player_level_2_last_selected_4_lang
+PushString "WT_BA"
 Call @menu_addItem_action
+
+:Label_trainer_player_level_2_last_selected_4_lang_end
 PushString "Invincible"
 Call @menu_addItem
 CallNative player_id 0 1
@@ -1154,7 +1211,8 @@ Call @menu_add_action
 Return 0 0
 
 :Label_trainer_player_level_2_last_selected_5
-PushString "Player - Weapons"
+PushString "PM_WEAPONS"
+CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 PushString "Give all Weapons"
 Call @menu_addItem_action
@@ -1173,11 +1231,12 @@ Call @menu_addItem
 Return 0 0
 
 :Label_trainer_player_level_2_last_selected_6
-PushString "Player - Special Ability"
+PushString "PS_SPEC_AB"
+CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
-PushString "Special Ability"
-Call @menu_addItem
+PushString "PS_SPEC_AB"
+Call @menu_addItem_gxt
 CallNative player_id 0 1
 CallNative is_special_ability_enabled 1 1
 Call @menu_addItem_bool
@@ -1221,153 +1280,87 @@ Switch [0 @Label_trainer_vehicle_level_2_last_selected_0]:[1 @Label_trainer_vehi
 Jump @Label_trainer_vehicle_level_2_end
 
 :Label_trainer_vehicle_level_2_last_selected_0
-PushString "Vehicle - Spawn"
+PushString "Spawn"
 StaticSet1 10
-PushString "VEH_CLASS_14"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_20"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_0"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_3"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_13"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_18"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_15"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_10"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_19"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_8"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_4"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_9"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_16"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_1"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_17"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_6"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_5"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_7"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_2"
-Call @menu_addItem_gxt
-
-PushString "Trailers"
-Call @menu_addItem
-
-PushString "VEH_CLASS_21"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_11"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_12"
-Call @menu_addItem_gxt
+Call @trainer_vehicle_classes
 Return 0 0
 
 :Label_trainer_vehicle_level_2_last_selected_1
-PushString "Vehicle - Mod"
+PushString "Customize"
 StaticSet1 10
 StaticGet2 379
 StaticGet2 412
 CallNative set_vehicle_mod_kit 2 0
+
 pFrame1 5
 Push1 28
 pPeekSet
 drop
-PushString "Spoiler"
+PushString "CMOD_MOD_SPO"
 iPush_0
 pFrame1 5
 ArraySet1 1
-PushString "Front Bumpers"
+PushString "CMOD_BUM_1"
 iPush_1
 pFrame1 5
 ArraySet1 1
-PushString "Rear Bumpers"
+PushString "CMOD_BUM_4"
 iPush_2
 pFrame1 5
 ArraySet1 1
-PushString "Skirts"
+PushString "CMOD_MOD_SKI"
 iPush_3
 pFrame1 5
 ArraySet1 1
-PushString "Exhaust"
+PushString "CMOD_MOD_MUF"
 iPush_4
 pFrame1 5
 ArraySet1 1
-PushString "Frame"
+PushString "CMOD_MOD_CHA"
 iPush_5
 pFrame1 5
 ArraySet1 1
-PushString "Grille"
+PushString "CMOD_MOD_GRL"
 iPush_6
 pFrame1 5
 ArraySet1 1
-PushString "Hood"
+PushString "CMOD_MOD_HOD"
 iPush_7
 pFrame1 5
 ArraySet1 1
-PushString "Fenders"
+PushString "CMOD_MOD_FEN"
 Push1 8
 pFrame1 5
 ArraySet1 1
-PushString "Right Fender"
+PushString "CMOD_MOD_FEN"
 Push1 9
 pFrame1 5
 ArraySet1 1
-PushString "Roof"
+PushString "CMOD_MOD_ROF"
 Push1 10
 pFrame1 5
 ArraySet1 1
-PushString "Engine"
+PushString "CMOD_MOD_ENG"
 Push1 11
 pFrame1 5
 ArraySet1 1
-PushString "Brakes"
+PushString "CMOD_MOD_BRA"
 Push1 12
 pFrame1 5
 ArraySet1 1
-PushString "Transmission"
+PushString "CMOD_MOD_TRN"
 Push1 13
 pFrame1 5
 ArraySet1 1
-PushString "Horn"
+PushString "CMOD_MOD_HRN"
 Push1 14
 pFrame1 5
 ArraySet1 1
-PushString "Suspension"
+PushString "CMOD_MOD_SUS"
 Push1 15
 pFrame1 5
 ArraySet1 1
-PushString "Armor"
+PushString "CMOD_MOD_ARM"
 Push1 16
 pFrame1 5
 ArraySet1 1
@@ -1375,7 +1368,7 @@ PushString "Unknown 1"
 Push1 17
 pFrame1 5
 ArraySet1 1
-PushString "Turbo"
+PushString "CMOD_MOD_TUR"
 Push1 18
 pFrame1 5
 ArraySet1 1
@@ -1391,7 +1384,7 @@ PushString "Unknown 4"
 Push1 21
 pFrame1 5
 ArraySet1 1
-PushString "Lights"
+PushString "CMOD_MOD_LGT"
 Push1 22
 pFrame1 5
 ArraySet1 1
@@ -1401,37 +1394,37 @@ CallNative get_entity_model 1 1
 CallNative is_this_model_a_bike 1 1
 JumpFalse @Label_trainer_vehicle_level_2_mod_1
 
-PushString "Front Wheel"
+PushString "CMOD_WHE0_0"
 Push1 23
 pFrame1 5
 ArraySet1 1
-PushString "Rear Wheel"
+PushString "CMOD_WHE0_1"
 Push1 24
 pFrame1 5
 ArraySet1 1
 Jump @Label_trainer_vehicle_level_2_mod_2
 
 :Label_trainer_vehicle_level_2_mod_1
-PushString "Wheels"
+PushString "CMOD_MOD_WHEM"
 Push1 23
 pFrame1 5
 ArraySet1 1
 
-PushString "Rear Wheel"
+PushString "CMOD_WHE0_1"
 Push1 24
 pFrame1 5
 ArraySet1 1
 
 :Label_trainer_vehicle_level_2_mod_2
-PushString "Bulletproof Tires"
+PushString "CMOD_TYR_2"
 Push1 25
 pFrame1 5
 ArraySet1 1
-PushString "Custom Tires"
+PushString "CMOD_TYR_1"
 Push1 26
 pFrame1 5
 ArraySet1 1
-PushString "Tinted Windows"
+PushString "CMOD_GLD2_2"
 Push1 27
 pFrame1 5
 ArraySet1 1
@@ -1495,9 +1488,38 @@ Or
 JumpFalse @Label_trainer_vehicle_mod_level_2_count
 
 getF 3
+Push1 17
+CmpNe
+dup
+JumpFalse @Label_trainer_vehicle_not_mod_level_2_or
+getF 3
+Push1 19
+CmpNe
+And
+
+:Label_trainer_vehicle_not_mod_level_2_or
+dup
+JumpFalse @Label_trainer_vehicle_not_mod_level_2_or2
+getF 3
+Push1 20
+CmpNe
+And
+
+:Label_trainer_vehicle_not_mod_level_2_or2
+dup
+JumpFalse @Label_trainer_vehicle_not_mod_level_2_or4
+getF 3
+Push1 21
+CmpNe
+And
+
+:Label_trainer_vehicle_not_mod_level_2_or4
+JumpFalse @Label_trainer_vehicle_mod_level_2_goto_mod_count
+
+getF 3
 pFrame1 5
 ArrayGet1 1
-Call @menu_addItem
+Call @menu_addItem_gxt
 StaticGet2 379
 getF 3
 CallNative is_toggle_mod_on 2 1
@@ -1510,6 +1532,8 @@ getF 3
 StaticGet1 5
 pstatic2 385
 ArraySet1 1
+
+:Label_trainer_vehicle_mod_level_2_goto_mod_count
 Jump @Label_trainer_vehicle_mod_level_2_mod_count
 
 :Label_trainer_vehicle_mod_level_2_count
@@ -1519,7 +1543,7 @@ JumpNE @Label_trainer_vehicle_mod_level_2_mod_custom
 getF 3
 pFrame1 5
 ArrayGet1 1
-Call @menu_addItem
+Call @menu_addItem_gxt
 StaticGet2 379
 CallNative get_vehicle_tyres_can_burst 1 1
 Not
@@ -1540,7 +1564,7 @@ JumpNE @Label_trainer_vehicle_mod_level_2_mod_tinted
 getF 3
 pFrame1 5
 ArrayGet1 1
-Call @menu_addItem
+Call @menu_addItem_gxt
 StaticGet2 379
 Push1 23
 CallNative get_vehicle_mod_variation 2 1
@@ -1560,7 +1584,7 @@ JumpNE @Label_trainer_vehicle_mod_level_2_mod_normal
 getF 3
 pFrame1 5
 ArrayGet1 1
-Call @menu_addItem
+Call @menu_addItem_gxt
 
 iPush_-1
 StaticGet2 379
@@ -1600,7 +1624,7 @@ JumpLE @Label_trainer_vehicle_mod_level_2_mod_count
 getF 3
 pFrame1 5
 ArrayGet1 1
-Call @menu_addItem
+Call @menu_addItem_gxt
 
 Push1 23
 getF 3
@@ -1638,7 +1662,7 @@ Jump @Label_trainer_vehicle_mod_level_2_while
 Return 0 0
 
 :Label_trainer_vehicle_level_2_last_selected_2
-PushString "Vehicle - Extras"
+PushString "Extras"
 StaticSet1 10
 
 pFrame1 5
@@ -1728,20 +1752,21 @@ Call @menu_error
 Return 0 0
 
 :Label_trainer_vehicle_level_2_last_selected_3
-PushString "Vehicle - Respray"
+PushString "CMOD_MOD_COL"
+CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
-PushString "Primary Color"
-Call @menu_addItem
+PushString "CMOD_COL0_0"
+Call @menu_addItem_gxt
 
-PushString "Secondary Color"
-Call @menu_addItem
+PushString "CMOD_COL0_1"
+Call @menu_addItem_gxt
 
-PushString "Pearlescent Color"
-Call @menu_addItem
+PushString "CMOD_COL1_6"
+Call @menu_addItem_gxt
 
-PushString "Wheel Color"
-Call @menu_addItem
+PushString "CMOD_MOD_WCL"
+Call @menu_addItem_gxt
 
 StaticGet2 379
 CallNative get_entity_model 1 1
@@ -1751,8 +1776,8 @@ getF 33
 CallNative get_number_of_vehicle_model_colours 1 1
 setF 34
 
-PushString "Variation"
-Call @menu_addItem
+PushString "CELL_840"
+Call @menu_addItem_gxt
 
 iPush_-1
 StaticGet2 379
@@ -1786,8 +1811,8 @@ getF 35
 iPush_0
 JumpLE @Label_trainer_vehicle_level_2_last_selected_3_end
 
-PushString "Livery"
-Call @menu_addItem
+PushString "CMOD_COL0_4"
+Call @menu_addItem_gxt
 StaticGet2 379
 CallNative get_vehicle_livery 1 1
 Add1 1
@@ -1800,18 +1825,18 @@ Call @menu_add_action
 Return 0 0
 
 :Label_trainer_vehicle_level_2_last_selected_4
-PushString "Vehicle - Modify"
+PushString "Modify"
 StaticSet1 10
 PushString "Doors"
 Call @menu_addItem
-PushString "Lights"
-Call @menu_addItem
-PushString "Plate"
-Call @menu_addItem
+PushString "CMOD_MOD_LGT"
+Call @menu_addItem_gxt
+PushString "CMOD_MOD_PLA"
+Call @menu_addItem_gxt
 PushString "Engine Sound"
 Call @menu_addItem
-PushString "Settings"
-Call @menu_addItem
+PushString "CELL_16"
+Call @menu_addItem_gxt
 Return 0 0
 
 :Label_trainer_vehicle_level_2_end
@@ -1820,7 +1845,7 @@ Return 0 0
 :trainer_teleport_level_2
 Function 1 0 6
 
-PushString "Teleport - Custom"
+PushString "Custom"
 StaticSet1 10
 
 CallNative player_ped_id 0 1
@@ -1927,7 +1952,8 @@ Return 0 0
 :trainer_player_variation_level_3
 Function 1 1 8
 
-PushString "Player - Appearance"
+PushString "FACE_APP"
+CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
 iPush_2
@@ -2044,7 +2070,8 @@ And
 
 :Label_trainer_player_variation_num_and
 JumpFalse @Label_trainer_player_variation_level_3_end2
-PushString "No options available."
+PushString "FMMC_NONE"
+CallNative unk_0x95C4B5AD 1 1
 iPush_1
 Call @menu_error
 
@@ -2080,7 +2107,8 @@ Return 1 0
 :trainer_player_weapon_level_3
 Function 1 0 4
 
-PushString "Player - Weapons"
+PushString "PM_WEAPONS"
+CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
 iPush_2
@@ -2519,7 +2547,7 @@ Return 0 0
 Return 0 0
 
 :trainer_vehicle_level_3
-Function 1 0 4
+Function 1 0 17
 
 iPush_0
 iPush_1
@@ -2549,33 +2577,67 @@ Call @trainer_vehicle_mod_level_3
 Return 0 0
 
 :Label_vehicle_level_3_last_selected_3
-PushString "Vehicle - Respray"
+PushString "CMOD_MOD_COL"
+CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
-PushString "Chrome"
+PushString "CMOD_COL1_0"
+Call @menu_addItem_gxt
+
+PushString "CMOD_COL1_1"
+Call @menu_addItem_gxt
+
+PushString "CMOD_COL1_1"
+CallNative unk_0x95C4B5AD 1 1
+pFrame1 2
+StrCopy 16
+
+iPush_2
+pFrame1 2
+StrAddi 16
+
+pFrame1 2
+Call @menu_return_var
 Call @menu_addItem
 
-PushString "Classic"
+PushString "CMOD_COL1_5"
+Call @menu_addItem_gxt
+
+PushString "CMOD_COL1_3"
+Call @menu_addItem_gxt
+
+PushString ""
+pFrame1 2
+StrCopy 16
+
+PushString "CMOD_COL1_3"
+CallNative unk_0x95C4B5AD 1 1
+pFrame1 2
+StrCopy 16
+
+iPush_2
+pFrame1 2
+StrAddi 16
+
+pFrame1 2
+Call @menu_return_var
 Call @menu_addItem
 
-PushString "Classic 2"
-Call @menu_addItem
+PushString "CMOD_COL1_4"
+Call @menu_addItem_gxt
 
-PushString "Matte"
-Call @menu_addItem
+iPush_0
+CallNative get_current_language 0 1
+JumpNE @Label_vehicle_level_3_last_selected_3_lang
+PushString "CELL_3007"
+Call @menu_addItem_gxt
+Jump @Label_vehicle_level_3_last_selected_3_lang_end
 
-PushString "Metallic"
-Call @menu_addItem
+:Label_vehicle_level_3_last_selected_3_lang
+PushString "CMOD_MOD_GLD2"
+Call @menu_addItem_gxt
 
-PushString "Metallic 2"
-Call @menu_addItem
-
-PushString "Metals"
-Call @menu_addItem
-
-PushString "Miscellaneous"
-Call @menu_addItem
-
+:Label_vehicle_level_3_last_selected_3_lang_end
 iPush_0
 iPush_2
 pstatic2 61
@@ -2594,8 +2656,8 @@ Or
 :Label_trainer_vehicle_colour_level_3_or
 JumpFalse @Label_trainer_vehicle_colour_level_3_end
 
-PushString "Custom"
-Call @menu_addItem
+PushString "FMMC_VEH_CUST"
+Call @menu_addItem_gxt
 
 :Label_trainer_vehicle_colour_level_3_end
 Return 0 0
@@ -2611,7 +2673,7 @@ Return 0 0
 Function 1 0 36
 
 :Label_trainer_vehicle_mod_level_3_1
-PushString "Vehicle - Mod"
+PushString "Customize"
 StaticSet1 10
 
 iPush_0
@@ -3319,7 +3381,7 @@ Return 0 0
 :trainer_vehicle_modify_level_3
 Function 1 0 4
 
-PushString "Vehicle - Modify"
+PushString "Modify"
 StaticSet1 10
 
 iPush_2
@@ -3390,74 +3452,7 @@ Call @menu_add_action
 Return 0 0
 
 :Label_trainer_vehicle_modify_level_3_last_selected_3
-PushString "VEH_CLASS_14"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_20"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_0"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_3"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_13"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_18"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_15"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_10"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_19"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_8"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_4"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_9"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_16"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_1"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_17"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_6"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_5"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_7"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_2"
-Call @menu_addItem_gxt
-
-PushString "Trailers"
-Call @menu_addItem
-
-PushString "VEH_CLASS_21"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_11"
-Call @menu_addItem_gxt
-
-PushString "VEH_CLASS_12"
-Call @menu_addItem_gxt
+Call @trainer_vehicle_classes
 Return 0 0
 
 :Label_trainer_vehicle_modify_level_3_last_selected_4
@@ -3556,7 +3551,8 @@ Return 0 0
 :trainer_vehicle_colour_level_4
 Function 1 0 4
 
-PushString "Vehicle - Respray"
+PushString "CMOD_MOD_COL"
+CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
 iPush_3
@@ -3658,8 +3654,8 @@ pFrame1 5
 CallNative get_vehicle_custom_secondary_colour 4 0
 
 :Label_trainer_vehicle_colour_custom_1
-PushString "Red"
-Call @menu_addItem
+PushString "RED"
+Call @menu_addItem_gxt
 getF 3
 iPush_0
 Push1 255
@@ -3667,8 +3663,8 @@ iPush_3
 Call @menu_addItem_number_keyboard
 Call @menu_add_action
 
-PushString "Green"
-Call @menu_addItem
+PushString "GREEN"
+Call @menu_addItem_gxt
 getF 4
 iPush_0
 Push1 255
@@ -3676,8 +3672,8 @@ iPush_3
 Call @menu_addItem_number_keyboard
 Call @menu_add_action
 
-PushString "Blue"
-Call @menu_addItem
+PushString "BLUE"
+Call @menu_addItem_gxt
 getF 5
 iPush_0
 Push1 255
@@ -3685,9 +3681,8 @@ iPush_3
 Call @menu_addItem_number_keyboard
 Call @menu_add_action
 
-PushString "Set"
-Call @menu_addItem
-Call @menu_add_action
+PushString "CMOD_MOD_COL"
+Call @menu_addItem_gxt_action
 
 :Label_trainer_vehicle_colour_custom_end
 Return 0 0
@@ -5483,7 +5478,8 @@ Return 0 1
 
 :trainer_error_vehicle
 Function 1 1 4
-PushString "Not in a vehicle."
+PushString "CMOD_FTRIG_VEH"
+CallNative unk_0x95C4B5AD 1 1
 getF 0
 Call @menu_error
 Return 1 0
@@ -8998,9 +8994,48 @@ Call @trainer_player_variation_level_3
 :Label_trainer_catch_button_press_end
 Return 0 0
 
+:trainer_debug_sound
+Function 1 0 4
+
+PushString "EPSILONISM_SITE_SOUNDS"
+Return 0 1
+
+:trainer_start_debug_sound
+Function 1 0 4
+
+CallNative play_stream_frontend 0 0
+PushString "WEB_EPSILONISM_SITE_MUSIC_SCENE"
+CallNative start_audio_scene 1 1
+drop
+
+Return 0 0
+
+:trainer_stop_debug_sound
+Function 1 0 4
+
+CallNative stop_stream 0 0
+PushString "WEB_EPSILONISM_SITE_MUSIC_SCENE"
+CallNative stop_audio_scene 1 0
+
+Return 0 0
+
 :trainer_setup
 Function 1 0 4
 
+PushString "MOD_MNU"
+Push1 9
+CallNative request_additional_text 2 0
+
+:Label_trainer_setup_while
+PushString "MOD_MNU"
+Push1 9
+CallNative has_this_additional_text_loaded 2 1
+Not
+JumpFalse @Label_trainer_setup_1
+iPush_0
+CallNative wait 1 0
+
+:Label_trainer_setup_1
 iPush_0
 staticset2 415
 
@@ -9289,7 +9324,7 @@ pstatic1 174
 ArraySet1 1
 
 :Label_menu_addItem_float_end
-Return 2 0
+Return 3 0
 
 :menu_add_data_2
 Function 1 1 4
@@ -9395,6 +9430,31 @@ pstatic1 123
 ArraySet1 1
 
 :Label_menu_addItem_gxt_end
+Return 1 0
+
+:menu_addItem_gxt_action
+Function 1 1 4
+
+StaticGet1 5
+Add1 1
+StaticSet1 5
+
+getF 0
+StaticGet1 5
+pstatic1 72
+ArraySet1 1
+
+iPush_4
+StaticGet1 5
+pstatic1 123
+ArraySet1 1
+
+iPush_1
+StaticGet1 5
+pstatic2 225
+ArraySet1 1
+
+:Label_menu_addItem_gxt_action_end
 Return 1 0
 
 :menu_addItem_gxt_veh_hash
@@ -10973,6 +11033,9 @@ Return 3 0
 :menu_hide
 Function 1 0 2
 Call @menu_reverse_game_state
+Push1 9
+iPush_0
+CallNative clear_additional_text 2 0
 iPush_0
 StaticSet1 13
 pstatic1 12
@@ -12294,8 +12357,19 @@ Return 3 0
 Function 1 3 3
 PushString "STRING"
 CallNative unk_0x3E35563E 1 0
+
+getF 0
+CallNative does_text_label_exist 1 1
+JumpFalse @Label_draw_string_1
+getF 0
+CallNative unk_0x3E35563E 1 0
+Jump @Label_draw_string_2
+
+:Label_draw_string_1
 getF 0
 CallNative unk_0x27A244D8 1 0
+
+:Label_draw_string_2
 getF 1
 getF 2
 CallNative unk_0x6F8350CE 2 0
@@ -12357,6 +12431,80 @@ iPush_0
 CallNative set_text_edge 5 0
 Return 5 0
 
+:trainer_vehicle_classes
+Function 1 0 4
+
+PushString "VEH_CLASS_14"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_20"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_0"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_3"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_13"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_18"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_15"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_10"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_19"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_8"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_4"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_9"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_16"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_1"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_17"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_6"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_5"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_7"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_2"
+Call @menu_addItem_gxt
+
+PushString "TRAILER"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_21"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_11"
+Call @menu_addItem_gxt
+
+PushString "VEH_CLASS_12"
+Call @menu_addItem_gxt
+
+Return 0 0
+
 :trainer_vehicle_spawn_level_3
 Function 1 0 4
 
@@ -12365,7 +12513,7 @@ iPush_1
 pstatic2 61
 ArrayGet1 1
 JumpNE @Label_trainer_vehicle_spawn_level_3_2
-PushString "Vehicle - Spawn"
+PushString "Spawn"
 StaticSet1 10
 
 Push1 36
@@ -12379,7 +12527,7 @@ setF 3
 Jump @Label_trainer_vehicle_spawn_level_3_3
 
 :Label_trainer_vehicle_spawn_level_3_2
-PushString "Vehicle - Modify"
+PushString "Modify"
 StaticSet1 10
 
 iPush_3
@@ -14155,7 +14303,7 @@ Return 0 0
 :trainer_player_model_level_3
 Function 1 0 4
 
-PushString "Player - Change Model"
+PushString "Change Model"
 StaticSet1 10
 
 iPush_2
