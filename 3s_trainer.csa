@@ -38,8 +38,13 @@ JumpFalse @Label_main_draw
 Call @menu_set
 StaticGet2 418
 JumpFalse @Label_trainer_debug_set
-Call @trainer_stop_debug_sound
-
+StaticGet2 419
+StaticGet1 9
+iPush_1
+Sub
+pstatic2 61
+ArrayGet1 1
+JumpEQ @Label_trainer_debug_set
 iPush_0
 StaticSet2 418
 
@@ -132,8 +137,14 @@ StaticSet2 529
 :Label_trainer_animal_check_end
 StaticGet2 531
 JumpFalse @Label_trainer_wanted_check_end
+CallNative player_id 0 1
 iPush_0
-CallNative set_max_wanted_level 1 0
+iPush_0
+CallNative set_player_wanted_level 3 0
+CallNative player_id 0 1
+iPush_0
+CallNative set_player_wanted_level_now 2 0
+
 
 :Label_trainer_wanted_check_end
 StaticGet2 532
@@ -306,11 +317,6 @@ StaticGet2 418
 Not
 JumpFalse @Label_trainer_debug_1
 
-PushString "MUSIC"
-Call @trainer_debug_sound
-CallNative load_stream 2 1
-JumpFalse @Label_trainer_debug_sound
-
 PushString "Debug"
 Call @menu_addItem
 iPush_1
@@ -319,7 +325,6 @@ StaticSet2 418
 StaticGet1 5
 StaticSet2 419
 
-:Label_trainer_debug_sound
 Return 0 0
 
 :Label_trainer_debug_1
@@ -557,8 +562,6 @@ Return 0 0
 
 :trainer_debug_menu
 Function 1 0 4
-
-Call @trainer_start_debug_sound
 
 PushString "Debug"
 StaticSet1 10
@@ -836,31 +839,31 @@ Push1 23
 Call @menu_addItem_number
 Call @menu_add_action
 
-PushString "CHEAT_ADVANCE_WEATHER_EXTRA_SUNNY"
+PushString "Extra Sunny"
 Call @menu_addItem_action
-PushString "CHEAT_ADVANCE_WEATHER_CLEAR"
+PushString "Clear"
 Call @menu_addItem_action
-PushString "CHEAT_ADVANCE_WEATHER_CLOUDY"
+PushString "Clouds"
 Call @menu_addItem_action
-PushString "CHEAT_ADVANCE_WEATHER_SMOGGY"
+PushString "Smog"
 Call @menu_addItem_action
-PushString "Foggy Weather"
+PushString "Foggy"
 Call @menu_addItem_action
-PushString "CHEAT_ADVANCE_WEATHER_OVERCAST"
+PushString "Overcast"
 Call @menu_addItem_action
-PushString "CHEAT_ADVANCE_WEATHER_RAIN"
+PushString "Rain"
 Call @menu_addItem_action
-PushString "CHEAT_ADVANCE_WEATHER_THUNDER"
+PushString "Thunder"
 Call @menu_addItem_action
-PushString "CHEAT_ADVANCE_WEATHER_CLEARING"
+PushString "Clearing"
 Call @menu_addItem_action
-PushString "Neutral Weather"
+PushString "Neutral"
 Call @menu_addItem_action
-PushString "CHEAT_ADVANCE_WEATHER_SNOW"
+PushString "Snow"
 Call @menu_addItem_action
 PushString "Blizzard"
 Call @menu_addItem_action
-PushString "Light Snow Weather"
+PushString "Snowlight"
 Call @menu_addItem_action
 PushString "Xmas"
 Call @menu_addItem_action
@@ -1259,6 +1262,11 @@ Call @menu_addItem_action
 PushString "Remove All Weapons"
 Call @menu_addItem_action
 PushString "Infinite Ammo"
+Call @menu_addItem
+iPush_0
+Call @menu_addItem_bool
+Call @menu_add_action
+PushString "No Reload"
 Call @menu_addItem
 iPush_0
 Call @menu_addItem_bool
@@ -1680,10 +1688,22 @@ iPush_0
 JumpLE @Label_trainer_vehicle_mod_level_2_mod_count
 
 getF 3
+Push1 10
+JumpGT @Label_trainer_vehicle_mod_level_2_slot_name
+
 StaticGet2 379
-CallNative unk_0x5E113483 2 1
+getF 3
+CallNative get_mod_slot_name 2 1
+Call @menu_addItem
+Jump @Label_trainer_vehicle_mod_level_2_slot_name_1
+
+:Label_trainer_vehicle_mod_level_2_slot_name
+getF 3
+pFrame1 5
+ArrayGet1 1
 Call @menu_addItem
 
+:Label_trainer_vehicle_mod_level_2_slot_name_1
 Push1 23
 getF 3
 CmpEq
@@ -2608,7 +2628,7 @@ Return 0 0
 Return 0 0
 
 :trainer_vehicle_level_3
-Function 1 0 34
+Function 1 0 5
 
 iPush_0
 iPush_1
@@ -2648,11 +2668,11 @@ pstatic2 61
 ArrayGet1 1
 JumpNE @Label_vehicle_level_3_last_selected_3_1
 PushString "Tire Smoke Colour 1"
-Call @menu_addItem
+Call @menu_addItem_action
 PushString "Tire Smoke Colour 2"
-Call @menu_addItem
+Call @menu_addItem_action
 PushString "Tire Smoke Colour 3"
-Call @menu_addItem
+Call @menu_addItem_action
 Jump @Label_vehicle_level_3_last_selected_3_2
 
 :Label_vehicle_level_3_last_selected_3_1
@@ -2664,15 +2684,8 @@ Call @menu_addItem
 
 PushString "CMOD_COL1_1"
 CallNative unk_0x95C4B5AD 1 1
-pFrame1 2
-StrCopy 16
-
 iPush_2
-pFrame1 2
-StrAddi 16
-
-pFrame1 2
-Call @menu_addItem
+Call @menu_addItem_add_number
 
 PushString "CMOD_COL1_5"
 Call @menu_addItem
@@ -2680,21 +2693,10 @@ Call @menu_addItem
 PushString "CMOD_COL1_3"
 Call @menu_addItem
 
-PushString ""
-pFrame1 2
-StrCopy 16
-
 PushString "CMOD_COL1_3"
 CallNative unk_0x95C4B5AD 1 1
-pFrame1 2
-StrCopy 16
-
 iPush_2
-pFrame1 2
-StrAddi 16
-
-pFrame1 2
-Call @menu_addItem
+Call @menu_addItem_add_number
 
 PushString "CMOD_COL1_4"
 Call @menu_addItem
@@ -3395,6 +3397,56 @@ iPush_1
 setF 7
 
 :Label_trainer_vehicle_mod_level_3_additem
+
+
+iPush_2
+pstatic2 61
+ArrayGet1 1
+pstatic2 385
+ArrayGet1 1
+Push1 10
+CmpLE
+dup
+JumpFalse @Label_trainer_vehicle_mod_level_3_additem2_text_label_or_1
+iPush_0
+getF 3
+CmpNe
+And
+
+:Label_trainer_vehicle_mod_level_3_additem2_text_label_or_1
+dup
+JumpFalse @Label_trainer_vehicle_mod_level_3_additem2_text_label_or
+StaticGet2 379
+iPush_2
+pstatic2 61
+ArrayGet1 1
+pstatic2 385
+ArrayGet1 1
+getF 3
+Add1 1
+CallNative get_mod_text_label 3 1
+CallNative is_string_null_or_empty 1 1
+Not
+And
+
+:Label_trainer_vehicle_mod_level_3_additem2_text_label_or
+JumpFalse @Label_trainer_vehicle_mod_level_3_additem2_text_label
+StaticGet2 379
+iPush_2
+pstatic2 61
+ArrayGet1 1
+pstatic2 385
+ArrayGet1 1
+getF 3
+Add1 1
+CallNative get_mod_text_label 3 1
+Call @menu_addItem
+getF 3
+Call @menu_add_number
+Call @menu_add_action
+Jump @Label_trainer_vehicle_mod_level_3_not_continue
+
+:Label_trainer_vehicle_mod_level_3_additem2_text_label
 iPush_1
 getF 7
 JumpNE @Label_trainer_vehicle_mod_level_3_additem2
@@ -5567,8 +5619,9 @@ Return 0 1
 Function 1 1 4
 PushString "CMOD_FTRIG_VEH"
 CallNative unk_0x95C4B5AD 1 1
+PushString ""
 getF 0
-Call @menu_error
+Call @menu_error_2_strings
 Return 1 0
 
 :menu_action
@@ -6832,7 +6885,7 @@ Return 0 0
 
 :Label_trainer_player_action_level_2_last_selected_5
 StaticGet1 4
-Switch [0 @Label_trainer_player_weapon_action_level_2_last_selected_0]:[1 @Label_trainer_player_weapon_action_level_2_last_selected_1]:[2 @Label_trainer_player_weapon_action_level_2_last_selected_2]:[3 @Label_trainer_player_weapon_action_level_2_last_selected_3]:[4 @Label_trainer_player_weapon_action_level_2_last_selected_4]:[5 @Label_trainer_player_weapon_action_level_2_last_selected_5]
+Switch [0 @Label_trainer_player_weapon_action_level_2_last_selected_0]:[1 @Label_trainer_player_weapon_action_level_2_last_selected_1]:[2 @Label_trainer_player_weapon_action_level_2_last_selected_2]:[3 @Label_trainer_player_weapon_action_level_2_last_selected_3]:[4 @Label_trainer_player_weapon_action_level_2_last_selected_4]:[5 @Label_trainer_player_weapon_action_level_2_last_selected_5]:[6 @Label_trainer_player_weapon_action_level_2_last_selected_6]
 Jump @Label_trainer_player_weapon_action_level_2_end
 
 :Label_trainer_player_weapon_action_level_2_last_selected_0
@@ -7156,20 +7209,28 @@ Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_player_weapon_action_level_2_last_selected_3
+CallNative player_ped_id 0 1
+Call @menu_get_current_bool
+Not
+CallNative set_ped_infinite_ammo_clip 2 0
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_player_weapon_action_level_2_last_selected_4
 StaticGet2 532
 Not
 StaticSet2 532
 Call @menu_toggle_current_bool
 Return 0 0
 
-:Label_trainer_player_weapon_action_level_2_last_selected_4
+:Label_trainer_player_weapon_action_level_2_last_selected_5
 StaticGet2 533
 Not
 StaticSet2 533
 Call @menu_toggle_current_bool
 Return 0 0
 
-:Label_trainer_player_weapon_action_level_2_last_selected_5
+:Label_trainer_player_weapon_action_level_2_last_selected_6
 StaticGet2 534
 Not
 StaticSet2 534
@@ -9110,31 +9171,6 @@ Call @trainer_player_variation_level_3
 :Label_trainer_catch_button_press_end
 Return 0 0
 
-:trainer_debug_sound
-Function 1 0 4
-
-PushString "EPSILONISM_SITE_SOUNDS"
-Return 0 1
-
-:trainer_start_debug_sound
-Function 1 0 4
-
-CallNative play_stream_frontend 0 0
-PushString "WEB_EPSILONISM_SITE_MUSIC_SCENE"
-CallNative start_audio_scene 1 1
-drop
-
-Return 0 0
-
-:trainer_stop_debug_sound
-Function 1 0 4
-
-CallNative stop_stream 0 0
-PushString "WEB_EPSILONISM_SITE_MUSIC_SCENE"
-CallNative stop_audio_scene 1 0
-
-Return 0 0
-
 :trainer_setup
 Function 1 0 4
 
@@ -9854,6 +9890,12 @@ CallNative hide_help_text_this_frame 0 0
 iPush_0
 CallNative set_cinematic_button_active 1 0
 
+CallNative player_ped_id 0 1
+iPush_1
+iPush_-1
+iPush_0
+CallNative set_ped_using_action_mode 4 0
+
 iPush_0
 iPush_0
 CallNative disable_control_action 2 0
@@ -10306,6 +10348,12 @@ Return 1 1
 
 :menu_reverse_game_state
 Function 1 0 2
+CallNative player_ped_id 0 1
+iPush_0
+iPush_-1
+iPush_0
+CallNative set_ped_using_action_mode 4 0
+
 iPush_1
 CallNative set_cinematic_button_active 1 0
 Return 0 0
@@ -17769,6 +17817,7 @@ Return 0 0
 :dummy_strings
 Function 1 0 4
 
+
 PushString "DUMMY1"
 PushString "DUMMY2"
 PushString "DUMMY3"
@@ -17979,5 +18028,115 @@ PushString "DUMMY207"
 PushString "DUMMY208"
 PushString "DUMMY209"
 PushString "DUMMY210"
+PushString "DUMMY211"
+PushString "DUMMY212"
+PushString "DUMMY213"
+PushString "DUMMY214"
+PushString "DUMMY215"
+PushString "DUMMY216"
+PushString "DUMMY217"
+PushString "DUMMY218"
+PushString "DUMMY219"
+PushString "DUMMY220"
+PushString "DUMMY221"
+PushString "DUMMY222"
+PushString "DUMMY223"
+PushString "DUMMY224"
+PushString "DUMMY225"
+PushString "DUMMY226"
+PushString "DUMMY227"
+PushString "DUMMY228"
+PushString "DUMMY229"
+PushString "DUMMY230"
+PushString "DUMMY231"
+PushString "DUMMY232"
+PushString "DUMMY233"
+PushString "DUMMY234"
+PushString "DUMMY235"
+PushString "DUMMY236"
+PushString "DUMMY237"
+PushString "DUMMY238"
+PushString "DUMMY239"
+PushString "DUMMY240"
+PushString "DUMMY241"
+PushString "DUMMY242"
+PushString "DUMMY243"
+PushString "DUMMY244"
+PushString "DUMMY245"
+PushString "DUMMY246"
+PushString "DUMMY247"
+PushString "DUMMY248"
+PushString "DUMMY249"
+PushString "DUMMY250"
+PushString "DUMMY251"
+PushString "DUMMY252"
+PushString "DUMMY253"
+PushString "DUMMY254"
+PushString "DUMMY255"
+PushString "DUMMY256"
+PushString "DUMMY257"
+PushString "DUMMY258"
+PushString "DUMMY259"
+PushString "DUMMY260"
+PushString "DUMMY261"
+PushString "DUMMY262"
+PushString "DUMMY263"
+PushString "DUMMY264"
+PushString "DUMMY265"
+PushString "DUMMY266"
+PushString "DUMMY267"
+PushString "DUMMY268"
+PushString "DUMMY269"
+PushString "DUMMY270"
+PushString "DUMMY271"
+PushString "DUMMY272"
+PushString "DUMMY273"
+PushString "DUMMY274"
+PushString "DUMMY275"
+PushString "DUMMY276"
+PushString "DUMMY277"
+PushString "DUMMY278"
+PushString "DUMMY279"
+PushString "DUMMY280"
+PushString "DUMMY281"
+PushString "DUMMY282"
+PushString "DUMMY283"
+PushString "DUMMY284"
+PushString "DUMMY285"
+PushString "DUMMY286"
+PushString "DUMMY287"
+PushString "DUMMY288"
+PushString "DUMMY289"
+PushString "DUMMY290"
+PushString "DUMMY291"
+PushString "DUMMY292"
+PushString "DUMMY293"
+PushString "DUMMY294"
+PushString "DUMMY295"
+PushString "DUMMY296"
+PushString "DUMMY297"
+PushString "DUMMY298"
+PushString "DUMMY299"
+PushString "DUMMY300"
+PushString "DUMMY301"
+PushString "DUMMY302"
+PushString "DUMMY303"
+PushString "DUMMY304"
+PushString "DUMMY305"
+PushString "DUMMY306"
+PushString "DUMMY307"
+PushString "DUMMY308"
+PushString "DUMMY309"
+PushString "DUMMY310"
+PushString "DUMMY311"
+PushString "DUMMY312"
+PushString "DUMMY313"
+PushString "DUMMY314"
+PushString "DUMMY315"
+PushString "DUMMY316"
+PushString "DUMMY317"
+PushString "DUMMY318"
+PushString "DUMMY319"
+PushString "DUMMY320"
 
 Return 0 0
