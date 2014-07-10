@@ -37,21 +37,43 @@ Not
 JumpFalse @Label_main_draw
 Call @menu_set
 StaticGet2 418
-JumpFalse @Label_trainer_debug_set
+JumpFalse @Label_trainer_debug_set_end
+
+iPush_2
+Push1 174
+CallNative is_disabled_control_just_released 2 1
+dup
+JumpFalse @Label_trainer_debug_set_or
 StaticGet2 419
 StaticGet1 9
 iPush_1
 Sub
 pstatic2 61
 ArrayGet1 1
-JumpEQ @Label_trainer_debug_set
+CmpNe
+And
+
+:Label_trainer_debug_set_or
+JumpFalse @Label_trainer_debug_set
+iPush_0
+StaticSet2 418
+
+iPush_-1
+StaticSet2 419
+Jump @Label_trainer_debug_set_end
+
+:Label_trainer_debug_set
+iPush_2
+Push1 175
+CallNative is_disabled_control_just_released 2 1
+JumpFalse @Label_trainer_debug_set_end
 iPush_0
 StaticSet2 418
 
 iPush_-1
 StaticSet2 419
 
-:Label_trainer_debug_set
+:Label_trainer_debug_set_end
 iPush_0
 StaticGet1 7
 JumpNE @Label_main_draw
@@ -165,6 +187,13 @@ CallNative player_id 0 1
 CallNative set_explosive_melee_this_frame 1 0
 
 :Label_trainer_explosive_melee_check_end
+StaticGet2 535
+JumpFalse @Label_trainer_infinite_special_check_end
+CallNative player_id 0 1
+iPush_1
+CallNative special_ability_fill_meter 2 0
+
+:Label_trainer_infinite_special_check_end
 Return 0 0
 
 :trainer_race_turbo_check
@@ -1202,8 +1231,10 @@ Return 0 0
 PushString "LOB_CAT_9"
 CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
+
 PushString "GC_MENU26"
 Call @menu_addItem_action
+
 PushString "Max Wanted Level"
 Call @menu_addItem
 CallNative get_max_wanted_level 0 1
@@ -1211,6 +1242,7 @@ iPush_0
 iPush_5
 Call @menu_addItem_number
 Call @menu_add_action
+
 PushString "GC_MENU24"
 Call @menu_addItem
 CallNative player_id 0 1
@@ -1219,6 +1251,21 @@ iPush_0
 iPush_5
 Call @menu_addItem_number
 Call @menu_add_action
+
+PushString "Wanted Level Multiplier"
+Call @menu_addItem
+fPush_0.0
+fPush_0.0
+fPush_1.0
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "Ignore Low Events"
+Call @menu_addItem
+iPush_0
+Call @menu_addItem_bool
+Call @menu_add_action
+
 PushString "Never Wanted"
 Call @menu_addItem
 StaticGet2 531
@@ -1266,7 +1313,7 @@ Call @menu_addItem
 iPush_0
 Call @menu_addItem_bool
 Call @menu_add_action
-PushString "No Reload"
+PushString "Infinite Clip"
 Call @menu_addItem
 iPush_0
 Call @menu_addItem_bool
@@ -1311,12 +1358,10 @@ Call @menu_add_action
 PushString "Recharge"
 Call @menu_addItem_action
 
-PushString "Refill Multiplier"
+PushString "Infinite Special"
 Call @menu_addItem
-fPush_0.0
-fPush -100
-fPush 100
-Call @menu_addItem_float
+StaticGet2 535
+Call @menu_addItem_bool
 Call @menu_add_action
 Return 0 0
 
@@ -1442,7 +1487,7 @@ PushString "Unknown 2"
 Push1 19
 pFrame1 5
 ArraySet1 1
-PushString "Unknown 3"
+PushString "Tire Smoke"
 Push1 20
 pFrame1 5
 ArraySet1 1
@@ -2673,6 +2718,21 @@ PushString "Tire Smoke Colour 2"
 Call @menu_addItem_action
 PushString "Tire Smoke Colour 3"
 Call @menu_addItem_action
+PushString "Tire Smoke Colour 4"
+Call @menu_addItem_action
+PushString "Tire Smoke Colour 5"
+Call @menu_addItem_action
+PushString "Tire Smoke Colour 6"
+Call @menu_addItem_action
+PushString "Tire Smoke Colour 7"
+Call @menu_addItem_action
+PushString "Tire Smoke Colour 8"
+Call @menu_addItem_action
+PushString "Tire Smoke Colour 9"
+Call @menu_addItem_action
+PushString "Tire Smoke Colour 10"
+Call @menu_addItem_action
+
 Jump @Label_vehicle_level_3_last_selected_3_2
 
 :Label_vehicle_level_3_last_selected_3_1
@@ -3507,7 +3567,7 @@ Jump @Label_trainer_vehicle_mod_level_3_while
 Return 0 0
 
 :trainer_vehicle_modify_level_3
-Function 1 0 4
+Function 1 0 8
 
 PushString "Modify"
 StaticSet1 10
@@ -3539,7 +3599,47 @@ Call @menu_addItem_action
 Return 0 0
 
 :Label_trainer_vehicle_modify_level_3_last_selected_1
+StaticGet2 379
+pFrame1 2
+pFrame1 3
+CallNative get_vehicle_lights_state 3 1
+drop
+
+PushString "Vehicle Lights"
+Call @menu_addItem
+getF 2
+iPush_0
+iPush_4
+Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "Vehicle Lights Multiplier"
+Call @menu_addItem
+fPush_0.0
+fPush -10.0
+fPush 10.0
+Call @menu_addItem_float
+Call @menu_add_action
+
 PushString "Interior Light"
+Call @menu_addItem
+iPush_0
+Call @menu_addItem_bool
+Call @menu_add_action
+
+PushString "Indicator Lights Left"
+Call @menu_addItem
+iPush_0
+Call @menu_addItem_bool
+Call @menu_add_action
+
+PushString "Indicator Lights Right"
+Call @menu_addItem
+iPush_0
+Call @menu_addItem_bool
+Call @menu_add_action
+
+PushString "Brake Lights"
 Call @menu_addItem
 iPush_0
 Call @menu_addItem_bool
@@ -3556,6 +3656,13 @@ PushString "Search Light Dusk"
 Call @menu_addItem
 StaticGet2 379
 CallNative is_vehicle_searchlight_on 1 1
+Call @menu_addItem_bool
+Call @menu_add_action
+
+PushString "Taxi Light"
+Call @menu_addItem
+StaticGet2 379
+CallNative is_taxi_light_on 1 1
 Call @menu_addItem_bool
 Call @menu_add_action
 Return 0 0
@@ -3619,6 +3726,14 @@ Call @menu_addItem_action
 
 PushString "Engine STRETCH_MICHAEL_4"
 Call @menu_addItem_action
+
+PushString "Can Be Knocked Off"
+Call @menu_addItem
+iPush_0
+iPush_0
+iPush_3
+Call @menu_addItem_number
+Call @menu_add_action
 Return 0 0
 
 :Label_trainer_vehicle_modify_level_3_end
@@ -5617,11 +5732,38 @@ Return 0 1
 
 :trainer_error_vehicle
 Function 1 1 4
-PushString "CMOD_FTRIG_VEH"
-CallNative unk_0x95C4B5AD 1 1
-PushString ""
+
 getF 0
-Call @menu_error_2_strings
+JumpFalse @Label_trainer_error_vehicle_1
+iPush_0
+StaticSet1 11
+iPush_0
+StaticSet1 45
+
+Call @menu_clean
+
+StaticGet1 9
+iPush_1
+Sub
+StaticSet1 9
+
+StaticGet1 9
+pstatic2 61
+ArrayGet1 1
+StaticSet1 4
+
+Call @menu_set
+Call @menu_set_frontend
+
+:Label_trainer_error_vehicle_1
+PushString "CMOD_FTRIG_VEH"
+CallNative unk_0x574EE85C 1 0
+PushString ""
+CallNative unk_0x27A244D8 1 0
+iPush_0
+iPush_1
+CallNative unk_0x08F7AF78 2 1
+drop
 Return 1 0
 
 :menu_action
@@ -6770,7 +6912,7 @@ Return 0 0
 
 :Label_trainer_player_action_level_2_last_selected_3
 StaticGet1 4
-Switch [0 @Label_trainer_player_wanted_action_level_2_last_selected_0]:[1 @Label_trainer_player_wanted_action_level_2_last_selected_1]:[2 @Label_trainer_player_wanted_action_level_2_last_selected_2]:[3 @Label_trainer_player_wanted_action_level_2_last_selected_3]
+Switch [0 @Label_trainer_player_wanted_action_level_2_last_selected_0]:[1 @Label_trainer_player_wanted_action_level_2_last_selected_1]:[2 @Label_trainer_player_wanted_action_level_2_last_selected_2]:[3 @Label_trainer_player_wanted_action_level_2_last_selected_3]:[4 @Label_trainer_player_wanted_action_level_2_last_selected_4]:[5 @Label_trainer_player_wanted_action_level_2_last_selected_5]
 Jump @Label_trainer_player_wanted_action_level_2_end
 
 :Label_trainer_player_wanted_action_level_2_last_selected_0
@@ -6798,6 +6940,19 @@ CallNative set_player_wanted_level_now 2 0
 Return 0 0
 
 :Label_trainer_player_wanted_action_level_2_last_selected_3
+Call @menu_get_current_number
+CallNative set_wanted_level_multiplier 1 0
+Return 0 0
+
+:Label_trainer_player_wanted_action_level_2_last_selected_4
+CallNative get_player_index 0 1
+Call @menu_get_current_bool
+Not
+CallNative set_ignore_low_priority_shocking_events 2 0
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_player_wanted_action_level_2_last_selected_5
 StaticGet2 531
 Not
 StaticSet2 531
@@ -7250,19 +7405,10 @@ Jump @Label_trainer_player_special_action_level_2_end
 
 :Label_trainer_player_special_action_level_2_last_selected_0
 CallNative player_id 0 1
+CallNative player_id 0 1
 CallNative is_special_ability_enabled 1 1
-JumpFalse @Label_trainer_player_special_action_level_2_last_selected_0_false
-CallNative player_id 0 1
-iPush_0
+Not
 CallNative enable_special_ability 2 0
-Jump @Label_trainer_player_special_action_level_2_last_selected_0_end
-
-:Label_trainer_player_special_action_level_2_last_selected_0_false
-CallNative player_id 0 1
-iPush_1
-CallNative enable_special_ability 2 0
-
-:Label_trainer_player_special_action_level_2_last_selected_0_end
 Call @menu_toggle_current_bool
 Return 0 0
 
@@ -7273,9 +7419,10 @@ CallNative special_ability_fill_meter 2 0
 Return 0 0
 
 :Label_trainer_player_special_action_level_2_last_selected_2
-CallNative player_id 0 1
-Call @menu_get_current_number
-CallNative set_special_ability_multiplier 2 0
+StaticGet2 535
+Not
+StaticSet2 535
+Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_player_special_action_level_2_end
@@ -7940,7 +8087,7 @@ Return 0 0
 iPush_1
 pstatic2 61
 ArrayGet1 1
-Switch [0 @Label_trainer_vehicle_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_action_level_3_last_selected_1]:[4 @Label_trainer_vehicle_action_level_3_last_selected_4]
+Switch [0 @Label_trainer_vehicle_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_action_level_3_last_selected_1]:[3 @Label_trainer_vehicle_action_level_3_last_selected_3]:[4 @Label_trainer_vehicle_action_level_3_last_selected_4]
 Jump @Label_trainer_vehicle_action_level_3_end
 
 :Label_trainer_vehicle_action_level_3_last_selected_0
@@ -7952,6 +8099,10 @@ Return 0 0
 
 :Label_trainer_vehicle_action_level_3_last_selected_1
 Call @trainer_vehicle_mod_action_level_3
+Return 0 0
+
+:Label_trainer_vehicle_action_level_3_last_selected_3
+Call @trainer_vehicle_colour_action_level_3
 Return 0 0
 
 :Label_trainer_vehicle_action_level_3_last_selected_4
@@ -7997,6 +8148,93 @@ StaticGet2 413
 CallNative set_vehicle_mod 4 0
 
 :Label_trainer_vehicle_mod_action_level_3_end
+Return 0 0
+
+:trainer_vehicle_colour_action_level_3
+Function 1 0 7
+
+StaticGet1 4
+Switch [1 @Label_trainer_vehicle_colour_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_colour_action_level_3_last_selected_2]:[3 @Label_trainer_vehicle_colour_action_level_3_last_selected_3]:[4 @Label_trainer_vehicle_colour_action_level_3_last_selected_4]:[5 @Label_trainer_vehicle_colour_action_level_3_last_selected_5]:[6 @Label_trainer_vehicle_colour_action_level_3_last_selected_6]:[7 @Label_trainer_vehicle_colour_action_level_3_last_selected_7]:[8 @Label_trainer_vehicle_colour_action_level_3_last_selected_8]:[9 @Label_trainer_vehicle_colour_action_level_3_last_selected_9]
+Jump @Label_trainer_vehicle_colour_action_level_3_end
+
+:Label_trainer_vehicle_colour_action_level_3_last_selected_1
+StaticGet2 379
+Push3 255, 255, 255
+CallNative set_vehicle_tyre_smoke_color 4 0
+Return 0 0
+
+:Label_trainer_vehicle_colour_action_level_3_last_selected_2
+StaticGet2 379
+Push2 255, 127
+iPush_0
+CallNative set_vehicle_tyre_smoke_color 4 0
+Return 0 0
+
+:Label_trainer_vehicle_colour_action_level_3_last_selected_3
+StaticGet2 379
+Push2 252, 238
+iPush_0
+CallNative set_vehicle_tyre_smoke_color 4 0
+Return 0 0
+
+:Label_trainer_vehicle_colour_action_level_3_last_selected_4
+StaticGet2 379
+iPush_0
+Push2 174, 239
+CallNative set_vehicle_tyre_smoke_color 4 0
+Return 0 0
+
+:Label_trainer_vehicle_colour_action_level_3_last_selected_5
+StaticGet2 379
+Push1 226
+iPush_6
+iPush_6
+CallNative set_vehicle_tyre_smoke_color 4 0
+Return 0 0
+
+:Label_trainer_vehicle_colour_action_level_3_last_selected_6
+StaticGet2 379
+Push3 20, 20, 20
+CallNative set_vehicle_tyre_smoke_color 4 0
+Return 0 0
+
+:Label_trainer_vehicle_colour_action_level_3_last_selected_7
+StaticGet2 379
+globalget3 1344954
+globalget3 1344955
+globalget3 1344956
+CallNative set_vehicle_tyre_smoke_color 4 0
+Return 0 0
+
+:Label_trainer_vehicle_colour_action_level_3_last_selected_8
+Push1 21
+pFrame1 3
+pFrame1 4
+pFrame1 5
+pFrame1 6
+CallNative get_hud_colour 5 0
+StaticGet2 379
+getF 3
+getF 4
+getF 5
+CallNative set_vehicle_tyre_smoke_color 4 0
+Return 0 0
+
+:Label_trainer_vehicle_colour_action_level_3_last_selected_9
+Push1 18
+pFrame1 3
+pFrame1 4
+pFrame1 5
+pFrame1 6
+CallNative get_hud_colour 5 0
+StaticGet2 379
+getF 3
+getF 4
+getF 5
+CallNative set_vehicle_tyre_smoke_color 4 0
+Return 0 0
+
+:Label_trainer_vehicle_colour_action_level_3_end
 Return 0 0
 
 :trainer_vehicle_modify_action_level_3
@@ -8073,10 +8311,22 @@ Return 0 0
 Function 1 0 4
 
 StaticGet1 4
-Switch [0 @Label_trainer_vehicle_light_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_light_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_light_action_level_3_last_selected_2]
+Switch [0 @Label_trainer_vehicle_light_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_light_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_light_action_level_3_last_selected_2]:[3 @Label_trainer_vehicle_light_action_level_3_last_selected_3]:[4 @Label_trainer_vehicle_light_action_level_3_last_selected_4]:[5 @Label_trainer_vehicle_light_action_level_3_last_selected_5]:[6 @Label_trainer_vehicle_light_action_level_3_last_selected_6]:[7 @Label_trainer_vehicle_light_action_level_3_last_selected_7]:[8 @Label_trainer_vehicle_light_action_level_3_last_selected_8]
 Jump @Label_trainer_vehicle_light_action_level_3_end
 
 :Label_trainer_vehicle_light_action_level_3_last_selected_0
+StaticGet2 379
+Call @menu_get_current_number
+CallNative set_vehicle_lights 2 0
+Return 0 0
+
+:Label_trainer_vehicle_light_action_level_3_last_selected_1
+StaticGet2 379
+Call @menu_get_current_number
+CallNative set_vehicle_light_multiplier 2 0
+Return 0 0
+
+:Label_trainer_vehicle_light_action_level_3_last_selected_2
 StaticGet2 379
 Call @menu_get_current_bool
 Not
@@ -8084,26 +8334,63 @@ CallNative set_vehicle_interiorlight 2 0
 Call @menu_toggle_current_bool
 Return 0 0
 
-:Label_trainer_vehicle_light_action_level_3_last_selected_1
+:Label_trainer_vehicle_light_action_level_3_last_selected_3
+StaticGet2 379
+Call @menu_get_current_bool
+Not
+iPush_4
+Call @menu_get_bool
+CallNative set_vehicle_indicator_lights 3 0
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_vehicle_light_action_level_3_last_selected_4
+StaticGet2 379
+iPush_3
+Call @menu_get_bool
+Call @menu_get_current_bool
+Not
+CallNative set_vehicle_indicator_lights 3 0
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_vehicle_light_action_level_3_last_selected_5
+StaticGet2 379
+Call @menu_get_current_bool
+Not
+CallNative set_vehicle_brake_lights 2 0
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_vehicle_light_action_level_3_last_selected_6
 StaticGet2 379
 Call @menu_get_current_bool
 Not
 iPush_0
 CallNative set_vehicle_searchlight 3 0
 Call @menu_toggle_current_bool
-iPush_2
+iPush_7
 Call @menu_toggle_bool
 Return 0 0
 
-:Label_trainer_vehicle_light_action_level_3_last_selected_2
+:Label_trainer_vehicle_light_action_level_3_last_selected_7
 StaticGet2 379
 Call @menu_get_current_bool
 Not
 iPush_1
 CallNative set_vehicle_searchlight 3 0
 Call @menu_toggle_current_bool
-iPush_1
+iPush_6
 Call @menu_toggle_bool
+Return 0 0
+
+:Label_trainer_vehicle_light_action_level_3_last_selected_8
+StaticGet2 379
+StaticGet2 379
+CallNative is_taxi_light_on 1 1
+Not
+CallNative set_taxi_lights 2 0
+Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_vehicle_light_action_level_3_end
@@ -8138,7 +8425,7 @@ Return 0 0
 Function 1 0 3
 
 StaticGet1 4
-Switch [0 @Label_trainer_vehicle_settings_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_settings_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_settings_action_level_3_last_selected_2]:[3 @Label_trainer_vehicle_settings_action_level_3_last_selected_3]:[4 @Label_trainer_vehicle_settings_action_level_3_last_selected_4]:[5 @Label_trainer_vehicle_settings_action_level_3_last_selected_5]:[6 @Label_trainer_vehicle_settings_action_level_3_last_selected_6]
+Switch [0 @Label_trainer_vehicle_settings_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_settings_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_settings_action_level_3_last_selected_2]:[3 @Label_trainer_vehicle_settings_action_level_3_last_selected_3]:[4 @Label_trainer_vehicle_settings_action_level_3_last_selected_4]:[5 @Label_trainer_vehicle_settings_action_level_3_last_selected_5]:[6 @Label_trainer_vehicle_settings_action_level_3_last_selected_6]:[7 @Label_trainer_vehicle_settings_action_level_3_last_selected_7]
 Jump @Label_trainer_vehicle_settings_action_level_3_end
 
 :Label_trainer_vehicle_settings_action_level_3_last_selected_0
@@ -8155,6 +8442,9 @@ Not
 StaticSet2 414
 iPush_0
 StaticSet2 415
+StaticGet2 379
+iPush_0
+CallNative set_horn_enabled 2 0
 Call @menu_toggle_current_bool
 
 :trainer_vehicle_settings_boost_end
@@ -8194,6 +8484,12 @@ Return 0 0
 StaticGet2 379
 PushString "STRETCH_MICHAEL_4"
 CallNative unk_0x33B0B007 2 0
+Return 0 0
+
+:Label_trainer_vehicle_settings_action_level_3_last_selected_7
+CallNative player_ped_id 0 1
+Call @menu_get_current_number
+CallNative set_ped_can_be_knocked_off_vehicle 2 0
 Return 0 0
 
 :Label_trainer_vehicle_settings_action_level_3_end
@@ -8361,12 +8657,28 @@ iPush_3
 iPush_2
 pstatic2 61
 ArrayGet1 1
-JumpNE @Label_trainer_vehicle_action_colour_end
+JumpNE @Label_trainer_vehicle_action_colour_4
 
 StaticGet2 379
 getF 5
 Call @menu_get_current_number
 CallNative set_vehicle_extra_colours 3 0
+Jump @Label_trainer_vehicle_action_colour_end
+
+:Label_trainer_vehicle_action_colour_4
+iPush_4
+iPush_2
+pstatic2 61
+ArrayGet1 1
+JumpNE @Label_trainer_vehicle_action_colour_end
+StaticGet2 379
+iPush_0
+Call @menu_get_number
+iPush_1
+Call @menu_get_number
+iPush_2
+Call @menu_get_number
+CallNative set_vehicle_tyre_smoke_color 4 0
 
 :Label_trainer_vehicle_action_colour_end
 Return 0 0
@@ -10579,10 +10891,10 @@ Or
 JumpFalse @Label_catch_button_press_left_float_2
 
 StaticGet1 4
-pstatic2 327
+pstatic2 276
 ArrayGet1 1
 StaticGet1 4
-pstatic2 276
+pstatic2 327
 ArrayGet1 1
 fCmpNe
 JumpFalse @Label_catch_button_press_left_float_1
@@ -10689,10 +11001,10 @@ Or
 JumpFalse @Label_catch_button_press_right_float_2
 
 StaticGet1 4
-pstatic2 276
+pstatic1 174
 ArrayGet1 1
 StaticGet1 4
-pstatic1 174
+pstatic2 276
 ArrayGet1 1
 fCmpNe
 JumpFalse @Label_catch_button_press_right_float_1
@@ -11107,6 +11419,8 @@ getF 2
 JumpFalse @Label_menu_error_2_strings_1
 iPush_0
 StaticSet1 11
+iPush_0
+StaticSet1 45
 
 Call @menu_clean
 
@@ -11121,6 +11435,7 @@ ArrayGet1 1
 StaticSet1 4
 
 Call @menu_set
+Call @menu_set_frontend
 
 :Label_menu_error_2_strings_1
 PushString "TWOSTRINGS"
@@ -11143,6 +11458,8 @@ getF 2
 JumpFalse @Label_menu_error_2_strings_gxt_1
 iPush_0
 StaticSet1 11
+iPush_0
+StaticSet1 45
 
 Call @menu_clean
 
@@ -11157,6 +11474,7 @@ ArrayGet1 1
 StaticSet1 4
 
 Call @menu_set
+Call @menu_set_frontend
 
 :Label_menu_error_2_strings_gxt_1
 PushString "TWOSTRINGS"
