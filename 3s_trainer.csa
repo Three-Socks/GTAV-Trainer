@@ -39,34 +39,6 @@ Call @menu_set
 StaticGet2 418
 JumpFalse @Label_trainer_debug_set_end
 
-iPush_2
-Push1 174
-CallNative is_disabled_control_just_released 2 1
-dup
-JumpFalse @Label_trainer_debug_set_or
-StaticGet2 419
-StaticGet1 9
-iPush_1
-Sub
-pstatic2 61
-ArrayGet1 1
-CmpNe
-And
-
-:Label_trainer_debug_set_or
-JumpFalse @Label_trainer_debug_set
-iPush_0
-StaticSet2 418
-
-iPush_-1
-StaticSet2 419
-Jump @Label_trainer_debug_set_end
-
-:Label_trainer_debug_set
-iPush_2
-Push1 175
-CallNative is_disabled_control_just_released 2 1
-JumpFalse @Label_trainer_debug_set_end
 iPush_0
 StaticSet2 418
 
@@ -337,11 +309,11 @@ Return 0 0
 Function 1 0 4
 
 StaticGet2 417
-Push1 100
+Push1 50
 JumpLE @Label_trainer_debug_1
 iPush_0
 StaticGet1 9
-JumpEQ @Label_trainer_debug_1
+JumpNE @Label_trainer_debug_1
 StaticGet2 418
 Not
 JumpFalse @Label_trainer_debug_1
@@ -566,24 +538,6 @@ Call @trainer_security_checks_terminate
 Return 0 0
 
 :Label_trainer_menu_set_2
-StaticGet2 418
-JumpFalse @menu_set_1
-iPush_-1
-StaticGet2 419
-JumpEQ @Label_menu_set_goto_end
-StaticGet2 419
-StaticGet1 9
-iPush_1
-Sub
-pstatic2 61
-ArrayGet1 1
-JumpNE @Label_menu_set_goto_end
-Call @trainer_debug_menu
-
-:Label_menu_set_goto_end
-Jump @Label_menu_set_end
-
-:menu_set_1
 Call @trainer_level_0
 
 :Label_menu_set_end
@@ -756,13 +710,15 @@ CallNative get_current_language 0 1
 JumpNE @Label_level_0_lang
 PushString "World Settings"
 Call @menu_addItem
-Jump @Label_level_0_end
+Jump @Label_level_0_teleport
 
 :Label_level_0_lang
 PushString "CELL_16"
 Call @menu_addItem
 
-:Label_level_0_end
+:Label_level_0_teleport
+PushString "Teleport"
+Call @menu_addItem
 Return 0 0
 
 :Label_level_1
@@ -794,7 +750,7 @@ Function 1 0 7
 iPush_0
 pstatic2 61
 ArrayGet1 1
-Switch [0 @Label_last_selected_0]:[1 @Label_last_selected_1]:[2 @Label_last_selected_2]:[3 @Label_last_selected_3]
+Switch [0 @Label_last_selected_0]:[1 @Label_last_selected_1]:[2 @Label_last_selected_2]:[3 @Label_last_selected_3]:[4 @Label_last_selected_4]
 Jump @Label_level_1_end
 
 :Label_last_selected_0
@@ -910,6 +866,10 @@ Call @menu_addItem
 
 PushString "Waypoint"
 Call @menu_addItem_action
+Return 0 0
+
+:Label_last_selected_4
+Call @trainer_debug_menu
 Return 0 0
 
 :Label_level_1_end
@@ -5775,24 +5735,6 @@ JumpNE @Label_action4
 iPush_0
 StaticSet1 7
 
-StaticGet2 418
-JumpFalse @menu_action_debug_1
-iPush_-1
-StaticGet2 419
-JumpEQ @Label_menu_action_debug_goto_end
-StaticGet2 419
-StaticGet1 9
-iPush_1
-Sub
-pstatic2 61
-ArrayGet1 1
-JumpNE @Label_menu_action_debug_goto_end
-Call @trainer_debug_action
-
-:Label_menu_action_debug_goto_end
-Jump @Label_action_switch_22
-
-:menu_action_debug_1
 StaticGet1 9
 Switch [1 @Label_action_switch_1]:[2 @Label_action_switch_2]:[3 @Label_action_switch_3]:[4 @Label_action_switch_4]:[5 @Label_action_switch_5]
 Jump @Label_action_switch_22
@@ -5939,7 +5881,7 @@ Function 1 0 4
 iPush_0
 pstatic2 61
 ArrayGet1 1
-Switch [1 @Label_action_level_1_last_selected_1]:[2 @Label_action_level_1_last_selected_2]:[3 @Label_action_level_1_last_selected_3]
+Switch [1 @Label_action_level_1_last_selected_1]:[2 @Label_action_level_1_last_selected_2]:[3 @Label_action_level_1_last_selected_3]:[4 @Label_action_level_1_last_selected_4]
 Jump @Label_action_level_1_end
 
 :Label_action_level_1_last_selected_1
@@ -5952,6 +5894,10 @@ Return 0 0
 
 :Label_action_level_1_last_selected_3
 Call @trainer_teleport_action_level_1
+Return 0 0
+
+:Label_action_level_1_last_selected_4
+Call @trainer_debug_action
 Return 0 0
 
 :Label_action_level_1_end
