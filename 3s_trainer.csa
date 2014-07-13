@@ -8,6 +8,11 @@ JumpFalse @Label_main_end
 iPush_0
 CallNative wait 1 0
 
+CallNative network_is_game_in_progress 0 1
+JumpFalse @Label_main_1
+Call @trainer_network_while_set
+
+:Label_main_1
 Call @trainer_security_checks
 Call @trainer_loop_checks
 Call @trainer_catch_load_button_press
@@ -91,6 +96,24 @@ Function 1 1 4
 
 getF 0
 StaticSet1 6
+Return 1 0
+
+:trainer_network_while_set
+Function 1 0 4
+
+:Label_trainer_network_while_set_3
+Return 0 0
+
+:trainer_network_set_spawn_veh
+Function 1 1 12
+
+iPush_1
+StaticSet2 525
+
+getF 0
+StaticSet2 526
+
+:Label_network_set_spawn_veh_end
 Return 1 0
 
 :trainer_loop_checks
@@ -8159,6 +8182,13 @@ Switch [0 @Label_trainer_vehicle_action_level_3_last_selected_0]:[1 @Label_train
 Jump @Label_trainer_vehicle_action_level_3_end
 
 :Label_trainer_vehicle_action_level_3_last_selected_0
+CallNative network_is_game_in_progress 0 1
+JumpFalse @Label_trainer_vehicle_action_level_3_last_selected_0_not_network
+Call @menu_get_current_extra
+Call @trainer_network_set_spawn_veh
+Jump @Label_trainer_vehicle_action_level_3_last_selected_0_end
+
+:Label_trainer_vehicle_action_level_3_last_selected_0_not_network
 Call @menu_get_current_extra
 Call @trainer_spawn_veh_action
 
@@ -8242,6 +8272,9 @@ StaticGet2 379
 Push1 20
 iPush_0
 CallNative toggle_vehicle_mod 3 0
+StaticGet2 379
+Push1 20
+CallNative remove_vehicle_mod 2 0
 Return 0 0
 
 :Label_trainer_vehicle_colour_action_level_3_last_selected_1
@@ -11033,7 +11066,7 @@ StaticGet1 4
 pstatic2 327
 ArrayGet1 1
 ItoF
-fCmpNe
+fCmpLe
 JumpFalse @Label_catch_button_press_left_float_1
 
 StaticGet1 4
@@ -11145,7 +11178,7 @@ StaticGet1 4
 pstatic2 276
 ArrayGet1 1
 ItoF
-fCmpNe
+fCmpLe
 JumpFalse @Label_catch_button_press_right_float_1
 
 StaticGet1 4
@@ -13067,10 +13100,17 @@ Call @menu_addItem
 PushString "VEH_CLASS_12"
 Call @menu_addItem
 
+CallNative get_num_dlc_vehicles 0 1
+iPush_0
+JumpLE @Label_trainer_vehicle_classes_end
+PushString "DLC"
+Call @menu_addItem
+
+:Label_trainer_vehicle_classes_end
 Return 0 0
 
 :trainer_vehicle_spawn_level_3
-Function 1 0 4
+Function 1 0 5
 
 iPush_0
 iPush_1
@@ -13101,7 +13141,7 @@ setF 3
 
 :Label_trainer_vehicle_spawn_level_3_3
 getF 3
-Switch [0 @Label_trainer_vehicle_spawn_level_3_last_selected_boats]:[1 @Label_trainer_vehicle_spawn_level_3_last_selected_commercial]:[2 @Label_trainer_vehicle_spawn_level_3_last_selected_compacts]:[3 @Label_trainer_vehicle_spawn_level_3_last_selected_coupes]:[4 @Label_trainer_vehicle_spawn_level_3_last_selected_cycles]:[5 @Label_trainer_vehicle_spawn_level_3_last_selected_emergency]:[6 @Label_trainer_vehicle_spawn_level_3_last_selected_helicopters]:[7 @Label_trainer_vehicle_spawn_level_3_last_selected_industrial]:[8 @Label_trainer_vehicle_spawn_level_3_last_selected_military]:[9 @Label_trainer_vehicle_spawn_level_3_last_selected_motorcycles]:[10 @Label_trainer_vehicle_spawn_level_3_last_selected_muscle]:[11 @Label_trainer_vehicle_spawn_level_3_last_selected_off_road]:[12 @Label_trainer_vehicle_spawn_level_3_last_selected_planes]:[13 @Label_trainer_vehicle_spawn_level_3_last_selected_sedans]:[14 @Label_trainer_vehicle_spawn_level_3_last_selected_service]:[15 @Label_trainer_vehicle_spawn_level_3_last_selected_sports]:[16 @Label_trainer_vehicle_spawn_level_3_last_selected_sports_classics]:[17 @Label_trainer_vehicle_spawn_level_3_last_selected_super]:[18 @Label_trainer_vehicle_spawn_level_3_last_selected_suvs]:[19 @Label_trainer_vehicle_spawn_level_3_last_selected_trailers]:[20 @Label_trainer_vehicle_spawn_level_3_last_selected_trains]:[21 @Label_trainer_vehicle_spawn_level_3_last_selected_utility]:[22 @Label_trainer_vehicle_spawn_level_3_last_selected_vans]
+Switch [0 @Label_trainer_vehicle_spawn_level_3_last_selected_boats]:[1 @Label_trainer_vehicle_spawn_level_3_last_selected_commercial]:[2 @Label_trainer_vehicle_spawn_level_3_last_selected_compacts]:[3 @Label_trainer_vehicle_spawn_level_3_last_selected_coupes]:[4 @Label_trainer_vehicle_spawn_level_3_last_selected_cycles]:[5 @Label_trainer_vehicle_spawn_level_3_last_selected_emergency]:[6 @Label_trainer_vehicle_spawn_level_3_last_selected_helicopters]:[7 @Label_trainer_vehicle_spawn_level_3_last_selected_industrial]:[8 @Label_trainer_vehicle_spawn_level_3_last_selected_military]:[9 @Label_trainer_vehicle_spawn_level_3_last_selected_motorcycles]:[10 @Label_trainer_vehicle_spawn_level_3_last_selected_muscle]:[11 @Label_trainer_vehicle_spawn_level_3_last_selected_off_road]:[12 @Label_trainer_vehicle_spawn_level_3_last_selected_planes]:[13 @Label_trainer_vehicle_spawn_level_3_last_selected_sedans]:[14 @Label_trainer_vehicle_spawn_level_3_last_selected_service]:[15 @Label_trainer_vehicle_spawn_level_3_last_selected_sports]:[16 @Label_trainer_vehicle_spawn_level_3_last_selected_sports_classics]:[17 @Label_trainer_vehicle_spawn_level_3_last_selected_super]:[18 @Label_trainer_vehicle_spawn_level_3_last_selected_suvs]:[19 @Label_trainer_vehicle_spawn_level_3_last_selected_trailers]:[20 @Label_trainer_vehicle_spawn_level_3_last_selected_trains]:[21 @Label_trainer_vehicle_spawn_level_3_last_selected_utility]:[22 @Label_trainer_vehicle_spawn_level_3_last_selected_vans]:[23 @Label_trainer_vehicle_spawn_level_3_last_selected_dlc]
 Jump @Label_trainer_vehicle_spawn_level_3_end
 
 :Label_trainer_vehicle_spawn_level_3_last_selected_boats
@@ -14863,6 +14903,30 @@ Call @menu_addItem_gxt_veh_hash
 PushString "YOUGA"
 Call @menu_add_number
 Call @menu_add_action
+Return 0 0
+
+:Label_trainer_vehicle_spawn_level_3_last_selected_dlc
+iPush_0
+setF 4
+
+:Label_trainer_vehicle_spawn_level_3_last_selected_dlc_while
+getF 4
+CallNative get_num_dlc_vehicles 0 1
+JumpGE @Label_trainer_vehicle_spawn_level_3_last_selected_dlc_while_end
+getF 4
+CallNative get_dlc_vehicle_model 1 1
+Call @menu_addItem_gxt_veh_hash
+getF 4
+CallNative get_dlc_vehicle_model 1 1
+Call @menu_add_number
+Call @menu_add_action
+
+getF 4
+Add1 1
+setF 4
+Jump @Label_trainer_vehicle_spawn_level_3_last_selected_dlc_while
+
+:Label_trainer_vehicle_spawn_level_3_last_selected_dlc_while_end
 Return 0 0
 
 :Label_trainer_vehicle_spawn_level_3_end
