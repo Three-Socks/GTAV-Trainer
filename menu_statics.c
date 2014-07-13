@@ -226,3 +226,15 @@ Static_533
 
 // trainer_explosive_melee
 Static_534
+
+// trainer_infinite_special
+Static_535
+
+// trainer_invincible
+Static_536
+
+// trainer_infinite_ammo
+Static_537
+
+// trainer_infinite_clip
+Static_538
