@@ -788,34 +788,9 @@ fPush 100
 Call @menu_addItem_float
 Call @menu_add_action
 
-PushString "action mode"
-Call @menu_addItem
-iPush_0
-Call @menu_addItem_bool
-Call @menu_add_action
-
-PushString "ammo 5A5E3B67"
-Call @menu_addItem
-iPush_0
-iPush_0
-Push1 100
-Call @menu_addItem_number
-Call @menu_add_action
-
 PushString "Language"
 Call @menu_addItem
 CallNative get_current_language 0 1
-iPush_0
-Push1 100
-Call @menu_addItem_number
-Call @menu_add_action
-
-PushString "Variation Colour"
-Call @menu_addItem_action
-
-PushString "network_is_rockstar_dev"
-Call @menu_addItem
-CallNative network_is_rockstar_dev 0 1
 iPush_0
 Push1 100
 Call @menu_addItem_number
@@ -3727,12 +3702,6 @@ iPush_0
 Call @menu_addItem_bool
 Call @menu_add_action
 
-PushString "Brake Lights"
-Call @menu_addItem
-iPush_0
-Call @menu_addItem_bool
-Call @menu_add_action
-
 PushString "Search Light Night"
 Call @menu_addItem
 StaticGet2 379
@@ -6079,7 +6048,7 @@ Return 0 0
 Function 1 0 4
 
 StaticGet1 4
-Switch [0 @Label_trainer_debug_action_level_1_last_selected_0]:[1 @Label_trainer_debug_action_level_1_last_selected_1]:[2 @Label_trainer_debug_action_level_1_last_selected_2]:[3 @Label_trainer_debug_action_level_1_last_selected_3]:[4 @Label_trainer_debug_action_level_1_last_selected_4]:[5 @Label_trainer_debug_action_level_1_last_selected_5]:[6 @Label_trainer_debug_action_level_1_last_selected_6]:[7 @Label_trainer_debug_action_level_1_last_selected_7]:[8 @Label_trainer_debug_action_level_1_last_selected_8]:[9 @Label_trainer_debug_action_level_1_last_selected_9]:[10 @Label_trainer_debug_action_level_1_last_selected_10]:[11 @Label_trainer_debug_action_level_1_last_selected_11]:[12 @Label_trainer_debug_action_level_1_last_selected_12]:[13 @Label_trainer_debug_action_level_1_last_selected_13]:[14 @Label_trainer_debug_action_level_1_last_selected_14]:[15 @Label_trainer_debug_action_level_1_last_selected_15]:[16 @Label_trainer_debug_action_level_1_last_selected_16]:[17 @Label_trainer_debug_action_level_1_last_selected_17]:[19 @Label_trainer_debug_action_level_1_last_selected_19]:[20 @Label_trainer_debug_action_level_1_last_selected_20]
+Switch [0 @Label_trainer_debug_action_level_1_last_selected_0]:[1 @Label_trainer_debug_action_level_1_last_selected_1]:[2 @Label_trainer_debug_action_level_1_last_selected_2]:[3 @Label_trainer_debug_action_level_1_last_selected_3]:[4 @Label_trainer_debug_action_level_1_last_selected_4]:[5 @Label_trainer_debug_action_level_1_last_selected_5]:[6 @Label_trainer_debug_action_level_1_last_selected_6]:[7 @Label_trainer_debug_action_level_1_last_selected_7]:[8 @Label_trainer_debug_action_level_1_last_selected_8]:[9 @Label_trainer_debug_action_level_1_last_selected_9]:[10 @Label_trainer_debug_action_level_1_last_selected_10]:[11 @Label_trainer_debug_action_level_1_last_selected_11]:[12 @Label_trainer_debug_action_level_1_last_selected_12]:[13 @Label_trainer_debug_action_level_1_last_selected_13]:[14 @Label_trainer_debug_action_level_1_last_selected_14]:[15 @Label_trainer_debug_action_level_1_last_selected_15]:[17 @Label_trainer_debug_action_level_1_last_selected_17]
 Jump @Label_trainer_debug_action_level_1_end
 
 :Label_trainer_debug_action_level_1_last_selected_0
@@ -6179,25 +6148,7 @@ Call @menu_get_current_number
 CallNative unk_0x3D26105F 2 0
 Return 0 0
 
-:Label_trainer_debug_action_level_1_last_selected_16
-CallNative player_ped_id 0 1
-Call @menu_get_current_bool
-Not
-iPush_-1
-iPush_0
-CallNative set_ped_using_action_mode 4 0
-Call @menu_toggle_current_bool
-PushString "set action mode"
-Call @menu_msg
-Return 0 0
-
 :Label_trainer_debug_action_level_1_last_selected_17
-CallNative player_ped_id 0 1
-Call @menu_get_current_number
-CallNative unk_0x5A5E3B67 2 0
-Return 0 0
-
-:Label_trainer_debug_action_level_1_last_selected_19
 CallNative player_ped_id 0 1
 Push1 255
 iPush_0
@@ -6222,9 +6173,6 @@ Push1 255
 Push1 255
 iPush_3
 CallNative unk_0x57E5B3F9 5 0
-Return 0 0
-
-:Label_trainer_debug_action_level_1_last_selected_20
 Return 0 0
 
 :Label_trainer_debug_action_level_1_end
@@ -6669,7 +6617,7 @@ Jump @Label_trainer_teleport_action_3_2
 
 :Label_trainer_teleport_action_3_1
 StaticGet2 457
-PushS 2000
+PushS 3000
 Call @trainer_teleport_time
 JumpFalse @Label_trainer_teleport_action_3_2
 iPush_4
@@ -6710,17 +6658,6 @@ iPush_0
 setF 8
 
 :Label_trainer_teleport_action_5_628
-iPush_3
-pFrame1 0
-ToStack
-pFrame1 9
-CallNative get_ground_z_for_3d_coord 4 1
-Not
-JumpFalse @Label_trainer_teleport_action_5_628_2
-iPush_0
-setF 8
-
-:Label_trainer_teleport_action_5_628_2
 StaticGet2 457
 PushS 12500
 Call @trainer_teleport_time
@@ -6742,6 +6679,15 @@ iPush_0
 StaticSet2 458
 
 :Label_trainer_teleport_action_5_631
+PushS 2000
+CallNative wait 1 0
+iPush_3
+pFrame1 0
+ToStack
+pFrame1 9
+CallNative get_ground_z_for_3d_coord 4 1
+drop
+
 CallNative player_ped_id 0 1
 iPush_0
 CallNative is_ped_in_any_vehicle 2 1
@@ -6839,7 +6785,7 @@ CmpGt
 Return 2 1
 
 :trainer_teleport_action_level_1
-Function 1 0 6
+Function 1 0 7
 
 StaticGet1 4
 Switch [0 @Label_trainer_teleport_action_level_1_last_selected_0]:[2 @Label_trainer_teleport_action_level_1_last_selected_2]
@@ -6859,9 +6805,12 @@ StaticGet1 26
 JumpNE @Label_trainer_teleport_action_level_1_last_selected_2_1
 CallNative is_waypoint_active 0 1
 JumpFalse @Label_trainer_teleport_action_level_1_last_selected_2_error
+
 CallNative unk_0xB9827942 0 1
 CallNative get_first_blip_info_id 1 1
-CallNative get_blip_info_id_coord 1 3
+setF 3
+getF 3
+CallNative get_blip_coords 1 3
 iPush_3
 pstatic2 524
 FromStack
@@ -8461,7 +8410,7 @@ Return 0 0
 Function 1 0 4
 
 StaticGet1 4
-Switch [0 @Label_trainer_vehicle_light_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_light_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_light_action_level_3_last_selected_2]:[3 @Label_trainer_vehicle_light_action_level_3_last_selected_3]:[4 @Label_trainer_vehicle_light_action_level_3_last_selected_4]:[5 @Label_trainer_vehicle_light_action_level_3_last_selected_5]:[6 @Label_trainer_vehicle_light_action_level_3_last_selected_6]:[7 @Label_trainer_vehicle_light_action_level_3_last_selected_7]:[8 @Label_trainer_vehicle_light_action_level_3_last_selected_8]
+Switch [0 @Label_trainer_vehicle_light_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_light_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_light_action_level_3_last_selected_2]:[3 @Label_trainer_vehicle_light_action_level_3_last_selected_3]:[4 @Label_trainer_vehicle_light_action_level_3_last_selected_4]:[5 @Label_trainer_vehicle_light_action_level_3_last_selected_5]:[6 @Label_trainer_vehicle_light_action_level_3_last_selected_6]:[7 @Label_trainer_vehicle_light_action_level_3_last_selected_7]
 Jump @Label_trainer_vehicle_light_action_level_3_end
 
 :Label_trainer_vehicle_light_action_level_3_last_selected_0
@@ -8488,16 +8437,15 @@ Return 0 0
 StaticGet2 379
 Call @menu_get_current_bool
 Not
-iPush_4
-Call @menu_get_bool
+Call @menu_get_current_bool
+Not
 CallNative set_vehicle_indicator_lights 3 0
 Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_vehicle_light_action_level_3_last_selected_4
 StaticGet2 379
-iPush_3
-Call @menu_get_bool
+iPush_0
 Call @menu_get_current_bool
 Not
 CallNative set_vehicle_indicator_lights 3 0
@@ -8508,33 +8456,25 @@ Return 0 0
 StaticGet2 379
 Call @menu_get_current_bool
 Not
-CallNative set_vehicle_brake_lights 2 0
-Call @menu_toggle_current_bool
-Return 0 0
-
-:Label_trainer_vehicle_light_action_level_3_last_selected_6
-StaticGet2 379
-Call @menu_get_current_bool
-Not
 iPush_0
-CallNative set_vehicle_searchlight 3 0
-Call @menu_toggle_current_bool
-iPush_7
-Call @menu_toggle_bool
-Return 0 0
-
-:Label_trainer_vehicle_light_action_level_3_last_selected_7
-StaticGet2 379
-Call @menu_get_current_bool
-Not
-iPush_1
 CallNative set_vehicle_searchlight 3 0
 Call @menu_toggle_current_bool
 iPush_6
 Call @menu_toggle_bool
 Return 0 0
 
-:Label_trainer_vehicle_light_action_level_3_last_selected_8
+:Label_trainer_vehicle_light_action_level_3_last_selected_6
+StaticGet2 379
+Call @menu_get_current_bool
+Not
+iPush_1
+CallNative set_vehicle_searchlight 3 0
+Call @menu_toggle_current_bool
+iPush_5
+Call @menu_toggle_bool
+Return 0 0
+
+:Label_trainer_vehicle_light_action_level_3_last_selected_7
 StaticGet2 379
 StaticGet2 379
 CallNative is_taxi_light_on 1 1
@@ -11104,13 +11044,13 @@ JumpFalse @Label_catch_button_press_left_float_2
 StaticGet1 4
 pstatic2 327
 ArrayGet1 1
+fPush 0.110
+fAdd
 ItoF
 StaticGet1 4
 pstatic2 276
 ArrayGet1 1
 ItoF
-fPush 0.100
-fSub
 fCmpLe
 JumpFalse @Label_catch_button_press_left_float_1
 
@@ -11219,11 +11159,11 @@ StaticGet1 4
 pstatic2 276
 ArrayGet1 1
 ItoF
-fPush 0.100
-fAdd
 StaticGet1 4
 pstatic1 174
 ArrayGet1 1
+fPush 0.110
+fSub
 ItoF
 fCmpLe
 JumpFalse @Label_catch_button_press_right_float_1
@@ -14593,7 +14533,7 @@ PushString "ARMYTRAILER2"
 Call @menu_add_number
 Call @menu_add_action
 
-PushString "TRAILERS"
+PushString "TRAILER"
 Call @menu_addItem
 Push -777275802
 Call @menu_add_extra
@@ -14601,7 +14541,7 @@ PushString "FREIGHTTRAILER"
 Call @menu_add_number
 Call @menu_add_action
 
-PushString "TRAILERS"
+PushString "TRAILER"
 Call @menu_addItem
 Push 356391690
 Call @menu_add_extra
@@ -14609,7 +14549,7 @@ PushString "PROPTRAILER"
 Call @menu_add_number
 Call @menu_add_action
 
-PushString "TRAILERS"
+PushString "TRAILER"
 Call @menu_addItem
 Push 1019737494
 Call @menu_add_extra
@@ -14623,7 +14563,7 @@ PushString "BALETRAILER"
 Call @menu_add_number
 Call @menu_add_action
 
-PushString "TRAILERS"
+PushString "TRAILER"
 Call @menu_addItem
 Push -2140210194
 Call @menu_add_extra
@@ -18525,32 +18465,5 @@ PushString "DUMMY130"
 PushString "DUMMY131"
 PushString "DUMMY132"
 PushString "DUMMY133"
-PushString "DUMMY134"
-PushString "DUMMY135"
-PushString "DUMMY136"
-PushString "DUMMY137"
-PushString "DUMMY138"
-PushString "DUMMY139"
-PushString "DUMMY140"
-PushString "DUMMY141"
-PushString "DUMMY142"
-PushString "DUMMY143"
-PushString "DUMMY144"
-PushString "DUMMY145"
-PushString "DUMMY146"
-PushString "DUMMY147"
-PushString "DUMMY148"
-PushString "DUMMY149"
-PushString "DUMMY150"
-PushString "DUMMY151"
-PushString "DUMMY152"
-PushString "DUMMY153"
-PushString "DUMMY154"
-PushString "DUMMY155"
-PushString "DUMMY156"
-PushString "DUMMY157"
-PushString "DUMMY158"
-PushString "DUMMY159"
-PushString "DUMMY160"
 
 Return 0 0
