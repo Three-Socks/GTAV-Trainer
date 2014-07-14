@@ -238,3 +238,6 @@ Static_537
 
 // trainer_infinite_clip
 Static_538
+
+// trainer_drift_mode
+Static_539

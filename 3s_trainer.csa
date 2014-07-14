@@ -242,6 +242,46 @@ iPush_1
 CallNative set_ped_infinite_ammo_clip 2 0
 
 :Label_trainer_infinite_clip_check_end
+StaticGet2 539
+JumpFalse @Label_trainer_drift_mode_check_end
+
+StaticGet2 379
+Call @trainer_race_turbo_check
+dup
+JumpFalse @Label_trainer_drift_mode_check_or2
+CallNative player_ped_id 0 1
+StaticGet2 379
+CallNative is_ped_sitting_in_vehicle 2 1
+And
+
+:Label_trainer_drift_mode_check_or2
+JumpFalse @Label_trainer_drift_mode_check_end
+
+iPush_0
+Push1 69
+CallNative is_control_pressed 2 1
+dup
+Not
+JumpFalse @Label_trainer_drift_mode_check_or
+iPush_0
+Push1 225
+CallNative is_control_pressed 2 1
+Or
+
+:Label_trainer_drift_mode_check_or
+JumpFalse @Label_trainer_drift_mode_check_disable
+
+StaticGet2 379
+iPush_1
+CallNative set_vehicle_reduce_grip 2 0
+Jump @Label_trainer_drift_mode_check_end
+
+:Label_trainer_drift_mode_check_disable
+StaticGet2 379
+iPush_0
+CallNative set_vehicle_reduce_grip 2 0
+
+:Label_trainer_drift_mode_check_end
 Return 0 0
 
 :trainer_race_turbo_check
@@ -1315,12 +1355,6 @@ fPush_1.0
 Call @menu_addItem_float
 Call @menu_add_action
 
-PushString "Ignore Low Events"
-Call @menu_addItem
-iPush_0
-Call @menu_addItem_bool
-Call @menu_add_action
-
 PushString "Never Wanted"
 Call @menu_addItem
 StaticGet2 531
@@ -1349,8 +1383,7 @@ Call @menu_addItem_action
 :Label_trainer_player_level_2_last_selected_4_lang_end
 PushString "Invincible"
 Call @menu_addItem
-CallNative player_id 0 1
-CallNative get_player_invincible 1 1
+StaticGet2 536
 Call @menu_addItem_bool
 Call @menu_add_action
 Return 0 0
@@ -1365,12 +1398,12 @@ PushString "Remove All Weapons"
 Call @menu_addItem_action
 PushString "Infinite Ammo"
 Call @menu_addItem
-iPush_0
+StaticGet2 537
 Call @menu_addItem_bool
 Call @menu_add_action
 PushString "Infinite Clip"
 Call @menu_addItem
-iPush_0
+StaticGet2 538
 Call @menu_addItem_bool
 Call @menu_add_action
 
@@ -2295,10 +2328,10 @@ StaticSet1 10
 iPush_2
 pstatic2 61
 ArrayGet1 1
-Switch [6 @Label_trainer_player_weapon_level_3_last_selected_6]:[7 @Label_trainer_player_weapon_level_3_last_selected_7]
+Switch [7 @Label_trainer_player_weapon_level_3_last_selected_7]:[8 @Label_trainer_player_weapon_level_3_last_selected_8]
 Jump @Label_trainer_player_weapon_level_3_end
 
-:Label_trainer_player_weapon_level_3_last_selected_6
+:Label_trainer_player_weapon_level_3_last_selected_7
 PushString "WT_UNARMED"
 Call @menu_addItem
 Push -1569615261
@@ -2651,7 +2684,7 @@ Call @menu_add_extra
 Call @menu_add_action
 Return 0 0
 
-:Label_trainer_player_weapon_level_3_last_selected_7
+:Label_trainer_player_weapon_level_3_last_selected_8
 PushString "WT_BOTTLE"
 Call @menu_addItem
 Push -102323637
@@ -3536,7 +3569,8 @@ ArrayGet1 1
 pstatic2 385
 ArrayGet1 1
 getF 3
-Add1 1
+iPush_1
+Sub
 CallNative get_mod_text_label 3 1
 CallNative is_string_null_or_empty 1 1
 Not
@@ -3551,7 +3585,8 @@ ArrayGet1 1
 pstatic2 385
 ArrayGet1 1
 getF 3
-Add1 1
+iPush_1
+Sub
 CallNative get_mod_text_label 3 1
 Call @menu_addItem
 getF 3
@@ -3771,6 +3806,12 @@ Call @menu_add_action
 PushString "Slidey Wheels"
 Call @menu_addItem
 iPush_0
+Call @menu_addItem_bool
+Call @menu_add_action
+
+PushString "Slidey Wheels Handbrake"
+Call @menu_addItem
+StaticGet2 539
 Call @menu_addItem_bool
 Call @menu_add_action
 
@@ -7012,18 +7053,13 @@ CallNative set_wanted_level_multiplier 1 0
 Return 0 0
 
 :Label_trainer_player_wanted_action_level_2_last_selected_4
-CallNative get_player_index 0 1
-Call @menu_get_current_bool
-Not
-CallNative set_ignore_low_priority_shocking_events 2 0
-Call @menu_toggle_current_bool
-Return 0 0
-
-:Label_trainer_player_wanted_action_level_2_last_selected_5
 StaticGet2 531
 Not
 StaticSet2 531
 Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_player_wanted_action_level_2_last_selected_5
 Return 0 0
 
 :Label_trainer_player_wanted_action_level_2_end
@@ -8539,7 +8575,7 @@ Return 0 0
 Function 1 0 3
 
 StaticGet1 4
-Switch [0 @Label_trainer_vehicle_settings_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_settings_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_settings_action_level_3_last_selected_2]:[3 @Label_trainer_vehicle_settings_action_level_3_last_selected_3]:[4 @Label_trainer_vehicle_settings_action_level_3_last_selected_4]:[5 @Label_trainer_vehicle_settings_action_level_3_last_selected_5]:[6 @Label_trainer_vehicle_settings_action_level_3_last_selected_6]:[7 @Label_trainer_vehicle_settings_action_level_3_last_selected_7]
+Switch [0 @Label_trainer_vehicle_settings_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_settings_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_settings_action_level_3_last_selected_2]:[3 @Label_trainer_vehicle_settings_action_level_3_last_selected_3]:[4 @Label_trainer_vehicle_settings_action_level_3_last_selected_4]:[5 @Label_trainer_vehicle_settings_action_level_3_last_selected_5]:[6 @Label_trainer_vehicle_settings_action_level_3_last_selected_6]:[7 @Label_trainer_vehicle_settings_action_level_3_last_selected_7]:[8 @Label_trainer_vehicle_settings_action_level_3_last_selected_8]
 Jump @Label_trainer_vehicle_settings_action_level_3_end
 
 :Label_trainer_vehicle_settings_action_level_3_last_selected_0
@@ -8589,18 +8625,25 @@ Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_vehicle_settings_action_level_3_last_selected_5
+StaticGet2 539
+Not
+StaticSet2 539
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_vehicle_settings_action_level_3_last_selected_6
 StaticGet2 379
 PushString "BJXL_ARMENIAN_3"
 CallNative unk_0x33B0B007 2 0
 Return 0 0
 
-:Label_trainer_vehicle_settings_action_level_3_last_selected_6
+:Label_trainer_vehicle_settings_action_level_3_last_selected_7
 StaticGet2 379
 PushString "STRETCH_MICHAEL_4"
 CallNative unk_0x33B0B007 2 0
 Return 0 0
 
-:Label_trainer_vehicle_settings_action_level_3_last_selected_7
+:Label_trainer_vehicle_settings_action_level_3_last_selected_8
 CallNative player_ped_id 0 1
 Call @menu_get_current_bool
 Not
@@ -11059,13 +11102,15 @@ Or
 JumpFalse @Label_catch_button_press_left_float_2
 
 StaticGet1 4
-pstatic2 276
-ArrayGet1 1
-ItoF
-StaticGet1 4
 pstatic2 327
 ArrayGet1 1
 ItoF
+StaticGet1 4
+pstatic2 276
+ArrayGet1 1
+ItoF
+fPush 0.100
+fSub
 fCmpLe
 JumpFalse @Label_catch_button_press_left_float_1
 
@@ -11171,11 +11216,13 @@ Or
 JumpFalse @Label_catch_button_press_right_float_2
 
 StaticGet1 4
-pstatic1 174
+pstatic2 276
 ArrayGet1 1
 ItoF
+fPush 0.100
+fAdd
 StaticGet1 4
-pstatic2 276
+pstatic1 174
 ArrayGet1 1
 ItoF
 fCmpLe
@@ -13100,6 +13147,11 @@ Call @menu_addItem
 PushString "VEH_CLASS_12"
 Call @menu_addItem
 
+iPush_0
+iPush_1
+pstatic2 61
+ArrayGet1 1
+JumpNE @Label_trainer_vehicle_classes_end
 CallNative get_num_dlc_vehicles 0 1
 iPush_0
 JumpLE @Label_trainer_vehicle_classes_end
@@ -14540,31 +14592,45 @@ Call @menu_addItem_gxt_veh_hash
 PushString "ARMYTRAILER2"
 Call @menu_add_number
 Call @menu_add_action
+
+PushString "TRAILERS"
+Call @menu_addItem
 Push -777275802
-Call @menu_addItem_gxt_veh_hash
+Call @menu_add_extra
 PushString "FREIGHTTRAILER"
 Call @menu_add_number
 Call @menu_add_action
+
+PushString "TRAILERS"
+Call @menu_addItem
 Push 356391690
-Call @menu_addItem_gxt_veh_hash
+Call @menu_add_extra
 PushString "PROPTRAILER"
 Call @menu_add_number
 Call @menu_add_action
+
+PushString "TRAILERS"
+Call @menu_addItem
 Push 1019737494
-Call @menu_addItem_gxt_veh_hash
+Call @menu_add_extra
 PushString "GRAINTRAILER"
 Call @menu_add_number
 Call @menu_add_action
+
 Push -399841706
 Call @menu_addItem_gxt_veh_hash
 PushString "BALETRAILER"
 Call @menu_add_number
 Call @menu_add_action
+
+PushString "TRAILERS"
+Call @menu_addItem
 Push -2140210194
-Call @menu_addItem_gxt_veh_hash
+Call @menu_add_extra
 PushString "DOCKTRAILER"
 Call @menu_add_number
 Call @menu_add_action
+
 Push -877478386
 Call @menu_addItem_gxt_veh_hash
 PushString "TRAILERS"
