@@ -5992,11 +5992,11 @@ Call @trainer_world_action_level_1
 Return 0 0
 
 :Label_action_level_1_last_selected_3
-Call @trainer_teleport_action_level_1
+Call @trainer_debug_action
 Return 0 0
 
 :Label_action_level_1_last_selected_4
-Call @trainer_debug_action
+Call @trainer_teleport_action_level_1
 Return 0 0
 
 :Label_action_level_1_end
@@ -8435,8 +8435,7 @@ Return 0 0
 StaticGet2 379
 Call @menu_get_current_bool
 Not
-Call @menu_get_current_bool
-Not
+iPush_0
 CallNative set_vehicle_indicator_lights 3 0
 Call @menu_toggle_current_bool
 Return 0 0
@@ -11014,10 +11013,6 @@ pstatic2 276
 ArraySet1 1
 
 :Label_catch_button_press_goto_7
-iPush_-1
-PushString "NAV_LEFT_RIGHT"
-PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
-CallNative play_sound_frontend 3 0
 Jump @Label_catch_button_press_goto_7_1
 
 :Label_catch_button_press_left_float
@@ -11037,7 +11032,7 @@ CmpEq
 Or
 
 :Label_catch_left_button_float_press_or
-JumpFalse @Label_catch_button_press_left_float_2
+JumpFalse @Label_catch_button_press_goto_7_1
 
 StaticGet1 4
 pstatic2 327
@@ -11070,13 +11065,11 @@ StaticGet1 4
 pstatic2 276
 ArraySet1 1
 
-:Label_catch_button_press_left_float_2
+:Label_catch_button_press_goto_7_1
 iPush_-1
 PushString "NAV_LEFT_RIGHT"
 PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
 CallNative play_sound_frontend 3 0
-
-:Label_catch_button_press_goto_7_1
 Jump @Label_catch_button_press_end
 
 :Label_catch_right_button_press
@@ -11128,11 +11121,7 @@ pstatic2 276
 ArraySet1 1
 
 :Label_catch_button_press_right_goto_7
-iPush_-1
-PushString "NAV_LEFT_RIGHT"
-PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
-CallNative play_sound_frontend 3 0
-Jump @Label_catch_button_press_end
+Jump @Label_catch_button_press_right_float_2
 
 :Label_catch_button_press_right_float
 iPush_2
@@ -11174,7 +11163,7 @@ fAdd
 StaticGet1 4
 pstatic2 276
 ArraySet1 1
-Jump @Label_catch_button_press_end
+Jump @Label_catch_button_press_right_float_2
 
 :Label_catch_button_press_right_float_1
 StaticGet1 4
@@ -16345,7 +16334,7 @@ Call @menu_addItem
 Push -890640939
 Call @menu_add_number
 Call @menu_add_action
-PushString "Cop"
+PushString "Male Cop"
 Call @menu_addItem
 Push -1699520669
 Call @menu_add_number
@@ -16968,7 +16957,7 @@ Call @menu_addItem
 Push 1250841910
 Call @menu_add_number
 Call @menu_add_action
-PushString "Cop"
+PushString "Female Cop"
 Call @menu_addItem
 Push 368603149
 Call @menu_add_number
@@ -17354,7 +17343,7 @@ Call @menu_addItem
 Push -973145378
 Call @menu_add_number
 Call @menu_add_action
-PushString "Cop"
+PushString "Male Cop"
 Call @menu_addItem
 Push 1581098148
 Call @menu_add_number
