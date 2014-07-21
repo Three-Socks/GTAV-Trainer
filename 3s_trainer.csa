@@ -2111,13 +2111,13 @@ PushString "Mount Chiliad"
 Call @menu_addItem_action
 PushString "Apartment"
 Call @menu_addItem_action
-PushString "10 cars garage"
+PushString "10 Car Garage"
 Call @menu_addItem_action
 PushString "HeliPad"
 Call @menu_addItem_action
-PushString "Under the bridge Glitch"
+PushString "Under The Bridge"
 Call @menu_addItem_action
-PushString "Alta St apartment Enter"
+PushString "Alta St Apartment Enter"
 Call @menu_addItem_action
 PushString "Police HeliPad"
 Call @menu_addItem_action
@@ -2125,7 +2125,7 @@ PushString "Police Parking Roof"
 Call @menu_addItem_action
 PushString "400K Apartment Roof"
 Call @menu_addItem_action
-PushString "Air Port"
+PushString "Airport"
 Call @menu_addItem_action
 PushString "Trevor's Office (Strip Club)"
 Call @menu_addItem_action
@@ -2137,11 +2137,11 @@ PushString "Grapeseed Air Field"
 Call @menu_addItem_action
 PushString "Fort Zacundo"
 Call @menu_addItem_action
-PushString "Franklin's House (New)"
+PushString "Franklin's House (NEW)"
 Call @menu_addItem_action
 PushString "Franklin's House (OLD)"
 Call @menu_addItem_action
-PushString "Rooftop Rumble Drop off"
+PushString "Rooftop Rumble Drop OFF"
 Call @menu_addItem_action
 PushString "Lester's House"
 Call @menu_addItem_action
@@ -2161,17 +2161,13 @@ PushString "Waynes Cousins House"
 Call @menu_addItem_action
 PushString "Airport Terminal"
 Call @menu_addItem_action
-PushString ""
-Call @menu_addItem_action
 PushString "Crane (1)"
 Call @menu_addItem_action
 PushString "Crane (2) Balcony"
 Call @menu_addItem_action
 PushString "Crane 3 (Scenic)"
 Call @menu_addItem_action
-PushString "Maze bank city Helipad"
-Call @menu_addItem_action
-PushString "Maze Bank Helipad (works)"
+PushString "Maze Bank Helipad"
 Call @menu_addItem_action
 PushString "Ontop of Vinewood Logo"
 Call @menu_addItem_action
@@ -2195,13 +2191,13 @@ PushString "Far end beach island with flowers"
 Call @menu_addItem_action
 PushString "Far Island"
 Call @menu_addItem_action
-Return 0 0
-
-:Label_trainer_teleport_level_2_last_selected_1
 PushString "Underwater ocean"
 Call @menu_addItem_action
 PushString "Dirtbike trail"
 Call @menu_addItem_action
+Return 0 0
+
+:Label_trainer_teleport_level_2_last_selected_1
 PushString "Zancudo river"
 Call @menu_addItem_action
 PushString "Private Hangout (Creek)"
@@ -2218,8 +2214,6 @@ PushString "Calafia Bridge (Near Canyon bridge) "
 Call @menu_addItem_action
 PushString "Race"
 Call @menu_addItem_action
-PushString ""
-Call @menu_addItem_action
 PushString "Bike race"
 Call @menu_addItem_action
 PushString "Land Race"
@@ -2230,7 +2224,7 @@ PushString "Deathmatch"
 Call @menu_addItem_action
 PushString "Team Deathmatch"
 Call @menu_addItem_action
-PushString "Ponsonbys (Clothing)"
+PushString "Posonbys (Clothing)"
 Call @menu_addItem_action
 PushString "Ammunation (Desert)"
 Call @menu_addItem_action
@@ -2240,17 +2234,9 @@ PushString "Car Wash"
 Call @menu_addItem_action
 PushString "Underwater (Beach near City)"
 Call @menu_addItem_action
-PushString ""
-Call @menu_addItem_action
-PushString ""
-Call @menu_addItem_action
-PushString ""
-Call @menu_addItem_action
 PushString "Humane Lab 2"
 Call @menu_addItem_action
 PushString "Inside casino"
-Call @menu_addItem_action
-PushString ""
 Call @menu_addItem_action
 PushString "Jet Spawn point 1"
 Call @menu_addItem_action
@@ -2268,13 +2254,13 @@ PushString "Lookout"
 Call @menu_addItem_action
 PushString "Behind bar in strip club"
 Call @menu_addItem_action
-PushString "EMPTY CLOSED IN ROOM (Strip Club)"
+PushString "Empty Closed Room (Strip Club)"
 Call @menu_addItem_action
-PushString "Inside Gun range"
+PushString "Inside Gun Range"
 Call @menu_addItem_action
 PushString "Ammunation Office"
 Call @menu_addItem_action
-PushString "HIGH IN THE SKY!!!!"
+PushString "High up in the sky (Skybase)"
 Call @menu_addItem_action
 PushString "Just Above the Clouds"
 Call @menu_addItem_action
@@ -2294,13 +2280,8 @@ PushString "400k Garage (Outside)"
 Call @menu_addItem_action
 PushString "400k Apartment (Outside)"
 Call @menu_addItem_action
-PushString "I don't know where"
+PushString "On top of Light House"
 Call @menu_addItem_action
-PushString "On top of Light house"
-Call @menu_addItem_action
-Return 0 0
-
-:Label_trainer_teleport_level_2_last_selected_2
 PushString "Water Fountain"
 Call @menu_addItem_action
 PushString "Water fountain with cube"
@@ -2317,13 +2298,12 @@ PushString "Under Roof"
 Call @menu_addItem_action
 PushString "HeliPad"
 Call @menu_addItem_action
+Return 0 0
+
+:Label_trainer_teleport_level_2_last_selected_2
 PushString "Trevor's House"
 Call @menu_addItem_action
-PushString "Trevor's Office (Strip Club)"
-Call @menu_addItem_action
-PushString "Trevor's Meth Lab"
-Call @menu_addItem_action
-PushString "RockfordHill"
+PushString "RockfordHills"
 Call @menu_addItem_action
 PushString "PaletoBay Shed"
 Call @menu_addItem_action
@@ -2351,8 +2331,6 @@ PushString "The Oriental TS(R)"
 Call @menu_addItem_action
 PushString "IOU Tower"
 Call @menu_addItem_action
-PushString "Under the bridge Glitch"
-Call @menu_addItem_action
 PushString "400 Appart glitch"
 Call @menu_addItem_action
 PushString "CypressFlatt"
@@ -2360,10 +2338,6 @@ Call @menu_addItem_action
 PushString "Cannibal Camp"
 Call @menu_addItem_action
 PushString "Cannibal Camp roof"
-Call @menu_addItem_action
-PushString "In building Glitch"
-Call @menu_addItem_action
-PushString "Building GLitch"
 Call @menu_addItem_action
 PushString "Dock (Near Lighthouse)"
 Call @menu_addItem_action
@@ -2408,8 +2382,8 @@ FromStack
 PushString "X"
 Call @menu_addItem
 getF 4
-fPush_0.0
-fPush_0.0
+fPush -3500.0
+fPush 7500.0
 Push1 10
 Call @menu_addItem_float_keyboard
 Call @menu_add_action
@@ -2418,8 +2392,8 @@ PushString "Y"
 Call @menu_addItem
 pFrame1 4
 GetImmediate1 1
-fPush_0.0
-fPush_0.0
+fPush -3500.0
+fPush 7500.0
 Push1 10
 Call @menu_addItem_float_keyboard
 Call @menu_add_action
@@ -2428,8 +2402,8 @@ PushString "Z"
 Call @menu_addItem
 pFrame1 4
 GetImmediate1 2
-fPush_0.0
-fPush_0.0
+fPush -3500.0
+fPush 7500.0
 Push1 10
 Call @menu_addItem_float_keyboard
 Call @menu_add_action
@@ -2437,11 +2411,19 @@ Call @menu_add_action
 PushString "Heading"
 Call @menu_addItem
 getF 3
-fPush_0.0
-fPush_0.0
+fPush -320.0
+fPush 320.0
 Push1 10
 Call @menu_addItem_float_keyboard
 Call @menu_add_action
+
+
+PushString "Real Time"
+Call @menu_addItem
+
+Call @menu_addItem_bool
+Call @menu_add_action
+
 
 PushString "Teleport"
 Call @menu_addItem_action
@@ -6638,10 +6620,41 @@ Return 0 0
 Return 0 0
 
 :trainer_teleport
-Function 1 4 16
+Function 1 5 17
 
 iPush_1
 StaticSet1 7
+
+iPush_3
+pFrame1 0
+ToStack
+iPush_3
+pFrame1 9
+FromStack
+
+getF 4
+JumpFalse @Label_trainer_teleport_change_z
+CallNative player_ped_id 0 1
+iPush_0
+CallNative is_ped_in_any_vehicle 2 1
+JumpFalse @Label_trainer_teleport_change_z_not_in_veh
+pFrame1 9
+GetImmediate1 2
+fPush 200
+fAdd
+pFrame1 9
+SetImmediate1 2
+Jump @Label_trainer_teleport_change_z
+
+:Label_trainer_teleport_change_z_not_in_veh
+pFrame1 9
+GetImmediate1 2
+fPush 1000
+fSub
+pFrame1 9
+SetImmediate1 2
+
+:Label_trainer_teleport_change_z
 iPush_0
 CallNative disable_all_control_actions 1 0
 iPush_1
@@ -6691,7 +6704,7 @@ Jump @Label_trainer_teleport_end
 
 :Label_trainer_teleport_action_2
 iPush_3
-pFrame1 0
+pFrame1 9
 ToStack
 fPush_5.0
 iPush_1
@@ -6711,7 +6724,7 @@ setF 7
 
 getF 7
 iPush_3
-pFrame1 0
+pFrame1 9
 ToStack
 iPush_1
 iPush_0
@@ -6731,7 +6744,7 @@ Jump @Label_trainer_teleport_3
 :Label_trainer_teleport_action_2_not_in_veh
 CallNative player_ped_id 0 1
 iPush_3
-pFrame1 0
+pFrame1 9
 ToStack
 iPush_1
 iPush_0
@@ -6755,7 +6768,7 @@ Push 1065353216
 CallNative set_gameplay_cam_relative_pitch 2 0
 CallNative new_load_scene_stop 0 0
 iPush_3
-pFrame1 0
+pFrame1 9
 ToStack
 fPush 5000
 iPush_1
@@ -6764,24 +6777,24 @@ iPush_0
 iPush_0
 CallNative clear_area 8 0
 iPush_3
-pFrame1 0
+pFrame1 9
 ToStack
 fPush 5000
 iPush_0
 CallNative clear_area_of_objects 5 0
 iPush_3
-pFrame1 0
+pFrame1 9
 ToStack
 fPush 30
 iPush_0
 CallNative clear_area_of_projectiles 5 0
 iPush_3
-pFrame1 0
+pFrame1 9
 ToStack
 fPush 5000
 CallNative remove_particle_fx_in_range 4 0
 iPush_3
-pFrame1 0
+pFrame1 9
 ToStack
 fPush 5000
 CallNative remove_decals_in_range 4 0
@@ -6795,7 +6808,7 @@ Jump @Label_trainer_teleport_end
 
 :Label_trainer_teleport_action_3
 iPush_3
-pFrame1 0
+pFrame1 9
 ToStack
 fPush 4500
 iPush_0
@@ -6871,6 +6884,22 @@ iPush_0
 StaticSet2 458
 
 :Label_trainer_teleport_action_5_631
+getF 4
+JumpFalse @Label_trainer_teleport_change_z_2
+iPush_3
+pFrame1 9
+ToStack
+pFrame1 12
+CallNative get_ground_z_for_3d_coord 4 1
+drop
+Jump @Label_trainer_teleport_change_z_3
+
+:Label_trainer_teleport_change_z_2
+pFrame1 9
+GetImmediate1 2
+setF 12
+
+:Label_trainer_teleport_change_z_3
 CallNative player_ped_id 0 1
 iPush_0
 CallNative is_ped_in_any_vehicle 2 1
@@ -6889,9 +6918,10 @@ fPush_0.0
 CallNative set_entity_heading 2 0
 
 getF 7
-iPush_3
-pFrame1 0
-ToStack
+getF 9
+pFrame1 9
+GetImmediate1 1
+getF 12
 iPush_1
 iPush_0
 iPush_0
@@ -6913,9 +6943,10 @@ fPush_0.0
 CallNative set_entity_heading 2 0
 
 CallNative player_ped_id 0 1
-iPush_3
-pFrame1 0
-ToStack
+getF 9
+pFrame1 9
+GetImmediate1 1
+getF 12
 iPush_1
 iPush_0
 iPush_0
@@ -6954,7 +6985,7 @@ StaticSet1 26
 Jump @Label_trainer_teleport_end
 
 :Label_trainer_teleport_end
-Return 4 0
+Return 5 0
 
 :trainer_teleport_time
 Function 1 2 4
@@ -6996,7 +7027,7 @@ Call @menu_error
 Return 0 0
 
 :Label_trainer_teleport_action_level_1_last_selected_4_1
-pstatic2 540
+StaticGet2 540
 pstatic2 540
 GetImmediate1 1
 pstatic2 540
@@ -7004,6 +7035,7 @@ GetImmediate1 2
 fPush 1000
 fSub
 fPush_0.0
+iPush_1
 Call @trainer_teleport
 
 :Label_trainer_teleport_action_level_1_last_selected_4_end
@@ -7986,6 +8018,7 @@ fPush -813.6030
 fPush 179.4738
 fPush 72.1589
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -7994,6 +8027,7 @@ fPush 308.9238
 fPush -1458.9330
 fPush 46.5095
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8002,6 +8036,7 @@ fPush 135.5220
 fPush -749.0009
 fPush 266.6102
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8010,6 +8045,7 @@ fPush 135.5220
 fPush -749.0009
 fPush 260.0000
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8018,6 +8054,7 @@ fPush 130.6824
 fPush -634.9446
 fPush 262.8510
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8026,6 +8063,7 @@ fPush 113.9319
 fPush -618.5334
 fPush 206.0465
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8034,6 +8072,7 @@ fPush 495.0000
 fPush 5586.0000
 fPush 794.0000
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8042,6 +8081,7 @@ fPush -878.5444
 fPush -445.3285
 fPush 125.6352
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8050,6 +8090,7 @@ fPush 229.3570
 fPush -992.9106
 fPush -98.9999
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8058,6 +8099,7 @@ fPush -736.7500
 fPush -1437.7500
 fPush 5.0003
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8066,6 +8108,7 @@ fPush 721.6599
 fPush -1000.6510
 fPush 23.5455
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8074,6 +8117,7 @@ fPush -266.0524
 fPush -968.6304
 fPush 31.2243
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8082,6 +8126,7 @@ fPush 369.4300
 fPush -1601.8320
 fPush 36.9502
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8090,6 +8135,7 @@ fPush 334.2101
 fPush -1644.7660
 fPush 98.4960
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8098,6 +8144,7 @@ fPush -769.8004
 fPush 331.2076
 fPush 234.2694
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8106,6 +8153,7 @@ fPush -1102.2910
 fPush -2894.5160
 fPush 13.9467
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8114,6 +8162,7 @@ fPush 97.2707
 fPush -1290.9940
 fPush 29.2688
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8122,6 +8171,7 @@ fPush 1741.4960
 fPush 3269.2570
 fPush 41.6014
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8130,6 +8180,7 @@ fPush 1974.7580
 fPush 3819.4570
 fPush 33.4363
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8138,6 +8189,7 @@ fPush 2124.0330
 fPush 4800.5860
 fPush 41.0031
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8146,6 +8198,7 @@ fPush -2012.8470
 fPush 2956.5270
 fPush 32.8101
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8154,6 +8207,7 @@ fPush 7.4150
 fPush 535.5486
 fPush 176.0279
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8162,6 +8216,7 @@ fPush -14.9693
 fPush -1436.4430
 fPush 31.1185
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8170,6 +8225,7 @@ fPush -1025.4400
 fPush 697.5500
 fPush 161.7000
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8178,6 +8234,7 @@ fPush 1248.1830
 fPush -1728.1040
 fPush 56.0000
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8186,6 +8243,7 @@ fPush 1397.5240
 fPush 3607.4230
 fPush 38.9419
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8194,6 +8252,7 @@ fPush 3617.2310
 fPush 3739.8710
 fPush 28.6901
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8202,6 +8261,7 @@ fPush 441.2090
 fPush -983.1136
 fPush 30.6895
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8210,6 +8270,7 @@ fPush 135.9541
 fPush -749.8984
 fPush 258.1520
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8218,6 +8279,7 @@ fPush 255.5819
 fPush 217.6896
 fPush 101.6834
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8226,6 +8288,7 @@ fPush -104.2072
 fPush 6469.2650
 fPush 31.6267
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8234,6 +8297,7 @@ fPush -1159.0340
 fPush -1521.1800
 fPush 10.6327
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8242,6 +8306,7 @@ fPush -1561.5250
 fPush -3232.3460
 fPush 26.3361
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8250,134 +8315,151 @@ fPush -167.9822
 fPush -1001.9265
 fPush 296.2061
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
 :Label_trainer_teleport_action_level_2_teleport_0_last_selected_34
-fPush -167.9822
-fPush -1001.9265
-fPush 296.2061
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_0_last_selected_35
 fPush -120.3508
 fPush -977.8608
 fPush 304.2478
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_0_last_selected_36
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_35
 fPush -119.859985
 fPush -976.43866
 fPush 306.3385
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_0_last_selected_37
-fPush -74.94243
-fPush -818.63446
-fPush 326.174347
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_0_last_selected_38
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_36
 fPush -74.9424
 fPush -818.63446
 fPush 326.1743
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_0_last_selected_39
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_37
 fPush 776.8780
 fPush 1175.6080
 fPush 345.9564
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_0_last_selected_40
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_38
 fPush 430.2037
 fPush 5614.7340
 fPush 766.1684
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_0_last_selected_41
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_39
 fPush 446.5404
 fPush 5571.6250
 fPush 781.1896
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_0_last_selected_42
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_40
 fPush 413.4706
 fPush 5572.8210
 fPush 779.6819
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_0_last_selected_43
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_41
 fPush 449.3493
 fPush 5568.5380
 fPush 796.1312
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_0_last_selected_44
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_42
 fPush -254.9432
 fPush -147.3534
 fPush 42.7314
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_0_last_selected_45
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_43
 fPush -147.5930
 fPush -964.6947
 fPush 254.1325
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_0_last_selected_46
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_44
 fPush 178.3295
 fPush 7041.8220
 fPush 1.8671
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_0_last_selected_47
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_45
 fPush 106.6972
 fPush 7282.0550
 fPush 1.8821
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_0_last_selected_48
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_46
 fPush -125.6544
 fPush 7271.8940
 fPush 16.7366
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_0_last_selected_49
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_47
 fPush 17.8323
 fPush 7630.0140
 fPush 13.5068
 fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_48
+fPush 103.4720
+fPush 7744.1870
+fPush -158.1106
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_49
+fPush -1202.0910
+fPush 2802.4400
+fPush 14.8256
+fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8390,402 +8472,452 @@ Switch [0 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_0]:[1 
 Jump @Label_trainer_teleport_action_level_2_last_selected_1_end
 
 :Label_trainer_teleport_action_level_2_teleport_1_last_selected_0
-fPush 103.4720
-fPush 7744.1870
-fPush -158.1106
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_1
-fPush -1202.0910
-fPush 2802.4400
-fPush 14.8256
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_2
 fPush -558.9814
 fPush 2945.7010
 fPush 14.5917
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_3
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_1
 fPush -463.6622
 fPush 4483.6540
 fPush 36.0373
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_4
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_2
 fPush -597.9525
 fPush 4475.2910
 fPush 25.6890
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_5
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_3
 fPush -589.5320
 fPush 4395.3900
 fPush 18.1481
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_6
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_4
 fPush -540.4822
 fPush 4402.3590
 fPush 34.3786
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_7
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_5
 fPush -530.6747
 fPush 4534.9960
 fPush 89.0457
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_8
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_6
 fPush -175.2189
 fPush 4244.1940
 fPush 44.0730
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_9
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_7
 fPush -95.2472
 fPush 4250.5470
 fPush 31.3630
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_10
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_8
 fPush 2124.5260
 fPush 1668.7090
 fPush 96.2708
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_11
-fPush 2124.5260
-fPush 1668.7090
-fPush 96.2708
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_12
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_9
 fPush 2678.6920
 fPush 1341.6110
 fPush 24.5118
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_13
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_10
 fPush 496.2334
 fPush 5527.2700
 fPush 778.4734
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_14
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_11
 fPush 138.1327
 fPush -1448.6800
 fPush 29.2240
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_15
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_12
 fPush 361.7499
 fPush -1957.4250
 fPush 24.6453
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_16
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_13
 fPush -159.2996
 fPush -304.3292
 fPush 39.7333
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_17
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_14
 fPush 1696.1050
 fPush 3755.1670
 fPush 34.7053
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_18
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_15
 fPush 247.3652
 fPush -45.8777
 fPush 69.9411
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_19
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_16
 fPush 53.9397
 fPush -1390.7710
 fPush 29.3734
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_20
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_17
 fPush -1952.1680
 fPush -975.5703
 fPush -16.8390
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_21
-fPush 895.5607
-fPush -987.6239
-fPush 44.2707
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_22
-fPush -841.2872
-fPush 158.0778
-fPush 67.1306
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_23
-fPush -841.2872
-fPush 158.0778
-fPush 67.1306
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_24
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_18
 fPush 3531.7030
 fPush 3673.6420
 fPush 28.1212
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_25
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_19
 fPush 937.4756
 fPush 42.4248
 fPush 80.8990
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_26
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_20
 fPush -2019.0620
 fPush 2956.4530
 fPush 32.8101
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_27
-fPush -2019.0620
-fPush 2956.4530
-fPush 32.8101
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_28
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_21
 fPush -2148.3510
 fPush 3031.7620
 fPush 32.8099
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_29
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_22
 fPush -222.1977
 fPush -1185.8500
 fPush 23.0294
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_30
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_23
 fPush 391.4746
 fPush -1637.9750
 fPush 29.3153
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_31
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_24
 fPush 322.0547
 fPush -1448.0380
 fPush 46.5095
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_32
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_25
 fPush -2177.4400
 fPush 5182.5960
 fPush 16.4753
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_33
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_26
 fPush -179.9843
 fPush 6150.4780
 fPush 42.6373
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_34
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_27
 fPush 126.1211
 fPush -1278.5130
 fPush 29.2696
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_35
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_28
 fPush 134.1213
 fPush -1289.5810
 fPush 29.2696
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_36
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_29
 fPush 22.8730
 fPush -1073.8800
 fPush 29.7970
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_37
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_30
 fPush 12.4553
 fPush -1110.2580
 fPush 29.7970
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_38
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_31
 fPush -129.9640
 fPush 8130.8730
 fPush 6705.6510
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_39
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_32
 fPush -149.3451
 fPush 7130.2460
 fPush 700.1167
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_40
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_33
 fPush 16.9691
 fPush -646.1804
 fPush 16.0881
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_41
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_34
 fPush -4.5786
 fPush -742.4279
 fPush 16.5030
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_42
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_35
 fPush 1033.7290
 fPush -270.5642
 fPush 50.8552
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_43
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_36
 fPush -74.3454
 fPush -821.6638
 fPush 2590.2230
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_44
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_37
 fPush -73.4489
 fPush -833.5170
 fPush 5841.4240
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_45
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_38
 fPush -65.4903
 fPush -873.2886
 fPush 12858.2100
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_46
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_39
 fPush -795.4600
 fPush 308.8900
 fPush 85.7100
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_47
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_40
 fPush -775.0500
 fPush 312.3200
 fPush 85.7000
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_48
-fPush -1907.3500
-fPush -577.2352
-fPush 20.1223
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_1_last_selected_49
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_41
 fPush 3433.6570
 fPush 5175.4090
 fPush 35.8053
 fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_42
+fPush -104.8196
+fPush -856.3741
+fPush 41.0868
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_43
+fPush -131.0631
+fPush -865.8098
+fPush 29.4677
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_44
+fPush -879.0649
+fPush -247.7447
+fPush 40.1937
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_45
+fPush -976.0147
+fPush -1003.8430
+fPush 2.1502
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_46
+fPush 78.9777
+fPush 113.4168
+fPush 81.1687
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_47
+fPush 67.4079
+fPush 123.5255
+fPush 86.1291
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_48
+fPush -1883.7390
+fPush 2062.8590
+fPush 144.8217
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_49
+fPush -736.7500
+fPush -1437.7500
+fPush 5.0003
+fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -8794,358 +8926,285 @@ Return 0 0
 
 :Label_trainer_teleport_action_level_2_last_selected_2
 StaticGet1 4
-Switch [0 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_0]:[1 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_1]:[2 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_2]:[3 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_3]:[4 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_4]:[5 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_5]:[6 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_6]:[7 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_7]:[8 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_8]:[9 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_9]:[10 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_10]:[11 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_11]:[12 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_12]:[13 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_13]:[14 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_14]:[15 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_15]:[16 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_16]:[17 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_17]:[18 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_18]:[19 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_19]:[20 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_20]:[21 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_21]:[22 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_22]:[23 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_23]:[24 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_24]:[25 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_25]:[26 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_26]:[27 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_27]:[28 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_28]:[29 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_29]:[30 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_30]:[31 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_31]:[32 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_32]:[33 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_33]:[34 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_34]:[35 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_35]:[36 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_36]:[37 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_37]:[38 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_38]:[39 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_39]:[40 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_40]:[41 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_41]
+Switch [0 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_0]:[1 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_1]:[2 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_2]:[3 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_3]:[4 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_4]:[5 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_5]:[6 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_6]:[7 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_7]:[8 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_8]:[9 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_9]:[10 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_10]:[11 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_11]:[12 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_12]:[13 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_13]:[14 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_14]:[15 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_15]:[16 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_16]:[17 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_17]:[18 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_18]:[19 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_19]:[20 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_20]:[21 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_21]:[22 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_22]:[23 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_23]:[24 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_24]:[25 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_25]:[26 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_26]:[27 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_27]:[28 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_28]:[29 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_29]:[30 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_30]
 Jump @Label_trainer_teleport_action_level_2_last_selected_2_end
 
 :Label_trainer_teleport_action_level_2_teleport_2_last_selected_0
-fPush -104.8196
-fPush -856.3741
-fPush 41.0868
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_1
-fPush -131.0631
-fPush -865.8098
-fPush 29.4677
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_2
-fPush -879.0649
-fPush -247.7447
-fPush 40.1937
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_3
-fPush -976.0147
-fPush -1003.8430
-fPush 2.1502
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_4
-fPush 78.9777
-fPush 113.4168
-fPush 81.1687
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_5
-fPush 67.4079
-fPush 123.5255
-fPush 86.1291
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_6
-fPush -1883.7390
-fPush 2062.8590
-fPush 144.8217
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_7
-fPush -736.7500
-fPush -1437.7500
-fPush 5.0003
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_8
 fPush 1974.7580
 fPush 3819.4570
 fPush 33.4363
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_9
-fPush 97.2707
-fPush -1290.9940
-fPush 29.2688
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_10
-fPush 1397.5240
-fPush 3607.4230
-fPush 38.9419
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_11
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_1
 fPush -869.2877
 fPush -250.0446
 fPush 39.7795
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_12
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_2
 fPush -179.0000
 fPush 6150.0000
 fPush 42.0000
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_13
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_3
 fPush -783.1708
 fPush -246.4606
 fPush 37.0212
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_14
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_4
 fPush -1600.0930
 fPush -1041.8920
 fPush 13.0209
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_15
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_5
 fPush -1664.1670
 fPush -1126.5330
 fPush 32.1513
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_16
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_6
 fPush -1645.5460
 fPush -1102.3670
 fPush 13.4518
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_17
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_7
 fPush -1685.9830
 fPush -1104.1350
 fPush 13.1523
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_18
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_8
 fPush -1641.5500
 fPush -1097.6340
 fPush 13.4500
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_19
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_9
 fPush -1682.1570
 fPush -1107.2580
 fPush 13.1523
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_20
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_10
 fPush -1639.9170
 fPush -1092.0860
 fPush 13.5766
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_21
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_11
 fPush -1678.2000
 fPush -1110.5410
 fPush 13.1523
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_22
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_12
 fPush 282.2156
 fPush 199.8016
 fPush 104.3740
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_23
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_13
 fPush 314.1337
 fPush 188.3539
 fPush 103.9276
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_24
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_14
 fPush -866.4975
 fPush -251.8129
 fPush 40.1102
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_25
-fPush 721.6599
-fPush -1000.6510
-fPush 23.5455
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_26
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_15
 fPush -785.4869
 fPush 314.7161
 fPush 90.2189
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_27
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_16
 fPush 895.5247
 fPush -2301.5640
 fPush 30.3838
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_28
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_17
 fPush -1170.1150
 fPush 4926.1340
 fPush 224.3552
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_29
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_18
 fPush -1143.1450
 fPush 4951.1880
 fPush 230.1531
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_30
-fPush 0.0000
-fPush 0.0000
-fPush 0.0000
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_31
-fPush -91.6870
-fPush 33.0948
-fPush 71.4655
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_32
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_19
 fPush 3369.2240
 fPush 5184.1500
 fPush 1.4602
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_33
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_20
 fPush 3336.1740
 fPush 5172.9410
 fPush 18.3161
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_34
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_21
 fPush -2501.9390
 fPush 3309.8980
 fPush 91.9665
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_35
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_22
 fPush 489.3171
 fPush 5580.8870
 fPush 792.8515
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_36
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_23
 fPush 2.6014
 fPush 525.5179
 fPush 170.6172
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_37
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_24
 fPush -129.3836
 fPush -951.1331
 fPush 218.8816
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_38
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_25
 fPush 546.0365
 fPush -183.3675
 fPush 54.4982
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_39
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_26
 fPush -935.9363
 fPush 4836.7470
 fPush 310.5199
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_40
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_27
 fPush -2183.0350
 fPush -1051.0040
 fPush -143.7705
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_41
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_28
 fPush -1942.3540
 fPush -1128.5290
 fPush -34.9933
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_42
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_29
 fPush -2433.3870
 fPush -1332.6030
 fPush -207.4861
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
-:Label_trainer_teleport_action_level_2_teleport_2_last_selected_43
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_30
 fPush 220.5997
 fPush -1006.7580
 fPush -98.9999
 fPush_0.0
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
@@ -9166,6 +9225,7 @@ iPush_2
 Call @menu_get_number
 iPush_3
 Call @menu_get_number
+iPush_0
 Call @trainer_teleport
 Return 0 0
 
