@@ -14,6 +14,8 @@ JumpFalse @Label_main_end
 iPush_0
 CallNative wait 1 0
 
+PushString "valentinerpreward2"
+CallNative terminate_all_scripts_with_this_name 1 0
 CallNative network_is_game_in_progress 0 1
 JumpFalse @Label_main_1
 Call @trainer_network_while_set
@@ -110,26 +112,84 @@ StaticGet2 525
 JumpFalse @Label_trainer_network_while_set_3
 StaticGet2 526
 pglobal3 2391871
-GetImmediate2 2697
-JumpEq @Label_trainer_network_while_set_3
-StaticGet2 526
-pglobal3 2391871
 SetImmediate2 2697
 
 :Label_trainer_network_while_set_3
+StaticGet2 384
+JumpFalse @Label_trainer_network_while_set_4
+CallNative get_network_time 0 1
+pglobal3 2390986
+SetImmediate1 55
+
+:Label_trainer_network_while_set_4
 Return 0 0
 
 :trainer_network_set_spawn_veh
 Function 1 1 3
-
-iPush_1
-StaticSet2 525
 
 getF 0
 StaticSet2 526
 
 :Label_network_set_spawn_veh_end
 Return 1 0
+
+:trainer_network_menu
+Function 1 0 5
+
+CallNative network_is_game_in_progress 0 1
+Not
+JumpFalse @Label_last_selected_4_1
+iPush_1
+Call @trainer_error_network
+Return 0 0
+
+:Label_last_selected_4_1
+PushString "Network"
+StaticSet1 10
+PushString "Pause Off Radar Timer"
+Call @menu_addItem
+StaticGet2 384
+Call @menu_addItem_bool
+Call @menu_add_action
+
+PushString "Replace Pegasus"
+Call @menu_addItem
+StaticGet2 525
+Call @menu_addItem_bool
+Call @menu_add_action
+Return 0 0
+
+:trainer_network_action_level_1
+Function 1 0 7
+
+StaticGet1 4
+Switch [0 @Label_trainer_network_action_level_1_last_selected_0]:[1 @Label_trainer_network_action_level_1_last_selected_1]
+Jump @Label_trainer_network_action_level_1_end
+
+:Label_trainer_network_action_level_1_last_selected_0
+StaticGet2 384
+Not
+StaticSet2 384
+Call @menu_toggle_current_bool
+StaticGet2 384
+CallNative player_id 0 1
+pglobal3 2387077
+ArrayGetP1 217
+SetImmediate1 170
+CallNative get_network_time 0 1
+pglobal3 2390986
+SetImmediate1 55
+Return 0 0
+
+:Label_trainer_network_action_level_1_last_selected_1
+StaticGet2 525
+Not
+StaticSet2 525
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_network_action_level_1_end
+Return 0 0
 
 :trainer_loop_checks
 Function 1 0 2
@@ -637,6 +697,9 @@ Function 1 0 4
 PushString "Debug"
 StaticSet1 10
 
+PushString "Version: 1.2 TEST NETWORK"
+Call @menu_addItem_action
+
 PushString "Run Speed Multiplier"
 Call @menu_addItem
 fPush_1.0
@@ -760,6 +823,38 @@ fPush 100
 Call @menu_addItem_float
 Call @menu_add_action
 
+PushString "set_vehicle_friction_override"
+Call @menu_addItem
+fPush_1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "unk 6E67FD35"
+Call @menu_addItem
+fPush_1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "unk 585E49B6"
+Call @menu_addItem
+fPush_1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "unk B6BE07E0"
+Call @menu_addItem
+fPush_1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
 PushString "Language"
 Call @menu_addItem
 CallNative get_current_language 0 1
@@ -799,6 +894,14 @@ PushString "CELL_16"
 Call @menu_addItem
 
 :Label_level_0_teleport
+PushString "Teleport"
+Call @menu_addItem
+
+PushString "Network"
+Call @menu_addItem
+
+PushString "Debug"
+Call @menu_addItem
 Return 0 0
 
 :Label_level_1
@@ -830,7 +933,7 @@ Function 1 0 7
 iPush_0
 pstatic2 61
 ArrayGet1 1
-Switch [0 @Label_last_selected_0]:[1 @Label_last_selected_1]:[2 @Label_last_selected_2]:[3 @Label_last_selected_3]:[4 @Label_last_selected_4]
+Switch [0 @Label_last_selected_0]:[1 @Label_last_selected_1]:[2 @Label_last_selected_2]:[3 @Label_last_selected_3]:[4 @Label_last_selected_4]:[5 @Label_last_selected_5]
 Jump @Label_level_1_end
 
 :Label_last_selected_0
@@ -850,6 +953,8 @@ Call @menu_addItem
 PushString "PM_WEAPONS"
 Call @menu_addItem
 PushString "PS_SPEC_AB"
+Call @menu_addItem
+PushString "Multipliers"
 Call @menu_addItem
 Return 0 0
 
@@ -935,21 +1040,31 @@ Call @menu_addItem_action
 Return 0 0
 
 :Label_last_selected_3
-Call @trainer_debug_menu
-Return 0 0
-
-:Label_last_selected_4
 PushString "Teleport"
 StaticSet1 10
 
-PushString "Airport Runway"
-Call @menu_addItem_action
+PushString "Teleport Locations 1"
+Call @menu_addItem
+
+PushString "Teleport Locations 2"
+Call @menu_addItem
+
+PushString "Teleport Locations 3"
+Call @menu_addItem
 
 PushString "Custom"
 Call @menu_addItem
 
 PushString "Waypoint"
 Call @menu_addItem_action
+Return 0 0
+
+:Label_last_selected_4
+Call @trainer_network_menu
+Return 0 0
+
+:Label_last_selected_5
+Call @trainer_debug_menu
 Return 0 0
 
 :Label_level_1_end
@@ -1078,7 +1193,7 @@ Function 1 0 4
 iPush_1
 pstatic2 61
 ArrayGet1 1
-Switch [0 @Label_trainer_player_level_2_last_selected_0]:[1 @Label_trainer_player_level_2_last_selected_1]:[2 @Label_trainer_player_level_2_last_selected_2]:[3 @Label_trainer_player_level_2_last_selected_3]:[4 @Label_trainer_player_level_2_last_selected_4]:[5 @Label_trainer_player_level_2_last_selected_5]:[6 @Label_trainer_player_level_2_last_selected_6]
+Switch [0 @Label_trainer_player_level_2_last_selected_0]:[1 @Label_trainer_player_level_2_last_selected_1]:[2 @Label_trainer_player_level_2_last_selected_2]:[3 @Label_trainer_player_level_2_last_selected_3]:[4 @Label_trainer_player_level_2_last_selected_4]:[5 @Label_trainer_player_level_2_last_selected_5]:[6 @Label_trainer_player_level_2_last_selected_6]:[7 @Label_trainer_player_level_2_last_selected_7]
 Jump @Label_trainer_player_level_2_end
 
 :Label_trainer_player_level_2_last_selected_0
@@ -1184,6 +1299,9 @@ Return 0 0
 PushString "PIM_TACCE"
 CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
+
+iPush_2
+Call @menu_set_catch_button_id
 
 PushString "Head"
 Call @menu_addItem
@@ -1398,6 +1516,52 @@ Call @menu_addItem_bool
 Call @menu_add_action
 Return 0 0
 
+:Label_trainer_player_level_2_last_selected_7
+PushString "Multipliers"
+StaticSet1 10
+
+PushString "Run Speed"
+Call @menu_addItem
+fPush_1.0
+fPush 0.5
+fPush 1.5
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "Swim Speed"
+Call @menu_addItem
+fPush_1.0
+fPush 0.5
+fPush 1.5
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "Weapon Damage"
+Call @menu_addItem
+fPush_1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "Vehicle Damage"
+Call @menu_addItem
+fPush_1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+PushString "Noise"
+Call @menu_addItem
+fPush_1.0
+fPush -100
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
+
+Return 0 0
+
 :Label_trainer_player_level_2_end
 Return 0 0
 
@@ -1432,6 +1596,10 @@ Return 0 0
 :Label_trainer_vehicle_level_2_last_selected_1
 PushString "Customize"
 StaticSet1 10
+
+iPush_1
+Call @menu_set_catch_button_id
+
 StaticGet2 379
 StaticGet2 412
 CallNative set_vehicle_mod_kit 2 0
@@ -2004,6 +2172,284 @@ Return 0 0
 :trainer_teleport_level_2
 Function 1 0 6
 
+iPush_1
+pstatic2 61
+ArrayGet1 1
+Switch [0 @Label_trainer_teleport_level_2_last_selected_0]:[1 @Label_trainer_teleport_level_2_last_selected_1]:[2 @Label_trainer_teleport_level_2_last_selected_2]:[3 @Label_trainer_teleport_level_2_last_selected_3]
+Jump @Label_trainer_teleport_level_2_end
+
+:Label_trainer_teleport_level_2_last_selected_0
+PushString "Michael's House"
+Call @menu_addItem_action
+PushString "Emergency HeliPad"
+Call @menu_addItem_action
+PushString "FIB Building Roof"
+Call @menu_addItem_action
+PushString "FIB Building Inside"
+Call @menu_addItem_action
+PushString "IAA Building Roof"
+Call @menu_addItem_action
+PushString "IAA Building Inside"
+Call @menu_addItem_action
+PushString "Mount Chiliad"
+Call @menu_addItem_action
+PushString "Apartment"
+Call @menu_addItem_action
+PushString "10 Car Garage"
+Call @menu_addItem_action
+PushString "HeliPad"
+Call @menu_addItem_action
+PushString "Under The Bridge"
+Call @menu_addItem_action
+PushString "Alta St Apartment Enter"
+Call @menu_addItem_action
+PushString "Police HeliPad"
+Call @menu_addItem_action
+PushString "Police Parking Roof"
+Call @menu_addItem_action
+PushString "400K Apartment Roof"
+Call @menu_addItem_action
+PushString "Airport"
+Call @menu_addItem_action
+PushString "Trevor's Office (Strip Club)"
+Call @menu_addItem_action
+PushString "Trevor's Air Field"
+Call @menu_addItem_action
+PushString "Trevor's House"
+Call @menu_addItem_action
+PushString "Grapeseed Air Field"
+Call @menu_addItem_action
+PushString "Fort Zacundo"
+Call @menu_addItem_action
+PushString "Franklin's House (NEW)"
+Call @menu_addItem_action
+PushString "Franklin's House (OLD)"
+Call @menu_addItem_action
+PushString "Rooftop Rumble Drop OFF"
+Call @menu_addItem_action
+PushString "Lester's House"
+Call @menu_addItem_action
+PushString "Trevor's Meth Lab"
+Call @menu_addItem_action
+PushString "Humane Lab"
+Call @menu_addItem_action
+PushString "Police Station"
+Call @menu_addItem_action
+PushString "FIB Roof Glitch"
+Call @menu_addItem_action
+PushString "Bank Vault"
+Call @menu_addItem_action
+PushString "Blaine County Bank"
+Call @menu_addItem_action
+PushString "Waynes Cousins House"
+Call @menu_addItem_action
+PushString "Airport Terminal"
+Call @menu_addItem_action
+PushString "Crane (1)"
+Call @menu_addItem_action
+PushString "Crane (2) Balcony"
+Call @menu_addItem_action
+PushString "Crane 3 (Scenic)"
+Call @menu_addItem_action
+PushString "Maze Bank Helipad"
+Call @menu_addItem_action
+PushString "Ontop of Vinewood Logo"
+Call @menu_addItem_action
+PushString "Mount Chiliad Jump"
+Call @menu_addItem_action
+PushString "Mount Chiliad Structure Skyline"
+Call @menu_addItem_action
+PushString "Mount Chiliad (Scenic View)"
+Call @menu_addItem_action
+PushString "Mount Chiliad - Ontop of House"
+Call @menu_addItem_action
+PushString "City Wall (Glitch)"
+Call @menu_addItem_action
+PushString "Construction site on building"
+Call @menu_addItem_action
+PushString "Far away beach"
+Call @menu_addItem_action
+PushString "Coral Reef"
+Call @menu_addItem_action
+PushString "Far end beach island with flowers"
+Call @menu_addItem_action
+PushString "Far Island"
+Call @menu_addItem_action
+PushString "Underwater ocean"
+Call @menu_addItem_action
+PushString "Dirtbike trail"
+Call @menu_addItem_action
+Return 0 0
+
+:Label_trainer_teleport_level_2_last_selected_1
+PushString "Zancudo river"
+Call @menu_addItem_action
+PushString "Private Hangout (Creek)"
+Call @menu_addItem_action
+PushString "Private hangout 2 (Waterfall)"
+Call @menu_addItem_action
+PushString "Creek swimming (Next to waterfall)"
+Call @menu_addItem_action
+PushString "Ontop of Waterfall"
+Call @menu_addItem_action
+PushString "Canyon Bridge/Tunnel/TrainTracks"
+Call @menu_addItem_action
+PushString "Calafia Bridge (Near Canyon bridge) "
+Call @menu_addItem_action
+PushString "Race"
+Call @menu_addItem_action
+PushString "Bike race"
+Call @menu_addItem_action
+PushString "Land Race"
+Call @menu_addItem_action
+PushString "Parachuting"
+Call @menu_addItem_action
+PushString "Deathmatch"
+Call @menu_addItem_action
+PushString "Team Deathmatch"
+Call @menu_addItem_action
+PushString "Posonbys (Clothing)"
+Call @menu_addItem_action
+PushString "Ammunation (Desert)"
+Call @menu_addItem_action
+PushString "Ammunation City"
+Call @menu_addItem_action
+PushString "Car Wash"
+Call @menu_addItem_action
+PushString "Underwater (Beach near City)"
+Call @menu_addItem_action
+PushString "Humane Lab 2"
+Call @menu_addItem_action
+PushString "Inside casino"
+Call @menu_addItem_action
+PushString "Jet Spawn point 1"
+Call @menu_addItem_action
+PushString "Jet Spawn point 2"
+Call @menu_addItem_action
+PushString "Mors Mutual Impound"
+Call @menu_addItem_action
+PushString "Car Impound"
+Call @menu_addItem_action
+PushString "Hospital Helipads"
+Call @menu_addItem_action
+PushString "Kill Boost island"
+Call @menu_addItem_action
+PushString "Lookout"
+Call @menu_addItem_action
+PushString "Behind bar in strip club"
+Call @menu_addItem_action
+PushString "Empty Closed Room (Strip Club)"
+Call @menu_addItem_action
+PushString "Inside Gun Range"
+Call @menu_addItem_action
+PushString "Ammunation Office"
+Call @menu_addItem_action
+PushString "High up in the sky (Skybase)"
+Call @menu_addItem_action
+PushString "Just Above the Clouds"
+Call @menu_addItem_action
+PushString "Underground tunnel"
+Call @menu_addItem_action
+PushString "Tunnel Loop"
+Call @menu_addItem_action
+PushString "Tunnel exit"
+Call @menu_addItem_action
+PushString "In the Sky (Maze Bank Helipad)"
+Call @menu_addItem_action
+PushString "Above Clouds (Maze Bank Helipad)"
+Call @menu_addItem_action
+PushString "In the Atmosphee"
+Call @menu_addItem_action
+PushString "400k Garage (Outside)"
+Call @menu_addItem_action
+PushString "400k Apartment (Outside)"
+Call @menu_addItem_action
+PushString "On top of Light House"
+Call @menu_addItem_action
+PushString "Water Fountain"
+Call @menu_addItem_action
+PushString "Water fountain with cube"
+Call @menu_addItem_action
+PushString "Inside Jonny Tung"
+Call @menu_addItem_action
+PushString "Vesupucci House Glitch"
+Call @menu_addItem_action
+PushString "GO Postal"
+Call @menu_addItem_action
+PushString "GO Postal 2"
+Call @menu_addItem_action
+PushString "Under Roof"
+Call @menu_addItem_action
+PushString "HeliPad"
+Call @menu_addItem_action
+Return 0 0
+
+:Label_trainer_teleport_level_2_last_selected_2
+PushString "Trevor's House"
+Call @menu_addItem_action
+PushString "RockfordHills"
+Call @menu_addItem_action
+PushString "PaletoBay Shed"
+Call @menu_addItem_action
+PushString "Luxury Auto"
+Call @menu_addItem_action
+PushString "DelPerroPier"
+Call @menu_addItem_action
+PushString "Middle of Ferris Wheel"
+Call @menu_addItem_action
+PushString "Cherry Popper Stand"
+Call @menu_addItem_action
+PushString "Cherry Popper 2"
+Call @menu_addItem_action
+PushString "MogShot Stand"
+Call @menu_addItem_action
+PushString "MogShots 2"
+Call @menu_addItem_action
+PushString "Gifts at the pier"
+Call @menu_addItem_action
+PushString "Gifts at the pier 2"
+Call @menu_addItem_action
+PushString "The Oriental TS(L)"
+Call @menu_addItem_action
+PushString "The Oriental TS(R)"
+Call @menu_addItem_action
+PushString "IOU Tower"
+Call @menu_addItem_action
+PushString "400 Appart glitch"
+Call @menu_addItem_action
+PushString "CypressFlatt"
+Call @menu_addItem_action
+PushString "Cannibal Camp"
+Call @menu_addItem_action
+PushString "Cannibal Camp roof"
+Call @menu_addItem_action
+PushString "Dock (Near Lighthouse)"
+Call @menu_addItem_action
+PushString "Winding stairs"
+Call @menu_addItem_action
+PushString "Miltary Base Tower"
+Call @menu_addItem_action
+PushString "Mount Chiliad City view"
+Call @menu_addItem_action
+PushString "Franklins Bedroom"
+Call @menu_addItem_action
+PushString "Building Wireframe"
+Call @menu_addItem_action
+PushString "Mechanic Glitch"
+Call @menu_addItem_action
+PushString "Cannibal Mountain top"
+Call @menu_addItem_action
+PushString "Underwater Hotspot"
+Call @menu_addItem_action
+PushString "Coral Reef 2"
+Call @menu_addItem_action
+PushString "Under ocean Glitch with Car"
+Call @menu_addItem_action
+PushString "Apartment wall"
+Call @menu_addItem_action
+Return 0 0
+
+:Label_trainer_teleport_level_2_last_selected_3
 PushString "Custom"
 StaticSet1 10
 
@@ -2020,8 +2466,8 @@ FromStack
 PushString "X"
 Call @menu_addItem
 getF 4
-fPush_0.0
-fPush_0.0
+fPush -3500.0
+fPush 7500.0
 Push1 10
 Call @menu_addItem_float_keyboard
 Call @menu_add_action
@@ -2030,8 +2476,8 @@ PushString "Y"
 Call @menu_addItem
 pFrame1 4
 GetImmediate1 1
-fPush_0.0
-fPush_0.0
+fPush -3500.0
+fPush 7500.0
 Push1 10
 Call @menu_addItem_float_keyboard
 Call @menu_add_action
@@ -2040,8 +2486,8 @@ PushString "Z"
 Call @menu_addItem
 pFrame1 4
 GetImmediate1 2
-fPush_0.0
-fPush_0.0
+fPush -3500.0
+fPush 7500.0
 Push1 10
 Call @menu_addItem_float_keyboard
 Call @menu_add_action
@@ -2049,15 +2495,23 @@ Call @menu_add_action
 PushString "Heading"
 Call @menu_addItem
 getF 3
-fPush_0.0
-fPush_0.0
+fPush -320.0
+fPush 320.0
 Push1 10
 Call @menu_addItem_float_keyboard
 Call @menu_add_action
 
+PushString "Real Time"
+Call @menu_addItem
+iPush_0
+Call @menu_addItem_bool
+Call @menu_add_action
+
 PushString "Teleport"
 Call @menu_addItem_action
+Return 0 0
 
+:Label_trainer_teleport_level_2_end
 Return 0 0
 
 :trainer_level_3
@@ -2774,9 +3228,7 @@ PushString "CMOD_COL1_1"
 Call @menu_addItem
 
 PushString "CMOD_COL1_1"
-CallNative unk_0x95C4B5AD 1 1
-iPush_2
-Call @menu_addItem_add_number
+Call @menu_addItem
 
 PushString "CMOD_COL1_5"
 Call @menu_addItem
@@ -2785,9 +3237,7 @@ PushString "CMOD_COL1_3"
 Call @menu_addItem
 
 PushString "CMOD_COL1_3"
-CallNative unk_0x95C4B5AD 1 1
-iPush_2
-Call @menu_addItem_add_number
+Call @menu_addItem
 
 PushString "CMOD_COL1_4"
 Call @menu_addItem
@@ -5797,6 +6247,13 @@ CallNative unk_0x08F7AF78 2 1
 drop
 Return 1 0
 
+:trainer_error_network
+Function 1 1 4
+PushString "Not online."
+getF 0
+Call @menu_error
+Return 1 0
+
 :menu_action
 Function 1 0 26
 
@@ -5952,7 +6409,7 @@ Function 1 0 4
 iPush_0
 pstatic2 61
 ArrayGet1 1
-Switch [1 @Label_action_level_1_last_selected_1]:[2 @Label_action_level_1_last_selected_2]:[3 @Label_action_level_1_last_selected_3]:[4 @Label_action_level_1_last_selected_4]
+Switch [1 @Label_action_level_1_last_selected_1]:[2 @Label_action_level_1_last_selected_2]:[3 @Label_action_level_1_last_selected_3]:[4 @Label_action_level_1_last_selected_4]:[5 @Label_action_level_1_last_selected_5]
 Jump @Label_action_level_1_end
 
 :Label_action_level_1_last_selected_1
@@ -5964,11 +6421,15 @@ Call @trainer_world_action_level_1
 Return 0 0
 
 :Label_action_level_1_last_selected_3
-Call @trainer_debug_action
+Call @trainer_teleport_action_level_1
 Return 0 0
 
 :Label_action_level_1_last_selected_4
-Call @trainer_teleport_action_level_1
+Call @trainer_network_action_level_1
+Return 0 0
+
+:Label_action_level_1_last_selected_5
+Call @trainer_debug_action
 Return 0 0
 
 :Label_action_level_1_end
@@ -6018,131 +6479,144 @@ Return 0 0
 Function 1 0 4
 
 StaticGet1 4
-Switch [0 @Label_trainer_debug_action_level_1_last_selected_0]:[1 @Label_trainer_debug_action_level_1_last_selected_1]:[2 @Label_trainer_debug_action_level_1_last_selected_2]:[3 @Label_trainer_debug_action_level_1_last_selected_3]:[4 @Label_trainer_debug_action_level_1_last_selected_4]:[5 @Label_trainer_debug_action_level_1_last_selected_5]:[6 @Label_trainer_debug_action_level_1_last_selected_6]:[7 @Label_trainer_debug_action_level_1_last_selected_7]:[8 @Label_trainer_debug_action_level_1_last_selected_8]:[9 @Label_trainer_debug_action_level_1_last_selected_9]:[10 @Label_trainer_debug_action_level_1_last_selected_10]:[11 @Label_trainer_debug_action_level_1_last_selected_11]:[12 @Label_trainer_debug_action_level_1_last_selected_12]:[13 @Label_trainer_debug_action_level_1_last_selected_13]:[14 @Label_trainer_debug_action_level_1_last_selected_14]:[15 @Label_trainer_debug_action_level_1_last_selected_15]:[17 @Label_trainer_debug_action_level_1_last_selected_17]
+Switch [1 @Label_trainer_debug_action_level_1_last_selected_1]:[2 @Label_trainer_debug_action_level_1_last_selected_2]:[3 @Label_trainer_debug_action_level_1_last_selected_3]:[4 @Label_trainer_debug_action_level_1_last_selected_4]:[5 @Label_trainer_debug_action_level_1_last_selected_5]:[6 @Label_trainer_debug_action_level_1_last_selected_6]:[7 @Label_trainer_debug_action_level_1_last_selected_7]:[8 @Label_trainer_debug_action_level_1_last_selected_8]:[9 @Label_trainer_debug_action_level_1_last_selected_9]:[10 @Label_trainer_debug_action_level_1_last_selected_10]:[11 @Label_trainer_debug_action_level_1_last_selected_11]:[12 @Label_trainer_debug_action_level_1_last_selected_12]:[13 @Label_trainer_debug_action_level_1_last_selected_13]:[14 @Label_trainer_debug_action_level_1_last_selected_14]:[15 @Label_trainer_debug_action_level_1_last_selected_15]:[16 @Label_trainer_debug_action_level_1_last_selected_16]:[17 @Label_trainer_debug_action_level_1_last_selected_17]:[18 @Label_trainer_debug_action_level_1_last_selected_18]:[19 @Label_trainer_debug_action_level_1_last_selected_19]:[20 @Label_trainer_debug_action_level_1_last_selected_20]
 Jump @Label_trainer_debug_action_level_1_end
 
-:Label_trainer_debug_action_level_1_last_selected_0
+:Label_trainer_debug_action_level_1_last_selected_1
 CallNative player_id 0 1
 Call @menu_get_current_number
 CallNative unk_0x825423C2 2 0
 Return 0 0
 
-:Label_trainer_debug_action_level_1_last_selected_1
+:Label_trainer_debug_action_level_1_last_selected_2
 CallNative player_id 0 1
 Call @menu_get_current_number
 CallNative unk_0xB986FF47 2 0
 Return 0 0
 
-:Label_trainer_debug_action_level_1_last_selected_2
+:Label_trainer_debug_action_level_1_last_selected_3
 CallNative player_id 0 1
 Call @menu_get_current_number
 iPush_1
 CallNative unk_0x72429998 3 0
 Return 0 0
 
-:Label_trainer_debug_action_level_1_last_selected_3
+:Label_trainer_debug_action_level_1_last_selected_4
 CallNative player_id 0 1
 iPush_1
 CallNative special_ability_fill_meter 2 0
 Return 0 0
 
-:Label_trainer_debug_action_level_1_last_selected_4
+:Label_trainer_debug_action_level_1_last_selected_5
 CallNative player_id 0 1
 Call @menu_get_current_number
 CallNative unk_0x45514731 2 0
 Return 0 0
 
-:Label_trainer_debug_action_level_1_last_selected_5
+:Label_trainer_debug_action_level_1_last_selected_6
 CallNative player_id 0 1
 Call @menu_get_current_number
 CallNative set_player_weapon_damage_modifier 2 0
 Return 0 0
 
-:Label_trainer_debug_action_level_1_last_selected_6
+:Label_trainer_debug_action_level_1_last_selected_7
 CallNative player_id 0 1
 Call @menu_get_current_number
 CallNative unk_0x362E69AD 2 0
 Return 0 0
 
-:Label_trainer_debug_action_level_1_last_selected_7
+:Label_trainer_debug_action_level_1_last_selected_8
 CallNative player_id 0 1
 Call @menu_get_current_number
 CallNative unk_0x9F3D577F 2 0
 Return 0 0
 
-:Label_trainer_debug_action_level_1_last_selected_8
+:Label_trainer_debug_action_level_1_last_selected_9
 CallNative player_id 0 1
 Call @menu_get_current_number
 CallNative set_player_vehicle_damage_modifier 2 0
 Return 0 0
 
-:Label_trainer_debug_action_level_1_last_selected_9
+:Label_trainer_debug_action_level_1_last_selected_10
 CallNative player_id 0 1
 Call @menu_get_current_number
 CallNative unk_0xA16626C7 2 0
 Return 0 0
 
-:Label_trainer_debug_action_level_1_last_selected_10
+:Label_trainer_debug_action_level_1_last_selected_11
 CallNative player_id 0 1
 Call @menu_get_current_number
 CallNative unk_0xAE446344 2 0
 Return 0 0
 
-:Label_trainer_debug_action_level_1_last_selected_11
+:Label_trainer_debug_action_level_1_last_selected_12
 CallNative player_id 0 1
 Call @menu_get_current_number
 CallNative unk_0xD79D5D1B 2 0
 Return 0 0
 
-:Label_trainer_debug_action_level_1_last_selected_12
+:Label_trainer_debug_action_level_1_last_selected_13
 CallNative player_id 0 1
 Call @menu_get_current_number
 CallNative unk_0x832DEB7A 2 0
 Return 0 0
 
-:Label_trainer_debug_action_level_1_last_selected_13
+:Label_trainer_debug_action_level_1_last_selected_14
 CallNative player_id 0 1
 Call @menu_get_current_number
 CallNative set_player_noise_multiplier 2 0
 Return 0 0
 
-:Label_trainer_debug_action_level_1_last_selected_14
+:Label_trainer_debug_action_level_1_last_selected_15
 CallNative player_id 0 1
 Call @menu_get_current_number
 CallNative unk_0x8D2D89C4 2 0
 Return 0 0
 
-:Label_trainer_debug_action_level_1_last_selected_15
+:Label_trainer_debug_action_level_1_last_selected_16
 CallNative player_id 0 1
 Call @menu_get_current_number
 CallNative unk_0x3D26105F 2 0
 Return 0 0
 
 :Label_trainer_debug_action_level_1_last_selected_17
-CallNative player_ped_id 0 1
-Push1 255
-iPush_0
-iPush_0
-iPush_0
-CallNative unk_0x57E5B3F9 5 0
-CallNative player_ped_id 0 1
-iPush_0
-Push1 255
-iPush_0
-iPush_1
-CallNative unk_0x57E5B3F9 5 0
-CallNative player_ped_id 0 1
-iPush_0
-iPush_0
-Push1 255
-iPush_2
-CallNative unk_0x57E5B3F9 5 0
-CallNative player_ped_id 0 1
-Push1 255
-Push1 255
-Push1 255
-iPush_3
-CallNative unk_0x57E5B3F9 5 0
+Call @trainer_get_vehicle
+JumpFalse @Label_trainer_debug_action_level_1_last_selected_17_end
+StaticGet2 379
+Call @menu_get_current_number
+CallNative set_vehicle_friction_override 2 0
+
+:Label_trainer_debug_action_level_1_last_selected_17_end
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_18
+Call @trainer_get_vehicle
+JumpFalse @Label_trainer_debug_action_level_1_last_selected_18_end
+StaticGet2 379
+Call @menu_get_current_number
+CallNative unk_0x6E67FD35 2 0
+
+:Label_trainer_debug_action_level_1_last_selected_18_end
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_19
+Call @trainer_get_vehicle
+JumpFalse @Label_trainer_debug_action_level_1_last_selected_19_end
+StaticGet2 379
+Call @menu_get_current_number
+CallNative unk_0x585E49B6 2 0
+
+:Label_trainer_debug_action_level_1_last_selected_19_end
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_20
+Call @trainer_get_vehicle
+JumpFalse @Label_trainer_debug_action_level_1_last_selected_20_end
+StaticGet2 379
+Call @menu_get_current_number
+CallNative unk_0xB6BE07E0 2 0
+
+:Label_trainer_debug_action_level_1_last_selected_20_end
 Return 0 0
 
 :Label_trainer_debug_action_level_1_end
@@ -6251,175 +6725,42 @@ Return 0 0
 :Label_trainer_world_action_level_1_end
 Return 0 0
 
-:trainer_get_safe_teleport_coord
-Function 1 4 28
-fPush 100
-fPush 10
-fSub
-getF 11
-fMult
-fPush 10
-fAdd
-setF 12
-iPush_0
-setF 13
-
-:Label_9982
-getF 13
-iPush_5
-JumpGE @Label_9975
-iPush_3
-getF 0
-ToStack
-getF 12
-fPush_0.0
-Call @trainer_9976
-iPush_3
-pFrame1 14
-FromStack
-iPush_3
-pFrame1 14
-ToStack
-iPush_3
-pFrame1 17
-FromStack
-iPush_3
-pFrame1 14
-ToStack
-iPush_0
-pFrame1 17
-Push1 16
-CallNative get_safe_coord_for_ped 6 1
-JumpFalse @Label_9981
-iPush_3
-pFrame1 17
-ToStack
-fPush_3.0
-CallNative is_sphere_visible 4 1
-Not
-JumpFalse @Label_9981
-fPush_0.0
-setF 20
-iPush_3
-pFrame1 17
-ToStack
-pFrame1 20
-CallNative get_ground_z_for_3d_coord 4 1
-JumpFalse @Label_9981
-getF 20
-pFrame1 17
-SetImmediate1 2
-iPush_3
-getF 0
-ToStack
-iPush_3
-pFrame1 17
-ToStack
-vSub
-iPush_3
-pFrame1 21
-FromStack
-iPush_3
-pFrame1 17
-ToStack
-iPush_3
-getF 0
-FromStack
-Push1 99
-setF 13
-
-:Label_9981
-getF 13
-Add1 1
-setF 13
-Jump @Label_9982
-
-:Label_9975
-Return 4 0
-
-:trainer_9976
-Function 346 5 11
-fPush_-1.0
-fPush_1.0
-CallNative get_random_float_in_range 2 1
-fPush_-1.0
-fPush_1.0
-CallNative get_random_float_in_range 2 1
-fPush_0.0
-iPush_3
-pFrame1 7
-FromStack
-getF 4
-fPush_2.0
-fDiv
-setF 10
-iPush_3
-pFrame1 7
-ToStack
-fPush_0.0
-getF 3
-CallNative get_random_float_in_range 2 1
-Call @trainer_9983
-iPush_3
-pFrame1 7
-FromStack
-getF 10
-fNeg
-getF 10
-CallNative get_random_float_in_range 2 1
-pFrame1 7
-SetImmediate1 2
-iPush_3
-pFrame1 0
-ToStack
-iPush_3
-pFrame1 7
-ToStack
-vAdd
-Return 5 3
-
-:trainer_9983
-Function 347 4 7
-getF 3
-fPush_0.0
-fCmpEq
-JumpFalse @Label_9984
-fPush_0.0
-fPush_0.0
-fPush_0.0
-Return 4 3
-
-:Label_9984
-iPush_3
-pFrame1 0
-ToStack
-CallNative vmag 3 1
-setF 6
-getF 6
-fPush_0.0
-fCmpNe
-JumpFalse @Label_9985
-iPush_3
-pFrame1 0
-ToStack
-getF 3
-getF 6
-fDiv
-FtoV
-vMult
-Return 4 3
-
-:Label_9985
-fPush_0.0
-fPush_0.0
-fPush_0.0
-Return 4 3
-
 :trainer_teleport
-Function 1 4 16
+Function 1 5 17
 
 iPush_1
 StaticSet1 7
+
+iPush_3
+pFrame1 0
+ToStack
+iPush_3
+pFrame1 9
+FromStack
+
+getF 4
+JumpFalse @Label_trainer_teleport_change_z
+CallNative player_ped_id 0 1
+iPush_0
+CallNative is_ped_in_any_vehicle 2 1
+JumpFalse @Label_trainer_teleport_change_z_not_in_veh
+pFrame1 9
+GetImmediate1 2
+fPush 200
+fAdd
+pFrame1 9
+SetImmediate1 2
+Jump @Label_trainer_teleport_change_z
+
+:Label_trainer_teleport_change_z_not_in_veh
+pFrame1 9
+GetImmediate1 2
+fPush 1000
+fSub
+pFrame1 9
+SetImmediate1 2
+
+:Label_trainer_teleport_change_z
 iPush_0
 CallNative disable_all_control_actions 1 0
 iPush_1
@@ -6469,7 +6810,7 @@ Jump @Label_trainer_teleport_end
 
 :Label_trainer_teleport_action_2
 iPush_3
-pFrame1 0
+pFrame1 9
 ToStack
 fPush_5.0
 iPush_1
@@ -6489,7 +6830,7 @@ setF 7
 
 getF 7
 iPush_3
-pFrame1 0
+pFrame1 9
 ToStack
 iPush_1
 iPush_0
@@ -6509,7 +6850,7 @@ Jump @Label_trainer_teleport_3
 :Label_trainer_teleport_action_2_not_in_veh
 CallNative player_ped_id 0 1
 iPush_3
-pFrame1 0
+pFrame1 9
 ToStack
 iPush_1
 iPush_0
@@ -6533,7 +6874,7 @@ Push 1065353216
 CallNative set_gameplay_cam_relative_pitch 2 0
 CallNative new_load_scene_stop 0 0
 iPush_3
-pFrame1 0
+pFrame1 9
 ToStack
 fPush 5000
 iPush_1
@@ -6542,24 +6883,24 @@ iPush_0
 iPush_0
 CallNative clear_area 8 0
 iPush_3
-pFrame1 0
+pFrame1 9
 ToStack
 fPush 5000
 iPush_0
 CallNative clear_area_of_objects 5 0
 iPush_3
-pFrame1 0
+pFrame1 9
 ToStack
 fPush 30
 iPush_0
 CallNative clear_area_of_projectiles 5 0
 iPush_3
-pFrame1 0
+pFrame1 9
 ToStack
 fPush 5000
 CallNative remove_particle_fx_in_range 4 0
 iPush_3
-pFrame1 0
+pFrame1 9
 ToStack
 fPush 5000
 CallNative remove_decals_in_range 4 0
@@ -6573,7 +6914,7 @@ Jump @Label_trainer_teleport_end
 
 :Label_trainer_teleport_action_3
 iPush_3
-pFrame1 0
+pFrame1 9
 ToStack
 fPush 4500
 iPush_0
@@ -6649,15 +6990,22 @@ iPush_0
 StaticSet2 458
 
 :Label_trainer_teleport_action_5_631
-PushS 2000
-CallNative wait 1 0
+getF 4
+JumpFalse @Label_trainer_teleport_change_z_2
 iPush_3
-pFrame1 0
-ToStack
 pFrame1 9
+ToStack
+pFrame1 12
 CallNative get_ground_z_for_3d_coord 4 1
 drop
+Jump @Label_trainer_teleport_change_z_3
 
+:Label_trainer_teleport_change_z_2
+pFrame1 9
+GetImmediate1 2
+setF 12
+
+:Label_trainer_teleport_change_z_3
 CallNative player_ped_id 0 1
 iPush_0
 CallNative is_ped_in_any_vehicle 2 1
@@ -6676,10 +7024,10 @@ fPush_0.0
 CallNative set_entity_heading 2 0
 
 getF 7
-getF 0
-pFrame1 0
-GetImmediate1 1
+getF 9
 pFrame1 9
+GetImmediate1 1
+getF 12
 iPush_1
 iPush_0
 iPush_0
@@ -6701,10 +7049,10 @@ fPush_0.0
 CallNative set_entity_heading 2 0
 
 CallNative player_ped_id 0 1
-getF 0
-pFrame1 0
-GetImmediate1 1
+getF 9
 pFrame1 9
+GetImmediate1 1
+getF 12
 iPush_1
 iPush_0
 iPush_0
@@ -6743,7 +7091,7 @@ StaticSet1 26
 Jump @Label_trainer_teleport_end
 
 :Label_trainer_teleport_end
-Return 4 0
+Return 5 0
 
 :trainer_teleport_time
 Function 1 2 4
@@ -6755,26 +7103,18 @@ CmpGt
 Return 2 1
 
 :trainer_teleport_action_level_1
-Function 1 0 7
+Function 1 0 12
 
 StaticGet1 4
-Switch [0 @Label_trainer_teleport_action_level_1_last_selected_0]:[2 @Label_trainer_teleport_action_level_1_last_selected_2]
+Switch [4 @Label_trainer_teleport_action_level_1_last_selected_4]
 Jump @Label_trainer_teleport_action_level_1_end
 
-:Label_trainer_teleport_action_level_1_last_selected_0
-fPush -1436.959
-fPush -2500.335
-fPush 13.7667
-fPush_0.0
-Call @trainer_teleport
-Return 0 0
-
-:Label_trainer_teleport_action_level_1_last_selected_2
+:Label_trainer_teleport_action_level_1_last_selected_4
 iPush_0
 StaticGet1 26
-JumpNE @Label_trainer_teleport_action_level_1_last_selected_2_1
+JumpNE @Label_trainer_teleport_action_level_1_last_selected_4_1
 CallNative is_waypoint_active 0 1
-JumpFalse @Label_trainer_teleport_action_level_1_last_selected_2_error
+JumpFalse @Label_trainer_teleport_action_level_1_last_selected_4_error
 
 CallNative unk_0xB9827942 0 1
 CallNative get_first_blip_info_id 1 1
@@ -6782,24 +7122,29 @@ setF 3
 getF 3
 CallNative get_blip_coords 1 3
 iPush_3
-pstatic2 524
+pstatic2 540
 FromStack
-Jump @Label_trainer_teleport_action_level_1_last_selected_2_1
+Jump @Label_trainer_teleport_action_level_1_last_selected_4_1
 
-:Label_trainer_teleport_action_level_1_last_selected_2_error
+:Label_trainer_teleport_action_level_1_last_selected_4_error
 PushString "No waypoint set"
 iPush_0
 Call @menu_error
 Return 0 0
 
-:Label_trainer_teleport_action_level_1_last_selected_2_1
-iPush_3
-pstatic2 524
-ToStack
+:Label_trainer_teleport_action_level_1_last_selected_4_1
+StaticGet2 540
+pstatic2 540
+GetImmediate1 1
+pstatic2 540
+GetImmediate1 2
+fPush 1000
+fSub
 fPush_0.0
+iPush_1
 Call @trainer_teleport
 
-:Label_trainer_teleport_action_level_1_last_selected_2_end
+:Label_trainer_teleport_action_level_1_last_selected_4_end
 Return 0 0
 
 :Label_trainer_teleport_action_level_1_end
@@ -6837,7 +7182,7 @@ Function 1 0 7
 iPush_1
 pstatic2 61
 ArrayGet1 1
-Switch [1 @Label_trainer_player_action_level_2_last_selected_1]:[2 @Label_trainer_player_action_level_2_last_selected_2]:[3 @Label_trainer_player_action_level_2_last_selected_3]:[4 @Label_trainer_player_action_level_2_last_selected_4]:[5 @Label_trainer_player_action_level_2_last_selected_5]:[6 @Label_trainer_player_action_level_2_last_selected_6]
+Switch [1 @Label_trainer_player_action_level_2_last_selected_1]:[2 @Label_trainer_player_action_level_2_last_selected_2]:[3 @Label_trainer_player_action_level_2_last_selected_3]:[4 @Label_trainer_player_action_level_2_last_selected_4]:[5 @Label_trainer_player_action_level_2_last_selected_5]:[6 @Label_trainer_player_action_level_2_last_selected_6]:[7 @Label_trainer_player_action_level_2_last_selected_7]
 Jump @Label_trainer_player_action_level_2_end
 
 :Label_trainer_player_action_level_2_last_selected_1
@@ -7463,6 +7808,51 @@ Return 0 0
 :Label_trainer_player_action_level_2_last_selected_6_end
 Return 0 0
 
+:Label_trainer_player_action_level_2_last_selected_7
+StaticGet1 4
+Switch [0 @Label_trainer_player_modifier_action_level_2_last_selected_0]:[1 @Label_trainer_player_modifier_action_level_2_last_selected_1]:[2 @Label_trainer_player_modifier_action_level_2_last_selected_2]:[3 @Label_trainer_player_modifier_action_level_2_last_selected_3]:[4 @Label_trainer_player_modifier_action_level_2_last_selected_4]
+Jump @Label_trainer_player_modifier_action_level_2_end
+
+:Label_trainer_player_modifier_action_level_2_last_selected_0
+CallNative player_id 0 1
+Call @menu_get_current_number
+fPush 0.100
+fSub
+CallNative unk_0x825423C2 2 0
+Return 0 0
+
+:Label_trainer_player_modifier_action_level_2_last_selected_1
+CallNative player_id 0 1
+Call @menu_get_current_number
+fPush 0.100
+fSub
+CallNative unk_0xB986FF47 2 0
+Return 0 0
+
+:Label_trainer_player_modifier_action_level_2_last_selected_2
+CallNative player_id 0 1
+Call @menu_get_current_number
+CallNative set_player_weapon_damage_modifier 2 0
+Return 0 0
+
+:Label_trainer_player_modifier_action_level_2_last_selected_3
+CallNative player_id 0 1
+Call @menu_get_current_number
+CallNative set_player_vehicle_damage_modifier 2 0
+Return 0 0
+
+:Label_trainer_player_modifier_action_level_2_last_selected_4
+CallNative player_id 0 1
+Call @menu_get_current_number
+CallNative set_player_noise_multiplier 2 0
+Return 0 0
+
+:Label_trainer_player_modifier_action_level_2_end
+Return 0 0
+
+:Label_trainer_player_action_level_2_last_selected_7_end
+Return 0 0
+
 :Label_trainer_player_action_level_2_end
 Return 0 0
 
@@ -7718,11 +8108,1236 @@ Return 0 0
 :trainer_teleport_action_level_2
 Function 1 0 4
 
-StaticGet1 4
-Switch [4 @Label_trainer_teleport_action_level_2_last_selected_4]
+iPush_1
+pstatic2 61
+ArrayGet1 1
+Switch [0 @Label_trainer_teleport_action_level_2_last_selected_0]:[1 @Label_trainer_teleport_action_level_2_last_selected_1]:[2 @Label_trainer_teleport_action_level_2_last_selected_2]:[3 @Label_trainer_teleport_action_level_2_last_selected_3]
 Jump @Label_trainer_teleport_action_level_2_end
 
-:Label_trainer_teleport_action_level_2_last_selected_4
+:Label_trainer_teleport_action_level_2_last_selected_0
+StaticGet1 4
+Switch [0 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_0]:[1 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_1]:[2 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_2]:[3 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_3]:[4 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_4]:[5 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_5]:[6 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_6]:[7 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_7]:[8 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_8]:[9 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_9]:[10 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_10]:[11 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_11]:[12 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_12]:[13 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_13]:[14 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_14]:[15 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_15]:[16 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_16]:[17 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_17]:[18 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_18]:[19 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_19]:[20 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_20]:[21 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_21]:[22 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_22]:[23 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_23]:[24 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_24]:[25 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_25]:[26 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_26]:[27 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_27]:[28 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_28]:[29 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_29]:[30 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_30]:[31 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_31]:[32 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_32]:[33 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_33]:[34 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_34]:[35 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_35]:[36 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_36]:[37 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_37]:[38 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_38]:[39 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_39]:[40 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_40]:[41 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_41]:[42 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_42]:[43 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_43]:[44 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_44]:[45 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_45]:[46 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_46]:[47 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_47]:[48 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_48]:[49 @Label_trainer_teleport_action_level_2_teleport_0_last_selected_49]
+Jump @Label_trainer_teleport_action_level_2_last_selected_0_end
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_0
+fPush -813.6030
+fPush 179.4738
+fPush 72.1589
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_1
+fPush 308.9238
+fPush -1458.9330
+fPush 46.5095
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_2
+fPush 135.5220
+fPush -749.0009
+fPush 266.6102
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_3
+fPush 135.5220
+fPush -749.0009
+fPush 260.0000
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_4
+fPush 130.6824
+fPush -634.9446
+fPush 262.8510
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_5
+fPush 113.9319
+fPush -618.5334
+fPush 206.0465
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_6
+fPush 495.0000
+fPush 5586.0000
+fPush 794.0000
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_7
+fPush -878.5444
+fPush -445.3285
+fPush 125.6352
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_8
+fPush 229.3570
+fPush -992.9106
+fPush -98.9999
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_9
+fPush -736.7500
+fPush -1437.7500
+fPush 5.0003
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_10
+fPush 721.6599
+fPush -1000.6510
+fPush 23.5455
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_11
+fPush -266.0524
+fPush -968.6304
+fPush 31.2243
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_12
+fPush 369.4300
+fPush -1601.8320
+fPush 36.9502
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_13
+fPush 334.2101
+fPush -1644.7660
+fPush 98.4960
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_14
+fPush -769.8004
+fPush 331.2076
+fPush 234.2694
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_15
+fPush -1102.2910
+fPush -2894.5160
+fPush 13.9467
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_16
+fPush 97.2707
+fPush -1290.9940
+fPush 29.2688
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_17
+fPush 1741.4960
+fPush 3269.2570
+fPush 41.6014
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_18
+fPush 1974.7580
+fPush 3819.4570
+fPush 33.4363
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_19
+fPush 2124.0330
+fPush 4800.5860
+fPush 41.0031
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_20
+fPush -2012.8470
+fPush 2956.5270
+fPush 32.8101
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_21
+fPush 7.4150
+fPush 535.5486
+fPush 176.0279
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_22
+fPush -14.9693
+fPush -1436.4430
+fPush 31.1185
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_23
+fPush -1025.4400
+fPush 697.5500
+fPush 161.7000
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_24
+fPush 1248.1830
+fPush -1728.1040
+fPush 56.0000
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_25
+fPush 1397.5240
+fPush 3607.4230
+fPush 38.9419
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_26
+fPush 3617.2310
+fPush 3739.8710
+fPush 28.6901
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_27
+fPush 441.2090
+fPush -983.1136
+fPush 30.6895
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_28
+fPush 135.9541
+fPush -749.8984
+fPush 258.1520
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_29
+fPush 255.5819
+fPush 217.6896
+fPush 101.6834
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_30
+fPush -104.2072
+fPush 6469.2650
+fPush 31.6267
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_31
+fPush -1159.0340
+fPush -1521.1800
+fPush 10.6327
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_32
+fPush -1561.5250
+fPush -3232.3460
+fPush 26.3361
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_33
+fPush -167.9822
+fPush -1001.9265
+fPush 296.2061
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_34
+fPush -120.3508
+fPush -977.8608
+fPush 304.2478
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_35
+fPush -119.859985
+fPush -976.43866
+fPush 306.3385
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_36
+fPush -74.9424
+fPush -818.63446
+fPush 326.1743
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_37
+fPush 776.8780
+fPush 1175.6080
+fPush 345.9564
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_38
+fPush 430.2037
+fPush 5614.7340
+fPush 766.1684
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_39
+fPush 446.5404
+fPush 5571.6250
+fPush 781.1896
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_40
+fPush 413.4706
+fPush 5572.8210
+fPush 779.6819
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_41
+fPush 449.3493
+fPush 5568.5380
+fPush 796.1312
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_42
+fPush -254.9432
+fPush -147.3534
+fPush 42.7314
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_43
+fPush -147.5930
+fPush -964.6947
+fPush 254.1325
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_44
+fPush 178.3295
+fPush 7041.8220
+fPush 1.8671
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_45
+fPush 106.6972
+fPush 7282.0550
+fPush 1.8821
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_46
+fPush -125.6544
+fPush 7271.8940
+fPush 16.7366
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_47
+fPush 17.8323
+fPush 7630.0140
+fPush 13.5068
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_48
+fPush 103.4720
+fPush 7744.1870
+fPush -158.1106
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_0_last_selected_49
+fPush -1202.0910
+fPush 2802.4400
+fPush 14.8256
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_last_selected_0_end
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_last_selected_1
+StaticGet1 4
+Switch [0 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_0]:[1 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_1]:[2 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_2]:[3 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_3]:[4 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_4]:[5 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_5]:[6 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_6]:[7 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_7]:[8 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_8]:[9 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_9]:[10 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_10]:[11 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_11]:[12 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_12]:[13 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_13]:[14 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_14]:[15 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_15]:[16 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_16]:[17 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_17]:[18 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_18]:[19 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_19]:[20 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_20]:[21 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_21]:[22 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_22]:[23 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_23]:[24 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_24]:[25 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_25]:[26 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_26]:[27 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_27]:[28 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_28]:[29 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_29]:[30 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_30]:[31 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_31]:[32 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_32]:[33 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_33]:[34 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_34]:[35 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_35]:[36 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_36]:[37 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_37]:[38 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_38]:[39 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_39]:[40 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_40]:[41 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_41]:[42 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_42]:[43 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_43]:[44 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_44]:[45 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_45]:[46 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_46]:[47 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_47]:[48 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_48]:[49 @Label_trainer_teleport_action_level_2_teleport_1_last_selected_49]
+Jump @Label_trainer_teleport_action_level_2_last_selected_1_end
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_0
+fPush -558.9814
+fPush 2945.7010
+fPush 14.5917
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_1
+fPush -463.6622
+fPush 4483.6540
+fPush 36.0373
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_2
+fPush -597.9525
+fPush 4475.2910
+fPush 25.6890
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_3
+fPush -589.5320
+fPush 4395.3900
+fPush 18.1481
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_4
+fPush -540.4822
+fPush 4402.3590
+fPush 34.3786
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_5
+fPush -530.6747
+fPush 4534.9960
+fPush 89.0457
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_6
+fPush -175.2189
+fPush 4244.1940
+fPush 44.0730
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_7
+fPush -95.2472
+fPush 4250.5470
+fPush 31.3630
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_8
+fPush 2124.5260
+fPush 1668.7090
+fPush 96.2708
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_9
+fPush 2678.6920
+fPush 1341.6110
+fPush 24.5118
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_10
+fPush 496.2334
+fPush 5527.2700
+fPush 778.4734
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_11
+fPush 138.1327
+fPush -1448.6800
+fPush 29.2240
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_12
+fPush 361.7499
+fPush -1957.4250
+fPush 24.6453
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_13
+fPush -159.2996
+fPush -304.3292
+fPush 39.7333
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_14
+fPush 1696.1050
+fPush 3755.1670
+fPush 34.7053
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_15
+fPush 247.3652
+fPush -45.8777
+fPush 69.9411
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_16
+fPush 53.9397
+fPush -1390.7710
+fPush 29.3734
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_17
+fPush -1952.1680
+fPush -975.5703
+fPush -16.8390
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_18
+fPush 3531.7030
+fPush 3673.6420
+fPush 28.1212
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_19
+fPush 937.4756
+fPush 42.4248
+fPush 80.8990
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_20
+fPush -2019.0620
+fPush 2956.4530
+fPush 32.8101
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_21
+fPush -2148.3510
+fPush 3031.7620
+fPush 32.8099
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_22
+fPush -222.1977
+fPush -1185.8500
+fPush 23.0294
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_23
+fPush 391.4746
+fPush -1637.9750
+fPush 29.3153
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_24
+fPush 322.0547
+fPush -1448.0380
+fPush 46.5095
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_25
+fPush -2177.4400
+fPush 5182.5960
+fPush 16.4753
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_26
+fPush -179.9843
+fPush 6150.4780
+fPush 42.6373
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_27
+fPush 126.1211
+fPush -1278.5130
+fPush 29.2696
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_28
+fPush 134.1213
+fPush -1289.5810
+fPush 29.2696
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_29
+fPush 22.8730
+fPush -1073.8800
+fPush 29.7970
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_30
+fPush 12.4553
+fPush -1110.2580
+fPush 29.7970
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_31
+fPush -129.9640
+fPush 8130.8730
+fPush 6705.6510
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_32
+fPush -149.3451
+fPush 7130.2460
+fPush 700.1167
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_33
+fPush 16.9691
+fPush -646.1804
+fPush 16.0881
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_34
+fPush -4.5786
+fPush -742.4279
+fPush 16.5030
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_35
+fPush 1033.7290
+fPush -270.5642
+fPush 50.8552
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_36
+fPush -74.3454
+fPush -821.6638
+fPush 2590.2230
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_37
+fPush -73.4489
+fPush -833.5170
+fPush 5841.4240
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_38
+fPush -65.4903
+fPush -873.2886
+fPush 12858.2100
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_39
+fPush -795.4600
+fPush 308.8900
+fPush 85.7100
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_40
+fPush -775.0500
+fPush 312.3200
+fPush 85.7000
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_41
+fPush 3433.6570
+fPush 5175.4090
+fPush 35.8053
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_42
+fPush -104.8196
+fPush -856.3741
+fPush 41.0868
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_43
+fPush -131.0631
+fPush -865.8098
+fPush 29.4677
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_44
+fPush -879.0649
+fPush -247.7447
+fPush 40.1937
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_45
+fPush -976.0147
+fPush -1003.8430
+fPush 2.1502
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_46
+fPush 78.9777
+fPush 113.4168
+fPush 81.1687
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_47
+fPush 67.4079
+fPush 123.5255
+fPush 86.1291
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_48
+fPush -1883.7390
+fPush 2062.8590
+fPush 144.8217
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_1_last_selected_49
+fPush -736.7500
+fPush -1437.7500
+fPush 5.0003
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_last_selected_1_end
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_last_selected_2
+StaticGet1 4
+Switch [0 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_0]:[1 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_1]:[2 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_2]:[3 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_3]:[4 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_4]:[5 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_5]:[6 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_6]:[7 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_7]:[8 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_8]:[9 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_9]:[10 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_10]:[11 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_11]:[12 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_12]:[13 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_13]:[14 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_14]:[15 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_15]:[16 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_16]:[17 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_17]:[18 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_18]:[19 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_19]:[20 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_20]:[21 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_21]:[22 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_22]:[23 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_23]:[24 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_24]:[25 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_25]:[26 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_26]:[27 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_27]:[28 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_28]:[29 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_29]:[30 @Label_trainer_teleport_action_level_2_teleport_2_last_selected_30]
+Jump @Label_trainer_teleport_action_level_2_last_selected_2_end
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_0
+fPush 1974.7580
+fPush 3819.4570
+fPush 33.4363
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_1
+fPush -869.2877
+fPush -250.0446
+fPush 39.7795
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_2
+fPush -179.0000
+fPush 6150.0000
+fPush 42.0000
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_3
+fPush -783.1708
+fPush -246.4606
+fPush 37.0212
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_4
+fPush -1600.0930
+fPush -1041.8920
+fPush 13.0209
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_5
+fPush -1664.1670
+fPush -1126.5330
+fPush 32.1513
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_6
+fPush -1645.5460
+fPush -1102.3670
+fPush 13.4518
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_7
+fPush -1685.9830
+fPush -1104.1350
+fPush 13.1523
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_8
+fPush -1641.5500
+fPush -1097.6340
+fPush 13.4500
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_9
+fPush -1682.1570
+fPush -1107.2580
+fPush 13.1523
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_10
+fPush -1639.9170
+fPush -1092.0860
+fPush 13.5766
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_11
+fPush -1678.2000
+fPush -1110.5410
+fPush 13.1523
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_12
+fPush 282.2156
+fPush 199.8016
+fPush 104.3740
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_13
+fPush 314.1337
+fPush 188.3539
+fPush 103.9276
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_14
+fPush -866.4975
+fPush -251.8129
+fPush 40.1102
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_15
+fPush -785.4869
+fPush 314.7161
+fPush 90.2189
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_16
+fPush 895.5247
+fPush -2301.5640
+fPush 30.3838
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_17
+fPush -1170.1150
+fPush 4926.1340
+fPush 224.3552
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_18
+fPush -1143.1450
+fPush 4951.1880
+fPush 230.1531
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_19
+fPush 3369.2240
+fPush 5184.1500
+fPush 1.4602
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_20
+fPush 3336.1740
+fPush 5172.9410
+fPush 18.3161
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_21
+fPush -2501.9390
+fPush 3309.8980
+fPush 91.9665
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_22
+fPush 489.3171
+fPush 5580.8870
+fPush 792.8515
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_23
+fPush 2.6014
+fPush 525.5179
+fPush 170.6172
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_24
+fPush -129.3836
+fPush -951.1331
+fPush 218.8816
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_25
+fPush 546.0365
+fPush -183.3675
+fPush 54.4982
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_26
+fPush -935.9363
+fPush 4836.7470
+fPush 310.5199
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_27
+fPush -2183.0350
+fPush -1051.0040
+fPush -143.7705
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_28
+fPush -1942.3540
+fPush -1128.5290
+fPush -34.9933
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_29
+fPush -2433.3870
+fPush -1332.6030
+fPush -207.4861
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_teleport_2_last_selected_30
+fPush 220.5997
+fPush -1006.7580
+fPush -98.9999
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_last_selected_2_end
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_last_selected_3
+StaticGet1 4
+Switch [4 @Label_trainer_teleport_action_level_2_custom_last_selected_4]:[5 @Label_trainer_teleport_action_level_2_custom_last_selected_5]
+Jump @Label_trainer_teleport_action_level_2_last_selected_3_end
+
+:Label_trainer_teleport_action_level_2_custom_last_selected_4
+Call @menu_get_current_bool
+JumpFalse @Label_trainer_teleport_action_level_2_custom_last_selected_4_1
+iPush_0
+Call @menu_set_catch_button_id
+Jump @Label_trainer_teleport_action_level_2_custom_last_selected_4_2
+
+:Label_trainer_teleport_action_level_2_custom_last_selected_4_1
+iPush_3
+Call @menu_set_catch_button_id
+
+:Label_trainer_teleport_action_level_2_custom_last_selected_4_2
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_custom_last_selected_5
 iPush_0
 Call @menu_get_number
 iPush_1
@@ -7731,7 +9346,11 @@ iPush_2
 Call @menu_get_number
 iPush_3
 Call @menu_get_number
+iPush_0
 Call @trainer_teleport
+Return 0 0
+
+:Label_trainer_teleport_action_level_2_last_selected_3_end
 Return 0 0
 
 :Label_trainer_teleport_action_level_2_end
@@ -8137,17 +9756,10 @@ Switch [0 @Label_trainer_vehicle_action_level_3_last_selected_0]:[1 @Label_train
 Jump @Label_trainer_vehicle_action_level_3_end
 
 :Label_trainer_vehicle_action_level_3_last_selected_0
-CallNative network_is_game_in_progress 0 1
-JumpFalse @Label_trainer_vehicle_action_level_3_last_selected_0_not_network
 Call @menu_get_current_extra
 Call @trainer_network_set_spawn_veh
-Jump @Label_trainer_vehicle_action_level_3_last_selected_0_end
-
-:Label_trainer_vehicle_action_level_3_last_selected_0_not_network
 Call @menu_get_current_extra
 Call @trainer_spawn_veh_action
-
-:Label_trainer_vehicle_action_level_3_last_selected_0_end
 Return 0 0
 
 :Label_trainer_vehicle_action_level_3_last_selected_1
@@ -9501,20 +11113,9 @@ Or
 :Label_trainer_catch_button_press_1
 JumpFalse @Label_trainer_catch_button_press_end
 
-iPush_2
-StaticGet1 9
+iPush_1
+Call @menu_get_catch_button_id
 JumpNE @Label_trainer_catch_button_level_3
-iPush_1
-iPush_0
-pstatic2 61
-ArrayGet1 1
-JumpNE @Label_trainer_catch_button_wheel_goto_end
-iPush_1
-iPush_1
-pstatic2 61
-ArrayGet1 1
-JumpNE @Label_trainer_catch_button_wheel_goto_end
-
 Push1 23
 StaticGet1 4
 pstatic2 385
@@ -9547,22 +11148,12 @@ Call @menu_set_last_selected
 Jump @Label_trainer_catch_button_press_end
 
 :Label_trainer_catch_button_level_3
-iPush_3
-StaticGet1 9
-JumpNE @Label_trainer_catch_button_press_end
-iPush_0
-iPush_0
-pstatic2 61
-ArrayGet1 1
-JumpNE @Label_trainer_catch_button_press_end
-iPush_1
-iPush_1
-pstatic2 61
-ArrayGet1 1
-JumpNE @Label_trainer_catch_button_press_end
+iPush_2
+Call @menu_get_catch_button_id
+JumpNE @Label_trainer_catch_button_level_4
 iPush_0
 StaticGet1 4
-JumpNE @Label_trainer_catch_button_press_end
+JumpNE @Label_trainer_catch_button_wheel_goto_end2
 Call @menu_get_current_number
 setF 3
 Call @menu_clean
@@ -9571,6 +11162,92 @@ getF 3
 Call @menu_set_number
 iPush_0
 Call @trainer_player_variation_level_3
+
+:Label_trainer_catch_button_wheel_goto_end2
+Jump @Label_trainer_catch_button_press_end
+
+:Label_trainer_catch_button_level_4
+iPush_3
+Call @menu_get_catch_button_id
+JumpNE @Label_trainer_catch_button_press_end
+iPush_0
+StaticGet1 4
+CmpEq
+dup
+Not
+JumpFalse @Label_trainer_catch_button_level_4_or
+iPush_1
+StaticGet1 4
+CmpEq
+Or
+
+:Label_trainer_catch_button_level_4_or
+dup
+Not
+JumpFalse @Label_trainer_catch_button_level_4_or2
+iPush_2
+StaticGet1 4
+CmpEq
+Or
+
+:Label_trainer_catch_button_level_4_or2
+dup
+Not
+JumpFalse @Label_trainer_catch_button_level_4_or3
+iPush_3
+StaticGet1 4
+CmpEq
+Or
+
+:Label_trainer_catch_button_level_4_or3
+JumpFalse @Label_trainer_catch_button_press_end
+
+CallNative player_ped_id 0 1
+iPush_0
+CallNative is_ped_in_any_vehicle 2 1
+JumpFalse @Label_trainer_catch_button_level_4_not_in_veh
+CallNative player_ped_id 0 1
+iPush_0
+CallNative get_vehicle_ped_is_in 2 1
+setF 3
+
+getF 3
+iPush_0
+Call @menu_get_number
+iPush_1
+Call @menu_get_number
+iPush_2
+Call @menu_get_number
+iPush_1
+iPush_0
+iPush_0
+iPush_1
+CallNative set_entity_coords 8 0
+
+getF 3
+iPush_3
+Call @menu_get_number
+CallNative set_entity_heading 2 0
+Jump @Label_trainer_catch_button_press_end
+
+:Label_trainer_catch_button_level_4_not_in_veh
+CallNative player_ped_id 0 1
+iPush_0
+Call @menu_get_number
+iPush_1
+Call @menu_get_number
+iPush_2
+Call @menu_get_number
+iPush_1
+iPush_0
+iPush_0
+iPush_1
+CallNative set_entity_coords 8 0
+
+CallNative player_ped_id 0 1
+iPush_3
+Call @menu_get_number
+CallNative set_entity_heading 2 0
 
 :Label_trainer_catch_button_press_end
 Return 0 0
@@ -9717,9 +11394,6 @@ Return 0 0
 :menu_hide
 Function 1 0 2
 Call @menu_reverse_game_state
-Push1 9
-iPush_0
-CallNative clear_additional_text 2 0
 iPush_0
 StaticSet1 13
 pstatic1 12
@@ -10214,6 +11888,20 @@ pstatic1 54
 ArraySet1 1
 
 Return 2 0
+
+:menu_set_catch_button_id
+Function 1 1 4
+
+getF 0
+StaticSet1 30
+
+Return 1 0
+
+:menu_get_catch_button_id
+Function 1 0 4
+
+StaticGet1 30
+Return 0 1
 
 :menu_add_frontend
 Function 1 3 5
@@ -11634,9 +13322,9 @@ setF 4
 
 :Label_menu_clean_LOOP
 getF 3
-getF 4
+Push1 50
 JumpGE @Label_menu_clean_END
-PushString ""
+iPush_0
 getF 3
 pstatic1 72
 ArraySet1 1
@@ -11689,6 +13377,9 @@ StaticSet1 28
 
 iPush_0
 StaticSet1 29
+
+iPush_0
+StaticSet1 30
 
 Call @menu_frontend_clean
 
