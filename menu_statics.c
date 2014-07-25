@@ -84,6 +84,9 @@ Static_28
 // (uint) menu_keyboard_custom_length
 Static_29
 
+// (uint) menu_catch_button_id
+Static_30
+
 // (bool) frontend_items_set
 Static_45
 
@@ -194,7 +197,7 @@ Static_458
 // trainer_sec_var_string4
 Static_459
 
-// (Vector3) trainer_teleport_coords
+// unused
 Static_524
 
 // trainer_network_vehicle_spawn
@@ -241,3 +244,12 @@ Static_538
 
 // trainer_drift_mode
 Static_539
+
+// (Vector3) trainer_teleport_coords
+Static_540
+
+// trainer_superjump
+Static_544
+
+// trainer_never_fall
+Static_545
