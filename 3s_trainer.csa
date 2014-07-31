@@ -141,19 +141,23 @@ StaticSet2 526
 :Label_network_set_spawn_veh_end
 Return 1 0
 
-:trainer_network_menu
+:trainer_network_menu_level_1
 Function 1 0 5
 
 CallNative network_is_game_in_progress 0 1
 Not
-JumpFalse @Label_last_selected_4_1
+JumpFalse @trainer_network_menu_level_1_1
 iPush_1
 Call @trainer_error_network
 Return 0 0
 
-:Label_last_selected_4_1
+:trainer_network_menu_level_1_1
 PushString "Network"
 StaticSet1 10
+
+PushString "Players"
+Call @menu_addItem
+
 PushString "Pause Off Radar Timer"
 Call @menu_addItem
 StaticGet2 384
@@ -175,10 +179,10 @@ Return 0 0
 Function 1 0 7
 
 StaticGet1 4
-Switch [0 @Label_trainer_network_action_level_1_last_selected_0]:[1 @Label_trainer_network_action_level_1_last_selected_1]:[2 @Label_trainer_network_action_level_1_last_selected_2]
+Switch [1 @Label_trainer_network_action_level_1_last_selected_1]:[2 @Label_trainer_network_action_level_1_last_selected_2]:[3 @Label_trainer_network_action_level_1_last_selected_3]
 Jump @Label_trainer_network_action_level_1_end
 
-:Label_trainer_network_action_level_1_last_selected_0
+:Label_trainer_network_action_level_1_last_selected_1
 StaticGet2 384
 Not
 StaticSet2 384
@@ -193,20 +197,296 @@ pglobal3 2391871
 SetImmediate1 55
 Return 0 0
 
-:Label_trainer_network_action_level_1_last_selected_1
+:Label_trainer_network_action_level_1_last_selected_2
 StaticGet2 525
 Not
 StaticSet2 525
 Call @menu_toggle_current_bool
 Return 0 0
 
-:Label_trainer_network_action_level_1_last_selected_2
+:Label_trainer_network_action_level_1_last_selected_3
 CallNative player_ped_id 0 1
 CallNative clear_ped_tasks_immediately 1 0
 Return 0 0
 
 :Label_trainer_network_action_level_1_end
 Return 0 0
+
+:trainer_network_menu_level_2
+Function 1 0 8
+
+PushString "Players"
+StaticSet1 10
+
+CallNative network_is_game_in_progress 0 1
+Not
+JumpFalse @Label_trainer_network_menu_level_2_network
+iPush_2
+Call @trainer_error_network
+Return 0 0
+
+:Label_trainer_network_menu_level_2_network
+iPush_0
+setF 2
+
+:Label_trainer_network_menu_level_2_while
+getF 2
+Push1 18
+JumpGE @Label_trainer_network_menu_level_2_while_exit
+getF 2
+CallNative int_to_playerindex 1 1
+setF 4
+getF 4
+Call @trainer_network_player_valid
+JumpFalse @Label_trainer_network_menu_level_2_1
+getF 3
+Push1 16
+JumpGE @Label_trainer_network_menu_level_2_1
+getF 3
+Add1 1
+setF 3
+
+getF 4
+CallNative get_player_name 1 1
+Call @menu_addItem
+getF 2
+StaticGet1 5
+pstatic2 385
+ArraySet1 1
+
+
+:Label_trainer_network_menu_level_2_1
+getF 2
+Add1 1
+setF 2
+Jump @Label_trainer_network_menu_level_2_while
+
+:Label_trainer_network_menu_level_2_while_exit
+iPush_0
+getF 3
+JumpNE @Label_trainer_network_menu_level_2_end
+PushString "BB_NONE0"
+Call @menu_addItem_action
+
+:Label_trainer_network_menu_level_2_end
+Call @menu_clean
+iPush_0
+StaticSet1 11
+StaticGet1 4
+StaticGet1 9
+pstatic2 61
+ArraySet1 1
+Call @menu_set_last_selected
+Return 0 0
+
+:trainer_network_menu_level_3
+Function 1 0 8
+
+CallNative network_is_game_in_progress 0 1
+Not
+JumpFalse @Label_trainer_network_menu_level_3_network
+iPush_3
+Call @trainer_error_network
+Return 0 0
+
+:Label_trainer_network_menu_level_3_network
+iPush_2
+pstatic2 61
+ArrayGet1 1
+pstatic2 385
+ArrayGet1 1
+CallNative int_to_playerindex 1 1
+setF 3
+
+getF 3
+Call @trainer_network_player_valid
+Not
+JumpFalse @Label_trainer_network_menu_level_3_1
+PushString "Player not valid"
+iPush_1
+Call @menu_error
+Return 0 0
+
+:Label_trainer_network_menu_level_3_1
+getF 3
+CallNative get_player_name 1 1
+StaticSet1 10
+
+PushString "Teleport to Player"
+Call @menu_addItem_action
+
+Return 0 0
+
+:trainer_network_menu_action_level_3
+Function 1 0 8
+
+CallNative network_is_game_in_progress 0 1
+Not
+JumpFalse @Label_trainer_network_menu_action_level_3_network
+iPush_3
+Call @trainer_error_network
+Return 0 0
+
+:Label_trainer_network_menu_action_level_3_network
+iPush_2
+pstatic2 61
+ArrayGet1 1
+pstatic2 385
+ArrayGet1 1
+CallNative int_to_playerindex 1 1
+setF 3
+
+getF 3
+CallNative get_player_ped 1 1
+setF 4
+
+getF 3
+Call @trainer_network_player_valid
+Not
+JumpFalse @Label_trainer_network_menu_action_level_3_1
+PushString "Player not valid"
+iPush_1
+Call @menu_error
+Return 0 0
+
+:Label_trainer_network_menu_action_level_3_1
+StaticGet1 4
+Switch [0 @Label_trainer_network_menu_action_level_3_last_selected_0]
+Jump @Label_trainer_network_menu_action_level_3_end
+
+:Label_trainer_network_menu_action_level_3_last_selected_0
+getF 4
+iPush_1
+CallNative get_entity_coords 2 3
+fPush_0.0
+iPush_0
+Call @trainer_teleport
+CallNative player_ped_id 0 1
+iPush_0
+CallNative is_ped_in_any_vehicle 2 1
+Not
+JumpFalse @Label_trainer_network_menu_action_level_3_last_selected_0_1
+getF 4
+iPush_0
+CallNative is_ped_in_any_vehicle 2 1
+JumpFalse @Label_trainer_network_menu_action_level_3_last_selected_0_1
+
+getF 4
+CallNative get_vehicle_ped_is_using 1 1
+setF 6
+
+getF 6
+iPush_0
+CallNative is_vehicle_driveable 2 1
+JumpFalse @Label_trainer_network_menu_action_level_3_last_selected_0_1
+
+iPush_0
+setF 5
+
+:Label_trainer_network_menu_action_level_3_last_selected_0_while
+getF 5
+getF 6
+CallNative get_vehicle_max_number_of_passengers 1 1
+Add1 1
+JumpGE @Label_trainer_network_menu_action_level_3_last_selected_0_1
+getF 6
+getF 5
+CallNative is_vehicle_seat_free 2 1
+JumpFalse @Label_trainer_network_menu_action_level_3_last_selected_0_while_1
+
+CallNative player_ped_id 0 1
+getF 6
+getF 5
+CallNative set_ped_into_vehicle 3 0
+Return 0 0
+
+:Label_trainer_network_menu_action_level_3_last_selected_0_while_1
+getF 5
+Add1 1
+setF 5
+Jump @Label_trainer_network_menu_action_level_3_last_selected_0_while
+
+
+:Label_trainer_network_menu_action_level_3_last_selected_0_1
+Return 0 0
+
+:Label_trainer_network_menu_action_level_3_end
+Return 0 0
+
+:trainer_network_player_valid
+Function 1 1 3
+
+getF 0
+iPush_0
+iPush_1
+Call @trainer_network_player_active
+Not
+JumpFalse @Label_trainer_network_player_valid_1
+iPush_0
+Return 1 1
+
+:Label_trainer_network_player_valid_1
+getF 0
+CallNative player_id 0 1
+JumpNE @Label_trainer_network_player_valid_2
+iPush_0
+Return 1 1
+
+:Label_trainer_network_player_valid_2
+CallNative player_id 0 1
+getF 0
+CallNative unk_0xE66A0B40 2 1
+Not
+JumpFalse @Label_trainer_network_player_valid_3
+iPush_0
+Return 1 1
+
+:Label_trainer_network_player_valid_3
+iPush_1
+Return 1 1
+
+:trainer_network_player_active
+Function 1 3 6
+getF 0
+setF 5
+getF 0
+CallNative network_is_player_active 1 1
+JumpFalse @Label_trainer_network_player_active_1
+getF 1
+JumpFalse @Label_trainer_network_player_active_2
+getF 0
+CallNative is_player_playing 1 1
+Not
+JumpFalse @Label_trainer_network_player_active_2
+iPush_0
+Return 3 1
+
+:Label_trainer_network_player_active_2
+getF 2
+JumpFalse @Label_trainer_network_player_active_3
+getF 5
+pglobal3 2390986
+GetImmediateP1 3
+ArrayGet1 1
+Not
+JumpFalse @Label_trainer_network_player_active_3
+iPush_0
+Return 3 1
+
+:Label_trainer_network_player_active_3
+iPush_1
+Return 3 1
+
+:Label_trainer_network_player_active_1
+iPush_0
+Return 3 1
+
+:trainer_error_network
+Function 1 1 4
+PushString "Not online."
+getF 0
+Call @menu_error
+Return 1 0
 
 :trainer_loop_checks
 Function 1 0 2
@@ -969,7 +1249,6 @@ Jump @Label_level_1_end
 
 :Label_last_selected_0
 PushString "BLIP_PLAYER"
-CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 PushString "Change Model"
 Call @menu_addItem
@@ -991,7 +1270,6 @@ Return 0 0
 
 :Label_last_selected_1
 PushString "VED_BLIPN"
-CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 PushString "Spawn"
 Call @menu_addItem
@@ -1028,7 +1306,6 @@ Jump @Label_last_selected_2_lang_end
 
 :Label_last_selected_2_lang
 PushString "CELL_16"
-CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
 :Label_last_selected_2_lang_end
@@ -1093,7 +1370,7 @@ Return 0 0
 :Label_last_selected_4
 CallNative network_is_game_in_progress 0 1
 JumpFalse @Label_last_selected_4_network
-Call @trainer_network_menu
+Call @trainer_network_menu_level_1
 Jump @Label_last_selected_4_end
 
 :Label_last_selected_4_network
@@ -1205,7 +1482,7 @@ Function 1 0 4
 iPush_0
 pstatic2 61
 ArrayGet1 1
-Switch [0 @Label_level_2_last_selected_0]:[1 @Label_level_2_last_selected_1]:[2 @Label_level_2_last_selected_2]:[3 @Label_level_2_last_selected_3]
+Switch [0 @Label_level_2_last_selected_0]:[1 @Label_level_2_last_selected_1]:[2 @Label_level_2_last_selected_2]:[3 @Label_level_2_last_selected_3]:[4 @Label_level_2_last_selected_4]
 Jump @Label_level_2_end
 
 :Label_level_2_last_selected_0
@@ -1221,6 +1498,14 @@ Return 0 0
 
 :Label_level_2_last_selected_3
 Call @trainer_teleport_level_2
+Return 0 0
+
+:Label_level_2_last_selected_4
+CallNative network_is_game_in_progress 0 1
+JumpFalse @Label_level_2_last_selected_4_1
+Call @trainer_network_menu_level_2
+
+:Label_level_2_last_selected_4_1
 Return 0 0
 
 :Label_level_2_end
@@ -1302,7 +1587,6 @@ Return 0 0
 
 :Label_trainer_player_level_2_last_selected_1
 PushString "FACE_APP"
-CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 PushString "FMMC_COL_DEF"
 Call @menu_addItem_action
@@ -1336,7 +1620,6 @@ Return 0 0
 
 :Label_trainer_player_level_2_last_selected_2
 PushString "PIM_TACCE"
-CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
 PushString "Head"
@@ -1423,7 +1706,6 @@ Return 0 0
 
 :Label_trainer_player_level_2_last_selected_3
 PushString "LOB_CAT_9"
-CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
 PushString "GC_MENU26"
@@ -1463,7 +1745,6 @@ Return 0 0
 
 :Label_trainer_player_level_2_last_selected_4
 PushString "WT_HEALTH"
-CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 PushString "HLTH_REGEN2"
 Call @menu_addItem_action
@@ -1489,7 +1770,6 @@ Return 0 0
 
 :Label_trainer_player_level_2_last_selected_5
 PushString "PM_WEAPONS"
-CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 PushString "Give all Weapons"
 Call @menu_addItem_action
@@ -1532,7 +1812,6 @@ Return 0 0
 
 :Label_trainer_player_level_2_last_selected_6
 PushString "PS_SPEC_AB"
-CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
 PushString "PS_SPEC_AB"
@@ -1589,7 +1868,6 @@ Return 0 0
 
 :Label_trainer_player_level_2_last_selected_8
 PushString "PIM_TCASH"
-CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
 PushString "BLIP_MICHAEL"
@@ -2173,7 +2451,6 @@ Return 0 0
 
 :Label_trainer_vehicle_level_2_last_selected_3
 PushString "CMOD_MOD_COL"
-CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
 PushString "CMOD_COL0_0"
@@ -2399,7 +2676,7 @@ Function 1 0 4
 iPush_0
 pstatic2 61
 ArrayGet1 1
-Switch [0 @Label_level_3_last_selected_0]:[1 @Label_level_3_last_selected_1]:[2 @Label_level_3_last_selected_2]:[3 @Label_level_3_last_selected_3]
+Switch [0 @Label_level_3_last_selected_0]:[1 @Label_level_3_last_selected_1]:[2 @Label_level_3_last_selected_2]:[3 @Label_level_3_last_selected_3]:[4 @Label_level_3_last_selected_4]
 Jump @Label_level_3_end
 
 :Label_level_3_last_selected_0
@@ -2438,6 +2715,14 @@ Return 0 0
 :Label_level_3_last_selected_3_end
 Return 0 0
 
+:Label_level_3_last_selected_4
+CallNative network_is_game_in_progress 0 1
+JumpFalse @Label_level_3_last_selected_4_1
+Call @trainer_network_menu_level_3
+
+:Label_level_3_last_selected_4_1
+Return 0 0
+
 :Label_level_3_end
 Return 0 0
 
@@ -2470,7 +2755,6 @@ Return 0 0
 Function 1 1 8
 
 PushString "FACE_APP"
-CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
 iPush_2
@@ -2627,7 +2911,6 @@ Return 1 0
 Function 1 0 4
 
 PushString "PM_WEAPONS"
-CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
 iPush_2
@@ -3097,7 +3380,6 @@ Return 0 0
 
 :Label_vehicle_level_3_last_selected_3
 PushString "CMOD_MOD_COL"
-CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
 iPush_4
@@ -4168,7 +4450,7 @@ Call @menu_addItem_action
 PushString "Floyd's House"
 Call @menu_addItem_action
 
-PushString "Fort Zuncoudo Tower"
+PushString "Fort Zancudo Tower"
 Call @menu_addItem_action
 
 PushString "Franklin's House (NEW)"
@@ -4742,7 +5024,6 @@ Return 0 0
 Function 1 0 4
 
 PushString "CMOD_MOD_COL"
-CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
 iPush_3
@@ -4794,7 +5075,6 @@ Return 0 0
 Function 1 0 6
 
 PushString "FMMC_VEH_CUST"
-CallNative unk_0x95C4B5AD 1 1
 StaticSet1 10
 
 iPush_0
@@ -8197,11 +8477,19 @@ Jump @Label_trainer_player_modifier_action_level_2_end
 
 :Label_trainer_player_modifier_action_level_2_last_selected_0
 CallNative player_id 0 1
+fPush_1.0
+CallNative unk_0x825423C2 2 0
+
+CallNative player_id 0 1
 Call @menu_get_current_number
 CallNative unk_0x825423C2 2 0
 Return 0 0
 
 :Label_trainer_player_modifier_action_level_2_last_selected_1
+CallNative player_id 0 1
+fPush_1.0
+CallNative unk_0xB986FF47 2 0
+
 CallNative player_id 0 1
 Call @menu_get_current_number
 CallNative unk_0xB986FF47 2 0
@@ -8552,7 +8840,7 @@ Function 1 0 4
 iPush_0
 pstatic2 61
 ArrayGet1 1
-Switch [0 @Label_action_level_3_last_selected_0]:[1 @Label_action_level_3_last_selected_1]:[2 @Label_action_level_3_last_selected_2]:[3 @Label_action_level_3_last_selected_3]
+Switch [0 @Label_action_level_3_last_selected_0]:[1 @Label_action_level_3_last_selected_1]:[2 @Label_action_level_3_last_selected_2]:[3 @Label_action_level_3_last_selected_3]:[4 @Label_action_level_3_last_selected_4]
 Jump @Label_action_level_3_end
 
 :Label_action_level_3_last_selected_0
@@ -8586,6 +8874,14 @@ Call @trainer_teleport_action_level_3_shopping
 Return 0 0
 
 :Label_action_level_3_last_selected_3_end
+Return 0 0
+
+:Label_action_level_3_last_selected_4
+CallNative network_is_game_in_progress 0 1
+JumpFalse @Label_action_level_3_last_selected_4_1
+Call @trainer_network_menu_action_level_3
+
+:Label_action_level_3_last_selected_4_1
 Return 0 0
 
 :Label_action_level_3_end
@@ -8968,8 +9264,17 @@ Switch [0 @Label_trainer_vehicle_action_level_3_last_selected_0]:[1 @Label_train
 Jump @Label_trainer_vehicle_action_level_3_end
 
 :Label_trainer_vehicle_action_level_3_last_selected_0
+StaticGet2 525
+JumpFalse @Label_trainer_vehicle_action_level_3_last_selected_0_not_network
+Call @menu_get_current_extra
+Call @trainer_network_set_spawn_veh
+Jump @Label_trainer_vehicle_action_level_3_last_selected_0_end
+
+:Label_trainer_vehicle_action_level_3_last_selected_0_not_network
 Call @menu_get_current_extra
 Call @trainer_spawn_veh_action
+
+:Label_trainer_vehicle_action_level_3_last_selected_0_end
 Return 0 0
 
 :Label_trainer_vehicle_action_level_3_last_selected_1
@@ -9227,9 +9532,15 @@ Return 0 0
 
 :Label_trainer_vehicle_light_action_level_3_last_selected_3
 StaticGet2 379
+iPush_0
+iPush_0
+CallNative set_vehicle_indicator_lights 3 0
+
+StaticGet2 379
 Call @menu_get_current_bool
 Not
-iPush_0
+Call @menu_get_current_bool
+Not
 CallNative set_vehicle_indicator_lights 3 0
 Call @menu_toggle_current_bool
 Return 0 0
@@ -11389,7 +11700,7 @@ FromStack
 iPush_3
 pFrame1 3
 ToStack
-fPush_5.0
+fPush 2.5
 iPush_0
 iPush_0
 iPush_0
@@ -11941,6 +12252,32 @@ pstatic1 174
 ArraySet1 1
 
 :Label_menu_addItem_number_end
+Return 3 0
+
+:menu_addItem_number_format
+Function 1 3 5
+
+Push1 13
+StaticGet1 5
+pstatic1 123
+ArraySet1 1
+
+getF 0
+StaticGet1 5
+pstatic2 276
+ArraySet1 1
+
+getF 1
+StaticGet1 5
+pstatic2 327
+ArraySet1 1
+
+getF 2
+StaticGet1 5
+pstatic1 174
+ArraySet1 1
+
+:Label_menu_addItem_number_format_end
 Return 3 0
 
 :menu_add_number
@@ -13101,8 +13438,6 @@ JumpFalse @Label_catch_button_press_goto_7_1
 StaticGet1 4
 pstatic2 327
 ArrayGet1 1
-fPush 0.110
-fAdd
 ItoF
 StaticGet1 4
 pstatic2 276
@@ -14310,10 +14645,10 @@ StaticGet1 5
 Add1 1
 setF 9
 
-PushString "Disabled"
+PushString "PIM_DHIGH0"
 setF 10
 
-PushString "Enabled"
+PushString "PIM_DHIGH1"
 setF 11
 
 iPush_1
@@ -14575,7 +14910,7 @@ CmpEq
 dup
 Not
 JumpFalse @Label_draw_menu_number_or
-iPush_7
+iPush_2
 getF 3
 pstatic1 123
 ArrayGet1 1
@@ -14583,6 +14918,39 @@ CmpEq
 Or
 
 :Label_draw_menu_number_or
+dup
+Not
+JumpFalse @Label_draw_menu_number_or_2
+iPush_7
+getF 3
+pstatic1 123
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_draw_menu_number_or_2
+dup
+Not
+JumpFalse @Label_draw_menu_number_or_3
+Push1 12
+getF 3
+pstatic1 123
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_draw_menu_number_or_3
+dup
+Not
+JumpFalse @Label_draw_menu_number_or_4
+Push1 13
+getF 3
+pstatic1 123
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_draw_menu_number_or_4
 JumpFalse @Label_draw_menu_number_end
 getF 18
 getF 19
@@ -14593,6 +14961,92 @@ fAdd
 iPush_1
 Call @set_up_draw
 
+iPush_2
+getF 3
+pstatic1 123
+ArrayGet1 1
+CmpEq
+dup
+Not
+JumpFalse @Label_draw_menu_float_or
+Push1 12
+getF 3
+pstatic1 123
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_draw_menu_float_or
+JumpFalse @Label_draw_menu_float_end
+PushString "NUMBER"
+CallNative unk_0x51E7A037 1 0
+
+getF 3
+pstatic2 276
+ArrayGet1 1
+iPush_4
+CallNative add_text_component_float 2 0
+
+iPush_1
+CallNative unk_0xD12A643A 1 1
+fPush 0.00859375
+fAdd
+setF 28
+
+getF 18
+getF 19
+getF 20
+StaticGet1 3
+fPush 0.203125
+fAdd
+iPush_1
+Call @set_up_draw
+getF 3
+pstatic2 276
+ArrayGet1 1
+fPush_0.0
+getF 5
+Call @draw_float
+Jump @Label_draw_menu_number_not_format_1
+
+:Label_draw_menu_float_end
+Push1 13
+getF 3
+pstatic1 123
+ArrayGet1 1
+JumpNE @Label_draw_menu_number_not_format
+PushString "ESDOLLA"
+CallNative unk_0x51E7A037 1 0
+
+getF 3
+pstatic2 276
+ArrayGet1 1
+iPush_1
+CallNative unk_0x12929BDF 2 0
+
+iPush_1
+CallNative unk_0xD12A643A 1 1
+fPush 0.00859375
+fAdd
+setF 28
+
+getF 18
+getF 19
+getF 20
+StaticGet1 3
+fPush 0.203125
+fAdd
+iPush_1
+Call @set_up_draw
+getF 3
+pstatic2 276
+ArrayGet1 1
+fPush_0.0
+getF 5
+Call @draw_number_format
+Jump @Label_draw_menu_number_not_format_1
+
+:Label_draw_menu_number_not_format
 PushString "NUMBER"
 CallNative unk_0x51E7A037 1 0
 
@@ -14622,11 +15076,12 @@ fPush_0.0
 getF 5
 Call @draw_number
 
+:Label_draw_menu_number_not_format_1
 StaticGet1 27
-JumpFalse @Label_draw_menu_number_end
+JumpFalse @Label_draw_menu_number_goto_end
 getF 3
 StaticGet1 4
-JumpNE @Label_draw_menu_number_end
+JumpNE @Label_draw_menu_number_goto_end
 
 iPush_2
 pFrame1 24
@@ -14710,155 +15165,11 @@ getF 25
 getF 26
 getF 27
 CallNative draw_sprite 11 0
+
+:Label_draw_menu_number_goto_end
+Jump @Label_draw_menu_bool_end
 
 :Label_draw_menu_number_end
-iPush_2
-getF 3
-pstatic1 123
-ArrayGet1 1
-CmpEq
-dup
-Not
-JumpFalse @Label_draw_menu_float_or
-Push1 12
-getF 3
-pstatic1 123
-ArrayGet1 1
-CmpEq
-Or
-
-:Label_draw_menu_float_or
-JumpFalse @Label_draw_menu_float_end
-
-getF 18
-getF 19
-getF 20
-StaticGet1 3
-fPush 0.203125
-fAdd
-iPush_1
-Call @set_up_draw
-
-PushString "NUMBER"
-CallNative unk_0x51E7A037 1 0
-
-getF 3
-pstatic2 276
-ArrayGet1 1
-iPush_4
-CallNative is_ped_hiding_near_indicatorlights 2 0
-
-iPush_1
-CallNative unk_0xD12A643A 1 1
-fPush 0.00859375
-fAdd
-setF 28
-
-getF 18
-getF 19
-getF 20
-StaticGet1 3
-fPush 0.203125
-fAdd
-iPush_1
-Call @set_up_draw
-getF 3
-pstatic2 276
-ArrayGet1 1
-fPush_0.0
-getF 5
-Call @draw_float
-
-StaticGet1 27
-JumpFalse @Label_draw_menu_float_end
-getF 3
-StaticGet1 4
-JumpNE @Label_draw_menu_float_end
-
-iPush_2
-pFrame1 24
-pFrame1 25
-pFrame1 26
-pFrame1 27
-CallNative get_hud_colour 5 0
-
-PushString "CommonMenu"
-PushString "arrowleft"
-CallNative get_texture_resolution 2 3
-iPush_3
-pFrame1 29
-FromStack
-
-PushString "CommonMenu"
-PushString "arrowleft"
-fPush 0.05
-getF 28
-fSub
-fPush 0.425
-fPush 0.5
-fMult
-fAdd
-getF 5
-fPush 0.00277776
-fSub
-StaticGet1 22
-fPush 0.5
-fMult
-fAdd
-getF 29
-getF 22
-ItoF
-fDiv
-pFrame1 29
-GetImmediate1 1
-getF 23
-ItoF
-fDiv
-fPush_0.0
-getF 24
-getF 25
-getF 26
-getF 27
-CallNative draw_sprite 11 0
-
-PushString "CommonMenu"
-PushString "arrowright"
-CallNative get_texture_resolution 2 3
-iPush_3
-pFrame1 29
-FromStack
-
-PushString "CommonMenu"
-PushString "arrowright"
-fPush 0.05
-fPush 0.425
-fPush 0.5
-fMult
-fAdd
-getF 5
-fPush 0.00277776
-fSub
-StaticGet1 22
-fPush 0.5
-fMult
-fAdd
-getF 29
-getF 22
-ItoF
-fDiv
-pFrame1 29
-GetImmediate1 1
-getF 23
-ItoF
-fDiv
-fPush_0.0
-getF 24
-getF 25
-getF 26
-getF 27
-CallNative draw_sprite 11 0
-
-:Label_draw_menu_float_end
 iPush_3
 getF 3
 pstatic1 123
@@ -14979,6 +15290,18 @@ PushString "NUMBER"
 CallNative unk_0x3E35563E 1 0
 getF 0
 CallNative add_text_component_integer 1 0
+getF 1
+getF 2
+CallNative unk_0x6F8350CE 2 0
+Return 3 0
+
+:draw_number_format
+Function 1 3 3
+PushString "ESDOLLA"
+CallNative unk_0x3E35563E 1 0
+getF 0
+iPush_1
+CallNative unk_0x12929BDF 2 0
 getF 1
 getF 2
 CallNative unk_0x6F8350CE 2 0
@@ -20388,143 +20711,4 @@ Call @menu_add_action
 Return 0 0
 
 :Label_trainer_player_model_level_3_end
-Return 0 0
-
-:dummy_strings
-Function 1 0 4
-
-PushString "DUMMY1"
-PushString "DUMMY2"
-PushString "DUMMY3"
-PushString "DUMMY4"
-PushString "DUMMY5"
-PushString "DUMMY6"
-PushString "DUMMY7"
-PushString "DUMMY8"
-PushString "DUMMY9"
-PushString "DUMMY10"
-PushString "DUMMY11"
-PushString "DUMMY12"
-PushString "DUMMY13"
-PushString "DUMMY14"
-PushString "DUMMY15"
-PushString "DUMMY16"
-PushString "DUMMY17"
-PushString "DUMMY18"
-PushString "DUMMY19"
-PushString "DUMMY20"
-PushString "DUMMY21"
-PushString "DUMMY22"
-PushString "DUMMY23"
-PushString "DUMMY24"
-PushString "DUMMY25"
-PushString "DUMMY26"
-PushString "DUMMY27"
-PushString "DUMMY28"
-PushString "DUMMY29"
-PushString "DUMMY30"
-PushString "DUMMY31"
-PushString "DUMMY32"
-PushString "DUMMY33"
-PushString "DUMMY34"
-PushString "DUMMY35"
-PushString "DUMMY36"
-PushString "DUMMY37"
-PushString "DUMMY38"
-PushString "DUMMY39"
-PushString "DUMMY40"
-PushString "DUMMY41"
-PushString "DUMMY42"
-PushString "DUMMY43"
-PushString "DUMMY44"
-PushString "DUMMY45"
-PushString "DUMMY46"
-PushString "DUMMY47"
-PushString "DUMMY48"
-PushString "DUMMY49"
-PushString "DUMMY50"
-PushString "DUMMY51"
-PushString "DUMMY52"
-PushString "DUMMY53"
-PushString "DUMMY54"
-PushString "DUMMY55"
-PushString "DUMMY56"
-PushString "DUMMY57"
-PushString "DUMMY58"
-PushString "DUMMY59"
-PushString "DUMMY60"
-PushString "DUMMY61"
-PushString "DUMMY62"
-PushString "DUMMY63"
-PushString "DUMMY64"
-PushString "DUMMY65"
-PushString "DUMMY66"
-PushString "DUMMY67"
-PushString "DUMMY68"
-PushString "DUMMY69"
-PushString "DUMMY70"
-PushString "DUMMY71"
-PushString "DUMMY72"
-PushString "DUMMY73"
-PushString "DUMMY74"
-PushString "DUMMY75"
-PushString "DUMMY76"
-PushString "DUMMY77"
-PushString "DUMMY78"
-PushString "DUMMY79"
-PushString "DUMMY80"
-PushString "DUMMY81"
-PushString "DUMMY82"
-PushString "DUMMY83"
-PushString "DUMMY84"
-PushString "DUMMY85"
-PushString "DUMMY86"
-PushString "DUMMY87"
-PushString "DUMMY88"
-PushString "DUMMY89"
-PushString "DUMMY90"
-PushString "DUMMY91"
-PushString "DUMMY92"
-PushString "DUMMY93"
-PushString "DUMMY94"
-PushString "DUMMY95"
-PushString "DUMMY96"
-PushString "DUMMY97"
-PushString "DUMMY98"
-PushString "DUMMY99"
-PushString "DUMMY100"
-PushString "DUMMY101"
-PushString "DUMMY102"
-PushString "DUMMY103"
-PushString "DUMMY104"
-PushString "DUMMY105"
-PushString "DUMMY106"
-PushString "DUMMY107"
-PushString "DUMMY108"
-PushString "DUMMY109"
-PushString "DUMMY110"
-PushString "DUMMY111"
-PushString "DUMMY112"
-PushString "DUMMY113"
-PushString "DUMMY114"
-PushString "DUMMY115"
-PushString "DUMMY116"
-PushString "DUMMY117"
-PushString "DUMMY118"
-PushString "DUMMY119"
-PushString "DUMMY120"
-PushString "DUMMY121"
-PushString "DUMMY122"
-PushString "DUMMY123"
-PushString "DUMMY124"
-PushString "DUMMY125"
-PushString "DUMMY126"
-PushString "DUMMY127"
-PushString "DUMMY128"
-PushString "DUMMY129"
-PushString "DUMMY130"
-PushString "DUMMY131"
-PushString "DUMMY132"
-PushString "DUMMY133"
-
 Return 0 0
