@@ -174,7 +174,13 @@ PushString "Clear Task"
 Call @menu_addItem_action
 
 PushString "Spawn Cash"
-Call @menu_addItem_action
+Call @menu_addItem
+Push 40000
+iPush_0
+Push 40000
+Push1 15
+Call @menu_addItem_number_keyboard
+Call @menu_add_action
 
 Return 0 0
 
@@ -215,6 +221,14 @@ Return 0 0
 :Label_trainer_network_action_level_1_last_selected_4
 iPush_1
 StaticSet1 7
+
+Push GetHash("PICKUP_MONEY_CASE")
+pglobal3 2401131
+SetImmediate2 3532
+
+Push GetHash("prop_money_bag_01")
+pglobal3 2401131
+SetImmediate2 3533
 
 StaticGet1 26
 Switch [0 @Label_trainer_network_action_level_1_last_selected_4_action_0]:[1 @Label_trainer_network_action_level_1_last_selected_4_action_1]:[2 @Label_trainer_network_action_level_1_last_selected_4_action_2]
@@ -278,12 +292,11 @@ pFrame1 3
 FromStack
 
 pFrame1 3
-GetImmediate1 2
-fPush 5.0
+GetImmediate1 1
+fPush 2.0
 fAdd
 pFrame1 3
-SetImmediate1 2
-
+SetImmediate1 1
 
 pglobal3 2401131
 GetImmediate2 3532
@@ -291,7 +304,7 @@ iPush_3
 pFrame1 3
 ToStack
 iPush_0
-PushS 20000
+Call @menu_get_current_number
 pglobal3 2401131
 GetImmediate2 3533
 iPush_0
@@ -414,7 +427,7 @@ Call @menu_addItem_action
 Return 0 0
 
 :trainer_network_menu_action_level_3
-Function 1 0 11
+Function 1 0 12
 
 CallNative network_is_game_in_progress 0 1
 Not
@@ -451,17 +464,41 @@ Switch [0 @Label_trainer_network_menu_action_level_3_last_selected_0]:[1 @Label_
 Jump @Label_trainer_network_menu_action_level_3_end
 
 :Label_trainer_network_menu_action_level_3_last_selected_0
-getF 4
-iPush_1
-CallNative get_entity_coords 2 3
-fPush_0.0
-iPush_0
-Call @trainer_teleport
+
 CallNative player_ped_id 0 1
 iPush_0
 CallNative is_ped_in_any_vehicle 2 1
-Not
-JumpFalse @Label_trainer_network_menu_action_level_3_last_selected_0_1
+JumpFalse @Label_trainer_network_menu_action_level_3_last_selected_0_not_veh
+CallNative player_ped_id 0 1
+iPush_0
+CallNative get_vehicle_ped_is_in 2 1
+setF 7
+
+getF 7
+getF 4
+iPush_1
+CallNative get_entity_coords 2 3
+iPush_1
+iPush_0
+iPush_0
+iPush_1
+CallNative set_entity_coords 8 0
+
+getF 7
+CallNative set_vehicle_on_ground_properly 1 1
+drop
+Jump @Label_trainer_network_menu_action_level_3_last_selected_0_not_veh_jump
+
+:Label_trainer_network_menu_action_level_3_last_selected_0_not_veh
+CallNative player_ped_id 0 1
+getF 4
+iPush_1
+CallNative get_entity_coords 2 3
+iPush_1
+iPush_0
+iPush_0
+iPush_1
+CallNative set_entity_coords 8 0
 getF 4
 iPush_0
 CallNative is_ped_in_any_vehicle 2 1
@@ -494,6 +531,8 @@ CallNative player_ped_id 0 1
 getF 6
 getF 5
 CallNative set_ped_into_vehicle 3 0
+
+:Label_trainer_network_menu_action_level_3_last_selected_0_not_veh_jump
 Return 0 0
 
 :Label_trainer_network_menu_action_level_3_last_selected_0_while_1
@@ -507,64 +546,29 @@ Jump @Label_trainer_network_menu_action_level_3_last_selected_0_while
 Return 0 0
 
 :Label_trainer_network_menu_action_level_3_last_selected_1
-iPush_2
-pstatic2 61
-ArrayGet1 1
-pstatic2 385
-ArrayGet1 1
-CallNative _player_id 0 1
-JumpEQ @Label_trainer_network_menu_action_level_3_last_selected_1_1
-iPush_2
-pstatic2 61
-ArrayGet1 1
-pstatic2 385
-ArrayGet1 1
-CallNative unk_0x98F3B274 1 1
-CallNative network_is_participant_active 1 1
-JumpFalse @Label_trainer_network_menu_action_level_3_last_selected_1_goto_end
-iPush_2
-pstatic2 61
-ArrayGet1 1
-pstatic2 385
-ArrayGet1 1
-CallNative unk_0x98F3B274 1 1
-CallNative network_get_player_index 1 1
-setF 5
+getF 4
+CallNative does_entity_exist 1 1
+JumpFalse @Label_trainer_network_menu_action_level_3_last_selected_1_error
 
-getF 5
-CallNative get_player_ped 1 1
-setF 6
+getF 4
+CallNative clear_ped_tasks_immediately 1 0
 
-
+getF 4
 CallNative player_ped_id 0 1
 iPush_1
 CallNative get_entity_coords 2 3
-iPush_3
-pFrame1 7
-FromStack
-
-getF 6
-iPush_3
-pFrame1 7
-ToStack
-iPush_1
+fPush_3.0
+PushS 1000
+Push 1048576000
 iPush_0
-iPush_0
-iPush_1
-CallNative set_entity_coords 8 0
-
-Jump @Label_trainer_network_menu_action_level_3_last_selected_1_goto2_end
-
-:Label_trainer_network_menu_action_level_3_last_selected_1_goto_end
-PushString "!network_is_participant_active"
-Call @menu_msg
-
-:Label_trainer_network_menu_action_level_3_last_selected_1_goto2_end
+Push 1193033728
+CallNative task_follow_nav_mesh_to_coord 9 0
 Jump @Label_trainer_network_menu_action_level_3_last_selected_1_end
 
-:Label_trainer_network_menu_action_level_3_last_selected_1_1
-PushString "_player_id == id"
-Call @menu_msg
+:Label_trainer_network_menu_action_level_3_last_selected_1_error
+PushString "Player is does not exist"
+iPush_0
+Call @menu_error
 
 :Label_trainer_network_menu_action_level_3_last_selected_1_end
 Return 0 0
@@ -7680,7 +7684,6 @@ iPush_0
 iPush_0
 iPush_0
 CallNative clear_area 8 0
-
 CallNative player_ped_id 0 1
 iPush_0
 CallNative is_ped_in_any_vehicle 2 1
