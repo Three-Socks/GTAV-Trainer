@@ -173,13 +173,16 @@ Call @menu_add_action
 PushString "Clear Task"
 Call @menu_addItem_action
 
+PushString "Spawn Cash"
+Call @menu_addItem_action
+
 Return 0 0
 
 :trainer_network_action_level_1
-Function 1 0 7
+Function 1 0 8
 
 StaticGet1 4
-Switch [1 @Label_trainer_network_action_level_1_last_selected_1]:[2 @Label_trainer_network_action_level_1_last_selected_2]:[3 @Label_trainer_network_action_level_1_last_selected_3]
+Switch [1 @Label_trainer_network_action_level_1_last_selected_1]:[2 @Label_trainer_network_action_level_1_last_selected_2]:[3 @Label_trainer_network_action_level_1_last_selected_3]:[4 @Label_trainer_network_action_level_1_last_selected_4]
 Jump @Label_trainer_network_action_level_1_end
 
 :Label_trainer_network_action_level_1_last_selected_1
@@ -207,6 +210,104 @@ Return 0 0
 :Label_trainer_network_action_level_1_last_selected_3
 CallNative player_ped_id 0 1
 CallNative clear_ped_tasks_immediately 1 0
+Return 0 0
+
+:Label_trainer_network_action_level_1_last_selected_4
+iPush_1
+StaticSet1 7
+
+StaticGet1 26
+Switch [0 @Label_trainer_network_action_level_1_last_selected_4_action_0]:[1 @Label_trainer_network_action_level_1_last_selected_4_action_1]:[2 @Label_trainer_network_action_level_1_last_selected_4_action_2]
+Jump @Label_trainer_network_action_level_1_last_selected_4_action_end
+
+:Label_trainer_network_action_level_1_last_selected_4_action_0
+pglobal3 2401131
+GetImmediate2 3533
+CallNative is_model_valid 1 1
+Not
+JumpFalse @Label_trainer_network_action_level_1_last_selected_4_action_0_valid
+PushString "Model not valid."
+iPush_0
+Call @menu_error
+iPush_0
+StaticSet1 7
+Return 0 0
+
+:Label_trainer_network_action_level_1_last_selected_4_action_0_valid
+pglobal3 2401131
+GetImmediate2 3533
+CallNative is_model_in_cdimage 1 1
+Not
+JumpFalse @Label_trainer_network_action_level_1_last_selected_4_action_0_end
+PushString "Model does not exist."
+iPush_0
+Call @menu_error
+iPush_0
+StaticSet1 7
+Return 0 0
+
+:Label_trainer_network_action_level_1_last_selected_4_action_0_end
+iPush_1
+StaticSet1 26
+Return 0 0
+
+:Label_trainer_network_action_level_1_last_selected_4_action_1
+pglobal3 2401131
+GetImmediate2 3533
+CallNative request_model 1 0
+
+pglobal3 2401131
+GetImmediate2 3533
+CallNative has_model_loaded 1 1
+JumpFalse @Label_trainer_network_action_level_1_last_selected_4_action_1_end
+iPush_2
+StaticSet1 26
+
+:Label_trainer_network_action_level_1_last_selected_4_action_1_end
+Return 0 0
+
+:Label_trainer_network_action_level_1_last_selected_4_action_2
+iPush_0
+StaticSet1 7
+
+CallNative player_ped_id 0 1
+iPush_1
+CallNative get_entity_coords 2 3
+iPush_3
+pFrame1 3
+FromStack
+
+pFrame1 3
+GetImmediate1 2
+fPush 5.0
+fAdd
+pFrame1 3
+SetImmediate1 2
+
+
+pglobal3 2401131
+GetImmediate2 3532
+iPush_3
+pFrame1 3
+ToStack
+iPush_0
+PushS 20000
+pglobal3 2401131
+GetImmediate2 3533
+iPush_0
+iPush_1
+CallNative create_ambient_pickup 9 1
+drop
+
+pglobal3 2401131
+GetImmediate2 3533
+CallNative set_model_as_no_longer_needed 1 0
+
+iPush_0
+StaticSet1 26
+Return 0 0
+
+:Label_trainer_network_action_level_1_last_selected_4_action_end
 Return 0 0
 
 :Label_trainer_network_action_level_1_end
@@ -269,14 +370,6 @@ PushString "BB_NONE0"
 Call @menu_addItem_action
 
 :Label_trainer_network_menu_level_2_end
-Call @menu_clean
-iPush_0
-StaticSet1 11
-StaticGet1 4
-StaticGet1 9
-pstatic2 61
-ArraySet1 1
-Call @menu_set_last_selected
 Return 0 0
 
 :trainer_network_menu_level_3
@@ -315,10 +408,13 @@ StaticSet1 10
 PushString "Teleport to Player"
 Call @menu_addItem_action
 
+PushString "Teleport to Me"
+Call @menu_addItem_action
+
 Return 0 0
 
 :trainer_network_menu_action_level_3
-Function 1 0 8
+Function 1 0 11
 
 CallNative network_is_game_in_progress 0 1
 Not
@@ -351,7 +447,7 @@ Return 0 0
 
 :Label_trainer_network_menu_action_level_3_1
 StaticGet1 4
-Switch [0 @Label_trainer_network_menu_action_level_3_last_selected_0]
+Switch [0 @Label_trainer_network_menu_action_level_3_last_selected_0]:[1 @Label_trainer_network_menu_action_level_3_last_selected_1]
 Jump @Label_trainer_network_menu_action_level_3_end
 
 :Label_trainer_network_menu_action_level_3_last_selected_0
@@ -410,6 +506,69 @@ Jump @Label_trainer_network_menu_action_level_3_last_selected_0_while
 :Label_trainer_network_menu_action_level_3_last_selected_0_1
 Return 0 0
 
+:Label_trainer_network_menu_action_level_3_last_selected_1
+iPush_2
+pstatic2 61
+ArrayGet1 1
+pstatic2 385
+ArrayGet1 1
+CallNative _player_id 0 1
+JumpEQ @Label_trainer_network_menu_action_level_3_last_selected_1_1
+iPush_2
+pstatic2 61
+ArrayGet1 1
+pstatic2 385
+ArrayGet1 1
+CallNative unk_0x98F3B274 1 1
+CallNative network_is_participant_active 1 1
+JumpFalse @Label_trainer_network_menu_action_level_3_last_selected_1_goto_end
+iPush_2
+pstatic2 61
+ArrayGet1 1
+pstatic2 385
+ArrayGet1 1
+CallNative unk_0x98F3B274 1 1
+CallNative network_get_player_index 1 1
+setF 5
+
+getF 5
+CallNative get_player_ped 1 1
+setF 6
+
+
+CallNative player_ped_id 0 1
+iPush_1
+CallNative get_entity_coords 2 3
+iPush_3
+pFrame1 7
+FromStack
+
+getF 6
+iPush_3
+pFrame1 7
+ToStack
+iPush_1
+iPush_0
+iPush_0
+iPush_1
+CallNative set_entity_coords 8 0
+
+Jump @Label_trainer_network_menu_action_level_3_last_selected_1_goto2_end
+
+:Label_trainer_network_menu_action_level_3_last_selected_1_goto_end
+PushString "!network_is_participant_active"
+Call @menu_msg
+
+:Label_trainer_network_menu_action_level_3_last_selected_1_goto2_end
+Jump @Label_trainer_network_menu_action_level_3_last_selected_1_end
+
+:Label_trainer_network_menu_action_level_3_last_selected_1_1
+PushString "_player_id == id"
+Call @menu_msg
+
+:Label_trainer_network_menu_action_level_3_last_selected_1_end
+Return 0 0
+
 :Label_trainer_network_menu_action_level_3_end
 Return 0 0
 
@@ -465,7 +624,7 @@ Return 3 1
 getF 2
 JumpFalse @Label_trainer_network_player_active_3
 getF 5
-pglobal3 2390986
+pglobal3 2391871
 GetImmediateP1 3
 ArrayGet1 1
 Not
