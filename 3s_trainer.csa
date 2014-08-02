@@ -121,7 +121,7 @@ StaticSet2 526
 :Label_network_set_spawn_veh_end
 Return 1 0
 
-:trainer_network_menu
+:trainer_network_menu_level_1
 Function 1 0 5
 
 CallNative network_is_game_in_progress 0 1
@@ -138,6 +138,23 @@ Return 0 0
 Function 1 0 7
 
 :Label_trainer_network_action_level_1_end
+Return 0 0
+
+:trainer_network_menu_level_2
+Function 1 0 8
+
+:Label_trainer_network_menu_level_2_end
+Return 0 0
+
+:trainer_network_menu_level_3
+Function 1 0 8
+
+Return 0 0
+
+:trainer_network_menu_action_level_3
+Function 1 0 12
+
+:Label_trainer_network_menu_action_level_3_end
 Return 0 0
 
 :trainer_error_network
@@ -708,7 +725,7 @@ Function 1 0 4
 PushString "Debug"
 StaticSet1 10
 
-PushString "Version: 1.3"
+PushString "Version: 1.4"
 Call @menu_addItem_action
 
 PushString "Run Speed Multiplier"
@@ -1083,7 +1100,7 @@ Return 0 0
 :Label_last_selected_4
 CallNative network_is_game_in_progress 0 1
 JumpFalse @Label_last_selected_4_network
-Call @trainer_network_menu
+Call @trainer_network_menu_level_1
 Jump @Label_last_selected_4_end
 
 :Label_last_selected_4_network
@@ -1195,7 +1212,7 @@ Function 1 0 4
 iPush_0
 pstatic2 61
 ArrayGet1 1
-Switch [0 @Label_level_2_last_selected_0]:[1 @Label_level_2_last_selected_1]:[2 @Label_level_2_last_selected_2]:[3 @Label_level_2_last_selected_3]
+Switch [0 @Label_level_2_last_selected_0]:[1 @Label_level_2_last_selected_1]:[2 @Label_level_2_last_selected_2]:[3 @Label_level_2_last_selected_3]:[4 @Label_level_2_last_selected_4]
 Jump @Label_level_2_end
 
 :Label_level_2_last_selected_0
@@ -1211,6 +1228,14 @@ Return 0 0
 
 :Label_level_2_last_selected_3
 Call @trainer_teleport_level_2
+Return 0 0
+
+:Label_level_2_last_selected_4
+CallNative network_is_game_in_progress 0 1
+JumpFalse @Label_level_2_last_selected_4_1
+Call @trainer_network_menu_level_2
+
+:Label_level_2_last_selected_4_1
 Return 0 0
 
 :Label_level_2_end
@@ -2381,7 +2406,7 @@ Function 1 0 4
 iPush_0
 pstatic2 61
 ArrayGet1 1
-Switch [0 @Label_level_3_last_selected_0]:[1 @Label_level_3_last_selected_1]:[2 @Label_level_3_last_selected_2]:[3 @Label_level_3_last_selected_3]
+Switch [0 @Label_level_3_last_selected_0]:[1 @Label_level_3_last_selected_1]:[2 @Label_level_3_last_selected_2]:[3 @Label_level_3_last_selected_3]:[4 @Label_level_3_last_selected_4]
 Jump @Label_level_3_end
 
 :Label_level_3_last_selected_0
@@ -2418,6 +2443,14 @@ Call @trainer_teleport_level_3_shopping
 Return 0 0
 
 :Label_level_3_last_selected_3_end
+Return 0 0
+
+:Label_level_3_last_selected_4
+CallNative network_is_game_in_progress 0 1
+JumpFalse @Label_level_3_last_selected_4_1
+Call @trainer_network_menu_level_3
+
+:Label_level_3_last_selected_4_1
 Return 0 0
 
 :Label_level_3_end
@@ -8537,7 +8570,7 @@ Function 1 0 4
 iPush_0
 pstatic2 61
 ArrayGet1 1
-Switch [0 @Label_action_level_3_last_selected_0]:[1 @Label_action_level_3_last_selected_1]:[2 @Label_action_level_3_last_selected_2]:[3 @Label_action_level_3_last_selected_3]
+Switch [0 @Label_action_level_3_last_selected_0]:[1 @Label_action_level_3_last_selected_1]:[2 @Label_action_level_3_last_selected_2]:[3 @Label_action_level_3_last_selected_3]:[4 @Label_action_level_3_last_selected_4]
 Jump @Label_action_level_3_end
 
 :Label_action_level_3_last_selected_0
@@ -8571,6 +8604,14 @@ Call @trainer_teleport_action_level_3_shopping
 Return 0 0
 
 :Label_action_level_3_last_selected_3_end
+Return 0 0
+
+:Label_action_level_3_last_selected_4
+CallNative network_is_game_in_progress 0 1
+JumpFalse @Label_action_level_3_last_selected_4_1
+Call @trainer_network_menu_action_level_3
+
+:Label_action_level_3_last_selected_4_1
 Return 0 0
 
 :Label_action_level_3_end
