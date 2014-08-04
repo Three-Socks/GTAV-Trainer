@@ -423,27 +423,158 @@ fPush_0.0
 StaticGet2 547
 fCmpNe
 JumpFalse @Label_trainer_brake_check_end
+iPush_0
+Push1 66
+CallNative is_control_pressed 2 1
+dup
+Not
+JumpFalse @Label_trainer_brake_check_or_1
+iPush_0
+Push1 69
+CallNative is_control_pressed 2 1
+Or
+
+:Label_trainer_brake_check_or_1
+dup
+Not
+JumpFalse @Label_trainer_brake_check_or_2
+iPush_0
+Push1 225
+CallNative is_control_pressed 2 1
+Or
+
+:Label_trainer_brake_check_or_2
+JumpFalse @Label_trainer_brake_check_end
+
 StaticGet2 379
 Call @trainer_race_turbo_check
 JumpFalse @Label_trainer_brake_check_1
+CallNative player_ped_id 0 1
+StaticGet2 379
+CallNative is_ped_sitting_in_vehicle 2 1
+JumpFalse @Label_trainer_brake_check_goto_end
+
+StaticGet2 379
+CallNative is_vehicle_on_all_wheels 1 1
+JumpFalse @Label_trainer_brake_check_goto_end
+
+StaticGet2 379
+CallNative get_entity_speed 1 1
+fPush 12.5
+fCmpLt
+JumpFalse @Label_trainer_brake_check_goto_end
+StaticGet2 379
+iPush_0
+fPush_0.0
+fPush_0.0
+StaticGet2 547
+fSub
+fPush_0.0
+fPush_0.0
+fPush_0.0
+fPush_0.0
+iPush_0
+iPush_1
+iPush_1
+iPush_1
+iPush_0
+iPush_1
+CallNative apply_force_to_entity 14 0
+
+:Label_trainer_brake_check_goto_end
 Jump @Label_trainer_brake_check_end
 
 :Label_trainer_brake_check_1
 fPush_0.0
 StaticSet2 547
 
-
 :Label_trainer_brake_check_end
 fPush_0.0
 StaticGet2 548
 fCmpNe
 JumpFalse @Label_trainer_loop_checks_end
+iPush_2
+Push1 185
+CallNative get_control_normal 2 1
+fPush -30
+fCmpLt
+dup
+Not
+JumpFalse @Label_trainer_handling_check_or
+iPush_2
+Push1 185
+CallNative get_control_normal 2 1
+fPush 30
+fCmpLt
+Or
+
+:Label_trainer_handling_check_or
+JumpFalse @Label_trainer_loop_checks_end
+
 StaticGet2 379
 Call @trainer_race_turbo_check
-JumpFalse @Label_trainer_handing_check_1
+JumpFalse @Label_trainer_handling_check_1
+CallNative player_ped_id 0 1
+StaticGet2 379
+CallNative is_ped_sitting_in_vehicle 2 1
+JumpFalse @Label_trainer_handling_check_goto_end
+
+StaticGet2 379
+CallNative is_vehicle_on_all_wheels 1 1
+JumpFalse @Label_trainer_handling_check_goto_end
+iPush_2
+Push1 185
+CallNative get_control_normal 2 1
+fPush -30
+fCmpLt
+JumpFalse @Label_trainer_handling_check_2
+
+StaticGet2 379
+iPush_0
+fPush_0.0
+StaticGet2 548
+fSub
+fPush_0.0
+fPush_0.0
+fPush_0.0
+fPush_0.0
+fPush_0.0
+iPush_0
+iPush_1
+iPush_1
+iPush_1
+iPush_0
+iPush_1
+CallNative apply_force_to_entity 14 0
+Jump @Label_trainer_handling_check_goto_end
+
+:Label_trainer_handling_check_2
+iPush_2
+Push1 185
+CallNative get_control_normal 2 1
+fPush 30
+fCmpLt
+JumpFalse @Label_trainer_handling_check_goto_end
+StaticGet2 379
+iPush_0
+StaticGet2 548
+fPush_0.0
+fPush_0.0
+fPush_0.0
+fPush_0.0
+fPush_0.0
+iPush_0
+iPush_1
+iPush_1
+iPush_1
+iPush_0
+iPush_1
+CallNative apply_force_to_entity 14 0
+
+:Label_trainer_handling_check_goto_end
 Jump @Label_trainer_loop_checks_end
 
-:Label_trainer_handing_check_1
+:Label_trainer_handling_check_1
 fPush_0.0
 StaticSet2 548
 
