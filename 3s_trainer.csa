@@ -167,6 +167,10 @@ Return 1 0
 :trainer_loop_checks
 Function 1 0 2
 
+CallNative player_id 0 1
+CallNative is_player_playing 1 1
+JumpFalse @Label_trainer_loop_checks_end
+
 StaticGet2 528
 JumpFalse @Label_trainer_animal_check_end
 CallNative player_id 0 1
@@ -220,12 +224,14 @@ StaticSet2 529
 StaticGet2 531
 JumpFalse @Label_trainer_wanted_check_end
 CallNative player_id 0 1
+CallNative get_player_wanted_level 1 1
 iPush_0
-iPush_0
-CallNative set_player_wanted_level 3 0
+JumpLE @Label_trainer_wanted_check_end
 CallNative player_id 0 1
+CallNative clear_player_wanted_level 1 0
+
 iPush_0
-CallNative set_player_wanted_level_now 2 0
+CallNative set_max_wanted_level 1 0
 
 :Label_trainer_wanted_check_end
 StaticGet2 532
@@ -292,18 +298,6 @@ CallNative set_ped_infinite_ammo_clip 2 0
 StaticGet2 539
 JumpFalse @Label_trainer_drift_mode_check_end
 
-StaticGet2 379
-Call @trainer_race_turbo_check
-dup
-JumpFalse @Label_trainer_drift_mode_check_or2
-CallNative player_ped_id 0 1
-StaticGet2 379
-CallNative is_ped_sitting_in_vehicle 2 1
-And
-
-:Label_trainer_drift_mode_check_or2
-JumpFalse @Label_trainer_drift_mode_check_end
-
 iPush_0
 Push1 69
 CallNative is_control_pressed 2 1
@@ -316,6 +310,18 @@ CallNative is_control_pressed 2 1
 Or
 
 :Label_trainer_drift_mode_check_or
+JumpFalse @Label_trainer_drift_mode_check_end
+
+StaticGet2 379
+Call @trainer_race_turbo_check
+dup
+JumpFalse @Label_trainer_drift_mode_check_or2
+CallNative player_ped_id 0 1
+StaticGet2 379
+CallNative is_ped_sitting_in_vehicle 2 1
+And
+
+:Label_trainer_drift_mode_check_or2
 JumpFalse @Label_trainer_drift_mode_check_disable
 
 StaticGet2 379
@@ -342,6 +348,106 @@ iPush_1
 CallNative set_ped_can_be_knocked_off_vehicle 2 0
 
 :Label_trainer_never_fall_check_end
+fPush_0.0
+StaticGet2 546
+fCmpNe
+JumpFalse @Label_trainer_speed_check_end
+iPush_0
+Push1 65
+CallNative is_control_pressed 2 1
+dup
+JumpFalse @Label_trainer_speed_check_or_1
+iPush_0
+Push1 66
+CallNative is_control_pressed 2 1
+Not
+And
+
+:Label_trainer_speed_check_or_1
+dup
+JumpFalse @Label_trainer_speed_check_or_2
+iPush_0
+Push1 69
+CallNative is_control_pressed 2 1
+Not
+And
+
+:Label_trainer_speed_check_or_2
+dup
+JumpFalse @Label_trainer_speed_check_or_3
+iPush_0
+Push1 225
+CallNative is_control_pressed 2 1
+Not
+And
+
+:Label_trainer_speed_check_or_3
+JumpFalse @Label_trainer_speed_check_end
+
+StaticGet2 379
+Call @trainer_race_turbo_check
+JumpFalse @Label_trainer_speed_check_1
+CallNative player_ped_id 0 1
+StaticGet2 379
+CallNative is_ped_sitting_in_vehicle 2 1
+JumpFalse @Label_trainer_speed_check_goto_end
+
+StaticGet2 379
+CallNative is_vehicle_on_all_wheels 1 1
+JumpFalse @Label_trainer_speed_check_goto_end
+StaticGet2 379
+iPush_0
+fPush_0.0
+StaticGet2 546
+fPush_0.0
+fPush_0.0
+fPush_0.0
+fPush_0.0
+iPush_0
+iPush_1
+iPush_1
+iPush_1
+iPush_0
+iPush_1
+CallNative apply_force_to_entity 14 0
+
+:Label_trainer_speed_check_goto_end
+Jump @Label_trainer_speed_check_end
+
+:Label_trainer_speed_check_1
+fPush_0.0
+StaticSet2 546
+
+:Label_trainer_speed_check_end
+fPush_0.0
+StaticGet2 547
+fCmpNe
+JumpFalse @Label_trainer_brake_check_end
+StaticGet2 379
+Call @trainer_race_turbo_check
+JumpFalse @Label_trainer_brake_check_1
+Jump @Label_trainer_brake_check_end
+
+:Label_trainer_brake_check_1
+fPush_0.0
+StaticSet2 547
+
+
+:Label_trainer_brake_check_end
+fPush_0.0
+StaticGet2 548
+fCmpNe
+JumpFalse @Label_trainer_loop_checks_end
+StaticGet2 379
+Call @trainer_race_turbo_check
+JumpFalse @Label_trainer_handing_check_1
+Jump @Label_trainer_loop_checks_end
+
+:Label_trainer_handing_check_1
+fPush_0.0
+StaticSet2 548
+
+:Label_trainer_loop_checks_end
 Return 0 0
 
 :trainer_race_turbo_check
@@ -356,10 +462,6 @@ JumpFalse @trainer_race_turbo_check_end
 getF 0
 iPush_0
 CallNative is_vehicle_driveable 2 1
-JumpFalse @trainer_race_turbo_check_end
-getF 0
-CallNative is_entity_on_fire 1 1
-Not
 JumpFalse @trainer_race_turbo_check_end
 iPush_1
 Return 1 1
@@ -2279,12 +2381,27 @@ StaticSet1 10
 
 PushString "Acceleration"
 Call @menu_addItem
+StaticGet2 546
+fPush_0.0
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
 
 PushString "Brakes"
 Call @menu_addItem
+StaticGet2 547
+fPush_0.0
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
 
 PushString "Handling"
 Call @menu_addItem
+StaticGet2 548
+fPush_0.0
+fPush 100
+Call @menu_addItem_float
+Call @menu_add_action
 
 Return 0 0
 
@@ -9842,6 +9959,27 @@ Call @trainer_vehicle_colour_action_level_2
 Return 0 0
 
 :Label_trainer_vehicle_action_level_2_last_selected_5
+StaticGet1 4
+Switch [0 @Label_trainer_vehicle_action_level_2_last_selected_5_0]:[1 @Label_trainer_vehicle_action_level_2_last_selected_5_1]:[2 @Label_trainer_vehicle_action_level_2_last_selected_5_2]
+Jump @Label_trainer_vehicle_action_level_2_last_selected_5_end
+
+:Label_trainer_vehicle_action_level_2_last_selected_5_0
+Call @menu_get_current_number
+StaticSet2 546
+Return 0 0
+
+:Label_trainer_vehicle_action_level_2_last_selected_5_1
+Call @menu_get_current_number
+StaticSet2 547
+Return 0 0
+
+:Label_trainer_vehicle_action_level_2_last_selected_5_2
+Call @menu_get_current_number
+StaticSet2 548
+Return 0 0
+
+
+:Label_trainer_vehicle_action_level_2_last_selected_5_end
 Return 0 0
 
 :Label_trainer_vehicle_action_level_2_end
@@ -13115,6 +13253,14 @@ StaticSet2 530
 
 iPush_0
 StaticSet2 531
+
+fPush_0.0
+StaticSet2 546
+fPush_0.0
+StaticSet2 547
+fPush_0.0
+StaticSet2 548
+
 
 Return 0 0
 
