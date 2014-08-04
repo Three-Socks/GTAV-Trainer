@@ -996,6 +996,8 @@ PushString "PS_SPEC_AB"
 Call @menu_addItem
 PushString "Multipliers"
 Call @menu_addItem
+PushString "Give Cash"
+Call @menu_addItem
 Return 0 0
 
 :Label_last_selected_1
@@ -1010,6 +1012,8 @@ Call @menu_addItem
 PushString "CMOD_MOD_COL"
 Call @menu_addItem
 PushString "Modify"
+Call @menu_addItem
+PushString "Multipliers"
 Call @menu_addItem
 
 iPush_0
@@ -1597,34 +1601,34 @@ Call @menu_add_action
 Return 0 0
 
 :Label_trainer_player_level_2_last_selected_8
-PushString "PIM_TCASH"
+PushString "Give Cash"
 StaticSet1 10
 
 PushString "BLIP_MICHAEL"
 Call @menu_addItem
 iPush_0
-Call @trainer_get_player_cash
 iPush_0
 Push 999999999
-Call @menu_addItem_number
+Push1 9
+Call @menu_addItem_number_keyboard
 Call @menu_add_action
 
 PushString "BLIP_FRANKLIN"
 Call @menu_addItem
-iPush_1
-Call @trainer_get_player_cash
+iPush_0
 iPush_0
 Push 999999999
-Call @menu_addItem_number
+Push1 9
+Call @menu_addItem_number_keyboard
 Call @menu_add_action
 
 PushString "BLIP_TREV"
 Call @menu_addItem
-iPush_2
-Call @trainer_get_player_cash
+iPush_0
 iPush_0
 Push 999999999
-Call @menu_addItem_number
+Push1 9
+Call @menu_addItem_number_keyboard
 Call @menu_add_action
 
 Return 0 0
@@ -1688,7 +1692,7 @@ Return 0 0
 iPush_1
 pstatic2 61
 ArrayGet1 1
-Switch [0 @Label_trainer_vehicle_level_2_last_selected_0]:[1 @Label_trainer_vehicle_level_2_last_selected_1]:[2 @Label_trainer_vehicle_level_2_last_selected_2]:[3 @Label_trainer_vehicle_level_2_last_selected_3]:[4 @Label_trainer_vehicle_level_2_last_selected_4]
+Switch [0 @Label_trainer_vehicle_level_2_last_selected_0]:[1 @Label_trainer_vehicle_level_2_last_selected_1]:[2 @Label_trainer_vehicle_level_2_last_selected_2]:[3 @Label_trainer_vehicle_level_2_last_selected_3]:[4 @Label_trainer_vehicle_level_2_last_selected_4]:[5 @Label_trainer_vehicle_level_2_last_selected_5]
 Jump @Label_trainer_vehicle_level_2_end
 
 :Label_trainer_vehicle_level_2_last_selected_0
@@ -2267,6 +2271,21 @@ PushString "Engine Sound"
 Call @menu_addItem
 PushString "CELL_16"
 Call @menu_addItem
+Return 0 0
+
+:Label_trainer_vehicle_level_2_last_selected_5
+PushString "Multipliers"
+StaticSet1 10
+
+PushString "Acceleration"
+Call @menu_addItem
+
+PushString "Brakes"
+Call @menu_addItem
+
+PushString "Handling"
+Call @menu_addItem
+
 Return 0 0
 
 :Label_trainer_vehicle_level_2_end
@@ -6893,12 +6912,12 @@ Return 0 0
 Function 1 0 4
 
 StaticGet1 4
-Switch [5 @Label_trainer_vehicle_action_level_1_last_selected_5]
+Switch [6 @Label_trainer_vehicle_action_level_1_last_selected_6]
 Jump @Label_trainer_vehicle_action_level_1_end
 
-:Label_trainer_vehicle_action_level_1_last_selected_5
+:Label_trainer_vehicle_action_level_1_last_selected_6
 Call @trainer_get_vehicle
-JumpFalse @Label_trainer_vehicle_action_level_1_last_selected_5_error
+JumpFalse @Label_trainer_vehicle_action_level_1_last_selected_6_error
 StaticGet2 379
 CallNative set_vehicle_fixed 1 0
 StaticGet2 379
@@ -6917,13 +6936,13 @@ StaticGet2 379
 CallNative remove_decals_from_vehicle 1 0
 StaticGet2 379
 CallNative unk_0x58D9775F 1 0
-Jump @Label_trainer_vehicle_action_level_1_last_selected_5_end
+Jump @Label_trainer_vehicle_action_level_1_last_selected_6_end
 
-:Label_trainer_vehicle_action_level_1_last_selected_5_error
+:Label_trainer_vehicle_action_level_1_last_selected_6_error
 iPush_0
 Call @trainer_error_vehicle
 
-:Label_trainer_vehicle_action_level_1_last_selected_5_end
+:Label_trainer_vehicle_action_level_1_last_selected_6_end
 Return 0 0
 
 :Label_trainer_vehicle_action_level_1_end
@@ -8250,12 +8269,27 @@ Switch [0 @Label_trainer_player_cash_action_level_2_last_selected_0]:[1 @Label_t
 Jump @Label_trainer_player_cash_action_level_2_end
 
 :Label_trainer_player_cash_action_level_2_last_selected_0
+iPush_0
+iPush_0
+Call @menu_get_current_number
+Call @trainer_set_player_cash
+drop
 Return 0 0
 
 :Label_trainer_player_cash_action_level_2_last_selected_1
+iPush_1
+iPush_0
+Call @menu_get_current_number
+Call @trainer_set_player_cash
+drop
 Return 0 0
 
 :Label_trainer_player_cash_action_level_2_last_selected_2
+iPush_2
+iPush_0
+Call @menu_get_current_number
+Call @trainer_set_player_cash
+drop
 Return 0 0
 
 :Label_trainer_player_cash_action_level_2_end
@@ -8266,6 +8300,1331 @@ Return 0 0
 
 :Label_trainer_player_action_level_2_end
 Return 0 0
+
+:trainer_set_player_cash
+Function 1 3 5
+getF 0
+pglobal3 86838
+GetImmediateP2 23936
+ArrayGetP1 29
+GetImmediate1 17
+iPush_3
+JumpNE @Label_trainer_set_player_cash_1
+iPush_0
+Return 3 1
+
+:Label_trainer_set_player_cash_1
+getF 0
+pglobal3 86838
+GetImmediateP2 23936
+ArrayGetP1 29
+GetImmediate1 17
+iPush_4
+JumpNE @Label_trainer_set_player_cash_2
+iPush_0
+Return 3 1
+
+:Label_trainer_set_player_cash_2
+getF 0
+pglobal3 86838
+GetImmediateP2 23936
+ArrayGetP1 29
+GetImmediate1 17
+iPush_1
+getF 1
+getF 2
+iPush_0
+Call @trainer_set_player_cash_main
+Return 3 1
+
+:trainer_set_player_cash_main
+Function 1 5 13
+Call @bank_check_for_code_deposits
+getF 3
+iPush_1
+JumpGE @Label_trainer_set_player_cash_main_1475
+iPush_0
+Return 5 1
+
+:Label_trainer_set_player_cash_main_1475
+fPush_1.0
+setF 7
+getF 1
+Switch [0 @Label_trainer_set_player_cash_main_1476]:[1 @Label_trainer_set_player_cash_main_1477]
+Jump @Label_trainer_set_player_cash_main_1478
+
+:Label_trainer_set_player_cash_main_1476
+getF 0
+Switch [0 @Label_trainer_set_player_cash_main_1479]:[1 @Label_trainer_set_player_cash_main_1480]:[2 @Label_trainer_set_player_cash_main_1481]
+Jump @Label_trainer_set_player_cash_main_1482
+
+:Label_trainer_set_player_cash_main_1479
+Push1 99
+iPush_1
+Call @trainer_set_player_cash_stat
+Push -656546900
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1482
+
+:Label_trainer_set_player_cash_main_1480
+Push -2098183071
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1482
+
+:Label_trainer_set_player_cash_main_1481
+Push 1578119842
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1482
+
+:Label_trainer_set_player_cash_main_1482
+iPush_0
+Call @Label_trainer_set_player_cash_achievement_check
+drop
+getF 2
+Switch [125 @Label_trainer_set_player_cash_main_1486]:[127 @Label_trainer_set_player_cash_main_1486]:[123 @Label_trainer_set_player_cash_main_1486]:[124 @Label_trainer_set_player_cash_main_1486]:[126 @Label_trainer_set_player_cash_main_1486]:[63 @Label_trainer_set_player_cash_main_1487]:[64 @Label_trainer_set_player_cash_main_1487]:[65 @Label_trainer_set_player_cash_main_1487]:[66 @Label_trainer_set_player_cash_main_1487]:[67 @Label_trainer_set_player_cash_main_1487]:[68 @Label_trainer_set_player_cash_main_1487]:[41 @Label_trainer_set_player_cash_main_1488]:[42 @Label_trainer_set_player_cash_main_1488]:[43 @Label_trainer_set_player_cash_main_1488]:[44 @Label_trainer_set_player_cash_main_1488]:[45 @Label_trainer_set_player_cash_main_1488]:[46 @Label_trainer_set_player_cash_main_1488]:[47 @Label_trainer_set_player_cash_main_1488]:[21 @Label_trainer_set_player_cash_main_1489]:[48 @Label_trainer_set_player_cash_main_1490]:[49 @Label_trainer_set_player_cash_main_1490]:[50 @Label_trainer_set_player_cash_main_1490]:[51 @Label_trainer_set_player_cash_main_1490]:[52 @Label_trainer_set_player_cash_main_1490]:[53 @Label_trainer_set_player_cash_main_1490]:[54 @Label_trainer_set_player_cash_main_1490]:[55 @Label_trainer_set_player_cash_main_1490]:[56 @Label_trainer_set_player_cash_main_1490]:[57 @Label_trainer_set_player_cash_main_1490]:[58 @Label_trainer_set_player_cash_main_1490]:[59 @Label_trainer_set_player_cash_main_1490]:[60 @Label_trainer_set_player_cash_main_1490]:[61 @Label_trainer_set_player_cash_main_1490]:[62 @Label_trainer_set_player_cash_main_1490]:[25 @Label_trainer_set_player_cash_main_1491]:[69 @Label_trainer_set_player_cash_main_1492]:[70 @Label_trainer_set_player_cash_main_1492]:[71 @Label_trainer_set_player_cash_main_1492]:[72 @Label_trainer_set_player_cash_main_1492]:[73 @Label_trainer_set_player_cash_main_1492]:[74 @Label_trainer_set_player_cash_main_1492]:[75 @Label_trainer_set_player_cash_main_1492]:[76 @Label_trainer_set_player_cash_main_1492]:[77 @Label_trainer_set_player_cash_main_1492]:[78 @Label_trainer_set_player_cash_main_1492]:[79 @Label_trainer_set_player_cash_main_1492]:[80 @Label_trainer_set_player_cash_main_1493]:[81 @Label_trainer_set_player_cash_main_1493]:[82 @Label_trainer_set_player_cash_main_1493]:[83 @Label_trainer_set_player_cash_main_1493]:[84 @Label_trainer_set_player_cash_main_1493]:[101 @Label_trainer_set_player_cash_main_1493]:[97 @Label_trainer_set_player_cash_main_1494]:[98 @Label_trainer_set_player_cash_main_1494]:[99 @Label_trainer_set_player_cash_main_1494]:[100 @Label_trainer_set_player_cash_main_1494]:[102 @Label_trainer_set_player_cash_main_1494]:[103 @Label_trainer_set_player_cash_main_1494]:[104 @Label_trainer_set_player_cash_main_1494]:[105 @Label_trainer_set_player_cash_main_1494]:[106 @Label_trainer_set_player_cash_main_1494]:[107 @Label_trainer_set_player_cash_main_1494]:[108 @Label_trainer_set_player_cash_main_1494]:[109 @Label_trainer_set_player_cash_main_1494]:[110 @Label_trainer_set_player_cash_main_1494]:[111 @Label_trainer_set_player_cash_main_1494]
+Jump @Label_trainer_set_player_cash_main_1495
+
+:Label_trainer_set_player_cash_main_1486
+iPush_5
+Call @Label_trainer_set_player_cash_main_1496
+JumpFalse @Label_trainer_set_player_cash_main_1497
+fPush 0.9
+setF 7
+iPush_5
+setF 8
+
+:Label_trainer_set_player_cash_main_1497
+Jump @Label_trainer_set_player_cash_main_1495
+
+:Label_trainer_set_player_cash_main_1487
+getF 0
+Switch [0 @Label_trainer_set_player_cash_main_1498]:[1 @Label_trainer_set_player_cash_main_1499]:[2 @Label_trainer_set_player_cash_main_1500]
+Jump @Label_trainer_set_player_cash_main_1501
+
+:Label_trainer_set_player_cash_main_1498
+Push -1190521599
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1501
+
+:Label_trainer_set_player_cash_main_1499
+Push 490143716
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1501
+
+:Label_trainer_set_player_cash_main_1500
+Push 121069433
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1501
+
+:Label_trainer_set_player_cash_main_1501
+iPush_1
+Call @Label_trainer_set_player_cash_main_1496
+JumpFalse @Label_trainer_set_player_cash_main_1502
+fPush_0.0
+setF 7
+iPush_1
+setF 8
+
+:Label_trainer_set_player_cash_main_1502
+Jump @Label_trainer_set_player_cash_main_1495
+
+:Label_trainer_set_player_cash_main_1488
+getF 0
+Switch [0 @Label_trainer_set_player_cash_main_1503]:[1 @Label_trainer_set_player_cash_main_1504]:[2 @Label_trainer_set_player_cash_main_1505]
+Jump @Label_trainer_set_player_cash_main_1506
+
+:Label_trainer_set_player_cash_main_1503
+Push 2038531975
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1506
+
+:Label_trainer_set_player_cash_main_1504
+Push -572903575
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1506
+
+:Label_trainer_set_player_cash_main_1505
+Push -953947924
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1506
+
+:Label_trainer_set_player_cash_main_1506
+iPush_0
+Call @Label_trainer_set_player_cash_main_1496
+JumpFalse @Label_trainer_set_player_cash_main_1507
+fPush_0.0
+setF 7
+iPush_0
+setF 8
+
+:Label_trainer_set_player_cash_main_1507
+Jump @Label_trainer_set_player_cash_main_1495
+
+:Label_trainer_set_player_cash_main_1489
+getF 0
+Switch [0 @Label_trainer_set_player_cash_main_1508]:[1 @Label_trainer_set_player_cash_main_1509]:[2 @Label_trainer_set_player_cash_main_1510]
+Jump @Label_trainer_set_player_cash_main_1511
+
+:Label_trainer_set_player_cash_main_1508
+Push 219506691
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1511
+
+:Label_trainer_set_player_cash_main_1509
+Push 1871505786
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1511
+
+:Label_trainer_set_player_cash_main_1510
+Push -2024399847
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1511
+
+:Label_trainer_set_player_cash_main_1511
+Jump @Label_trainer_set_player_cash_main_1495
+
+:Label_trainer_set_player_cash_main_1490
+getF 0
+Switch [0 @Label_trainer_set_player_cash_main_1512]:[1 @Label_trainer_set_player_cash_main_1513]:[2 @Label_trainer_set_player_cash_main_1514]
+Jump @Label_trainer_set_player_cash_main_1515
+
+:Label_trainer_set_player_cash_main_1512
+Push 408653638
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1515
+
+:Label_trainer_set_player_cash_main_1513
+Push -424799277
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1515
+
+:Label_trainer_set_player_cash_main_1514
+Push -558138038
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1515
+
+:Label_trainer_set_player_cash_main_1515
+Jump @Label_trainer_set_player_cash_main_1495
+
+:Label_trainer_set_player_cash_main_1491
+getF 0
+Switch [0 @Label_trainer_set_player_cash_main_1516]:[1 @Label_trainer_set_player_cash_main_1517]:[2 @Label_trainer_set_player_cash_main_1518]
+Jump @Label_trainer_set_player_cash_main_1519
+
+:Label_trainer_set_player_cash_main_1516
+Push 27639974
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1519
+
+:Label_trainer_set_player_cash_main_1517
+Push 422258364
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1519
+
+:Label_trainer_set_player_cash_main_1518
+Push 316202960
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1519
+
+:Label_trainer_set_player_cash_main_1519
+Jump @Label_trainer_set_player_cash_main_1495
+
+:Label_trainer_set_player_cash_main_1492
+getF 0
+Switch [0 @Label_trainer_set_player_cash_main_1520]:[1 @Label_trainer_set_player_cash_main_1521]:[2 @Label_trainer_set_player_cash_main_1522]
+Jump @Label_trainer_set_player_cash_main_1523
+
+:Label_trainer_set_player_cash_main_1520
+Push -445823242
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1523
+
+:Label_trainer_set_player_cash_main_1521
+Push -1386757215
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1523
+
+:Label_trainer_set_player_cash_main_1522
+Push -727828275
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1523
+
+:Label_trainer_set_player_cash_main_1523
+Jump @Label_trainer_set_player_cash_main_1495
+
+:Label_trainer_set_player_cash_main_1493
+getF 3
+Call @trainer_set_player_cash_stat_3
+
+:Label_trainer_set_player_cash_main_1494
+getF 0
+Switch [0 @Label_trainer_set_player_cash_main_1525]:[1 @Label_trainer_set_player_cash_main_1526]:[2 @Label_trainer_set_player_cash_main_1527]
+Jump @Label_trainer_set_player_cash_main_1528
+
+:Label_trainer_set_player_cash_main_1525
+Push 1806738963
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1528
+
+:Label_trainer_set_player_cash_main_1526
+Push 1576781520
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1528
+
+:Label_trainer_set_player_cash_main_1527
+Push 671882196
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1528
+
+:Label_trainer_set_player_cash_main_1528
+Jump @Label_trainer_set_player_cash_main_1495
+
+:Label_trainer_set_player_cash_main_1495
+Jump @Label_trainer_set_player_cash_main_1478
+
+:Label_trainer_set_player_cash_main_1477
+getF 0
+Switch [0 @Label_trainer_set_player_cash_main_1529]:[1 @Label_trainer_set_player_cash_main_1530]:[2 @Label_trainer_set_player_cash_main_1531]
+Jump @Label_trainer_set_player_cash_main_1532
+
+:Label_trainer_set_player_cash_main_1529
+Push1 95
+getF 3
+Call @trainer_set_player_cash_stat
+Jump @Label_trainer_set_player_cash_main_1532
+
+:Label_trainer_set_player_cash_main_1530
+Push1 97
+getF 3
+Call @trainer_set_player_cash_stat
+Jump @Label_trainer_set_player_cash_main_1532
+
+:Label_trainer_set_player_cash_main_1531
+Push1 96
+getF 3
+Call @trainer_set_player_cash_stat
+Jump @Label_trainer_set_player_cash_main_1532
+
+:Label_trainer_set_player_cash_main_1532
+Push1 98
+getF 3
+Call @trainer_set_player_cash_stat
+Jump @Label_trainer_set_player_cash_main_1478
+
+:Label_trainer_set_player_cash_main_1478
+getF 3
+iPush_1
+JumpGE @Label_trainer_set_player_cash_main_1533
+iPush_0
+Return 5 1
+
+:Label_trainer_set_player_cash_main_1533
+getF 0
+setF 9
+getF 7
+getF 3
+CallNative to_float 1 1
+fMult
+CallNative floor 1 1
+setF 3
+iPush_0
+setF 10
+getF 3
+setF 11
+getF 7
+fPush_0.0
+fCmpEq
+JumpFalse @Label_trainer_set_player_cash_main_1534
+getF 8
+Call @trainer_set_player_cash_lifeinvader
+iPush_1
+Return 5 1
+Jump @Label_trainer_set_player_cash_main_1536
+
+:Label_trainer_set_player_cash_main_1534
+getF 7
+fPush_1.0
+fCmpNe
+JumpFalse @Label_trainer_set_player_cash_main_1536
+getF 8
+Call @trainer_set_player_cash_lifeinvader
+
+:Label_trainer_set_player_cash_main_1536
+getF 9
+pglobal2 43946
+ArrayGet1 1
+getF 3
+Add
+setF 12
+getF 1
+Switch [1 @Label_trainer_set_player_cash_main_1537]:[0 @Label_trainer_set_player_cash_main_1538]
+Jump @Label_trainer_set_player_cash_main_1539
+
+:Label_trainer_set_player_cash_main_1537
+getF 9
+pglobal2 43946
+ArrayGet1 1
+iPush_0
+CmpGe
+dup
+JumpFalse @Label_trainer_set_player_cash_main_1540
+getF 3
+iPush_0
+CmpGt
+And
+
+:Label_trainer_set_player_cash_main_1540
+JumpFalse @Label_trainer_set_player_cash_main_1541
+getF 12
+iPush_0
+JumpGT @Label_trainer_set_player_cash_main_1542
+Push 2147483647
+getF 9
+pglobal2 43946
+ArraySet1 1
+Jump @Label_trainer_set_player_cash_main_1541
+
+:Label_trainer_set_player_cash_main_1542
+getF 9
+pglobal2 43946
+ArrayGet1 1
+getF 3
+Add
+getF 9
+pglobal2 43946
+ArraySet1 1
+
+:Label_trainer_set_player_cash_main_1541
+getF 0
+Switch [0 @Label_trainer_set_player_cash_main_1543]:[1 @Label_trainer_set_player_cash_main_1544]:[2 @Label_trainer_set_player_cash_main_1545]
+Jump @Label_trainer_set_player_cash_main_1546
+
+:Label_trainer_set_player_cash_main_1543
+Push -330339780
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1546
+
+:Label_trainer_set_player_cash_main_1544
+Push 1697564429
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1546
+
+:Label_trainer_set_player_cash_main_1545
+Push 1674823841
+getF 3
+Call @trainer_set_player_cash_stat_2
+Jump @Label_trainer_set_player_cash_main_1546
+
+:Label_trainer_set_player_cash_main_1546
+Jump @Label_trainer_set_player_cash_main_1539
+
+:Label_trainer_set_player_cash_main_1538
+getF 4
+Not
+JumpFalse @Label_trainer_set_player_cash_main_1547
+getF 9
+pglobal2 43946
+ArrayGet1 1
+getF 3
+Sub
+iPush_0
+JumpGE @Label_trainer_set_player_cash_main_1547
+iPush_0
+Return 5 1
+
+:Label_trainer_set_player_cash_main_1547
+getF 9
+pglobal2 43946
+ArrayGet1 1
+setF 10
+getF 9
+pglobal2 43946
+ArrayGet1 1
+getF 3
+Sub
+getF 9
+pglobal2 43946
+ArraySet1 1
+getF 4
+JumpFalse @Label_trainer_set_player_cash_main_1548
+getF 10
+setF 11
+
+:Label_trainer_set_player_cash_main_1548
+Jump @Label_trainer_set_player_cash_main_1539
+
+:Label_trainer_set_player_cash_main_1539
+getF 2
+iPush_1
+JumpNE @Label_trainer_set_player_cash_main_1549
+getF 11
+Push1 20
+JumpLE @Label_trainer_set_player_cash_main_1550
+
+:Label_trainer_set_player_cash_main_1550
+Jump @Label_trainer_set_player_cash_main_1551
+
+:Label_trainer_set_player_cash_main_1549
+getF 1
+getF 9
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 233
+ArrayGetP1 69
+GetImmediate1 1
+getF 9
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 233
+ArrayGetP1 69
+GetImmediateP1 2
+ArraySet1 6
+getF 2
+getF 9
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 233
+ArrayGetP1 69
+GetImmediate1 1
+getF 9
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 233
+ArrayGetP1 69
+GetImmediateP1 2
+ArrayGetP1 6
+SetImmediate1 1
+getF 3
+getF 9
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 233
+ArrayGetP1 69
+GetImmediate1 1
+getF 9
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 233
+ArrayGetP1 69
+GetImmediateP1 2
+ArrayGetP1 6
+SetImmediate1 2
+getF 9
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 233
+ArrayGet1 69
+Add1 1
+getF 9
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 233
+ArraySet1 69
+getF 9
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 233
+ArrayGetP1 69
+GetImmediate1 1
+Add1 1
+getF 9
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 233
+ArrayGetP1 69
+SetImmediate1 1
+getF 9
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 233
+ArrayGetP1 69
+GetImmediate1 1
+Push1 10
+JumpLE @Label_trainer_set_player_cash_main_1551
+iPush_0
+getF 9
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 233
+ArrayGetP1 69
+SetImmediate1 1
+
+:Label_trainer_set_player_cash_main_1551
+getF 0
+Call @Label_trainer_set_player_cash_stat_4
+globalget2 29814
+Push1 12
+JumpNE @Label_trainer_set_player_cash_main_1553
+iPush_0
+Call @trainer_set_player_cash_main_globals
+
+:Label_trainer_set_player_cash_main_1553
+iPush_1
+Return 5 1
+
+:bank_check_for_code_deposits
+Function 234 0 3
+Push 52740893
+pFrame1 2
+iPush_-1
+CallNative stat_get_int 3 1
+drop
+iPush_0
+pglobal2 43946
+ArrayGet1 1
+getF 2
+CmpEq
+Not
+JumpFalse @Label_bank_check_for_code_deposits_1601
+getF 2
+iPush_0
+pglobal2 43946
+ArraySet1 1
+
+:Label_bank_check_for_code_deposits_1601
+Push 1153264002
+pFrame1 2
+iPush_-1
+CallNative stat_get_int 3 1
+drop
+iPush_1
+pglobal2 43946
+ArrayGet1 1
+getF 2
+CmpEq
+Not
+JumpFalse @Label_bank_check_for_code_deposits_1603
+getF 2
+iPush_1
+pglobal2 43946
+ArraySet1 1
+
+:Label_bank_check_for_code_deposits_1603
+Push -1921710979
+pFrame1 2
+iPush_-1
+CallNative stat_get_int 3 1
+drop
+iPush_2
+pglobal2 43946
+ArrayGet1 1
+getF 2
+CmpEq
+Not
+JumpFalse @Label_bank_check_for_code_deposits_1604
+getF 2
+iPush_2
+pglobal2 43946
+ArraySet1 1
+
+:Label_bank_check_for_code_deposits_1604
+Return 0 0
+
+:trainer_set_player_cash_stat
+Function 1 2 5
+getF 1
+iPush_1
+JumpGE @Label_trainer_set_player_cash_stat_1597
+Return 2 0
+
+:Label_trainer_set_player_cash_stat_1597
+getF 0
+pglobal2 42515
+ArrayGetP1 7
+GetImmediate1 2
+JumpFalse @Label_trainer_set_player_cash_stat_1598
+Return 2 0
+
+:Label_trainer_set_player_cash_stat_1598
+getF 0
+pglobal2 42515
+ArrayGet1 7
+JumpFalse @Label_trainer_set_player_cash_stat_1599
+getF 0
+pglobal2 42515
+ArrayGetP1 7
+GetImmediate1 1
+pFrame1 4
+iPush_-1
+CallNative stat_get_int 3 1
+drop
+getF 4
+Add1 1
+setF 4
+getF 0
+pglobal2 42515
+ArrayGetP1 7
+GetImmediate1 1
+getF 4
+iPush_1
+CallNative stat_set_int 3 1
+drop
+
+:Label_trainer_set_player_cash_stat_1599
+CallNative network_is_game_in_progress 0 1
+JumpFalse @Label_trainer_set_player_cash_stat_1600
+Return 2 0
+
+:Label_trainer_set_player_cash_stat_1600
+Return 2 0
+
+:trainer_set_player_cash_stat_2
+Function 232 2 5
+getF 0
+pFrame1 4
+iPush_-1
+CallNative stat_get_int 3 1
+drop
+getF 4
+getF 1
+Add
+setF 4
+getF 0
+getF 4
+iPush_1
+CallNative stat_set_int 3 1
+drop
+Return 2 0
+
+:Label_trainer_set_player_cash_achievement_check
+Function 229 1 5
+iPush_0
+setF 4
+Push1 27
+CallNative has_achievement_been_passed 1 1
+JumpFalse @Label_trainer_set_player_cash_achievement_check_1583
+iPush_0
+Return 1 1
+
+:Label_trainer_set_player_cash_achievement_check_1583
+Push -656546900
+pFrame1 3
+iPush_-1
+CallNative stat_get_int 3 1
+JumpFalse @Label_trainer_set_player_cash_achievement_check_1584
+getF 4
+getF 3
+Add
+setF 4
+
+:Label_trainer_set_player_cash_achievement_check_1584
+Push -2098183071
+pFrame1 3
+iPush_-1
+CallNative stat_get_int 3 1
+JumpFalse @Label_trainer_set_player_cash_achievement_check_1585
+getF 4
+getF 3
+Add
+setF 4
+
+:Label_trainer_set_player_cash_achievement_check_1585
+Push 1578119842
+pFrame1 3
+iPush_-1
+CallNative stat_get_int 3 1
+JumpFalse @Label_trainer_set_player_cash_achievement_check_1586
+getF 4
+getF 3
+Add
+setF 4
+
+:Label_trainer_set_player_cash_achievement_check_1586
+getF 0
+JumpFalse @Label_trainer_set_player_cash_achievement_check_1587
+
+:Label_trainer_set_player_cash_achievement_check_1587
+getF 4
+Push 200000000
+JumpGE @Label_trainer_set_player_cash_achievement_check_1588
+iPush_0
+Return 1 1
+
+:Label_trainer_set_player_cash_achievement_check_1588
+Push1 27
+iPush_1
+Call @Label_trainer_set_player_cash_achievement_check_1589
+drop
+iPush_1
+Return 1 1
+
+:Label_trainer_set_player_cash_achievement_check_1589
+Function 230 2 4
+getF 0
+Push1 50
+JumpLT @Label_trainer_set_player_cash_achievement_check_1590
+iPush_0
+Return 2 1
+
+:Label_trainer_set_player_cash_achievement_check_1590
+getF 0
+getF 1
+Call @Label_trainer_set_player_cash_achievement_check_1591
+Return 2 1
+
+:Label_trainer_set_player_cash_achievement_check_1591
+Function 231 2 4
+getF 0
+CallNative has_achievement_been_passed 1 1
+dup
+JumpFalse @Label_trainer_set_player_cash_achievement_check_1592
+getF 1
+iPush_1
+CmpEq
+And
+
+:Label_trainer_set_player_cash_achievement_check_1592
+JumpFalse @Label_trainer_set_player_cash_achievement_check_1593
+iPush_0
+Return 2 1
+
+:Label_trainer_set_player_cash_achievement_check_1593
+globalget2 19696
+iPush_0
+CmpNe
+dup
+JumpFalse @Label_trainer_set_player_cash_achievement_check_1594
+globalget2 59842
+Not
+And
+
+:Label_trainer_set_player_cash_achievement_check_1594
+JumpFalse @Label_trainer_set_player_cash_achievement_check_1595
+iPush_0
+Return 2 1
+
+:Label_trainer_set_player_cash_achievement_check_1595
+getF 0
+CallNative give_achievement_to_player 1 1
+Not
+JumpFalse @Label_trainer_set_player_cash_achievement_check_1596
+iPush_0
+Return 2 1
+
+:Label_trainer_set_player_cash_achievement_check_1596
+iPush_1
+Return 2 1
+
+:Label_trainer_set_player_cash_main_1496
+Function 228 1 3
+CallNative network_is_game_in_progress 0 1
+Not
+JumpFalse @Label_trainer_set_player_cash_main_1582
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediate2 471
+getF 0
+CallNative is_bit_set 2 1
+Return 1 1
+
+:Label_trainer_set_player_cash_main_1582
+iPush_0
+pglobal3 2097152
+ArrayGetP2 5157
+GetImmediateP2 3087
+GetImmediate1 10
+getF 0
+CallNative is_bit_set 2 1
+Return 1 1
+
+:trainer_set_player_cash_stat_3
+Function 227 1 3
+Push1 93
+getF 0
+Call @trainer_set_player_cash_stat
+Push1 29
+getF 0
+Call @trainer_set_player_cash_stat
+Push1 30
+getF 0
+Call @trainer_set_player_cash_stat
+Return 1 0
+
+:trainer_set_player_cash_lifeinvader
+Function 224 1 20
+iPush_0
+setF 3
+CallNative network_is_game_in_progress 0 1
+Not
+JumpFalse @Label_trainer_set_player_cash_lifeinvader_1566
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediate2 471
+getF 0
+CallNative is_bit_set 2 1
+JumpFalse @Label_trainer_set_player_cash_lifeinvader_1567
+iPush_1
+setF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP2 471
+getF 0
+CallNative clear_bit 2 0
+
+:Label_trainer_set_player_cash_lifeinvader_1567
+Jump @Label_trainer_set_player_cash_lifeinvader_1568
+
+:Label_trainer_set_player_cash_lifeinvader_1566
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediate2 471
+getF 0
+CallNative is_bit_set 2 1
+dup
+Not
+JumpFalse @Label_trainer_set_player_cash_lifeinvader_1569
+iPush_0
+pglobal3 2097152
+ArrayGetP2 5157
+GetImmediateP2 3087
+GetImmediate1 10
+getF 0
+CallNative is_bit_set 2 1
+Or
+
+:Label_trainer_set_player_cash_lifeinvader_1569
+JumpFalse @Label_trainer_set_player_cash_lifeinvader_1568
+iPush_1
+setF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP2 471
+getF 0
+CallNative clear_bit 2 0
+iPush_0
+pglobal3 2097152
+ArrayGetP2 5157
+GetImmediateP2 3087
+GetImmediateP1 10
+getF 0
+CallNative clear_bit 2 0
+
+:Label_trainer_set_player_cash_lifeinvader_1568
+getF 3
+JumpFalse @Label_trainer_set_player_cash_lifeinvader_1571
+PushString "CHAR_LIFEINVADER"
+pFrame1 4
+StrCopy 64
+PushString "COUP_RED"
+CallNative unk_0x574EE85C 1 0
+getF 0
+Call @trainer_set_player_cash_lifeinvader_string
+CallNative unk_0xDCE05406 1 0
+pFrame1 4
+pFrame1 4
+iPush_1
+iPush_0
+PushString ""
+iPush_0
+CallNative unk_0xE7E3C98B 6 1
+drop
+
+:Label_trainer_set_player_cash_lifeinvader_1571
+Return 1 0
+
+:trainer_set_player_cash_lifeinvader_string
+Function 225 1 3
+getF 0
+Switch [0 @Label_trainer_set_player_cash_lifeinvader_string_1573]:[1 @Label_trainer_set_player_cash_lifeinvader_string_1574]:[2 @Label_trainer_set_player_cash_lifeinvader_string_1575]:[3 @Label_trainer_set_player_cash_lifeinvader_string_1576]:[4 @Label_trainer_set_player_cash_lifeinvader_string_1577]:[5 @Label_trainer_set_player_cash_lifeinvader_string_1578]:[6 @Label_trainer_set_player_cash_lifeinvader_string_1579]:[7 @Label_trainer_set_player_cash_lifeinvader_string_1580]
+Jump @Label_trainer_set_player_cash_lifeinvader_string_1581
+
+:Label_trainer_set_player_cash_lifeinvader_string_1573
+PushString "COUP_HAIRC"
+Return 1 1
+
+:Label_trainer_set_player_cash_lifeinvader_string_1574
+PushString "COUP_TATTOO"
+Return 1 1
+
+:Label_trainer_set_player_cash_lifeinvader_string_1575
+PushString "COUP_WARSTOCK"
+Return 1 1
+
+:Label_trainer_set_player_cash_lifeinvader_string_1576
+PushString "COUP_MOSPORT"
+Return 1 1
+
+:Label_trainer_set_player_cash_lifeinvader_string_1577
+PushString "COUP_ELITAS"
+Return 1 1
+
+:Label_trainer_set_player_cash_lifeinvader_string_1578
+PushString "COUP_MEDSPENS"
+Return 1 1
+
+:Label_trainer_set_player_cash_lifeinvader_string_1579
+PushString "COUP_SPRUNK"
+Return 1 1
+
+:Label_trainer_set_player_cash_lifeinvader_string_1580
+PushString "COUP_RESPRAY"
+Return 1 1
+
+:Label_trainer_set_player_cash_lifeinvader_string_1581
+PushString ""
+Return 1 1
+
+:Label_trainer_set_player_cash_stat_4
+Function 223 1 4
+getF 0
+pglobal2 43946
+ArrayGet1 1
+setF 3
+getF 0
+Switch [0 @Label_trainer_set_player_cash_stat_4_1562]:[1 @Label_trainer_set_player_cash_stat_4_1563]:[2 @Label_trainer_set_player_cash_stat_4_1564]
+Jump @Label_trainer_set_player_cash_stat_4_1565
+
+:Label_trainer_set_player_cash_stat_4_1562
+Push 52740893
+getF 3
+iPush_1
+CallNative stat_set_int 3 1
+drop
+Jump @Label_trainer_set_player_cash_stat_4_1565
+
+:Label_trainer_set_player_cash_stat_4_1563
+Push 1153264002
+getF 3
+iPush_1
+CallNative stat_set_int 3 1
+drop
+Jump @Label_trainer_set_player_cash_stat_4_1565
+
+:Label_trainer_set_player_cash_stat_4_1564
+Push -1921710979
+getF 3
+iPush_1
+CallNative stat_set_int 3 1
+drop
+Jump @Label_trainer_set_player_cash_stat_4_1565
+
+:Label_trainer_set_player_cash_stat_4_1565
+Return 1 0
+
+:trainer_set_player_cash_main_globals
+Function 222 1 5
+iPush_0
+setF 3
+iPush_0
+setF 4
+iPush_0
+setF 3
+
+:Label_trainer_set_player_cash_main_globals_1558
+getF 3
+iPush_3
+JumpGE @Label_trainer_set_player_cash_main_globals_1555
+iPush_0
+setF 4
+
+:Label_trainer_set_player_cash_main_globals_1557
+getF 4
+Push1 11
+JumpGE @Label_trainer_set_player_cash_main_globals_1556
+getF 4
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 233
+ArrayGetP1 69
+GetImmediateP1 2
+ArrayGet1 6
+getF 4
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 233
+ArrayGetP1 69
+GetImmediateP1 2
+ArrayGetP1 6
+SetImmediate1 3
+getF 4
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 233
+ArrayGetP1 69
+GetImmediateP1 2
+ArrayGetP1 6
+GetImmediate1 1
+getF 4
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 233
+ArrayGetP1 69
+GetImmediateP1 2
+ArrayGetP1 6
+SetImmediate1 4
+getF 4
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 233
+ArrayGetP1 69
+GetImmediateP1 2
+ArrayGetP1 6
+GetImmediate1 2
+getF 4
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 233
+ArrayGetP1 69
+GetImmediateP1 2
+ArrayGetP1 6
+SetImmediate1 5
+getF 4
+Add1 1
+setF 4
+Jump @Label_trainer_set_player_cash_main_globals_1557
+
+:Label_trainer_set_player_cash_main_globals_1556
+getF 3
+Add1 1
+setF 3
+Jump @Label_trainer_set_player_cash_main_globals_1558
+
+:Label_trainer_set_player_cash_main_globals_1555
+iPush_0
+setF 3
+
+:Label_trainer_set_player_cash_main_globals_1561
+getF 3
+Push1 10
+JumpGE @Label_trainer_set_player_cash_main_globals_1559
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+ArrayGet1 1
+iPush_0
+getF 3
+pglobal2 43954
+ArrayGetP1 3
+ArraySet1 1
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 11
+ArrayGet1 1
+iPush_0
+getF 3
+pglobal2 43954
+GetImmediateP1 31
+ArrayGetP1 3
+ArraySet1 1
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 22
+ArrayGet1 1
+iPush_0
+getF 3
+pglobal2 43954
+GetImmediateP1 62
+ArrayGetP1 3
+ArraySet1 1
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 33
+ArrayGet1 1
+iPush_0
+getF 3
+pglobal2 43954
+GetImmediateP1 93
+ArrayGetP1 3
+ArraySet1 1
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 44
+ArrayGet1 1
+iPush_0
+getF 3
+pglobal2 43954
+GetImmediateP1 124
+ArrayGetP1 3
+ArraySet1 1
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 55
+ArrayGet1 1
+iPush_0
+getF 3
+pglobal2 43954
+GetImmediateP1 155
+ArrayGetP1 3
+ArraySet1 1
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 66
+ArrayGet1 1
+iPush_0
+getF 3
+pglobal2 43954
+GetImmediateP1 186
+ArrayGetP1 3
+ArraySet1 1
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 77
+ArrayGet1 1
+iPush_0
+getF 3
+pglobal2 43954
+GetImmediateP1 217
+ArrayGetP1 3
+ArraySet1 1
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 88
+ArrayGet1 1
+iPush_0
+getF 3
+pglobal2 43954
+GetImmediateP1 248
+ArrayGetP1 3
+ArraySet1 1
+getF 0
+Not
+JumpFalse @Label_trainer_set_player_cash_main_globals_1560
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+ArrayGet1 1
+iPush_1
+getF 3
+pglobal2 43954
+ArrayGetP1 3
+ArraySet1 1
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 11
+ArrayGet1 1
+iPush_1
+getF 3
+pglobal2 43954
+GetImmediateP1 31
+ArrayGetP1 3
+ArraySet1 1
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 22
+ArrayGet1 1
+iPush_1
+getF 3
+pglobal2 43954
+GetImmediateP1 62
+ArrayGetP1 3
+ArraySet1 1
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 33
+ArrayGet1 1
+iPush_1
+getF 3
+pglobal2 43954
+GetImmediateP1 93
+ArrayGetP1 3
+ArraySet1 1
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 44
+ArrayGet1 1
+iPush_1
+getF 3
+pglobal2 43954
+GetImmediateP1 124
+ArrayGetP1 3
+ArraySet1 1
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 55
+ArrayGet1 1
+iPush_1
+getF 3
+pglobal2 43954
+GetImmediateP1 155
+ArrayGetP1 3
+ArraySet1 1
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 66
+ArrayGet1 1
+iPush_1
+getF 3
+pglobal2 43954
+GetImmediateP1 186
+ArrayGetP1 3
+ArraySet1 1
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 77
+ArrayGet1 1
+iPush_1
+getF 3
+pglobal2 43954
+GetImmediateP1 217
+ArrayGetP1 3
+ArraySet1 1
+getF 3
+pglobal3 86838
+GetImmediateP2 19911
+GetImmediateP1 88
+ArrayGet1 1
+iPush_1
+getF 3
+pglobal2 43954
+GetImmediateP1 248
+ArrayGetP1 3
+ArraySet1 1
+
+:Label_trainer_set_player_cash_main_globals_1560
+getF 3
+Add1 1
+setF 3
+Jump @Label_trainer_set_player_cash_main_globals_1561
+
+:Label_trainer_set_player_cash_main_globals_1559
+Return 1 0
 
 :trainer_player_variation_action
 Function 1 0 4
@@ -8350,7 +9709,7 @@ Return 0 0
 iPush_1
 pstatic2 61
 ArrayGet1 1
-Switch [1 @Label_trainer_vehicle_action_level_2_last_selected_1]:[2 @Label_trainer_vehicle_action_level_2_last_selected_2]:[3 @Label_trainer_vehicle_action_level_2_last_selected_3]
+Switch [1 @Label_trainer_vehicle_action_level_2_last_selected_1]:[2 @Label_trainer_vehicle_action_level_2_last_selected_2]:[3 @Label_trainer_vehicle_action_level_2_last_selected_3]:[5 @Label_trainer_vehicle_action_level_2_last_selected_5]
 Jump @Label_trainer_vehicle_action_level_2_end
 
 :Label_trainer_vehicle_action_level_2_last_selected_1
@@ -8480,6 +9839,9 @@ Return 0 0
 
 :Label_trainer_vehicle_action_level_2_last_selected_3
 Call @trainer_vehicle_colour_action_level_2
+Return 0 0
+
+:Label_trainer_vehicle_action_level_2_last_selected_5
 Return 0 0
 
 :Label_trainer_vehicle_action_level_2_end
