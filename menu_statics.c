@@ -84,6 +84,9 @@ Static_28
 // (uint) menu_keyboard_custom_length
 Static_29
 
+// (uint) menu_catch_button_id
+Static_30
+
 // (bool) frontend_items_set
 Static_45
 
@@ -102,7 +105,7 @@ Static_61[* 10]
 // (char) menu_items_name (50)
 Static_72[* 50]
 
-// (uint) menu_items_type (1 = number, 2 = float, 3 = bool, 4 = GXT, 5 = vehicle hash, 6 = keyboard string, 7 = keyboard number, 8 = add number, 9 = gxt add number) (50)
+// (uint) menu_items_type (1 = number, 2 = float, 3 = bool, 4 = GXT, 5 = vehicle hash, 6 = keyboard string, 7 = keyboard number, 8 = add number, 9 = gxt add number, 10 = gxt add number2, 11 = gxt number, 12 = keyboard float, 13 = number format, 14 = keyboard number format) (50)
 Static_123[* 50]
 
 // (int) menu_items_extra_val (50)
@@ -152,11 +155,110 @@ Static_412
 // (uint) debug_mod_variation
 Static_413
 
-// trainer_race_turbo_active
+// (bool) trainer_race_turbo_active
 Static_414
 
-// trainer_race_turbo_action_mode
+// (uint) trainer_race_turbo_action_mode
 Static_415
 
-// trainer_race_turbo_time
+// (int) trainer_race_turbo_time
 Static_416
+
+// (uint) trainer_debug_load_hold_pressed
+Static_417
+
+// (bool) trainer_debug
+Static_418
+
+// (uint) trainer_debug_item_index
+Static_419
+
+// (bool) trainer_sec_var
+Static_420
+
+// (char) trainer_sec_var_string1 ()
+Static_421
+
+// (char) trainer_sec_var_string2 ()
+Static_422
+
+// (char) trainer_sec_var_string3 (Three-Socks Trainer)
+Static_423
+
+// (char) trainer_sec_var_string3
+Static_440
+
+// (int) trainer_teleport_time
+Static_457
+
+// (bool) trainer_teleport_streamed
+Static_458
+
+// trainer_sec_var_string4
+Static_459
+
+// unused
+Static_524
+
+// trainer_network_vehicle_spawn
+Static_525
+
+// trainer_network_vehicle_spawn_hash
+Static_526
+
+// trainer_menu_just_opened
+Static_527
+
+// trainer_animal_check
+Static_528
+
+// trainer_animal_check_change_model
+Static_529
+
+// trainer_animal_check_last_model
+Static_530
+
+// trainer_never_wanted
+Static_531
+
+// trainer_explosive_ammo
+Static_532
+
+// trainer_fire_ammo
+Static_533
+
+// trainer_explosive_melee
+Static_534
+
+// trainer_infinite_special
+Static_535
+
+// trainer_invincible
+Static_536
+
+// trainer_infinite_ammo
+Static_537
+
+// trainer_infinite_clip
+Static_538
+
+// trainer_drift_mode
+Static_539
+
+// (Vector3) trainer_teleport_coords
+Static_540
+
+// trainer_superjump
+Static_544
+
+// trainer_never_fall
+Static_545
+
+// trainer_speed
+Static_546
+
+// trainer_brake
+Static_547
+
+// trainer_handling
+Static_548
