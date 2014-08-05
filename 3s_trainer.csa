@@ -1868,7 +1868,7 @@ iPush_0
 iPush_0
 Push 99999999
 Push1 9
-Call @menu_addItem_number_keyboard
+Call @menu_addItem_number_format_keyboard
 Call @menu_add_action
 
 PushString "BLIP_FRANKLIN"
@@ -1877,7 +1877,7 @@ iPush_0
 iPush_0
 Push 99999999
 Push1 9
-Call @menu_addItem_number_keyboard
+Call @menu_addItem_number_format_keyboard
 Call @menu_add_action
 
 PushString "BLIP_TREV"
@@ -1886,7 +1886,7 @@ iPush_0
 iPush_0
 Push 99999999
 Push1 9
-Call @menu_addItem_number_keyboard
+Call @menu_addItem_number_format_keyboard
 Call @menu_add_action
 
 Return 0 0
@@ -2561,6 +2561,9 @@ Push1 100
 iPush_3
 Call @menu_addItem_number_keyboard
 Call @menu_add_action
+
+PushString "Apply"
+Call @menu_addItem_action
 
 PushString "Reset"
 Call @menu_addItem_action
@@ -7083,7 +7086,20 @@ iPush_7
 StaticGet1 4
 pstatic1 123
 ArrayGet1 1
-JumpNE @Label_action_keyboard_float
+CmpEq
+dup
+Not
+JumpFalse @Label_action_keyboard_float_or
+Push1 14
+StaticGet1 4
+pstatic1 123
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_action_keyboard_float_or
+JumpFalse @Label_action_keyboard_float
+
 PushString "CELL_221"
 Call @menu_keyboard
 JumpFalse @Label_action_keyboard_number_goto_end
@@ -10132,7 +10148,7 @@ Return 0 0
 
 :Label_trainer_vehicle_action_level_2_last_selected_5
 StaticGet1 4
-Switch [0 @Label_trainer_vehicle_action_level_2_last_selected_5_0]:[1 @Label_trainer_vehicle_action_level_2_last_selected_5_1]:[2 @Label_trainer_vehicle_action_level_2_last_selected_5_2]:[3 @Label_trainer_vehicle_action_level_2_last_selected_5_3]
+Switch [0 @Label_trainer_vehicle_action_level_2_last_selected_5_0]:[1 @Label_trainer_vehicle_action_level_2_last_selected_5_1]:[2 @Label_trainer_vehicle_action_level_2_last_selected_5_2]:[3 @Label_trainer_vehicle_action_level_2_last_selected_5_3]:[4 @Label_trainer_vehicle_action_level_2_last_selected_5_4]
 Jump @Label_trainer_vehicle_action_level_2_last_selected_5_end
 
 :Label_trainer_vehicle_action_level_2_last_selected_5_0
@@ -10151,6 +10167,18 @@ StaticSet2 548
 Return 0 0
 
 :Label_trainer_vehicle_action_level_2_last_selected_5_3
+iPush_0
+Call @menu_get_number
+StaticSet2 546
+iPush_1
+Call @menu_get_number
+StaticSet2 547
+iPush_2
+Call @menu_get_number
+StaticSet2 548
+Return 0 0
+
+:Label_trainer_vehicle_action_level_2_last_selected_5_4
 iPush_0
 StaticSet2 546
 iPush_0
@@ -10950,6 +10978,9 @@ Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_vehicle_light_action_level_3_last_selected_3
+Call @menu_get_current_bool
+Not
+JumpFalse @Label_trainer_vehicle_light_action_level_3_last_selected_3_1
 StaticGet2 379
 iPush_0
 iPush_0
@@ -10961,15 +10992,45 @@ Not
 Call @menu_get_current_bool
 Not
 CallNative set_vehicle_indicator_lights 3 0
+Jump @Label_trainer_vehicle_light_action_level_3_last_selected_3_end
+
+:Label_trainer_vehicle_light_action_level_3_last_selected_3_1
+StaticGet2 379
+iPush_1
+iPush_0
+CallNative set_vehicle_indicator_lights 3 0
+StaticGet2 379
+iPush_0
+iPush_0
+CallNative set_vehicle_indicator_lights 3 0
+
+:Label_trainer_vehicle_light_action_level_3_last_selected_3_end
 Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_vehicle_light_action_level_3_last_selected_4
+Call @menu_get_current_bool
+Not
+JumpFalse @Label_trainer_vehicle_light_action_level_3_last_selected_4_1
+
 StaticGet2 379
 iPush_0
 Call @menu_get_current_bool
 Not
 CallNative set_vehicle_indicator_lights 3 0
+Jump @Label_trainer_vehicle_light_action_level_3_last_selected_4_end
+
+:Label_trainer_vehicle_light_action_level_3_last_selected_4_1
+StaticGet2 379
+iPush_1
+iPush_0
+CallNative set_vehicle_indicator_lights 3 0
+StaticGet2 379
+iPush_0
+iPush_0
+CallNative set_vehicle_indicator_lights 3 0
+
+:Label_trainer_vehicle_light_action_level_3_last_selected_4_end
 Call @menu_toggle_current_bool
 Return 0 0
 
@@ -13497,7 +13558,7 @@ ArrayGet1 1
 CmpEq
 dup
 Not
-JumpFalse @Label_menu_draw_frontend_hook_or
+JumpFalse @Label_menu_draw_frontend_hook_or_1
 iPush_7
 StaticGet1 4
 pstatic1 123
@@ -13505,7 +13566,29 @@ ArrayGet1 1
 CmpEq
 Or
 
-:Label_menu_draw_frontend_hook_or
+:Label_menu_draw_frontend_hook_or_1
+dup
+Not
+JumpFalse @Label_menu_draw_frontend_hook_or_2
+Push1 12
+StaticGet1 4
+pstatic1 123
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_menu_draw_frontend_hook_or_2
+dup
+Not
+JumpFalse @Label_menu_draw_frontend_hook_or_3
+Push1 14
+StaticGet1 4
+pstatic1 123
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_menu_draw_frontend_hook_or_3
 JumpFalse @Label_menu_draw_frontend_hook_end
 
 getF 3
@@ -13930,6 +14013,35 @@ getF 3
 StaticSet1 29
 
 :Label_menu_addItem_number_keyboard_end
+Return 4 0
+
+:menu_addItem_number_format_keyboard
+Function 1 4 6
+
+Push1 14
+StaticGet1 5
+pstatic1 123
+ArraySet1 1
+
+getF 0
+StaticGet1 5
+pstatic2 276
+ArraySet1 1
+
+getF 1
+StaticGet1 5
+pstatic2 327
+ArraySet1 1
+
+getF 2
+StaticGet1 5
+pstatic1 174
+ArraySet1 1
+
+getF 3
+StaticSet1 29
+
+:Label_menu_addItem_number_format_keyboard_end
 Return 4 0
 
 :menu_addItem_float_keyboard
@@ -14803,7 +14915,7 @@ ArrayGet1 1
 CmpEq
 dup
 Not
-JumpFalse @Label_catch_left_button_press_or
+JumpFalse @Label_catch_left_button_press_or_1
 iPush_7
 StaticGet1 4
 pstatic1 123
@@ -14811,7 +14923,29 @@ ArrayGet1 1
 CmpEq
 Or
 
-:Label_catch_left_button_press_or
+:Label_catch_left_button_press_or_1
+dup
+Not
+JumpFalse @Label_catch_left_button_press_or_2
+Push1 13
+StaticGet1 4
+pstatic1 123
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_catch_left_button_press_or_2
+dup
+Not
+JumpFalse @Label_catch_left_button_press_or_3
+Push1 14
+StaticGet1 4
+pstatic1 123
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_catch_left_button_press_or_3
 JumpFalse @Label_catch_button_press_left_float
 
 StaticGet1 4
@@ -14851,7 +14985,7 @@ ArrayGet1 1
 CmpEq
 dup
 Not
-JumpFalse @Label_catch_left_button_float_press_or
+JumpFalse @Label_catch_left_button_float_press_or_1
 Push1 12
 StaticGet1 4
 pstatic1 123
@@ -14859,7 +14993,7 @@ ArrayGet1 1
 CmpEq
 Or
 
-:Label_catch_left_button_float_press_or
+:Label_catch_left_button_float_press_or_1
 JumpFalse @Label_catch_button_press_goto_7_1
 
 StaticGet1 4
@@ -14873,7 +15007,7 @@ ItoF
 fCmpLe
 dup
 Not
-JumpFalse @Label_catch_left_button_float_press_or_1
+JumpFalse @Label_catch_left_button_float_press_or2_1
 StaticGet1 4
 pstatic2 327
 ArrayGet1 1
@@ -14882,7 +15016,7 @@ fPush_0.0
 fCmpLt
 Or
 
-:Label_catch_left_button_float_press_or_1
+:Label_catch_left_button_float_press_or2_1
 JumpFalse @Label_catch_button_press_left_float_1
 
 StaticGet1 4
@@ -14921,7 +15055,7 @@ ArrayGet1 1
 CmpEq
 dup
 Not
-JumpFalse @Label_catch_right_button_press_or
+JumpFalse @Label_catch_right_button_press_or_1
 iPush_7
 StaticGet1 4
 pstatic1 123
@@ -14929,7 +15063,29 @@ ArrayGet1 1
 CmpEq
 Or
 
-:Label_catch_right_button_press_or
+:Label_catch_right_button_press_or_1
+dup
+Not
+JumpFalse @Label_catch_right_button_press_or_2
+Push1 13
+StaticGet1 4
+pstatic1 123
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_catch_right_button_press_or_2
+dup
+Not
+JumpFalse @Label_catch_right_button_press_or_3
+Push1 14
+StaticGet1 4
+pstatic1 123
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_catch_right_button_press_or_3
 JumpFalse @Label_catch_button_press_right_float
 
 StaticGet1 4
@@ -16378,6 +16534,17 @@ CmpEq
 Or
 
 :Label_draw_menu_number_or_4
+dup
+Not
+JumpFalse @Label_draw_menu_number_or_5
+Push1 14
+getF 3
+pstatic1 123
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_draw_menu_number_or_5
 JumpFalse @Label_draw_menu_number_end
 getF 18
 getF 19
@@ -16441,7 +16608,20 @@ Push1 13
 getF 3
 pstatic1 123
 ArrayGet1 1
-JumpNE @Label_draw_menu_number_not_format
+CmpEq
+dup
+Not
+JumpFalse @Label_draw_menu_number_format_or
+Push1 14
+getF 3
+pstatic1 123
+ArrayGet1 1
+CmpEq
+Or
+
+:Label_draw_menu_number_format_or
+JumpFalse @Label_draw_menu_number_not_format
+
 PushString "ESDOLLA"
 CallNative unk_0x51E7A037 1 0
 
