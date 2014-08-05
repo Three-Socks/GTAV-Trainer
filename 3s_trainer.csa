@@ -167,10 +167,6 @@ Return 1 0
 :trainer_loop_checks
 Function 1 0 2
 
-CallNative player_id 0 1
-CallNative is_player_playing 1 1
-JumpFalse @Label_trainer_loop_checks_end
-
 StaticGet2 528
 JumpFalse @Label_trainer_animal_check_end
 CallNative player_id 0 1
@@ -221,6 +217,10 @@ iPush_0
 StaticSet2 529
 
 :Label_trainer_animal_check_end
+CallNative player_id 0 1
+CallNative is_player_playing 1 1
+JumpFalse @Label_trainer_loop_checks_end
+
 StaticGet2 531
 JumpFalse @Label_trainer_wanted_check_end
 CallNative player_id 0 1
@@ -298,6 +298,18 @@ CallNative set_ped_infinite_ammo_clip 2 0
 StaticGet2 539
 JumpFalse @Label_trainer_drift_mode_check_end
 
+StaticGet2 379
+Call @trainer_race_turbo_check
+dup
+JumpFalse @Label_trainer_drift_mode_check_or2
+CallNative player_ped_id 0 1
+StaticGet2 379
+CallNative is_ped_sitting_in_vehicle 2 1
+And
+
+:Label_trainer_drift_mode_check_or2
+JumpFalse @Label_trainer_drift_mode_check_end
+
 iPush_0
 Push1 69
 CallNative is_control_pressed 2 1
@@ -310,18 +322,6 @@ CallNative is_control_pressed 2 1
 Or
 
 :Label_trainer_drift_mode_check_or
-JumpFalse @Label_trainer_drift_mode_check_end
-
-StaticGet2 379
-Call @trainer_race_turbo_check
-dup
-JumpFalse @Label_trainer_drift_mode_check_or2
-CallNative player_ped_id 0 1
-StaticGet2 379
-CallNative is_ped_sitting_in_vehicle 2 1
-And
-
-:Label_trainer_drift_mode_check_or2
 JumpFalse @Label_trainer_drift_mode_check_disable
 
 StaticGet2 379
@@ -348,10 +348,9 @@ iPush_1
 CallNative set_ped_can_be_knocked_off_vehicle 2 0
 
 :Label_trainer_never_fall_check_end
-fPush_0.0
+iPush_0
 StaticGet2 546
-fCmpNe
-JumpFalse @Label_trainer_speed_check_end
+JumpEQ @Label_trainer_speed_check_end
 iPush_0
 Push1 65
 CallNative is_control_pressed 2 1
@@ -395,10 +394,19 @@ JumpFalse @Label_trainer_speed_check_goto_end
 StaticGet2 379
 CallNative is_vehicle_on_all_wheels 1 1
 JumpFalse @Label_trainer_speed_check_goto_end
+
+fPush 120
+StaticGet2 379
+CallNative get_entity_speed 1 1
+fCmpGt
+JumpFalse @Label_trainer_speed_check_goto_end
+
+
 StaticGet2 379
 iPush_0
 fPush_0.0
 StaticGet2 546
+ItoF
 fPush_0.0
 fPush_0.0
 fPush_0.0
@@ -415,14 +423,13 @@ CallNative apply_force_to_entity 14 0
 Jump @Label_trainer_speed_check_end
 
 :Label_trainer_speed_check_1
-fPush_0.0
+iPush_0
 StaticSet2 546
 
 :Label_trainer_speed_check_end
-fPush_0.0
+iPush_0
 StaticGet2 547
-fCmpNe
-JumpFalse @Label_trainer_brake_check_end
+JumpEQ @Label_trainer_brake_check_end
 iPush_0
 Push1 66
 CallNative is_control_pressed 2 1
@@ -458,16 +465,18 @@ StaticGet2 379
 CallNative is_vehicle_on_all_wheels 1 1
 JumpFalse @Label_trainer_brake_check_goto_end
 
+fPush 12.5
 StaticGet2 379
 CallNative get_entity_speed 1 1
-fPush 12.5
 fCmpLt
 JumpFalse @Label_trainer_brake_check_goto_end
+
 StaticGet2 379
 iPush_0
 fPush_0.0
 fPush_0.0
 StaticGet2 547
+ItoF
 fSub
 fPush_0.0
 fPush_0.0
@@ -485,27 +494,26 @@ CallNative apply_force_to_entity 14 0
 Jump @Label_trainer_brake_check_end
 
 :Label_trainer_brake_check_1
-fPush_0.0
+iPush_0
 StaticSet2 547
 
 :Label_trainer_brake_check_end
-fPush_0.0
+iPush_0
 StaticGet2 548
-fCmpNe
-JumpFalse @Label_trainer_loop_checks_end
+JumpEQ @Label_trainer_loop_checks_end
 iPush_2
 Push1 185
-CallNative get_control_normal 2 1
-fPush -30
-fCmpLt
+CallNative get_control_value 2 1
+Push1 100
+CmpLt
 dup
 Not
 JumpFalse @Label_trainer_handling_check_or
 iPush_2
 Push1 185
-CallNative get_control_normal 2 1
-fPush 30
-fCmpLt
+CallNative get_control_value 2 1
+Push1 150
+CmpGt
 Or
 
 :Label_trainer_handling_check_or
@@ -522,17 +530,24 @@ JumpFalse @Label_trainer_handling_check_goto_end
 StaticGet2 379
 CallNative is_vehicle_on_all_wheels 1 1
 JumpFalse @Label_trainer_handling_check_goto_end
+
+fPush 5.5
+StaticGet2 379
+CallNative get_entity_speed 1 1
+fCmpLt
+JumpFalse @Label_trainer_handling_check_goto_end
+
 iPush_2
 Push1 185
-CallNative get_control_normal 2 1
-fPush -30
-fCmpLt
-JumpFalse @Label_trainer_handling_check_2
+CallNative get_control_value 2 1
+Push1 100
+JumpGE @Label_trainer_handling_check_2
 
 StaticGet2 379
 iPush_0
 fPush_0.0
 StaticGet2 548
+ItoF
 fSub
 fPush_0.0
 fPush_0.0
@@ -551,13 +566,13 @@ Jump @Label_trainer_handling_check_goto_end
 :Label_trainer_handling_check_2
 iPush_2
 Push1 185
-CallNative get_control_normal 2 1
-fPush 30
-fCmpLt
-JumpFalse @Label_trainer_handling_check_goto_end
+CallNative get_control_value 2 1
+Push1 150
+JumpLE @Label_trainer_handling_check_goto_end
 StaticGet2 379
 iPush_0
 StaticGet2 548
+ItoF
 fPush_0.0
 fPush_0.0
 fPush_0.0
@@ -575,7 +590,7 @@ CallNative apply_force_to_entity 14 0
 Jump @Label_trainer_loop_checks_end
 
 :Label_trainer_handling_check_1
-fPush_0.0
+iPush_0
 StaticSet2 548
 
 :Label_trainer_loop_checks_end
@@ -1135,6 +1150,16 @@ Call @menu_add_action
 CallNative unk_0x1E28B28F 0 1
 CallNative unk_0xBE7ACD89 1 1
 Call @menu_addItem_action
+
+PushString "185 get_control_value"
+Call @menu_addItem
+iPush_2
+Push1 185
+CallNative get_control_value 2 1
+iPush_0
+Push1 100
+Call @menu_addItem_number
+Call @menu_add_action
 
 Return 0 0
 
@@ -1841,7 +1866,7 @@ PushString "BLIP_MICHAEL"
 Call @menu_addItem
 iPush_0
 iPush_0
-Push 999999999
+Push 99999999
 Push1 9
 Call @menu_addItem_number_keyboard
 Call @menu_add_action
@@ -1850,7 +1875,7 @@ PushString "BLIP_FRANKLIN"
 Call @menu_addItem
 iPush_0
 iPush_0
-Push 999999999
+Push 99999999
 Push1 9
 Call @menu_addItem_number_keyboard
 Call @menu_add_action
@@ -1859,7 +1884,7 @@ PushString "BLIP_TREV"
 Call @menu_addItem
 iPush_0
 iPush_0
-Push 999999999
+Push 99999999
 Push1 9
 Call @menu_addItem_number_keyboard
 Call @menu_add_action
@@ -2513,26 +2538,32 @@ StaticSet1 10
 PushString "Acceleration"
 Call @menu_addItem
 StaticGet2 546
-fPush_0.0
-fPush 100
-Call @menu_addItem_float
+iPush_0
+Push1 100
+iPush_3
+Call @menu_addItem_number_keyboard
 Call @menu_add_action
 
 PushString "Brakes"
 Call @menu_addItem
 StaticGet2 547
-fPush_0.0
-fPush 100
-Call @menu_addItem_float
+iPush_0
+Push1 100
+iPush_3
+Call @menu_addItem_number_keyboard
 Call @menu_add_action
 
 PushString "Handling"
 Call @menu_addItem
 StaticGet2 548
-fPush_0.0
-fPush 100
-Call @menu_addItem_float
+iPush_0
+Push1 100
+iPush_3
+Call @menu_addItem_number_keyboard
 Call @menu_add_action
+
+PushString "Reset"
+Call @menu_addItem_action
 
 Return 0 0
 
@@ -7978,8 +8009,18 @@ Return 0 0
 
 :Label_trainer_player_wanted_action_level_2_last_selected_4
 StaticGet2 531
-Not
+JumpFalse @Label_trainer_player_wanted_action_level_2_last_selected_4_1
+iPush_0
 StaticSet2 531
+iPush_5
+CallNative set_max_wanted_level 1 0
+Jump @Label_trainer_player_wanted_action_level_2_last_selected_4_end
+
+:Label_trainer_player_wanted_action_level_2_last_selected_4_1
+iPush_1
+StaticSet2 531
+
+:Label_trainer_player_wanted_action_level_2_last_selected_4_end
 Call @menu_toggle_current_bool
 Return 0 0
 
@@ -10091,7 +10132,7 @@ Return 0 0
 
 :Label_trainer_vehicle_action_level_2_last_selected_5
 StaticGet1 4
-Switch [0 @Label_trainer_vehicle_action_level_2_last_selected_5_0]:[1 @Label_trainer_vehicle_action_level_2_last_selected_5_1]:[2 @Label_trainer_vehicle_action_level_2_last_selected_5_2]
+Switch [0 @Label_trainer_vehicle_action_level_2_last_selected_5_0]:[1 @Label_trainer_vehicle_action_level_2_last_selected_5_1]:[2 @Label_trainer_vehicle_action_level_2_last_selected_5_2]:[3 @Label_trainer_vehicle_action_level_2_last_selected_5_3]
 Jump @Label_trainer_vehicle_action_level_2_last_selected_5_end
 
 :Label_trainer_vehicle_action_level_2_last_selected_5_0
@@ -10109,6 +10150,23 @@ Call @menu_get_current_number
 StaticSet2 548
 Return 0 0
 
+:Label_trainer_vehicle_action_level_2_last_selected_5_3
+iPush_0
+StaticSet2 546
+iPush_0
+StaticSet2 547
+iPush_0
+StaticSet2 548
+iPush_0
+iPush_0
+Call @menu_set_number
+iPush_1
+iPush_0
+Call @menu_set_number
+iPush_2
+iPush_0
+Call @menu_set_number
+Return 0 0
 
 :Label_trainer_vehicle_action_level_2_last_selected_5_end
 Return 0 0
@@ -13385,11 +13443,11 @@ StaticSet2 530
 iPush_0
 StaticSet2 531
 
-fPush_0.0
+iPush_0
 StaticSet2 546
-fPush_0.0
+iPush_0
 StaticSet2 547
-fPush_0.0
+iPush_0
 StaticSet2 548
 
 
