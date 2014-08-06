@@ -187,7 +187,8 @@ Call @menu_addItem
 iPush_4
 iPush_0
 Push1 100
-Call @menu_addItem_number
+iPush_3
+Call @menu_addItem_number_keyboard
 Call @menu_add_action
 
 Return 0 0
@@ -227,6 +228,18 @@ CallNative clear_ped_tasks_immediately 1 0
 Return 0 0
 
 :Label_trainer_network_action_level_1_last_selected_4
+iPush_5
+Call @menu_get_number
+CallNative player_ped_id 0 1
+Call @trainer_network_cash_drop
+Return 0 0
+
+:Label_trainer_network_action_level_1_end
+Return 0 0
+
+:trainer_network_cash_drop
+Function 1 2 12
+
 iPush_1
 StaticSet1 7
 
@@ -253,7 +266,7 @@ iPush_0
 Call @menu_error
 iPush_0
 StaticSet1 7
-Return 0 0
+Return 2 0
 
 :Label_trainer_network_action_level_1_last_selected_4_action_0_valid
 pglobal3 2401131
@@ -266,12 +279,12 @@ iPush_0
 Call @menu_error
 iPush_0
 StaticSet1 7
-Return 0 0
+Return 2 0
 
 :Label_trainer_network_action_level_1_last_selected_4_action_0_end
 iPush_1
 StaticSet1 26
-Return 0 0
+Return 2 0
 
 :Label_trainer_network_action_level_1_last_selected_4_action_1
 pglobal3 2401131
@@ -286,46 +299,45 @@ iPush_2
 StaticSet1 26
 
 :Label_trainer_network_action_level_1_last_selected_4_action_1_end
-Return 0 0
+Return 2 0
 
 :Label_trainer_network_action_level_1_last_selected_4_action_2
 iPush_0
 StaticSet1 7
 
-CallNative player_ped_id 0 1
+getF 1
 iPush_1
 CallNative get_entity_coords 2 3
 iPush_3
-pFrame1 3
+pFrame1 4
 FromStack
 
-pFrame1 3
+pFrame1 4
 GetImmediate1 1
 fPush 3.0
 fAdd
-pFrame1 3
+pFrame1 4
 SetImmediate1 1
 
 iPush_0
-setF 7
+setF 8
 
 :Label_trainer_network_action_level_1_last_selected_4_action_2_while
-getF 7
-iPush_5
-Call @menu_get_number
+getF 8
+getF 0
 Add1 1
 JumpGE @Label_trainer_network_action_level_1_last_selected_4_action_2_exit
-pFrame1 3
+pFrame1 4
 GetImmediate1 2
 fPush 0.1
 fAdd
-pFrame1 3
+pFrame1 4
 SetImmediate1 2
 
 pglobal3 2401131
 GetImmediate2 3532
 iPush_3
-pFrame1 3
+pFrame1 4
 ToStack
 iPush_0
 Call @menu_get_current_number
@@ -335,6 +347,11 @@ iPush_0
 iPush_1
 CallNative create_ambient_pickup 9 1
 drop
+
+getF 8
+Add1 1
+setF 8
+
 Jump @Label_trainer_network_action_level_1_last_selected_4_action_2_while
 
 :Label_trainer_network_action_level_1_last_selected_4_action_2_exit
@@ -345,13 +362,10 @@ CallNative set_model_as_no_longer_needed 1 0
 
 iPush_0
 StaticSet1 26
-Return 0 0
+Return 2 0
 
 :Label_trainer_network_action_level_1_last_selected_4_action_end
-Return 0 0
-
-:Label_trainer_network_action_level_1_end
-Return 0 0
+Return 2 0
 
 :trainer_network_menu_level_2
 Function 1 0 8
@@ -451,6 +465,27 @@ Call @menu_addItem_action
 PushString "Teleport to Me"
 Call @menu_addItem_action
 
+PushString "Clear Task"
+Call @menu_addItem_action
+
+PushString "Spawn Cash"
+Call @menu_addItem
+Push 40000
+iPush_0
+Push 40000
+Push1 5
+Call @menu_addItem_number_keyboard
+Call @menu_add_action
+
+PushString "Spawn Cash Amount"
+Call @menu_addItem
+iPush_4
+iPush_0
+Push1 100
+iPush_3
+Call @menu_addItem_number_keyboard
+Call @menu_add_action
+
 Return 0 0
 
 :trainer_network_menu_action_level_3
@@ -473,10 +508,6 @@ CallNative int_to_playerindex 1 1
 setF 3
 
 getF 3
-CallNative get_player_ped 1 1
-setF 4
-
-getF 3
 Call @trainer_network_player_valid
 Not
 JumpFalse @Label_trainer_network_menu_action_level_3_1
@@ -487,7 +518,7 @@ Return 0 0
 
 :Label_trainer_network_menu_action_level_3_1
 StaticGet1 4
-Switch [0 @Label_trainer_network_menu_action_level_3_last_selected_0]:[1 @Label_trainer_network_menu_action_level_3_last_selected_1]
+Switch [0 @Label_trainer_network_menu_action_level_3_last_selected_0]:[1 @Label_trainer_network_menu_action_level_3_last_selected_1]:[2 @Label_trainer_network_menu_action_level_3_last_selected_2]:[3 @Label_trainer_network_menu_action_level_3_last_selected_3]
 Jump @Label_trainer_network_menu_action_level_3_end
 
 :Label_trainer_network_menu_action_level_3_last_selected_0
@@ -502,7 +533,8 @@ CallNative get_vehicle_ped_is_in 2 1
 setF 7
 
 getF 7
-getF 4
+getF 3
+CallNative get_player_ped 1 1
 iPush_1
 CallNative get_entity_coords 2 3
 iPush_1
@@ -518,7 +550,8 @@ Jump @Label_trainer_network_menu_action_level_3_last_selected_0_not_veh_jump
 
 :Label_trainer_network_menu_action_level_3_last_selected_0_not_veh
 CallNative player_ped_id 0 1
-getF 4
+getF 3
+CallNative get_player_ped 1 1
 iPush_1
 CallNative get_entity_coords 2 3
 iPush_1
@@ -526,12 +559,14 @@ iPush_0
 iPush_0
 iPush_1
 CallNative set_entity_coords 8 0
-getF 4
+getF 3
+CallNative get_player_ped 1 1
 iPush_0
 CallNative is_ped_in_any_vehicle 2 1
 JumpFalse @Label_trainer_network_menu_action_level_3_last_selected_0_1
 
-getF 4
+getF 3
+CallNative get_player_ped 1 1
 CallNative get_vehicle_ped_is_using 1 1
 setF 6
 
@@ -573,14 +608,17 @@ Jump @Label_trainer_network_menu_action_level_3_last_selected_0_while
 Return 0 0
 
 :Label_trainer_network_menu_action_level_3_last_selected_1
-getF 4
+getF 3
+CallNative get_player_ped 1 1
 CallNative does_entity_exist 1 1
 JumpFalse @Label_trainer_network_menu_action_level_3_last_selected_1_error
 
-getF 4
+getF 3
+CallNative get_player_ped 1 1
 CallNative clear_ped_tasks_immediately 1 0
 
-getF 4
+getF 3
+CallNative get_player_ped 1 1
 CallNative player_ped_id 0 1
 iPush_1
 CallNative get_entity_coords 2 3
@@ -598,6 +636,34 @@ iPush_0
 Call @menu_error
 
 :Label_trainer_network_menu_action_level_3_last_selected_1_end
+Return 0 0
+
+:Label_trainer_network_menu_action_level_3_last_selected_2
+getF 3
+CallNative get_player_ped 1 1
+CallNative does_entity_exist 1 1
+JumpFalse @Label_trainer_network_menu_action_level_3_last_selected_2_end
+
+getF 3
+CallNative get_player_ped 1 1
+CallNative clear_ped_tasks_immediately 1 0
+
+:Label_trainer_network_menu_action_level_3_last_selected_2_end
+Return 0 0
+
+:Label_trainer_network_menu_action_level_3_last_selected_3
+getF 3
+CallNative get_player_ped 1 1
+CallNative does_entity_exist 1 1
+JumpFalse @Label_trainer_network_menu_action_level_3_last_selected_3_end
+
+iPush_4
+Call @menu_get_number
+getF 3
+CallNative get_player_ped 1 1
+Call @trainer_network_cash_drop
+
+:Label_trainer_network_menu_action_level_3_last_selected_3_end
 Return 0 0
 
 :Label_trainer_network_menu_action_level_3_end
