@@ -500,7 +500,7 @@ StaticSet2 547
 :Label_trainer_brake_check_end
 iPush_0
 StaticGet2 548
-JumpEQ @Label_trainer_loop_checks_end
+JumpEQ @Label_trainer_handling_check_end
 iPush_2
 Push1 185
 CallNative get_control_value 2 1
@@ -517,7 +517,7 @@ CmpGt
 Or
 
 :Label_trainer_handling_check_or
-JumpFalse @Label_trainer_loop_checks_end
+JumpFalse @Label_trainer_handling_check_end
 
 StaticGet2 379
 Call @trainer_race_turbo_check
@@ -587,11 +587,37 @@ iPush_1
 CallNative apply_force_to_entity 14 0
 
 :Label_trainer_handling_check_goto_end
-Jump @Label_trainer_loop_checks_end
+Jump @Label_trainer_handling_check_end
 
 :Label_trainer_handling_check_1
 iPush_0
 StaticSet2 548
+
+:Label_trainer_handling_check_end
+StaticGet2 549
+JumpFalse @Label_trainer_loop_checks_end
+StaticGet2 379
+Call @trainer_race_turbo_check
+JumpFalse @Label_trainer_loop_checks_end
+StaticGet2 379
+iPush_1
+CallNative set_entity_invincible 2 0
+StaticGet2 379
+iPush_0
+CallNative set_vehicle_can_be_visibly_damaged 2 0
+StaticGet2 379
+iPush_0
+CallNative set_vehicle_can_break 2 0
+StaticGet2 379
+iPush_1
+iPush_1
+iPush_1
+iPush_1
+iPush_1
+iPush_0
+iPush_0
+iPush_0
+CallNative set_entity_proofs 9 0
 
 :Label_trainer_loop_checks_end
 Return 0 0
@@ -4396,18 +4422,6 @@ Call @menu_add_action
 PushString "Race Boost"
 Call @menu_addItem
 StaticGet2 414
-Call @menu_addItem_bool
-Call @menu_add_action
-
-PushString "Visable Damage"
-Call @menu_addItem
-iPush_1
-Call @menu_addItem_bool
-Call @menu_add_action
-
-PushString "Can Break"
-Call @menu_addItem
-iPush_1
 Call @menu_addItem_bool
 Call @menu_add_action
 
@@ -11097,26 +11111,52 @@ Return 0 0
 Function 1 0 3
 
 StaticGet1 4
-Switch [0 @Label_trainer_vehicle_settings_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_settings_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_settings_action_level_3_last_selected_2]:[3 @Label_trainer_vehicle_settings_action_level_3_last_selected_3]:[4 @Label_trainer_vehicle_settings_action_level_3_last_selected_4]:[5 @Label_trainer_vehicle_settings_action_level_3_last_selected_5]:[6 @Label_trainer_vehicle_settings_action_level_3_last_selected_6]:[7 @Label_trainer_vehicle_settings_action_level_3_last_selected_7]:[8 @Label_trainer_vehicle_settings_action_level_3_last_selected_8]
+Switch [0 @Label_trainer_vehicle_settings_action_level_3_last_selected_0]:[1 @Label_trainer_vehicle_settings_action_level_3_last_selected_1]:[2 @Label_trainer_vehicle_settings_action_level_3_last_selected_2]:[3 @Label_trainer_vehicle_settings_action_level_3_last_selected_3]:[4 @Label_trainer_vehicle_settings_action_level_3_last_selected_4]:[5 @Label_trainer_vehicle_settings_action_level_3_last_selected_5]:[6 @Label_trainer_vehicle_settings_action_level_3_last_selected_6]
 Jump @Label_trainer_vehicle_settings_action_level_3_end
 
 :Label_trainer_vehicle_settings_action_level_3_last_selected_0
 StaticGet2 379
-Call @menu_get_current_bool
+StaticGet2 549
 Not
 CallNative set_entity_invincible 2 0
+StaticGet2 379
+StaticGet2 549
+CallNative set_vehicle_can_be_visibly_damaged 2 0
+StaticGet2 379
+StaticGet2 549
+CallNative set_vehicle_can_break 2 0
+StaticGet2 379
+StaticGet2 549
+Not
+StaticGet2 549
+Not
+StaticGet2 549
+Not
+StaticGet2 549
+Not
+StaticGet2 549
+Not
+iPush_0
+iPush_0
+iPush_0
+CallNative set_entity_proofs 9 0
+StaticGet2 549
+Not
+StaticSet2 549
 Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_vehicle_settings_action_level_3_last_selected_1
+StaticGet2 379
+StaticGet2 414
+Not
+CallNative set_horn_enabled 2 0
+
 StaticGet2 414
 Not
 StaticSet2 414
 iPush_0
 StaticSet2 415
-StaticGet2 379
-iPush_0
-CallNative set_horn_enabled 2 0
 Call @menu_toggle_current_bool
 
 :trainer_vehicle_settings_boost_end
@@ -11126,46 +11166,30 @@ Return 0 0
 StaticGet2 379
 Call @menu_get_current_bool
 Not
-CallNative set_vehicle_can_be_visibly_damaged 2 0
-Call @menu_toggle_current_bool
-Return 0 0
-
-:Label_trainer_vehicle_settings_action_level_3_last_selected_3
-StaticGet2 379
-Call @menu_get_current_bool
-Not
-CallNative set_vehicle_can_break 2 0
-Call @menu_toggle_current_bool
-Return 0 0
-
-:Label_trainer_vehicle_settings_action_level_3_last_selected_4
-StaticGet2 379
-Call @menu_get_current_bool
-Not
 CallNative set_vehicle_reduce_grip 2 0
 Call @menu_toggle_current_bool
 Return 0 0
 
-:Label_trainer_vehicle_settings_action_level_3_last_selected_5
+:Label_trainer_vehicle_settings_action_level_3_last_selected_3
 StaticGet2 539
 Not
 StaticSet2 539
 Call @menu_toggle_current_bool
 Return 0 0
 
-:Label_trainer_vehicle_settings_action_level_3_last_selected_6
+:Label_trainer_vehicle_settings_action_level_3_last_selected_4
 StaticGet2 379
 PushString "BJXL_ARMENIAN_3"
 CallNative unk_0x33B0B007 2 0
 Return 0 0
 
-:Label_trainer_vehicle_settings_action_level_3_last_selected_7
+:Label_trainer_vehicle_settings_action_level_3_last_selected_5
 StaticGet2 379
 PushString "STRETCH_MICHAEL_4"
 CallNative unk_0x33B0B007 2 0
 Return 0 0
 
-:Label_trainer_vehicle_settings_action_level_3_last_selected_8
+:Label_trainer_vehicle_settings_action_level_3_last_selected_6
 StaticGet2 545
 Not
 StaticSet2 545
