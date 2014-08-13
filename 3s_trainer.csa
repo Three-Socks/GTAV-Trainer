@@ -1262,26 +1262,8 @@ Push1 100
 Call @menu_addItem_number
 Call @menu_add_action
 
-PushString "0x1E28B28F"
+CallNative unk_0xA8171E9E 0 1
 Call @menu_addItem
-CallNative unk_0x1E28B28F 0 1
-iPush_0
-Push1 100
-Call @menu_addItem_number
-Call @menu_add_action
-
-CallNative unk_0x1E28B28F 0 1
-CallNative unk_0xBE7ACD89 1 1
-Call @menu_addItem_action
-
-PushString "185 get_control_value"
-Call @menu_addItem
-iPush_2
-Push1 185
-CallNative get_control_value 2 1
-iPush_0
-Push1 100
-Call @menu_addItem_number
 Call @menu_add_action
 
 Return 0 0
@@ -1377,7 +1359,7 @@ PushString "PS_SPEC_AB"
 Call @menu_addItem
 PushString "Multipliers"
 Call @menu_addItem
-PushString "Give Cash"
+PushString "PIM_TCASH"
 Call @menu_addItem
 Return 0 0
 
@@ -1424,6 +1406,12 @@ PushString "CELL_16"
 StaticSet1 10
 
 :Label_last_selected_2_lang_end
+PushString "Pause Clock"
+Call @menu_addItem
+StaticGet2 551
+Call @menu_addItem_bool
+Call @menu_add_action
+
 PushString "LOB_CAT_22"
 Call @menu_addItem
 CallNative get_clock_hours 0 1
@@ -1581,7 +1569,7 @@ iPush_0
 StaticSet2 417
 
 :Label_trainer_security_checks_1
-Push 697919248
+Push -1029121665
 StaticGet2 423
 CallNative get_hash_key 1 1
 JumpEq @Label_trainer_security_checks_end
@@ -1982,36 +1970,14 @@ Call @menu_add_action
 Return 0 0
 
 :Label_trainer_player_level_2_last_selected_8
-PushString "Give Cash"
+PushString "PIM_TCASH"
 StaticSet1 10
 
-PushString "BLIP_MICHAEL"
+PushString "Add"
 Call @menu_addItem
-iPush_0
-iPush_0
-Push 99999999
-Push1 9
-Call @menu_addItem_number_format_keyboard
-Call @menu_add_action
 
-PushString "BLIP_FRANKLIN"
+PushString "Remove"
 Call @menu_addItem
-iPush_0
-iPush_0
-Push 99999999
-Push1 9
-Call @menu_addItem_number_format_keyboard
-Call @menu_add_action
-
-PushString "BLIP_TREV"
-Call @menu_addItem
-iPush_0
-iPush_0
-Push 99999999
-Push1 9
-Call @menu_addItem_number_format_keyboard
-Call @menu_add_action
-
 Return 0 0
 
 :Label_trainer_player_level_2_end
@@ -2895,7 +2861,7 @@ Function 1 0 4
 iPush_1
 pstatic2 61
 ArrayGet1 1
-Switch [0 @Label_player_level_3_last_selected_0]:[1 @Label_player_level_3_last_selected_1]:[5 @Label_player_level_3_last_selected_5]
+Switch [0 @Label_player_level_3_last_selected_0]:[1 @Label_player_level_3_last_selected_1]:[5 @Label_player_level_3_last_selected_5]:[8 @Label_player_level_3_last_selected_8]
 Jump @Label_player_level_3_end
 
 :Label_player_level_3_last_selected_0
@@ -2909,6 +2875,38 @@ Return 0 0
 
 :Label_player_level_3_last_selected_5
 Call @trainer_player_weapon_level_3
+Return 0 0
+
+:Label_player_level_3_last_selected_8
+PushString "PIM_TCASH"
+StaticSet1 10
+
+PushString "BLIP_MICHAEL"
+Call @menu_addItem
+iPush_0
+iPush_0
+Push 99999999
+Push1 9
+Call @menu_addItem_number_format_keyboard
+Call @menu_add_action
+
+PushString "BLIP_FRANKLIN"
+Call @menu_addItem
+iPush_0
+iPush_0
+Push 99999999
+Push1 9
+Call @menu_addItem_number_format_keyboard
+Call @menu_add_action
+
+PushString "BLIP_TREV"
+Call @menu_addItem
+iPush_0
+iPush_0
+Push 99999999
+Push1 9
+Call @menu_addItem_number_format_keyboard
+Call @menu_add_action
 Return 0 0
 
 :Label_player_level_3_end
@@ -7519,95 +7517,104 @@ Return 0 0
 Function 1 0 4
 
 StaticGet1 4
-Switch [0 @Label_trainer_world_action_level_1_last_selected_0]:[1 @Label_trainer_world_action_level_1_last_selected_1]:[2 @Label_trainer_world_action_level_1_last_selected_2]:[3 @Label_trainer_world_action_level_1_last_selected_3]:[4 @Label_trainer_world_action_level_1_last_selected_4]:[5 @Label_trainer_world_action_level_1_last_selected_5]:[6 @Label_trainer_world_action_level_1_last_selected_6]:[7 @Label_trainer_world_action_level_1_last_selected_7]:[8 @Label_trainer_world_action_level_1_last_selected_8]:[9 @Label_trainer_world_action_level_1_last_selected_9]:[10 @Label_trainer_world_action_level_1_last_selected_10]:[11 @Label_trainer_world_action_level_1_last_selected_11]:[12 @Label_trainer_world_action_level_1_last_selected_12]:[13 @Label_trainer_world_action_level_1_last_selected_13]:[14 @Label_trainer_world_action_level_1_last_selected_14]
+Switch [0 @Label_trainer_world_action_level_1_last_selected_0]:[1 @Label_trainer_world_action_level_1_last_selected_1]:[2 @Label_trainer_world_action_level_1_last_selected_2]:[3 @Label_trainer_world_action_level_1_last_selected_3]:[4 @Label_trainer_world_action_level_1_last_selected_4]:[5 @Label_trainer_world_action_level_1_last_selected_5]:[6 @Label_trainer_world_action_level_1_last_selected_6]:[7 @Label_trainer_world_action_level_1_last_selected_7]:[8 @Label_trainer_world_action_level_1_last_selected_8]:[9 @Label_trainer_world_action_level_1_last_selected_9]:[10 @Label_trainer_world_action_level_1_last_selected_10]:[11 @Label_trainer_world_action_level_1_last_selected_11]:[12 @Label_trainer_world_action_level_1_last_selected_12]:[13 @Label_trainer_world_action_level_1_last_selected_13]:[14 @Label_trainer_world_action_level_1_last_selected_14]:[15 @Label_trainer_world_action_level_1_last_selected_15]
 Jump @Label_trainer_world_action_level_1_end
 
 :Label_trainer_world_action_level_1_last_selected_0
+Call @menu_get_current_bool
+Not
+CallNative pause_clock 1 0
+StaticGet2 551
+Not
+StaticSet2 551
+Return 0 0
+
+:Label_trainer_world_action_level_1_last_selected_1
 Call @menu_get_current_number
 iPush_0
 iPush_0
 CallNative set_clock_time 3 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_1
+:Label_trainer_world_action_level_1_last_selected_2
 PushString "EXTRASUNNY"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_2
+:Label_trainer_world_action_level_1_last_selected_3
 PushString "CLEAR"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_3
+:Label_trainer_world_action_level_1_last_selected_4
 PushString "CLOUDS"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_4
+:Label_trainer_world_action_level_1_last_selected_5
 PushString "SMOG"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_5
+:Label_trainer_world_action_level_1_last_selected_6
 PushString "FOGGY"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_6
+:Label_trainer_world_action_level_1_last_selected_7
 PushString "OVERCAST"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_7
+:Label_trainer_world_action_level_1_last_selected_8
 PushString "RAIN"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_8
+:Label_trainer_world_action_level_1_last_selected_9
 PushString "THUNDER"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_9
+:Label_trainer_world_action_level_1_last_selected_10
 PushString "CLEARING"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_10
+:Label_trainer_world_action_level_1_last_selected_11
 PushString "NEUTRAL"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_11
+:Label_trainer_world_action_level_1_last_selected_12
 PushString "SNOW"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_12
+:Label_trainer_world_action_level_1_last_selected_13
 PushString "BLIZZARD"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_13
+:Label_trainer_world_action_level_1_last_selected_14
 PushString "SNOWLIGHT"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_14
+:Label_trainer_world_action_level_1_last_selected_15
 PushString "XMAS"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
@@ -8009,7 +8016,7 @@ Function 1 0 7
 iPush_1
 pstatic2 61
 ArrayGet1 1
-Switch [1 @Label_trainer_player_action_level_2_last_selected_1]:[2 @Label_trainer_player_action_level_2_last_selected_2]:[3 @Label_trainer_player_action_level_2_last_selected_3]:[4 @Label_trainer_player_action_level_2_last_selected_4]:[5 @Label_trainer_player_action_level_2_last_selected_5]:[6 @Label_trainer_player_action_level_2_last_selected_6]:[7 @Label_trainer_player_action_level_2_last_selected_7]:[8 @Label_trainer_player_action_level_2_last_selected_8]
+Switch [1 @Label_trainer_player_action_level_2_last_selected_1]:[2 @Label_trainer_player_action_level_2_last_selected_2]:[3 @Label_trainer_player_action_level_2_last_selected_3]:[4 @Label_trainer_player_action_level_2_last_selected_4]:[5 @Label_trainer_player_action_level_2_last_selected_5]:[6 @Label_trainer_player_action_level_2_last_selected_6]:[7 @Label_trainer_player_action_level_2_last_selected_7]
 Jump @Label_trainer_player_action_level_2_end
 
 :Label_trainer_player_action_level_2_last_selected_1
@@ -8688,46 +8695,11 @@ Return 0 0
 :Label_trainer_player_action_level_2_last_selected_7_end
 Return 0 0
 
-:Label_trainer_player_action_level_2_last_selected_8
-StaticGet1 4
-Switch [0 @Label_trainer_player_cash_action_level_2_last_selected_0]:[1 @Label_trainer_player_cash_action_level_2_last_selected_1]:[2 @Label_trainer_player_cash_action_level_2_last_selected_2]
-Jump @Label_trainer_player_cash_action_level_2_end
-
-:Label_trainer_player_cash_action_level_2_last_selected_0
-iPush_0
-iPush_0
-Call @menu_get_current_number
-Call @trainer_set_player_cash
-drop
-Return 0 0
-
-:Label_trainer_player_cash_action_level_2_last_selected_1
-iPush_1
-iPush_0
-Call @menu_get_current_number
-Call @trainer_set_player_cash
-drop
-Return 0 0
-
-:Label_trainer_player_cash_action_level_2_last_selected_2
-iPush_2
-iPush_0
-Call @menu_get_current_number
-Call @trainer_set_player_cash
-drop
-Return 0 0
-
-:Label_trainer_player_cash_action_level_2_end
-Return 0 0
-
-:Label_trainer_player_action_level_2_last_selected_8_end
-Return 0 0
-
 :Label_trainer_player_action_level_2_end
 Return 0 0
 
 :trainer_set_player_cash
-Function 1 3 5
+Function 1 4 6
 getF 0
 pglobal3 86838
 GetImmediateP2 23936
@@ -8755,9 +8727,9 @@ pglobal3 86838
 GetImmediateP2 23936
 ArrayGetP1 29
 GetImmediate1 17
-iPush_1
 getF 1
 getF 2
+getF 3
 iPush_0
 Call @trainer_set_player_cash_main
 Return 3 1
@@ -10473,7 +10445,7 @@ Function 1 0 4
 iPush_1
 pstatic2 61
 ArrayGet1 1
-Switch [0 @Label_trainer_player_action_level_3_last_selected_0]:[1 @Label_trainer_player_action_level_3_last_selected_1]:[5 @Label_trainer_player_action_level_3_last_selected_5]
+Switch [0 @Label_trainer_player_action_level_3_last_selected_0]:[1 @Label_trainer_player_action_level_3_last_selected_1]:[5 @Label_trainer_player_action_level_3_last_selected_5]:[8 @Label_trainer_player_action_level_3_last_selected_8]
 Jump @Label_trainer_player_action_level_3_end
 
 :Label_trainer_player_action_level_3_last_selected_0
@@ -10505,6 +10477,50 @@ Call @menu_get_current_number
 Call @menu_get_current_extra
 iPush_0
 CallNative give_delayed_weapon_to_ped 4 0
+Return 0 0
+
+:Label_trainer_player_action_level_3_last_selected_8
+StaticGet1 4
+Switch [0 @Label_trainer_player_cash_action_level_3_last_selected_0]:[1 @Label_trainer_player_cash_action_level_3_last_selected_1]:[2 @Label_trainer_player_cash_action_level_3_last_selected_2]
+Jump @Label_trainer_player_cash_action_level_3_end
+
+:Label_trainer_player_cash_action_level_3_last_selected_0
+iPush_2
+pstatic2 61
+ArrayGet1 1
+iPush_0
+iPush_0
+Call @menu_get_current_number
+Call @trainer_set_player_cash
+drop
+Return 0 0
+
+:Label_trainer_player_cash_action_level_3_last_selected_1
+iPush_2
+pstatic2 61
+ArrayGet1 1
+iPush_1
+iPush_0
+Call @menu_get_current_number
+Call @trainer_set_player_cash
+drop
+Return 0 0
+
+:Label_trainer_player_cash_action_level_3_last_selected_2
+iPush_2
+pstatic2 61
+ArrayGet1 1
+iPush_2
+iPush_0
+Call @menu_get_current_number
+Call @trainer_set_player_cash
+drop
+Return 0 0
+
+:Label_trainer_player_cash_action_level_3_end
+Return 0 0
+
+:Label_trainer_player_action_level_3_last_selected_8_end
 Return 0 0
 
 :Label_trainer_player_action_level_3_end
@@ -13621,7 +13637,7 @@ StaticSet2 418
 iPush_-1
 StaticSet2 419
 
-PushString "Three-Socks Trainer"
+PushString "Three-Socks Trainer 1.5"
 StaticSet2 423
 
 iPush_0
