@@ -1406,11 +1406,8 @@ PushString "CELL_16"
 StaticSet1 10
 
 :Label_last_selected_2_lang_end
-PushString "Pause Clock"
+PushString "Water Levels"
 Call @menu_addItem
-StaticGet2 551
-Call @menu_addItem_bool
-Call @menu_add_action
 
 PushString "LOB_CAT_22"
 Call @menu_addItem
@@ -1418,6 +1415,12 @@ CallNative get_clock_hours 0 1
 iPush_0
 Push1 23
 Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "Pause Clock"
+Call @menu_addItem
+StaticGet2 551
+Call @menu_addItem_bool
 Call @menu_add_action
 
 PushString "Extra Sunny"
@@ -1597,6 +1600,40 @@ Call @trainer_vehicle_level_2
 Return 0 0
 
 :Label_level_2_last_selected_2
+PushString "Water Levels"
+StaticSet1 10
+
+PushString "X"
+Call @menu_addItem
+fPush_0.0
+fPush -9999.9
+fPush 9999.9
+Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "Y"
+Call @menu_addItem
+fPush_0.0
+fPush -9999.9
+fPush 9999.9
+Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "Z"
+Call @menu_addItem
+fPush_0.0
+fPush -9999.9
+fPush 9999.9
+Call @menu_addItem_number
+Call @menu_add_action
+
+PushString "Param 4"
+Call @menu_addItem
+fPush_0.0
+fPush -9999.9
+fPush 9999.9
+Call @menu_addItem_number
+Call @menu_add_action
 Return 0 0
 
 :Label_level_2_last_selected_3
@@ -7517,17 +7554,8 @@ Return 0 0
 Function 1 0 4
 
 StaticGet1 4
-Switch [0 @Label_trainer_world_action_level_1_last_selected_0]:[1 @Label_trainer_world_action_level_1_last_selected_1]:[2 @Label_trainer_world_action_level_1_last_selected_2]:[3 @Label_trainer_world_action_level_1_last_selected_3]:[4 @Label_trainer_world_action_level_1_last_selected_4]:[5 @Label_trainer_world_action_level_1_last_selected_5]:[6 @Label_trainer_world_action_level_1_last_selected_6]:[7 @Label_trainer_world_action_level_1_last_selected_7]:[8 @Label_trainer_world_action_level_1_last_selected_8]:[9 @Label_trainer_world_action_level_1_last_selected_9]:[10 @Label_trainer_world_action_level_1_last_selected_10]:[11 @Label_trainer_world_action_level_1_last_selected_11]:[12 @Label_trainer_world_action_level_1_last_selected_12]:[13 @Label_trainer_world_action_level_1_last_selected_13]:[14 @Label_trainer_world_action_level_1_last_selected_14]:[15 @Label_trainer_world_action_level_1_last_selected_15]
+Switch [1 @Label_trainer_world_action_level_1_last_selected_1]:[2 @Label_trainer_world_action_level_1_last_selected_2]:[3 @Label_trainer_world_action_level_1_last_selected_3]:[4 @Label_trainer_world_action_level_1_last_selected_4]:[5 @Label_trainer_world_action_level_1_last_selected_5]:[6 @Label_trainer_world_action_level_1_last_selected_6]:[7 @Label_trainer_world_action_level_1_last_selected_7]:[8 @Label_trainer_world_action_level_1_last_selected_8]:[9 @Label_trainer_world_action_level_1_last_selected_9]:[10 @Label_trainer_world_action_level_1_last_selected_10]:[11 @Label_trainer_world_action_level_1_last_selected_11]:[12 @Label_trainer_world_action_level_1_last_selected_12]:[13 @Label_trainer_world_action_level_1_last_selected_13]:[14 @Label_trainer_world_action_level_1_last_selected_14]:[15 @Label_trainer_world_action_level_1_last_selected_15]:[16 @Label_trainer_world_action_level_1_last_selected_16]
 Jump @Label_trainer_world_action_level_1_end
-
-:Label_trainer_world_action_level_1_last_selected_0
-Call @menu_get_current_bool
-Not
-CallNative pause_clock 1 0
-StaticGet2 551
-Not
-StaticSet2 551
-Return 0 0
 
 :Label_trainer_world_action_level_1_last_selected_1
 Call @menu_get_current_number
@@ -7537,84 +7565,93 @@ CallNative set_clock_time 3 0
 Return 0 0
 
 :Label_trainer_world_action_level_1_last_selected_2
+Call @menu_get_current_bool
+Not
+CallNative pause_clock 1 0
+StaticGet2 551
+Not
+StaticSet2 551
+Return 0 0
+
+:Label_trainer_world_action_level_1_last_selected_3
 PushString "EXTRASUNNY"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_3
+:Label_trainer_world_action_level_1_last_selected_4
 PushString "CLEAR"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_4
+:Label_trainer_world_action_level_1_last_selected_5
 PushString "CLOUDS"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_5
+:Label_trainer_world_action_level_1_last_selected_6
 PushString "SMOG"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_6
+:Label_trainer_world_action_level_1_last_selected_7
 PushString "FOGGY"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_7
+:Label_trainer_world_action_level_1_last_selected_8
 PushString "OVERCAST"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_8
+:Label_trainer_world_action_level_1_last_selected_9
 PushString "RAIN"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_9
+:Label_trainer_world_action_level_1_last_selected_10
 PushString "THUNDER"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_10
+:Label_trainer_world_action_level_1_last_selected_11
 PushString "CLEARING"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_11
+:Label_trainer_world_action_level_1_last_selected_12
 PushString "NEUTRAL"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_12
+:Label_trainer_world_action_level_1_last_selected_13
 PushString "SNOW"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_13
+:Label_trainer_world_action_level_1_last_selected_14
 PushString "BLIZZARD"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_14
+:Label_trainer_world_action_level_1_last_selected_15
 PushString "SNOWLIGHT"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_15
+:Label_trainer_world_action_level_1_last_selected_16
 PushString "XMAS"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
@@ -7644,8 +7681,8 @@ CallNative is_ped_in_any_vehicle 2 1
 JumpFalse @Label_trainer_teleport_change_z_not_in_veh
 pFrame1 9
 GetImmediate1 2
-fPush 200
-fAdd
+fPush 2000
+fSub
 pFrame1 9
 SetImmediate1 2
 Jump @Label_trainer_teleport_change_z
@@ -7653,7 +7690,7 @@ Jump @Label_trainer_teleport_change_z
 :Label_trainer_teleport_change_z_not_in_veh
 pFrame1 9
 GetImmediate1 2
-fPush 1000
+fPush 2000
 fSub
 pFrame1 9
 SetImmediate1 2
@@ -7990,7 +8027,7 @@ Function 1 0 4
 iPush_0
 pstatic2 61
 ArrayGet1 1
-Switch [0 @Label_action_level_2_last_selected_0]:[1 @Label_action_level_2_last_selected_1]:[3 @Label_action_level_2_last_selected_3]
+Switch [0 @Label_action_level_2_last_selected_0]:[1 @Label_action_level_2_last_selected_1]:[2 @Label_action_level_2_last_selected_2]:[3 @Label_action_level_2_last_selected_3]
 Jump @Label_action_level_2_end
 
 :Label_action_level_2_last_selected_0
@@ -8001,6 +8038,18 @@ Return 0 0
 
 :Label_action_level_2_last_selected_1
 Call @trainer_vehicle_action_level_2
+Return 0 0
+
+:Label_action_level_2_last_selected_2
+iPush_0
+Call @menu_get_number
+iPush_1
+Call @menu_get_number
+iPush_2
+Call @menu_get_number
+iPush_3
+Call @menu_get_number
+CallNative modify_water 4 0
 Return 0 0
 
 :Label_action_level_2_last_selected_3

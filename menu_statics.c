@@ -265,3 +265,9 @@ Static_548
 
 // trainer_vehicle_invincible
 Static_549
+
+// trainer_top_speed
+Static_550
+
+// trainer_pause_clock
+Static_551
