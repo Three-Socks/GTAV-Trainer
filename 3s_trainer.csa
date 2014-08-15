@@ -1262,10 +1262,27 @@ Push1 100
 Call @menu_addItem_number
 Call @menu_add_action
 
-CallNative unk_0xA8171E9E 0 1
+PushString "Weather Hash"
 Call @menu_addItem
+CallNative unk_0xA8171E9E 0 1
+iPush_0
+iPush_0
+Call @menu_addItem_number
 Call @menu_add_action
 
+StaticGet2 379
+CallNative does_entity_exist 1 1
+JumpFalse @Label_trainer_debug_menu_vehicle_speed
+PushString "Vehicle Speed"
+Call @menu_addItem
+StaticGet2 379
+CallNative get_entity_speed 1 1
+fPush_0.0
+fPush_0.0
+Call @menu_addItem_float
+Call @menu_add_action
+
+:Label_trainer_debug_menu_vehicle_speed
 Return 0 0
 
 :trainer_level_0
@@ -1406,9 +1423,6 @@ PushString "CELL_16"
 StaticSet1 10
 
 :Label_last_selected_2_lang_end
-PushString "Water Levels"
-Call @menu_addItem
-
 PushString "LOB_CAT_22"
 Call @menu_addItem
 CallNative get_clock_hours 0 1
@@ -1600,40 +1614,6 @@ Call @trainer_vehicle_level_2
 Return 0 0
 
 :Label_level_2_last_selected_2
-PushString "Water Levels"
-StaticSet1 10
-
-PushString "X"
-Call @menu_addItem
-fPush_0.0
-fPush -9999.9
-fPush 9999.9
-Call @menu_addItem_number
-Call @menu_add_action
-
-PushString "Y"
-Call @menu_addItem
-fPush_0.0
-fPush -9999.9
-fPush 9999.9
-Call @menu_addItem_number
-Call @menu_add_action
-
-PushString "Z"
-Call @menu_addItem
-fPush_0.0
-fPush -9999.9
-fPush 9999.9
-Call @menu_addItem_number
-Call @menu_add_action
-
-PushString "Param 4"
-Call @menu_addItem
-fPush_0.0
-fPush -9999.9
-fPush 9999.9
-Call @menu_addItem_number
-Call @menu_add_action
 Return 0 0
 
 :Label_level_2_last_selected_3
@@ -4556,7 +4536,7 @@ Return 0 0
 :Label_trainer_vehicle_modify_level_3_last_selected_4
 PushString "Invincible"
 Call @menu_addItem
-iPush_0
+StaticGet2 549
 Call @menu_addItem_bool
 Call @menu_add_action
 
@@ -7554,104 +7534,105 @@ Return 0 0
 Function 1 0 4
 
 StaticGet1 4
-Switch [1 @Label_trainer_world_action_level_1_last_selected_1]:[2 @Label_trainer_world_action_level_1_last_selected_2]:[3 @Label_trainer_world_action_level_1_last_selected_3]:[4 @Label_trainer_world_action_level_1_last_selected_4]:[5 @Label_trainer_world_action_level_1_last_selected_5]:[6 @Label_trainer_world_action_level_1_last_selected_6]:[7 @Label_trainer_world_action_level_1_last_selected_7]:[8 @Label_trainer_world_action_level_1_last_selected_8]:[9 @Label_trainer_world_action_level_1_last_selected_9]:[10 @Label_trainer_world_action_level_1_last_selected_10]:[11 @Label_trainer_world_action_level_1_last_selected_11]:[12 @Label_trainer_world_action_level_1_last_selected_12]:[13 @Label_trainer_world_action_level_1_last_selected_13]:[14 @Label_trainer_world_action_level_1_last_selected_14]:[15 @Label_trainer_world_action_level_1_last_selected_15]:[16 @Label_trainer_world_action_level_1_last_selected_16]
+Switch [0 @Label_trainer_world_action_level_1_last_selected_0]:[1 @Label_trainer_world_action_level_1_last_selected_1]:[2 @Label_trainer_world_action_level_1_last_selected_2]:[3 @Label_trainer_world_action_level_1_last_selected_3]:[4 @Label_trainer_world_action_level_1_last_selected_4]:[5 @Label_trainer_world_action_level_1_last_selected_5]:[6 @Label_trainer_world_action_level_1_last_selected_6]:[7 @Label_trainer_world_action_level_1_last_selected_7]:[8 @Label_trainer_world_action_level_1_last_selected_8]:[9 @Label_trainer_world_action_level_1_last_selected_9]:[10 @Label_trainer_world_action_level_1_last_selected_10]:[11 @Label_trainer_world_action_level_1_last_selected_11]:[12 @Label_trainer_world_action_level_1_last_selected_12]:[13 @Label_trainer_world_action_level_1_last_selected_13]:[14 @Label_trainer_world_action_level_1_last_selected_14]:[15 @Label_trainer_world_action_level_1_last_selected_15]
 Jump @Label_trainer_world_action_level_1_end
 
-:Label_trainer_world_action_level_1_last_selected_1
+:Label_trainer_world_action_level_1_last_selected_0
 Call @menu_get_current_number
 iPush_0
 iPush_0
 CallNative set_clock_time 3 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_2
+:Label_trainer_world_action_level_1_last_selected_1
 Call @menu_get_current_bool
 Not
 CallNative pause_clock 1 0
 StaticGet2 551
 Not
 StaticSet2 551
+Call @menu_toggle_current_bool
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_3
+:Label_trainer_world_action_level_1_last_selected_2
 PushString "EXTRASUNNY"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_4
+:Label_trainer_world_action_level_1_last_selected_3
 PushString "CLEAR"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_5
+:Label_trainer_world_action_level_1_last_selected_4
 PushString "CLOUDS"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_6
+:Label_trainer_world_action_level_1_last_selected_5
 PushString "SMOG"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_7
+:Label_trainer_world_action_level_1_last_selected_6
 PushString "FOGGY"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_8
+:Label_trainer_world_action_level_1_last_selected_7
 PushString "OVERCAST"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_9
+:Label_trainer_world_action_level_1_last_selected_8
 PushString "RAIN"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_10
+:Label_trainer_world_action_level_1_last_selected_9
 PushString "THUNDER"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_11
+:Label_trainer_world_action_level_1_last_selected_10
 PushString "CLEARING"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_12
+:Label_trainer_world_action_level_1_last_selected_11
 PushString "NEUTRAL"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_13
+:Label_trainer_world_action_level_1_last_selected_12
 PushString "SNOW"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_14
+:Label_trainer_world_action_level_1_last_selected_13
 PushString "BLIZZARD"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_15
+:Label_trainer_world_action_level_1_last_selected_14
 PushString "SNOWLIGHT"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 Return 0 0
 
-:Label_trainer_world_action_level_1_last_selected_16
+:Label_trainer_world_action_level_1_last_selected_15
 PushString "XMAS"
 CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
@@ -8041,15 +8022,6 @@ Call @trainer_vehicle_action_level_2
 Return 0 0
 
 :Label_action_level_2_last_selected_2
-iPush_0
-Call @menu_get_number
-iPush_1
-Call @menu_get_number
-iPush_2
-Call @menu_get_number
-iPush_3
-Call @menu_get_number
-CallNative modify_water 4 0
 Return 0 0
 
 :Label_action_level_2_last_selected_3
@@ -8757,7 +8729,7 @@ GetImmediate1 17
 iPush_3
 JumpNE @Label_trainer_set_player_cash_1
 iPush_0
-Return 3 1
+Return 4 1
 
 :Label_trainer_set_player_cash_1
 getF 0
@@ -8768,7 +8740,7 @@ GetImmediate1 17
 iPush_4
 JumpNE @Label_trainer_set_player_cash_2
 iPush_0
-Return 3 1
+Return 4 1
 
 :Label_trainer_set_player_cash_2
 getF 0
@@ -8781,7 +8753,7 @@ getF 2
 getF 3
 iPush_0
 Call @trainer_set_player_cash_main
-Return 3 1
+Return 4 1
 
 :trainer_set_player_cash_main
 Function 1 5 13
@@ -10534,10 +10506,11 @@ Switch [0 @Label_trainer_player_cash_action_level_3_last_selected_0]:[1 @Label_t
 Jump @Label_trainer_player_cash_action_level_3_end
 
 :Label_trainer_player_cash_action_level_3_last_selected_0
+iPush_0
 iPush_2
 pstatic2 61
 ArrayGet1 1
-iPush_0
+Not
 iPush_0
 Call @menu_get_current_number
 Call @trainer_set_player_cash
@@ -10545,10 +10518,11 @@ drop
 Return 0 0
 
 :Label_trainer_player_cash_action_level_3_last_selected_1
+iPush_1
 iPush_2
 pstatic2 61
 ArrayGet1 1
-iPush_1
+Not
 iPush_0
 Call @menu_get_current_number
 Call @trainer_set_player_cash
@@ -10557,9 +10531,10 @@ Return 0 0
 
 :Label_trainer_player_cash_action_level_3_last_selected_2
 iPush_2
+iPush_2
 pstatic2 61
 ArrayGet1 1
-iPush_2
+Not
 iPush_0
 Call @menu_get_current_number
 Call @trainer_set_player_cash
@@ -11333,7 +11308,6 @@ Return 0 0
 :Label_trainer_vehicle_settings_action_level_3_last_selected_1
 StaticGet2 379
 StaticGet2 414
-Not
 CallNative set_horn_enabled 2 0
 
 StaticGet2 414
