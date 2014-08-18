@@ -2497,14 +2497,14 @@ Return 0 0
 PushString "Multipliers"
 StaticSet1 10
 
-PushString "Top Speed"
-Call @menu_addItem
-StaticGet2 550
-iPush_0
-Push1 100
-iPush_3
-Call @menu_addItem_number_keyboard
-Call @menu_add_action
+// PushString "Top Speed"
+// Call @menu_addItem
+// StaticGet2 550
+// iPush_0
+// Push1 100
+// iPush_3
+// Call @menu_addItem_number_keyboard
+// Call @menu_add_action
 
 PushString "Acceleration"
 Call @menu_addItem
@@ -10029,30 +10029,30 @@ Return 0 0
 
 :Label_trainer_vehicle_action_level_2_last_selected_5
 StaticGet1 4
-Switch [0 @Label_trainer_vehicle_action_level_2_last_selected_5_0]:[1 @Label_trainer_vehicle_action_level_2_last_selected_5_1]:[2 @Label_trainer_vehicle_action_level_2_last_selected_5_2]:[3 @Label_trainer_vehicle_action_level_2_last_selected_5_3]:[4 @Label_trainer_vehicle_action_level_2_last_selected_5_4]:[5 @Label_trainer_vehicle_action_level_2_last_selected_5_5]
+Switch [0 @Label_trainer_vehicle_action_level_2_last_selected_5_0]:[1 @Label_trainer_vehicle_action_level_2_last_selected_5_1]:[2 @Label_trainer_vehicle_action_level_2_last_selected_5_2]:[3 @Label_trainer_vehicle_action_level_2_last_selected_5_3]:[4 @Label_trainer_vehicle_action_level_2_last_selected_5_4]
 Jump @Label_trainer_vehicle_action_level_2_last_selected_5_end
 
-:Label_trainer_vehicle_action_level_2_last_selected_5_0
-Call @menu_get_current_number
-StaticSet2 550
-Return 0 0
+// :Label_trainer_vehicle_action_level_2_last_selected_5_0
+// Call @menu_get_current_number
+// StaticSet2 550
+// Return 0 0
 
-:Label_trainer_vehicle_action_level_2_last_selected_5_1
+:Label_trainer_vehicle_action_level_2_last_selected_5_0
 Call @menu_get_current_number
 StaticSet2 546
 Return 0 0
 
-:Label_trainer_vehicle_action_level_2_last_selected_5_2
+:Label_trainer_vehicle_action_level_2_last_selected_5_1
 Call @menu_get_current_number
 StaticSet2 547
 Return 0 0
 
-:Label_trainer_vehicle_action_level_2_last_selected_5_3
+:Label_trainer_vehicle_action_level_2_last_selected_5_2
 Call @menu_get_current_number
 StaticSet2 548
 Return 0 0
 
-:Label_trainer_vehicle_action_level_2_last_selected_5_4
+:Label_trainer_vehicle_action_level_2_last_selected_5_3
 iPush_0
 Call @menu_get_number
 StaticSet2 550
@@ -10067,7 +10067,7 @@ Call @menu_get_number
 StaticSet2 548
 Return 0 0
 
-:Label_trainer_vehicle_action_level_2_last_selected_5_5
+:Label_trainer_vehicle_action_level_2_last_selected_5_4
 iPush_0
 StaticSet2 550
 iPush_0
