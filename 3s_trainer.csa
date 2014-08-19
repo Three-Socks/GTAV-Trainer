@@ -1124,6 +1124,24 @@ PushString "unk_0xA1D7FABE"
 Call @menu_addItem
 Call @menu_add_action
 
+PushString "set_ped_head_overlay"
+Call @menu_addItem
+iPush_0
+Call @menu_addItem_bool
+Call @menu_add_action
+
+PushString "set_ped_head_blend_data"
+Call @menu_addItem
+iPush_0
+Call @menu_addItem_bool
+Call @menu_add_action
+
+PushString "set_ped_can_head_ik"
+Call @menu_addItem
+iPush_0
+Call @menu_addItem_bool
+Call @menu_add_action
+
 PushString "Weather Hash"
 Call @menu_addItem
 CallNative unk_0xA8171E9E 0 1
@@ -7244,7 +7262,7 @@ Return 0 0
 Function 1 0 4
 
 StaticGet1 4
-Switch [1 @Label_trainer_debug_action_level_1_last_selected_1]:[2 @Label_trainer_debug_action_level_1_last_selected_2]
+Switch [1 @Label_trainer_debug_action_level_1_last_selected_1]:[2 @Label_trainer_debug_action_level_1_last_selected_2]:[3 @Label_trainer_debug_action_level_1_last_selected_3]:[4 @Label_trainer_debug_action_level_1_last_selected_4]:[5 @Label_trainer_debug_action_level_1_last_selected_5]
 Jump @Label_trainer_debug_action_level_1_end
 
 :Label_trainer_debug_action_level_1_last_selected_1
@@ -7262,6 +7280,41 @@ Return 0 0
 :Label_trainer_debug_action_level_1_last_selected_2
 CallNative player_ped_id 0 1
 CallNative unk_0xA1D7FABE 1 0
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_3
+CallNative player_ped_id 0 1
+Call @menu_get_current_bool
+Not
+iPush_0
+fPush_0.0
+CallNative set_ped_head_overlay 4 0
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_4
+CallNative player_ped_id 0 1
+iPush_0
+iPush_0
+iPush_0
+iPush_0
+iPush_0
+iPush_0
+iPush_0
+iPush_0
+fPush_0.0
+Call @menu_get_current_bool
+Not
+CallNative set_ped_head_blend_data 11 0
+Call @menu_toggle_current_bool
+Return 0 0
+
+:Label_trainer_debug_action_level_1_last_selected_5
+CallNative player_ped_id 0 1
+Call @menu_get_current_bool
+Not
+CallNative set_ped_can_head_ik 2 0
+Call @menu_toggle_current_bool
 Return 0 0
 
 :Label_trainer_debug_action_level_1_end
