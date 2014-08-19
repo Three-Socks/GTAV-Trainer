@@ -271,3 +271,6 @@ Static_550
 
 // trainer_pause_clock
 Static_551
+
+// trainer_teleport_ground_z
+Static_552
