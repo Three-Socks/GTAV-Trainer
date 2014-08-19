@@ -17568,6 +17568,11 @@ Call @menu_addItem_gxt_veh_hash
 PushString "SKYLIFT"
 Call @menu_add_number
 Call @menu_add_action
+Push -339587598
+Call @menu_addItem_gxt_veh_hash
+PushString "SWIFT"
+Call @menu_add_number
+Call @menu_add_action
 Return 0 0
 
 :Label_trainer_vehicle_spawn_level_3_last_selected_industrial
@@ -17936,6 +17941,11 @@ Call @menu_addItem_gxt_veh_hash
 PushString "BLIMP"
 Call @menu_add_number
 Call @menu_add_action
+Push 1824333165
+Call @menu_addItem_gxt_veh_hash
+PushString "BESRA"
+Call @menu_add_number
+Call @menu_add_action
 Push 368211810
 Call @menu_addItem_gxt_veh_hash
 PushString "CARGOPLANE"
@@ -17969,6 +17979,11 @@ Call @menu_add_action
 Push -1746576111
 Call @menu_addItem_gxt_veh_hash
 PushString "MAMMATUS"
+Call @menu_add_number
+Call @menu_add_action
+Push 165154707
+Call @menu_addItem_gxt_veh_hash
+PushString "MILJET"
 Call @menu_add_number
 Call @menu_add_action
 Push -1281684762
@@ -18298,6 +18313,11 @@ Call @menu_add_action
 Return 0 0
 
 :Label_trainer_vehicle_spawn_level_3_last_selected_sports_classics
+Push 1011753235
+Call @menu_addItem_gxt_veh_hash
+PushString "COQUETTE2"
+Call @menu_add_number
+Call @menu_add_action
 Push 1051415893
 Call @menu_addItem_gxt_veh_hash
 PushString "JB700"
