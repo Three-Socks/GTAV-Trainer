@@ -17183,6 +17183,7 @@ Call @menu_addItem_gxt_veh_hash
 PushString "SPEEDER"
 Call @menu_add_number
 Call @menu_add_action
+
 :Label_trainer_vehicle_spawn_level_3_check_speeder
 Push 400514754
 Call @menu_addItem_gxt_veh_hash
@@ -17288,6 +17289,7 @@ Call @menu_addItem_gxt_veh_hash
 PushString "PANTO"
 Call @menu_add_number
 Call @menu_add_action
+
 :Label_trainer_vehicle_spawn_level_3_check_panto
 Push -1450650718
 Call @menu_addItem_gxt_veh_hash
@@ -17713,6 +17715,7 @@ Call @menu_addItem_gxt_veh_hash
 PushString "SOVEREIGN"
 Call @menu_add_number
 Call @menu_add_action
+
 :Label_trainer_vehicle_spawn_level_3_check_sovereign
 Push 1836027715
 CallNative is_model_in_cdimage 1 1
@@ -17722,6 +17725,7 @@ Call @menu_addItem_gxt_veh_hash
 PushString "THRUST"
 Call @menu_add_number
 Call @menu_add_action
+
 :Label_trainer_vehicle_spawn_level_3_check_thrust
 Push -140902153
 Call @menu_addItem_gxt_veh_hash
@@ -17739,6 +17743,7 @@ Call @menu_addItem_gxt_veh_hash
 PushString "BLADE"
 Call @menu_add_number
 Call @menu_add_action
+
 :Label_trainer_vehicle_spawn_level_3_check_blade
 Push -682211828
 Call @menu_addItem_gxt_veh_hash
@@ -17806,6 +17811,7 @@ Call @menu_addItem_gxt_veh_hash
 PushString "BIFTA"
 Call @menu_add_number
 Call @menu_add_action
+
 :Label_trainer_vehicle_spawn_level_3_check_bifta
 Push -2128233223
 Call @menu_addItem_gxt_veh_hash
@@ -17835,6 +17841,7 @@ Call @menu_addItem_gxt_veh_hash
 PushString "DUBSTA3"
 Call @menu_add_number
 Call @menu_add_action
+
 :Label_trainer_vehicle_spawn_level_3_check_dubsta3
 Push -1661854193
 Call @menu_addItem_gxt_veh_hash
@@ -17859,6 +17866,7 @@ Call @menu_addItem_gxt_veh_hash
 PushString "KALAHARI"
 Call @menu_add_number
 Call @menu_add_action
+
 :Label_trainer_vehicle_spawn_level_3_check_kalahari
 Push -2064372143
 Call @menu_addItem_gxt_veh_hash
@@ -18029,6 +18037,7 @@ Call @menu_addItem_gxt_veh_hash
 PushString "GLENDALE"
 Call @menu_add_number
 Call @menu_add_action
+
 :Label_trainer_vehicle_spawn_level_3_check_glendale
 Push -1289722222
 Call @menu_addItem_gxt_veh_hash
@@ -18103,6 +18112,7 @@ Call @menu_addItem_gxt_veh_hash
 PushString "WARRENER"
 Call @menu_add_number
 Call @menu_add_action
+
 :Label_trainer_vehicle_spawn_level_3_check_warrener
 Push 1777363799
 Call @menu_addItem_gxt_veh_hash
@@ -18168,6 +18178,7 @@ Call @menu_addItem_gxt_veh_hash
 PushString "ALPHA"
 Call @menu_add_number
 Call @menu_add_action
+
 :Label_trainer_vehicle_spawn_level_3_check_alpha
 Push -1041692462
 Call @menu_addItem_gxt_veh_hash
@@ -18227,6 +18238,7 @@ Call @menu_addItem_gxt_veh_hash
 PushString "JESTER"
 Call @menu_add_number
 Call @menu_add_action
+
 :Label_trainer_vehicle_spawn_level_3_check_jester
 Push -142942670
 CallNative is_model_in_cdimage 1 1
@@ -18236,6 +18248,7 @@ Call @menu_addItem_gxt_veh_hash
 PushString "MASSACRO"
 Call @menu_add_number
 Call @menu_add_action
+
 :Label_trainer_vehicle_spawn_level_3_check_massacro
 Push 544021352
 Call @menu_addItem_gxt_veh_hash
@@ -18303,6 +18316,7 @@ Call @menu_addItem_gxt_veh_hash
 PushString "PIGALLE"
 Call @menu_add_number
 Call @menu_add_action
+
 :Label_trainer_vehicle_spawn_level_3_check_pigalle
 Push 117401876
 CallNative is_model_in_cdimage 1 1
@@ -18312,6 +18326,7 @@ Call @menu_addItem_gxt_veh_hash
 PushString "BTYPE"
 Call @menu_add_number
 Call @menu_add_action
+
 :Label_trainer_vehicle_spawn_level_3_check_btype
 Push 1545842587
 Call @menu_addItem_gxt_veh_hash
@@ -18384,6 +18399,7 @@ Call @menu_addItem_gxt_veh_hash
 PushString "TURISMOR"
 Call @menu_add_number
 Call @menu_add_action
+
 :Label_trainer_vehicle_spawn_level_3_check_turismor
 Push 338562499
 Call @menu_addItem_gxt_veh_hash
@@ -18471,6 +18487,7 @@ Call @menu_addItem_gxt_veh_hash
 PushString "HUNTLEY"
 Call @menu_add_number
 Call @menu_add_action
+
 :Label_trainer_vehicle_spawn_level_3_check_huntley
 Push 1269098716
 Call @menu_addItem_gxt_veh_hash
@@ -18861,6 +18878,7 @@ Call @menu_addItem_gxt_veh_hash
 PushString "PARADISE"
 Call @menu_add_number
 Call @menu_add_action
+
 :Label_trainer_vehicle_spawn_level_3_check_paradise
 Push -119658072
 Call @menu_addItem_gxt_veh_hash
