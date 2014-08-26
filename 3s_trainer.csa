@@ -1607,7 +1607,7 @@ iPush_0
 CallNative get_ped_prop_index 2 1
 Add1 1
 iPush_0
-Push1 30
+Push1 50
 Call @menu_addItem_number
 Call @menu_add_action
 
@@ -1647,7 +1647,7 @@ iPush_1
 CallNative get_ped_prop_index 2 1
 Add1 1
 iPush_0
-Push1 30
+Push1 50
 Call @menu_addItem_number
 Call @menu_add_action
 
